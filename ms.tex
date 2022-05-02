@@ -1,0 +1,53 @@
+%% For normal draft builds (figs undisplayed hence fast compile)
+%\documentclass[hyperpdf,nobind,draft,oneside]{hepthesis}
+%\documentclass[hyperpdf,nobind,draft,twoside]{hepthesis}
+
+%% For short draft builds (breaks citations by necessity)
+%\documentclass[hyperpdf,nobind,draft,hidefrontback]{hepthesis}
+
+%%For Cambridge soft-bound version
+\documentclass[hyperpdf,bindnopdf]{hepthesis}
+%% For Cambridge hard-bound version (must be one-sided)
+%\documentclass[hyperpdf,oneside]{hepthesis}
+
+%% Put package includes etc. into preamble.tex for convenience
+\input{preamble}
+
+%% Define the thesis title and author
+\title{Modelling lymphatic progression in head and neck cancer}
+\author{Roman Ludwig}
+
+%% Doc-specific PDF metadata
+\makeatletter
+\makeatother
+
+%% Start the document
+\begin{document}
+
+%% Define the un-numbered front matter (cover pages, rubrik and table of contents)
+\begin{frontmatter}
+    \input{frontmatter}
+\end{frontmatter}
+
+%% Start the content body of the thesis
+\begin{mainmatter}
+    %% Start arabic page numbering here
+    \pagenumbering{arabic}
+    %% Insert the semantically named chapters here
+    \subfile{chapters/introduction}
+    \subfile{chapters/bayesian_network_model}
+\end{mainmatter}
+
+%% Produce the appendices
+\begin{appendices}
+    \subfile{appendices/apdx1}
+\end{appendices}
+
+%% Produce the un-numbered back matter (e.g. colophon,
+%% bibliography, tables of figures etc., index...)
+\begin{backmatter}
+    \input{backmatter}
+\end{backmatter}
+
+%% Close
+\end{document}

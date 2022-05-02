@@ -1,0 +1,27 @@
+%% Load special font packages here if you wish
+% \usepackage{lmodern}
+\usepackage{mathpazo}
+% \usepackage{euler}
+
+%% Using Babel allows other languages to be used and mixed-in easily
+%\usepackage[ngerman,english]{babel}
+\usepackage[english]{babel}
+\selectlanguage{english}
+
+%% Citation system tweaks
+\usepackage{cite}
+
+%% Maths
+\usepackage{amsmath}
+\input{math_operators}
+
+\usepackage[acronym]{glossaries}
+\makeglossaries
+\setacronymstyle{long-short}
+\loadglsentries[acronym]{glossary}
+
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+%% Subfiles
+\usepackage{subfiles}
