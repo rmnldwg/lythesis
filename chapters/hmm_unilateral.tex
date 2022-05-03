@@ -1,0 +1,128 @@
+\documentclass[../ms.tex]{subfiles}
+
+\begin{document}
+
+\subsection{Formulating lymphatic progression as \gls{hmm}}
+\label{subsec:hmm_formulation}
+
+We consider discrete time-steps $t \in \{ 0, 1, 2, \ldots, T \}$. We will start by defining the hidden random variable for the state of the \gls{hmm} at time $t$ to be
+
+\begin{equation}
+    \mathbf{X}[t] = \left( X_v[t] \right)
+\end{equation}
+
+which represents the patient’s state of \gls{lnl} involvement as in the \gls{bn}, but for each time-step we have an instance of it. For the diagnosis $\mathbf{Z}$ on the other hand, we do not need to differentiate between different times, since in practice we will only ever see one diagnosis. This is illustrated in \cref{fig:hmm_schema}. The reason for this is that, if we diagnose a patient with cancer, treatment starts timely and we no longer observe the natural progression of the disease. From a modeling standpoint however, this is a problem that we will address later.
+
+A hidden Markov model is fully described by the starting state $\mathbf{X}[0] := \boldsymbol{\pi}$and the two conditional probability functions that govern the progression from a state $X[t]$ at time $t$ to a state $X[t+1]$ at the following time-step
+
+\begin{equation}
+    P_{HMM}\left( \mathbf{X}[t+1] \mid \mathbf{X}[t] \right)
+\end{equation}
+
+and the probability of a diagnostic observation given the true state of the patient
+
+\begin{equation}
+    P_{HMM}\left( \mathbf{Z} \mid \mathbf{X}[t] \right)
+\end{equation}
+
+Since both our state space and our observation space are discrete and finite, it is possible to enumerate all possible states and observations and collect them in a table or matrix. This so-called \emph{transition matrix} would then be
+
+\begin{equation}
+    \mathbf{A} = \left( a_{ij} \right) = \left( P_{HMM} \left( \mathbf{X}[t+1] = \boldsymbol{\xi}_i \mid \mathbf{X}[t] = \boldsymbol{\xi}_j \right) \right)
+\end{equation}
+
+and the \emph{observation matrix}
+
+\begin{equation}
+    \mathbf{B} = \left( b_{ij} \right) = \left( P_{HMM} \left( \mathbf{Z} = \boldsymbol{\zeta}_i \mid \mathbf{X}[t] = \boldsymbol{\xi}_j \right) \right)
+\end{equation}
+
+Here, $\boldsymbol{\xi}_i$ and $\boldsymbol{\zeta}_j$ are no new variables, but just $\mathbf{x}$ and $\mathbf{z}$ renamed and reordered. The indices $i$ and $j$ for one of the possible states or observations for the entire patient, not for an individual \gls{lnl}. In total, there are $S = |\{ 0,1 \}|^V$ different states and $S^{|\mathcal{O}|} = |\{ 0,1 \}|^{V \cdot |\mathcal{O}|}$ different possible observations. We order the hidden states from
+
+\begin{equation}
+    \boldsymbol{\xi}_1 = 
+    \begin{pmatrix}
+        0 & 0 & 0 & 0
+    \end{pmatrix}
+\end{equation}
+
+to
+
+\begin{equation} \label{eq:obs_matrix}
+    \boldsymbol{\xi}_{16} = 
+    \begin{pmatrix}
+        1 & 1 & 1 & 1
+    \end{pmatrix}
+\end{equation}
+
+in this case of $V = 4$. The exact ordering does not matter, it is just a convenience for the notation. our ordering of the states can be seen in the axes of \cref{fig:trans_matrix}. In analogy, we order the observations $\boldsymbol{\zeta}_j$ from 1 to $V \cdot |\mathcal{O}|$.
+
+In our case, the starting state corresponds to a primary tumor being present but all \glspl{lnl} are still in the healthy state. The observation matrix $\mathbf{B}$ is specified via sensitivity and specificity as described in \cref{eq:obs_matrix}. The main task is to infer the transition matrix $\mathbf{A}$. Usually, it is inferred from a series of observations and there exist efficient algorithms for that, e.g. the sum-product algorithm, which is particularly efficient in chains. Unfortunately, these algorithms cannot be applied for our problem for two profound reasons:
+
+\begin{enumerate}
+    \item We only have a single observation instead of a consecutive series of observations. 
+    \item It is unclear how many time-steps it took from the starting state to the one observation we have at the time of diagnosis.
+\end{enumerate}
+
+In the remainder of this section, we will detail the \gls{hmm} step-by-step, starting with the parameterization of the transition matrix $\mathbf{A}$ in \cref{subsec:hmm_parametrization}. Afterwards, in \cref{subsec:hmm_marginalization}, I will tackle the aforementioned problems, followed up by explaining how we perform inference on this model (\cref{subsec:hmm_inference}), incorporate information about a patient’s T-stage (\cref{subsec:hmm_tstage}) and assess the risk of \gls{lnl} involvement in a new patient (\cref{subsec:hmm_risk_assessment}). Lastly, we will introduce a way to incorporate incomplete observations in \cref{subsec:hmm_incomplete_diag}.
+
+\subsection{Parametrization of the transition matrix}
+\label{subsec:hmm_parametrization}
+
+The transition matrix $\mathbf{A}$ has $S = 2^2V$ entries and therefore $S(S-1)=2^2V-2^V$ degrees of freedom. Although searching the full space of viable transition matrices is possible via unparametrized sampling techniques, it is computationally challenging and hard to interpret. To achieve this reduction in degrees of freedom, and also preserve the anatomically and medically motivated structure of the Bayesian network from \cref{chap:bn_model}, we can represent the transition probability from one state $\mathbf{x}[t]$ to another state $\mathbf{x}[t+1]$ using the conditional probabilities defined for the \gls{bn}. The difference is that the probability of observing a certain state of \gls{lnl} $v$ now depends on the state of the patient one time-step before. Note that from here on, we will mostly drop the probabilistically correct notation $P(X=x)$ and just write $P(x)$ for brevity
+
+\begin{multline} \label{eq:hmm_one_step}
+    P_{HMM} \left( \mathbf{x}[t+1] \mid \mathbf{x}[t] \right)
+    = \prod_{v \in V}{Q \left( x_v[t+1]; x_v[t] \right) \\ 
+    \times \left[ P_{BN} \left( x_v[t+1] \mid \left\{ x_{\pa(v)}[t] \right\}, \left\{ \Tilde{t}_{\pa(v)v} \right\}, \Tilde{b}_v \right) \right]^{1-x_v[t]}}
+\end{multline}
+
+Here we have reused the conditional probability from the \gls{bn} for each \gls{lnl}, but we take it to the power of one minus that node’s previous value. This ensures that an involved node stays involved with probability 1. The parameters $\Tilde{t}_{\pa(v)v}$ and $\Tilde{b}_v$ take the same role as in the \gls{bn}, but they are now probability \emph{rates}, since they act per time-step. Lastly, the first term $Q$ in the product formalizes the fact that a metastatic lymph node level cannot become healthy again once it was involved. This also means that several entries in the transition matrix $\mathbf{A}$ must be zero. In a table the values of $Q\left( x_v[t+1]; x_v[t] \right)$ can be written like this:
+
+\begin{equation}
+    \begin{aligned}
+        Q \left( X_v[t+1] = 0; X_v[t] = 0 \right) &= 1 \\
+        Q \left( X_v[t+1] = 0; X_v[t] = 1 \right) &= 0 \\
+        Q \left( X_v[t+1] = 1; X_v[t] = 0 \right) &= 1 \\
+        Q \left( X_v[t+1] = 1; X_v[t] = 1 \right) &= 1 
+    \end{aligned}
+\end{equation}
+
+which gives rise to a "mask" for $\mathbf{A}$ which can be seen in \cref{fig:trans_matrix}.
+
+To illustrate \cref{eq:hmm_one_step}, it helps to look at a specific example. E.g., the transition probability from state $\boldsymbol{\xi}_5 = \begin{pmatrix} 0 & 1 & 0 & 0 \end{pmatrix}$ to state $\boldsymbol{\xi}_7 = \begin{pmatrix} 0 & 1 & 1 & 0 \end{pmatrix}$, which represents starting with involvement only in \gls{lnl} II and asking for the probability that \gls{lnl} III becomes involved as well over the next time-step:
+
+\begin{equation}
+    \begin{aligned}
+        P_{HMM} &\left( \mathbf{X}[t+1] = \boldsymbol{\xi}_7 \mid \mathbf{X}[t] = \boldsymbol{\xi}_5 \right) \\
+        = &Q \left( X_1[t+1] = 0; X_1[t] = 0 \right) P_{BN} \left( X_1[t+1] = 0 \mid \Tilde{b}_1 \right)^1 \\
+        \times &Q \left( X_2[t+1] = 1; X_2[t] = 1 \right) P_{BN} \left( X_2[t+1] = 1 \mid X_1[t] = 0, \Tilde{t}_{12}, \Tilde{b}_2 \right)^0 \\
+        \times &Q \left( X_3[t+1] = 1; X_3[t] = 0 \right) P_{BN} \left( X_3[t+1] = 1 \mid X_2[t] = 1, \Tilde{t}_{23}, \Tilde{b}_3 \right)^1 \\
+        \times &Q \left( X_4[t+1] = 0; X_4[t] = 0 \right) P_{BN} \left( X_4[t+1] = 0 \mid X_3[t] = 0, \Tilde{t}_{34}, \Tilde{b}_4 \right)^1 \\
+        = &\left( 1 - \Tilde{b}_1 \right) \cdot 1 \cdot \left( \Tilde{b}_3 + \Tilde{t}_{23} - \Tilde{b}_3 \Tilde{t}_23 \right) \cdot \left( 1 - \Tilde{b}_4 \right)
+    \end{aligned}
+\end{equation}
+
+The interpretation of the last line is that this is the probability that \gls{lnl} I and IV do not become involved, while \gls{lnl} III gets infected through lymphatic drainage from either the main tumor or \gls{lnl} II. The probability of \gls{lnl} II remaining involved is 1, of course, which is why we take the respective term to the power of 0.
+
+\subsection{Marginalization}
+\label{subsec:hmm_marginalization}
+
+\subsection{Inference of model parameters}
+\label{subsec:hmm_inference}
+
+\subsection{Incorporation of T-stage}
+\label{subsec:hmm_tstage}
+
+\subsection{Sampling}
+\label{subsec:hmm_sampling}
+
+\subsection{Risk assessment of microscopic involvement}
+\label{subsec:hmm_risk_assessment}
+
+\subsection{Inference and risk assessment for incomplete diagnoses}
+\label{subsec:hmm_incomplete_diag}
+
+
+
+\end{document}

@@ -25,23 +25,41 @@
 \begin{document}
 
 %% Define the un-numbered front matter (cover pages, rubrik and table of contents)
-\begin{frontmatter}
-    \input{frontmatter}
-\end{frontmatter}
+% \begin{frontmatter}
+%     \input{frontmatter}
+% \end{frontmatter}
 
 %% Start the content body of the thesis
 \begin{mainmatter}
     %% Start arabic page numbering here
     \pagenumbering{arabic}
+    
     %% Insert the semantically named chapters here
-    \subfile{chapters/introduction}
-    \subfile{chapters/bayesian_network_model}
+    \chapter{Previous work}
+    \label{chap:previous_work}
+    \subfile{chapters/previous_work}
+    
+        \section{Bayesian network model}
+        \label{sec:bn_model}
+        \subfile{chapters/previous_work_bayesian_network}
+        
+        \section{Limitations}
+        \label{sec:limitations}
+        \subfile{chapters/previous_work_limitations}
+    
+    \chapter{Hidden Markov model}
+    \label{chap:hmm_model}
+    \subfile{chapters/hmm}
+        
+        \section{Unilateral \gls{hmm}}
+        \label{sec:hmm_unilateral}
+        \subfile{chapters/hmm_unilateral}
 \end{mainmatter}
 
 %% Produce the appendices
-\begin{appendices}
-    \subfile{appendices/apdx1}
-\end{appendices}
+% \begin{appendices}
+%     \subfile{appendices/apdx1}
+% \end{appendices}
 
 %% Produce the un-numbered back matter (e.g. colophon,
 %% bibliography, tables of figures etc., index...)
