@@ -134,14 +134,68 @@ In the formalism of the last sections, the $P_{HMM}$ depends implicitly through 
 \end{equation}
 %
 with the probability $P \left( \boldsymbol{\zeta}_i \mid \theta \right)$ specified by \cref{eq:hmm_marginalize}. The product runs formally over all possible observational states. In reality, $f_i$ will likely be zero for a number of rare or implausible states that are not in the dataset.
+
+By Bayes' rule, the posterior distribution of those parameters is 
+%
+\begin{equation} \label{eq:hmm_bayes_theorem}
+    P \left( \theta \mid \boldsymbol{\mathcal{Z}} \right) = \frac{P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right) P\left( \theta \right)}{\int{P \left( \boldsymbol{\mathcal{Z}} \mid \theta' \right) P \left( \theta' \right) \,d\theta'}}
+\end{equation}
+%
+where $P(\theta)$ is the prior over these parameters. Since they are exclusively probability rates, they must all come from the interval $\mathcal{S} = [0,1]$. In this work we will choose the most uninformative prior
+%
+\begin{equation}
+    p(\theta) = 
+    \begin{cases}
+        1 & \text{if} \ \ \theta \in \left[ 0,1 \right]^{V(V-1)} \\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+%
+While it is easy to compute the likelihood, it is not feasible to efficiently calculate the normalization constant in the denominator of \cref{eq:hmm_bayes_theorem}. Hence, we will use \gls{mcmc} sampling methods to estimate the parameters $\theta$ and their uncertainty.
+
 \subsection{Incorporation of T-stage}
 \label{subsec:hmm_tstage}
+
+We have introduced the \gls{hmm} with the promise that it could handle the concept of T-stages through its explicit modeling of dynamic processes. To keep up with that, we will now explain how this is achieved using the time-prior $p(t)$.
+
+The core idea is to assume that early T-stage and late T-stage tumors share the same patterns of metastatic progression, except that late T-stage tumors are on average diagnosed at a later point in time, and thereby also show, on average, higher \gls{lnl} involvement. Formally, this can be described by assuming a different time-prior $p_T (t)$ for every T-stage $T$.  On the other hand, the transition matrix $\mathbf{A}$ is assumed to be the same for all T-stages.
+
+For the inference of model parameters, the training data is split into subgroups according to T-stage. We now define a column-vector $f_T$ separately for each T-stage, which counts the number of patients in the dataset that was diagnosed with one of the possible observational states and a given T-stage. The log-likelihood from which we want to sample is then simply a sum of the likelihoods as above, where the essential difference is that we equip each marginalization over time with a different time-prior $p_T (t)$, according to its T-stage:
+%
+\begin{equation} \label{eq:hmm_log_likelihood}
+    \log{P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right)} = \sum_{T=1}^{4}{\log{\left[ \sum_{t \in \mathbb{T}}{p_T (t) \cdot \boldsymbol{\pi}^\top \cdot (\mathbf{A})^t \cdot \mathbf{B}} \right]} \cdot \mathbf{f}_T}
+\end{equation}
+%
+The logarithm must be taken element-wise for the resulting row-vector inside the square brackets. The only data-dependent term here is the vector $f_T$ counting the occurrences of all possible observations. It is again important to note that the only difference between the part of the log-likelihood for the different T-stages is the exact shape or parametrization of the time-prior. The transition probabilities, and hence also the transition matrix $\mathbf{A}$, are the same for all T-stages. For this to work, we rely on the assumption that different typical patterns of nodal involvement for the same primary tumor location are caused mainly by different progression times
 
 \subsection{Sampling}
 \label{subsec:hmm_sampling}
 
+For learning we employed the \verb|python| implementation of an advanced ensemble sampler called \verb|emcee| \cite{foreman-mackey_emcee_2013} based on an affine invariant ensemble sampler \cite{goodman_ensemble_2010} to draw parameter samples from the likelihood in \cref{eq:hmm_log_likelihood}. Although sampling is the slowest and least preferable option of inference it is also without doubt in a large number of cases the only available option and in our case even feasible; we get relatively short auto-correlation times (around a couple of hundred steps) and an average modern multi-core CPU can easily draw hundreds of thousands of samples within minutes.
+Many distributions in the form of histograms we show in this work are made by computing the respective quantity – e.g., the risk (see below) – for a subset of the sampled parameters. We typically randomly select between 1\% and 2\% of the 200,000 samples drawn after the so-called burn-in phase, when the sampling has already converged to the target distribution, as a subset. The learned parameter densities are depicted as a corner \cite{foreman-mackey_cornerpy_2016} plot (e.g. in \cref{fig:hmm_unilateral_corner}).
+
 \subsection{Risk assessment of microscopic involvement}
 \label{subsec:hmm_risk_assessment}
+
+With a parameter set $\theta = \left( \left\{ \Tilde{b}_v \right\}, \left\{ \Tilde{t}_{\pa(v)v} \right\} \right)$, we can assess the risk of nodal involvement, given a diagnosis $\mathbf{z}$, of a new patient. Using Bayes’ law, the risk for a certain \gls{lnl} $v$ being involved is given by the conditional probability
+%
+\begin{equation}
+    \begin{aligned}
+        R \left( X_v=1 \mid \mathbf{z}, \theta \right) 
+        &= \frac{P \left( \mathbf{Z}=\mathbf{z} \mid X_v=1, \theta \right) P \left( X_v=1 \mid \theta \right)}{P \left( \mathbf{Z}=\mathbf{z} \mid \theta \right)} \\
+        &= \sum_{i\,:\,\xi_{iv}=1}{\frac{P \left( \mathbf{Z}=\mathbf{z} \mid \boldsymbol{\xi}_i , \theta \right) P \left( \boldsymbol{\xi}_i \mid \theta \right)}{P \left( \mathbf{Z}=\mathbf{z} \mid \theta \right)}}
+    \end{aligned}
+\end{equation}
+%
+Note that in the second line, we have explicitly written out the marginalization over all hidden states $\boldsymbol{\xi}_i$ that have \gls{lnl} $v$ involved. We have written the state of \gls{lnl} $v$ in the state $\boldsymbol{\xi}_i$ as $\xi_{iv}$. The denominator can be computed using \cref{eq:hmm_marginalize}, which already includes the marginalization over all hidden states $\boldsymbol{\xi}_i$.
+
+The process of sampling randomly generates $L$ sets of parameters $\theta = \begin{pmatrix} \theta_1 & \theta_2 & \ldots & \theta_L \end{pmatrix}$. They are therefore random variables and so is the risk $R \left( X_v \mid \mathbf{z}, \theta \right)$ since it is a function of $\theta$. Using the Monte Carlo estimator, we can therefore compute the moments of the distribution over the risk, including e.g. the expectation value
+%
+\begin{equation}
+    \mathbb{E}_{\boldsymbol{\theta}} \left[ R \left( X_v = 1 \mid \mathbf{z} \right) \right] = \frac{1}{L} \sum_{k=1}^{L}{R \left( X_v = 1 \mid \mathbf{z}, \theta_k \right)}
+\end{equation}
+%
+In the result sections below, we compute the individual risks for a large enough number $L$ of sampled parameters. Thereby, we can compute histograms for the risk that will approach the real probability density of the respective risk for $L \rightarrow \infty$. This provides additional information on the uncertainty in the predicted risk resulting from uncertainty in the model parameters.
 
 \subsection{Inference and risk assessment for incomplete diagnoses}
 \label{subsec:hmm_incomplete_diag}
