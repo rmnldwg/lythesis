@@ -1,0 +1,34 @@
+\documentclass[../ms.tex]{subfiles}
+
+\begin{document}
+
+In the previous chapter we have set up the formalism to deal with only one side of the neck. Implicitly, we have assumed that to be the ipsilateral side, i.e. the side where the primary tumor is located, because lymph drainage and hence metastatic spread is assumed to be a somewhat symmetric process. But depending on the tumor's location and lateralization, metastatic spread to the contralateral lymphatic system of the neck may also occur.
+
+The formalism of \cref{sec:hmm_unilateral} can easily be applied to the contralateral side and given respective training data for the sampling process, it would learn the appropriate spread probabilities to and among the contralateral \glspl{lnl} just as it would learn the ones for the ipsilateral side. From clinical experience, the contralateral involvement is usually less severe than the ipsilateral one, and hence we would expect the contralateral spread to be less probable as well. 
+
+However, combining two such unilateral models naively would make the assumption that ipsi- and contralateral spread are independent, which seems unlikely: If we know a patient has advanced metastases in the contralateral neck nodes, the risk to find similarly or even more advanced disease in ipsilateral neck nodes should probably be higher than if the contralateral neck were healthy. In other words, we are now looking for the joint probability $P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \mid \mathbf{Z}^\text{i}, \mathbf{Z}^\text{c} \right)$, where the superscripts $\text{i}$ and $\text{c}$ indicate the ipsi- and contralateral side respectively.
+
+The following section will pick up the unilateral formalism, extend and modify it to come up with a less naive bilateral model.
+
+\subsection{Expanding the unilateral model}
+\label{subsec:hmm_expand_to_bilateral}
+
+If we start by dissecting this joint conditional probability in the following way
+
+\begin{equation}
+    P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \mid \mathbf{Z}^\text{i}, \mathbf{Z}^\text{c} \right) \propto P \left( \mathbf{Z}^\text{i}, \mathbf{Z}^\text{c} \mid \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right) \cdot P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right)
+\end{equation}
+
+we notice right away that the likelihood on the right factorizes: Given the true states of involvement in the two sides of the neck, their respective diagnoses must be independent. Furthermore, the two factors are already given by their corresponding observation matrices $\mathbf{B}^\text{i}$ and $\mathbf{B}^\text{c}$.
+
+The joint probability of the hidden states $P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right)$ does not factorize in the same manner. But if we assume the lymphatic network to be symmetric and directed, there can be no direct connection between \glspl{lnl} of the two sides of the neck, which means the probability for involvement of the ipsi- and contralateral side only correlate via the diagnose time $t$. Hence 
+%
+\begin{equation}
+    \begin{aligned}
+        P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right) &= \sum_{t \in \mathbb{T}}{ p(t) \cdot P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \mid t \right)} \\
+        &= \sum_{t \in \mathbb{T}}{ p(t) \cdot P \Big( \mathbf{X}^\text{i} \mid t \Big) \cdot P \Big( \mathbf{X}^\text{c} \mid t \Big)}
+    \end{aligned}
+\end{equation}
+%
+the joint probability is a sum of factorizing terms.
+\end{document}
