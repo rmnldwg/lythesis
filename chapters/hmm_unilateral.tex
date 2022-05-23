@@ -122,7 +122,7 @@ So, essentially, \cref{eq:hmm_cond_time} first computes the probability vector o
     P \left( \mathbf{x} = \boldsymbol{\xi}_i \mid t \right) = \left[ \boldsymbol{\pi}^\top \cdot (\mathbf{A})^t \right]_i
 \end{equation}
 %
-and then multiplies it with the respective observation probability vector, which is a column of the $\mathbf{B}$ matrix, to finally marginalize over all possible true hidden states at the time $t$ of diagnosis.
+and then multiplies it with the respective observation probability vector, which is a column of the $\mathbf{B}$ matrix, to finally marginalize over all possible true hidden states -- effectively a sum over $i$ in \cref{eq:hmm_risk_cond_time} -- at the time $t$ of diagnosis.
 
 The problem that the number of time-steps until diagnosis is unknown cannot be solved in such an elegant fashion. Therefore, we must resort to brute force marginalization and introduce a prior $p(t)$, which is a discrete distribution over a finite number of time-steps. It describes the prior probability that a patient's cancer is diagnosed at a particular time-step $t$. To get the probability of a diagnosis $\mathbf{z}$ we must compute
 %

@@ -14,21 +14,51 @@ The following section will pick up the unilateral formalism, extend and modify i
 \label{subsec:hmm_expand_to_bilateral}
 
 If we start by dissecting this joint conditional probability in the following way
-
-\begin{equation}
-    P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \mid \mathbf{Z}^\text{i}, \mathbf{Z}^\text{c} \right) \propto P \left( \mathbf{Z}^\text{i}, \mathbf{Z}^\text{c} \mid \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right) \cdot P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right)
+%
+\begin{equation} \label{eq:hmm_bilateral_bayes}
+    P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \mid \mathbf{Z}^\text{i}, \mathbf{Z}^\text{c} \right) = \frac{P \left( \mathbf{Z}^\text{i}, \mathbf{Z}^\text{c} \mid \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right) \cdot P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right)}{P \left( \mathbf{Z}^\text{i}, \mathbf{Z}^\text{c} \right)}
 \end{equation}
-
+%
 we notice right away that the likelihood on the right factorizes: Given the true states of involvement in the two sides of the neck, their respective diagnoses must be independent. Furthermore, the two factors are already given by their corresponding observation matrices $\mathbf{B}^\text{i}$ and $\mathbf{B}^\text{c}$.
 
-The joint probability of the hidden states $P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right)$ does not factorize in the same manner. But if we assume the lymphatic network to be symmetric and directed, there can be no direct connection between \glspl{lnl} of the two sides of the neck, which means the probability for involvement of the ipsi- and contralateral side only correlate via the diagnose time $t$. Hence 
+The joint probability of the hidden states $P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right)$ does not factorize in the same manner. But if we assume the lymphatic network to be symmetric and directed, there can be no direct connection between \glspl{lnl} of the two sides of the neck, which means the probability for involvement of the ipsi- and contralateral side only correlate via the diagnose time $t$. Hence the joint probability is a sum of factorizing terms:
 %
-\begin{equation}
+\begin{equation} \label{eq:hmm_bilateral_dissect}
     \begin{aligned}
         P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right) &= \sum_{t \in \mathbb{T}}{ p(t) \cdot P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \mid t \right)} \\
-        &= \sum_{t \in \mathbb{T}}{ p(t) \cdot P \Big( \mathbf{X}^\text{i} \mid t \Big) \cdot P \Big( \mathbf{X}^\text{c} \mid t \Big)}
+        &= \sum_{t \in \mathbb{T}}{ p(t) \cdot P \Big( \mathbf{X}^\text{c} \mid t \Big) \cdot P^\top \Big( \mathbf{X}^\text{i} \mid t \Big)}
     \end{aligned}
 \end{equation}
 %
-the joint probability is a sum of factorizing terms.
+Note that the two row vectors of probabilities in the second line are multiplied using an outer product. We can write this in an algebraic way to effectively factorize this sum as follows
+%
+\begin{equation} \label{eq:hmm_bilateral_algebra}
+    P \left( \mathbf{X}^\text{c} = \boldsymbol{\xi}_n, \mathbf{X}^\text{i} = \boldsymbol{\xi}_m \right) = \left[ P^\top \Big( \mathbf{X}^\text{c} \mid \mathbf{t} \Big) \cdot \operatorname{diag}{p(\mathbf{t})} \cdot P \Big( \mathbf{X}^\text{i} \mid \mathbf{t} \Big) \right]_{n,m}
+\end{equation}
+%
+where the $P \left( \mathbf{X} \mid \mathbf{t} \right)$ are matrices with rows of the conditional probabilities $P \left( \mathbf{X} \mid t \right)$ which can be computed as in \cref{eq:hmm_risk_cond_time}. Multiplying these two matrices -- one for the contralateral side from the left and one for the ipsilateral side from the right -- onto a diagonal matrix containing the time prior marginalizes over the diagnose time and results in a matrix where the value in row $n$ and column $m$ represents the probability to find the contralateral neck in state $\mathbf{X}^\text{c} = \boldsymbol{\xi}_n$ and the ipsilateral lymphatic system in state $\mathbf{X}^\text{i} = \boldsymbol{\xi}_m$.
+
+Similarily, we can now multiply the observation matrices $\mathbf{B}$ from the left and the right onto $P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right)$ to compute the bilateral equivalent of \cref{eg:hmm_marginalize}:
+%
+\begin{equation} \label{eq:hmm_bilateral_observation}
+    P \left( \mathbf{Z}^\text{c} = \boldsymbol{\zeta}_n, \mathbf{Z}^\text{i} = \boldsymbol{\zeta}_m \right) = \left[ \mathbf{B}^\top \cdot P^\top \Big( \mathbf{X}^\text{c} \mid \mathbf{t} \Big) \cdot \operatorname{diag}{p(\mathbf{t})} \cdot P \Big( \mathbf{X}^\text{i} \mid \mathbf{t} \Big) \cdot \mathbf{B} \right]_{n,m}
+\end{equation}
+%
+Formally, all necessary terms can now be computed so that both inference and the subsequent risk prediction can be performed. However, in the next section we will go into more detail regarding how this was implemented.
+
+\subsection{Parameter symmetries and mid-line extension}
+\label{subsec:hmm_parameter_symmetries}
+
+Although it has been omitted, \crefrange{eq:hmm_bilateral_bayes}{eq:hmm_bilateral_observation} are still functions of the same parameters as in the unilateral model, but each side now has their own set $\boldsymbol{\theta}^\text{c}$ and $\boldsymbol{\theta}^\text{i}$ of spread probabilities that are used to parameterize the transition matrices $\mathbf{A}^\text{c}$ and $\mathbf{A}^\text{i}$ respectively.
+
+In principle, the spread probabilities of the two sides are entirely indepent, and a lateralized primary tumor certainly spreads to a different extend to the ipsi- versus the contralateral side. But the spread probabilities among the \glspl{lnl} should be equal when assuming that the lymphatic network in the head and neck region is symmetric. This means
+%
+\begin{equation}
+    \begin{aligned}
+        \big\{ \Tilde{b}^\text{c}_v \big\} &\neq \big\{ \Tilde{b}^\text{i}_v \big\} \\
+        \big\{ \Tilde{t}^\text{\,c}_v \big\} &= \big\{ \Tilde{t}^\text{\,i}_v \big\}
+    \end{aligned}
+\end{equation}
+%
+The reasonable assumption of a symmetric neck anatomy may therefore keep the number of added parameters relatively low.
 \end{document}
