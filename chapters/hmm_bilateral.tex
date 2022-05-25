@@ -55,10 +55,29 @@ In principle, the spread probabilities of the two sides are entirely indepent, a
 %
 \begin{equation}
     \begin{aligned}
-        \big\{ \Tilde{b}^\text{c}_v \big\} &\neq \big\{ \Tilde{b}^\text{i}_v \big\} \\
-        \big\{ \Tilde{t}^\text{\,c}_v \big\} &= \big\{ \Tilde{t}^\text{\,i}_v \big\}
+        \Tilde{b}^\text{c}_v &\neq \Tilde{b}^\text{i}_v \\
+        \Tilde{t}^\text{\,c}_v &= \Tilde{t}^\text{\,i}_v
     \end{aligned}
 \end{equation}
 %
 The reasonable assumption of a symmetric neck anatomy may therefore keep the number of added parameters relatively low.
+
+However, there are cases in which the primary tumor lies almost or exactly on the mid-sagittal plane of the patient. In such cases, we cannot reasonably distinguish between the ipsi- and contralateral side. Consequently, we must assume the base probability rates as well to be symmetric: $\Tilde{b}^\text{c}_v = \Tilde{b}^\text{i}_v$ \\
+This means there must be a continuous increase in the spread probabilities from the primary tumor to the contralateral \glspl{lnl} if we were to move a patient's tumor from a clearly lateralized location closer and closer to that patient's mid-sagittal plane. Ideally, we would like to factor information about the tumor's "degree of asymmetry" into our model, e.g. by considering a normalized perpendicular distance from the mid-sagittal plane to the tumor's center of mass or by considering the tumor volume on either side of this plane. Data like this, however, is rarely available. What is frequently reported and also clinically considered as a risk factor for contralateral involvement is whether or not the tumor touches or extends over the mid-sagittal plane. With this binary variable (and the information on whether the tumor is central/symmetric w.r.t. to the sagittal symmetry plane) we can now distinguish three degrees of lateralizations:
+
+\begin{enumerate}
+    \item $\centernot{\text{s}} , \centernot{\text{e}}$: The tumor does not cross or touch the mid-sagittal plane and is thus clearly lateralized. The base spread probabilities are $\big\{ \Tilde{b}_v^\text{i} \big\}$ and $\big\{ \Tilde{b}_v^{\text{c},\centernot{\text{e}}} \big\}$.
+    \item $\centernot{\text{s}} , \text{e}$: The tumor is lateralized, but crosses or touches the mid-sagittal plane. We will discuss how to define the spread probabilities to the contralateral side below.
+    \item $\text{s} , \text{e}$: The tumor is symmetric w.r.t. to the sagittal plane, thus $\Tilde{b}_v^{\text{c},\text{s}} = \Tilde{b}_v^\text{i}$
+\end{enumerate}
+
+Note that $\text{s} \, (\centernot{\text{s}})$ and $\text{e} \, (\centernot{\text{e}})$ denote the two binary variables \emph{symmetric} (or \emph{not symmetric}) and \emph{extending} (or \emph{not extending}) over the mid-sagittal plane. \\
+We can infer that in case 2 the spread probabilities to the contralateral \glspl{lnl} must be between the ones for the clearly lateralized (1) and the symmetric (3) case. Hence, we could introduce a new "mixing" parameter $\alpha$ that defines the contralateral spread from tumor to \glspl{lnl} as a linear superposition between the two extremes:
+%
+\begin{equation}
+    \Tilde{b}_v^{\text{c} , \text{e}} = \alpha \cdot \Tilde{b}_v^\text{i} + (1 - \alpha) \cdot \Tilde{b}_v^{\text{c} , \centernot{\text{e}}}
+\end{equation}
+%
+This new mixing parameter must be inferred from data just like the other spread probabilities and the parametrization of the time prior. \\
+When using the learned parameters to predict the risk of a new patient, the set of parameters for the computation is compiled from the total set of inferred parameters $\boldsymbol{\hat{\theta}} = \big\{ \Tilde{b}_v^\text{i} , \Tilde{b}_v^{\text{c} , \centernot{\text{e}}} , \alpha, \Tilde{t}_v, p_T \big\}$ depending on the risk factors - i.e. the lateralization of the tumor, T-stage, etc - the patient presents with at the time of diagnosis.
 \end{document}
