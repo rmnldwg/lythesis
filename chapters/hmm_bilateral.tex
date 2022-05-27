@@ -2,7 +2,7 @@
 
 \begin{document}
 
-In the previous chapter we have set up the formalism to deal with only one side of the neck. Implicitly, we have assumed that to be the ipsilateral side, i.e. the side where the primary tumor is located, because lymph drainage and hence metastatic spread is assumed to be a somewhat symmetric process. But depending on the tumor's location and lateralization, metastatic spread to the contralateral lymphatic system of the neck may also occur.
+In the previous chapter we have set up the formalism to deal with only one side of the neck. Implicitly, we have assumed that to be the ipsilateral side, i.e. the side of the sagittal plane where the primary tumor is located. This is because we assume lymphatic drainage to a process that is somewhat symmetric w.r.t. the sagittal plane, which means there can only be limited lymph flow across this plane. But depending on the tumor's location and lateralization, drainage and hence metastatic spread to the contralateral lymphatic system of the neck may also occur. In current clinical practice, a bilateral neck dissection or irradiation is often prescribed when the tumor is close to the mid-sagittal plane. So, ideally, we would like to model the risk for involvement in both sides of the neck at the same time.
 
 The formalism of \cref{sec:hmm_unilateral} can easily be applied to the contralateral side and given respective training data for the sampling process, it would learn the appropriate spread probabilities to and among the contralateral \glspl{lnl} just as it would learn the ones for the ipsilateral side. From clinical experience, the contralateral involvement is usually less severe than the ipsilateral one, and hence we would expect the contralateral spread to be less probable as well. 
 
@@ -72,12 +72,12 @@ This means there must be a continuous increase in the spread probabilities from 
 \end{enumerate}
 
 Note that $\text{s} \, (\centernot{\text{s}})$ and $\text{e} \, (\centernot{\text{e}})$ denote the two binary variables \emph{symmetric} (or \emph{not symmetric}) and \emph{extending} (or \emph{not extending}) over the mid-sagittal plane. \\
-We can infer that in case 2 the spread probabilities to the contralateral \glspl{lnl} must be between the ones for the clearly lateralized (1) and the symmetric (3) case. Hence, we could introduce a new "mixing" parameter $\alpha$ that defines the contralateral spread from tumor to \glspl{lnl} as a linear superposition between the two extremes:
+We can infer that in case 2 the spread probabilities to the contralateral \glspl{lnl} must be between the ones for the clearly lateralized (1) and the symmetric (3) case. Hence, we introduce a new "mixing" parameter $\alpha$ that defines the contralateral spread from tumor to the \glspl{lnl} as a linear superposition between the two extremes:
 %
 \begin{equation}
     \Tilde{b}_v^{\text{c} , \text{e}} = \alpha \cdot \Tilde{b}_v^\text{i} + (1 - \alpha) \cdot \Tilde{b}_v^{\text{c} , \centernot{\text{e}}}
 \end{equation}
 %
 This new mixing parameter must be inferred from data just like the other spread probabilities and the parametrization of the time prior. \\
-When using the learned parameters to predict the risk of a new patient, the set of parameters for the computation is compiled from the total set of inferred parameters $\boldsymbol{\hat{\theta}} = \big\{ \Tilde{b}_v^\text{i} , \Tilde{b}_v^{\text{c} , \centernot{\text{e}}} , \alpha, \Tilde{t}_v, p_T \big\}$ depending on the risk factors - i.e. the lateralization of the tumor, T-stage, etc - the patient presents with at the time of diagnosis.
+When using the learned parameters to predict the risk of a new patient, the set of parameters for the risk computation $\boldsymbol{\hat{\theta}}_R$ is compiled from the total set of inferred parameters $\boldsymbol{\hat{\theta}} = \big\{ \Tilde{b}_v^\text{i} , \Tilde{b}_v^{\text{c} , \centernot{\text{e}}} , \alpha, \Tilde{t}_v, p_T \big\}$, with \gls{lnl} $v \in V$ and T-stage $T \in \{1,2,3,4\}$, depending on the risk factors the patient presents with at the time of diagnosis. We can look at a concrete example:
 \end{document}

@@ -13,8 +13,8 @@ We consider discrete time-steps $t \in \{ 0, 1, 2, \ldots, T \}$. We will start 
 %
 which represents the patient’s state of \gls{lnl} involvement as in the \gls{bn}, but for each time-step we have an instance of it. For the diagnosis $\mathbf{Z}$ on the other hand, we do not need to differentiate between different times, since in practice we will only ever see one diagnosis. This is illustrated in \cref{fig:hmm_schema}. The reason for this is that, if we diagnose a patient with cancer, treatment starts timely and we no longer observe the natural progression of the disease. From a modeling standpoint however, this is a problem that we will address later.
 
-% A hidden Markov model is fully described by the starting state $\mathbf{X}[0] := \boldsymbol{\pi}$and the two conditional probability functions that govern the progrssion from a state $X[t]$ at time $t$ to a state $X[t+1]$ at the following time-step
-
+A hidden Markov model is fully described by the starting state $\mathbf{X}[0] \coloneqq \boldsymbol{\pi}$ and the two conditional probability functions that govern the progression from a state $X[t]$ at time $t$ to a state $X[t+1]$ at the following time-step
+%
 \begin{equation}
     P_{HMM}\left( \mathbf{X}[t+1] \mid \mathbf{X}[t] \right)
 \end{equation}
@@ -37,7 +37,7 @@ and the \emph{observation matrix}
     \mathbf{B} = \left( b_{ij} \right) = \left( P_{HMM} \left( \mathbf{Z} = \boldsymbol{\zeta}_i \mid \mathbf{X}[t] = \boldsymbol{\xi}_j \right) \right)
 \end{equation}
 %
-Here, $\boldsymbol{\xi}_i$ and $\boldsymbol{\zeta}_j$ are no new variables, but just $\mathbf{x}$ and $\mathbf{z}$ renamed and reordered. The indices $i$ and $j$ for one of the possible states or observations for the entire patient, not for an individual \gls{lnl}. In total, there are $S = |\{ 0,1 \}|^V$ different states and $S^{|\mathcal{O}|} = |\{ 0,1 \}|^{V \cdot |\mathcal{O}|}$ different possible observations. We order the hidden states from
+Here, $\boldsymbol{\xi}_i$ and $\boldsymbol{\zeta}_j$ are no new variables, but just $\mathbf{x}$ and $\mathbf{z}$ renamed and reordered. The indices $i$ and $j$ for one of the possible states or observations for the entire patient, not for an individual \gls{lnl}. In total, there are $S = |\{ 0,1 \}|^V$ different states and the same number of different possible observations per diagnostic modality. We order the hidden states from
 %
 \begin{equation}
     \boldsymbol{\xi}_1 = 
@@ -55,7 +55,7 @@ to
     \end{pmatrix}
 \end{equation}
 %
-in this case of $V = 4$. The exact ordering does not matter, it is just a convenience for the notation. our ordering of the states can be seen in the axes of \cref{fig:trans_matrix}. In analogy, we order the observations $\boldsymbol{\zeta}_j$ from 1 to $V \cdot |\mathcal{O}|$.
+in this case of $V = 4$. The exact ordering does not matter, it is just a convenience for the notation. our ordering of the states can be seen in the axes of \cref{fig:trans_matrix}. In analogy, we order the observations $\boldsymbol{\zeta}_j$ from 1 to $2^V$. Note that for now we will not consider multiple diagnostic modalities and how to combine them. We will get back to that topic in \cref{subsec:hmm_unilateral_implementation}.
 
 In our case, the starting state corresponds to a primary tumor being present but all \glspl{lnl} are still in the healthy state. The observation matrix $\mathbf{B}$ is specified via sensitivity and specificity as described in \cref{eq:obs_matrix}. The main task is to infer the transition matrix $\mathbf{A}$. Usually, it is inferred from a series of observations and there exist efficient algorithms for that, e.g. the sum-product algorithm, which is particularly efficient in chains. Unfortunately, these algorithms cannot be applied for our problem for two profound reasons:
 
@@ -69,7 +69,7 @@ In the remainder of this section, we will detail the \gls{hmm} step-by-step, sta
 \subsection{Parametrization of the transition matrix}
 \label{subsec:hmm_parametrization}
 
-The transition matrix $\mathbf{A}$ has $S = 2^2V$ entries and therefore $S(S-1)=2^2V-2^V$ degrees of freedom. Although searching the full space of viable transition matrices is possible via unparametrized sampling techniques, it is computationally challenging and hard to interpret. To achieve this reduction in degrees of freedom, and also preserve the anatomically and medically motivated structure of the Bayesian network from \cref{chap:bn_model}, we can represent the transition probability from one state $\mathbf{x}[t]$ to another state $\mathbf{x}[t+1]$ using the conditional probabilities defined for the \gls{bn}. The difference is that the probability of observing a certain state of \gls{lnl} $v$ now depends on the state of the patient one time-step before. Note that from here on, we will mostly drop the probabilistically correct notation $P(X=x)$ and just write $P(x)$ for brevity
+The square transition matrix $\mathbf{A}$ has $S = 2^{2V}$ entries and therefore $S(S-1)=2^{2V}-2^V$ degrees of freedom. Although searching the full space of viable transition matrices is possible via unparametrized sampling techniques, it is computationally challenging and hard to interpret. To achieve this reduction in degrees of freedom, and also preserve the anatomically and medically motivated structure of the Bayesian network from \cref{chap:bn_model}, we can represent the transition probability from one state $\mathbf{x}[t]$ to another state $\mathbf{x}[t+1]$ using the conditional probabilities defined for the \gls{bn}. The difference is that the probability of observing a certain state of \gls{lnl} $v$ now depends on the state of the patient one time-step before. Note that from here on, we will mostly drop the probabilistically correct notation $P(X=x)$ and just write $P(x)$ for brevity
 %
 \begin{multline} \label{eq:hmm_one_step}
     P_{HMM} \left( \mathbf{x}[t+1] \mid \mathbf{x}[t] \right)
@@ -135,10 +135,10 @@ While the choice of the time-prior may seem unclear at this point, its role for 
 \subsection{Inference of model parameters}
 \label{subsec:hmm_inference}
 
-In the formalism of the last sections, the $P_{HMM}$ depends implicitly through $P_{BN}$ on parameters $\theta = \left\{ \Tilde{t}_{pv} , \Tilde{b}_v \mid v \in V , p \in \pa(v) \right\}$, which – as mentioned – are now probability rates and have therefore a slightly different interpretation. Due to the marginalization over time-steps in \cref{eq:hmm_marginalize} the likelihood function additionally depends on the choice and parametrization of the prior $p(t)$. The parameters are to be inferred from a dataset of lymphatic progression patterns in a cohort of patients. We assume that for each patient we record for every \gls{lnl} $v$ whether it is involved according to diagnostic modality $k$. In other words, for each patient we observe one of the $V \cdot |\mathcal{O}|$ possible diagnoses. Formally, we can then express the dataset $\boldsymbol{\mathcal{Z}}$ as vector $\mathbf{f}$ of the number of patients $f_i$ for which the diagnosis corresponds to the observational state $\boldsymbol{\zeta}_i$. The likelihood $P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right)$ of observing this dataset, given a particular choice of parameters is then given by
+In the formalism of the last sections, the $P_{HMM}$ depends implicitly through $P_{BN}$ on parameters $\theta = \left\{ \Tilde{t}_{pv} , \Tilde{b}_v \mid v \in V , p \in \pa(v) \right\}$, which – as mentioned – are now probability rates and have therefore a slightly different interpretation. Due to the marginalization over time-steps in \cref{eq:hmm_marginalize} the likelihood function additionally depends on the choice and parametrization of the prior $p(t)$. The parameters are to be inferred from a dataset of lymphatic progression patterns in a cohort of patients. We still assume that for each patient we record for every \gls{lnl} $v$ whether it is involved according to only one diagnostic modality. In other words, for each patient we observe one of the $2^V$ possible diagnoses. As mentioned before, we will expand this to multiple diagnostic modalities furhter down in \cref{subsec:hmm_unilateral_implementation}. Formally, we can then express the dataset $\boldsymbol{\mathcal{Z}}$ as vector $\mathbf{f}$ of the number of patients $f_i$ for which the diagnosis corresponds to the observational state $\boldsymbol{\zeta}_i$. The likelihood $P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right)$ of observing this dataset, given a particular choice of parameters, is then given by
 %
 \begin{equation}
-    P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right) = \prod_{i=1}^{V \cdot |\mathcal{O}|}{P \left( \boldsymbol{\zeta}_i \mid \theta \right)^{f_i}}
+    P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right) = \prod_{i=1}^{2^V}{P \left( \boldsymbol{\zeta}_i \mid \theta \right)^{f_i}}
 \end{equation}
 %
 with the probability $P \left( \boldsymbol{\zeta}_i \mid \theta \right)$ specified by \cref{eq:hmm_marginalize}. The product runs formally over all possible observational states. In reality, $f_i$ will likely be zero for a number of rare or implausible states that are not in the dataset.
@@ -208,18 +208,18 @@ In the result sections below, we compute the individual risks for a large enough
 \subsection{Inference and risk assessment for incomplete diagnoses}
 \label{subsec:hmm_incomplete_diag}
 
-A diagnosis is often not complete, meaning that not all \glspl{lnl} might have been observed with all available diagnostic modalities. E.g., while a patient may have undergone a \gls{pet} scan to identify suspicious lymph nodes in the whole neck, \gls{fna} is only performed in a subset of \glspl{lnl}. Hence, we must be able to deal with “incomplete” observations for some \glspl{lnl}. To do so, we first introduce a new observation variable
+A diagnosis is often not complete, meaning that not all \glspl{lnl} might have been checked with a diagnostic modality. E.g., \gls{fna} is usually only performed in a subset of \glspl{lnl}. Hence, we must be able to deal with “incomplete” observations for some \glspl{lnl}. To do so, we first introduce a new observation variable
 %
 \begin{equation}
-    d_v^{\mathcal{O}} \in \{ 0, 1, \emptyset \}
+    d_v \in \{ 0, 1, \emptyset \}
 \end{equation}
 %
 where $\emptyset$ indicates \emph{unobserved}. Furthermore, we define a \emph{match function}
 %
 \begin{equation}
-    \operatorname{match}(\mathbf{d}, \mathbf{z}) := 
+    \operatorname{match}(\mathbf{d}, \mathbf{z}) \coloneqq 
     \begin{cases}
-        \text{true} & \text{if} \,\, d_v^{\mathcal{O}} = z_v^{\mathcal{O}} \vee d_v^{\mathcal{O}} = \emptyset ; \forall v,\mathcal{O} \\
+        \text{true} & \text{if} \,\, d_v = z_v \vee d_v = \emptyset ; \,\forall v \\
         \text{false} & \text{else}
     \end{cases}
 \end{equation}
@@ -269,6 +269,50 @@ Using this notation for marginalizing over unknown or incomplete observations al
 \begin{equation}
     \mathbf{C} = 
     \begin{pmatrix} \mathbf{c}^{\mathbf{d}_1} & \mathbf{c}^{\mathbf{d}_2} & \cdots & \mathbf{c}^{\mathbf{d}_N} \end{pmatrix}
+\end{equation}
+%
+\subsection{Multiple diagnostic modalities}
+\label{subsec:hmm_unilateral_multimod}
+
+Throughout the last sections, we have only dealt with diagnoses from a single modality. In practice, however, most patients undergo screening for metastases using different modalities, like \gls{ct}, \gls{mri} or \gls{fna}. The sensitivities and specificities of these might vary greatly and by combining them in a probabilistically rigorous way, we may gain a additional information.
+
+Luckily, the introduced formalism requires very little changes to be able to incorporate multiple diagnostic modalities. Let $\mathcal{O} = \{ \text{CT}, \text{MRI}, \text{FNA}, \ldots \}$ be the set of modalities. Then we can extend the collection of observed binary \gls{rv} $\mathbf{z}$ from a single modality
+%
+\begin{equation}
+    \mathbf{z} = \left( x_v \right)_{v \in [1,V]} =
+    \begin{pmatrix}
+        x_1 & \cdots & x_V
+    \end{pmatrix}
+\end{equation}
+%
+to multiple diagnostic modalities
+%
+\begin{equation}
+    \mathbf{z} = \left( x_v^k \right)_{v \in [1,V] \atop k \in [1, |\mathcal{O}|]} =
+    \begin{pmatrix}
+        x_1^1 & \cdots & x_V^1 & x_2^2 & \cdots & x_V^{|\mathcal{O}|}
+    \end{pmatrix}
+\end{equation}
+%
+where $k$ enumerates the elements in the set $\mathcal{O}$. We can use $\boldsymbol{\zeta}_j$ again and this time the counting variable $j$ goes from $1$ to $2^{V \cdot |\mathcal{O}|}$. Notice that this means the observation matrix $\mathbf{B}$ is not square anymore. Also, it now contains the sensitivities and specificities of all the modalities in $\mathcal{O}$. If we had separate square observation matrices $\mathbf{B}^k$ for each diagnostic modality, the new total matrix' rows $\mathbf{b}_i = \mathbf{B}_{i:}$ would be the outer products of the individual observation matrices:
+%
+\begin{equation}
+    \mathbf{b}_i = \mathbf{b}_i^1 \otimes \mathbf{b}_i^2 \otimes \cdots \otimes \mathbf{b}_i^{|\mathcal{O}|}
+\end{equation}
+%
+Completely analogous to how we enlarged the vector of binary \glspl{rv} $\mathbf{z}$, we can also extend the vectors $\mathbf{c}$ and $\mathbf{d}$ and then immediately use the entire formalism of the section before to model lymphatic progression with potentially incomplete diagnoses from multiple modalities. However, we will drop this way of continuously enumerating the observations in the next section again, because there is a slightly more efficient and elegant way to do it. This section only served to show that it is naturally possible to extend the formalism to combine findings from different diagnostic modalities.
+
+\subsection{Combining modalities and data}
+\label{subsec:hmm_unilateral_combine}
+
+First, note that the matrix $\mathbf{B}$ -- and also the matrix $\mathbf{C}$ -- can get very large very quickly: The former is of size $2^V \times 2^{V\cdot|\mathcal{O}|}$ and the latter has dimensions $2^{V\cdot|\mathcal{O}|} \times N$, meaning both grow exponentially with the number of \glspl{lnl} \emph{and} diagnostic modalities. And although neither $\mathbf{B}$ not $\mathbf{C}$ depend on the parameters $\theta$, meaning their product can be precomputed, we can simply iterate over all patients, possible hidden states and available diagnostic modalities to compute $\boldsymbol{\Omega} \coloneqq \mathbf{B} \cdot \mathbf{C}$ directly, which saves us building up and multiplying matrices with potentially millions of entries.
+
+To compute this matrix $\boldsymbol{\Omega}$, we first abandon the just-introduced way of combining diagnoses for all modalities into one large vector and separate them again, so that we have complete and incomplete observations $\boldsymbol{\zeta}_j^k$ and $\mathbf{d}_n^k$ respectively for each modality, where $n \in [1,N]$ enumerates the patients in the data.
+%
+\begin{equation}
+    \boldsymbol{\Omega}_{mn} 
+    = \prod_{k=1}^{|\mathcal{O}|}{ P \left( \mathbf{d}_n^k \mid \boldsymbol{\xi}_m \right) }
+    = \prod_{k=1}^{|\mathcal{O}|}{ \left[ \sum_{j \,:\, \operatorname{match}(\mathbf{d}_n^k, \boldsymbol{\zeta}_j^k) }{\mathbf{B}_{mj}^k} \right] }
 \end{equation}
 %
 \end{document}
