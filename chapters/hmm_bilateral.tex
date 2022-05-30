@@ -30,18 +30,18 @@ The joint probability of the hidden states $P \left( \mathbf{X}^\text{i}, \mathb
     \end{aligned}
 \end{equation}
 %
-Note that the two row vectors of probabilities in the second line are multiplied using an outer product. We can write this in an algebraic way to effectively factorize this sum as follows
+Note that the two row vectors of probabilities in the second line are multiplied using an outer product. Using the notation from the last section, We can write this in an algebraic way to effectively factorize this sum as follows
 %
 \begin{equation} \label{eq:hmm_bilateral_algebra}
-    P \left( \mathbf{X}^\text{c} = \boldsymbol{\xi}_n, \mathbf{X}^\text{i} = \boldsymbol{\xi}_m \right) = \left[ P^\top \Big( \mathbf{X}^\text{c} \mid \mathbf{t} \Big) \cdot \operatorname{diag}{p(\mathbf{t})} \cdot P \Big( \mathbf{X}^\text{i} \mid \mathbf{t} \Big) \right]_{n,m}
+    P \left( \mathbf{X}^\text{c} = \boldsymbol{\xi}_n, \mathbf{X}^\text{i} = \boldsymbol{\xi}_m \right) = \left[ \boldsymbol{\Lambda}_\text{c}^\top \cdot \operatorname{diag}{p(\mathbf{t})} \cdot \boldsymbol{\Lambda}_\text{i} \right]_{n,m}
 \end{equation}
 %
-where the $P \left( \mathbf{X} \mid \mathbf{t} \right)$ are matrices with rows of the conditional probabilities $P \left( \mathbf{X} \mid t \right)$ which can be computed as in \cref{eq:hmm_risk_cond_time}. Multiplying these two matrices -- one for the contralateral side from the left and one for the ipsilateral side from the right -- onto a diagonal matrix containing the time prior marginalizes over the diagnose time and results in a matrix where the value in row $n$ and column $m$ represents the probability to find the contralateral neck in state $\mathbf{X}^\text{c} = \boldsymbol{\xi}_n$ and the ipsilateral lymphatic system in state $\mathbf{X}^\text{i} = \boldsymbol{\xi}_m$.
+where the $\boldsymbol{\Lambda}$ are again matrices with rows of the conditional probabilities $P \left( \mathbf{X} \mid t \right)$ which can be computed as defined in \cref{eq:hmm_matrix_lambda}. Multiplying these two matrices -- one for the contralateral side from the left and one for the ipsilateral side from the right -- onto a diagonal matrix containing the time prior marginalizes over the diagnose time and results in a matrix where the value in row $n$ and column $m$ represents the probability to find the contralateral neck in state $\mathbf{X}^\text{c} = \boldsymbol{\xi}_n$ and the ipsilateral lymphatic system in state $\mathbf{X}^\text{i} = \boldsymbol{\xi}_m$.
 
 Similarily, we can now multiply the observation matrices $\mathbf{B}$ from the left and the right onto $P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right)$ to compute the bilateral equivalent of \cref{eg:hmm_marginalize}:
 %
 \begin{equation} \label{eq:hmm_bilateral_observation}
-    P \left( \mathbf{Z}^\text{c} = \boldsymbol{\zeta}_n, \mathbf{Z}^\text{i} = \boldsymbol{\zeta}_m \right) = \left[ \mathbf{B}^\top \cdot P^\top \Big( \mathbf{X}^\text{c} \mid \mathbf{t} \Big) \cdot \operatorname{diag}{p(\mathbf{t})} \cdot P \Big( \mathbf{X}^\text{i} \mid \mathbf{t} \Big) \cdot \mathbf{B} \right]_{n,m}
+    P \left( \mathbf{Z}^\text{c} = \boldsymbol{\zeta}_n, \mathbf{Z}^\text{i} = \boldsymbol{\zeta}_m \right) = \left[ \mathbf{B}^\top \cdot \boldsymbol{\Lambda}_\text{c}^\top \cdot \operatorname{diag}{p(\mathbf{t})} \cdot \boldsymbol{\Lambda}_\text{i} \cdot \mathbf{B} \right]_{n,m}
 \end{equation}
 %
 Formally, all necessary terms can now be computed so that both inference and the subsequent risk prediction can be performed. However, in the next section we will go into more detail regarding how this was implemented.
