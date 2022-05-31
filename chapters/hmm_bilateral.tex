@@ -56,8 +56,9 @@ In principle, the spread probabilities of the two sides are entirely indepent, a
 \begin{equation}
     \begin{aligned}
         \Tilde{b}^\text{c}_v &\neq \Tilde{b}^\text{i}_v \\
-        \Tilde{t}^\text{\,c}_v &= \Tilde{t}^\text{\,i}_v
+        \Tilde{t}^\text{\,c}_{rv} &= \Tilde{t}^\text{\,i}_{rv}
     \end{aligned}
+    \quad \forall \, v \leq V \, , \, r \in \pa(v)
 \end{equation}
 %
 The reasonable assumption of a symmetric neck anatomy may therefore keep the number of added parameters relatively low.
@@ -79,5 +80,5 @@ We can infer that in case 2 the spread probabilities to the contralateral \glspl
 \end{equation}
 %
 This new mixing parameter must be inferred from data just like the other spread probabilities and the parametrization of the time prior. \\
-When using the learned parameters to predict the risk of a new patient, the set of parameters for the risk computation $\boldsymbol{\hat{\theta}}_R$ is compiled from the total set of inferred parameters $\boldsymbol{\hat{\theta}} = \big\{ \Tilde{b}_v^\text{i} , \Tilde{b}_v^{\text{c} , \centernot{\text{e}}} , \alpha, \Tilde{t}_v, p_T \big\}$, with \gls{lnl} $v \in V$ and T-stage $T \in \{1,2,3,4\}$, depending on the risk factors the patient presents with at the time of diagnosis. We can look at a concrete example:
+When using the learned parameters to predict the risk of a new patient, the set of parameters for the risk computation $\boldsymbol{\hat{\theta}}_R$ is compiled from the total set of inferred parameters $\boldsymbol{\hat{\theta}} = \big\{ \Tilde{b}_v^\text{i} , \Tilde{b}_v^{\text{c} , \centernot{\text{e}}} , \alpha, \Tilde{t}_{rv}, p_T \big\}$, depending on the risk factors the patient presents with at the time of diagnosis. As always, for $\boldsymbol{\hat{\theta}}$ we have $v \leq V$, $r \in \pa(v)$ and the T-stage $T \in \{ 1, 2, 3, 4 \}$. We can look at a concrete example:
 \end{document}
