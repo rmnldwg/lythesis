@@ -1,0 +1,48 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% other/uzh/defaults.ldf
+%% NOVA thesis configuration file
+%%
+%% Customization for UNIVERSITY of ZURICH (strings and cover)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE other/uzh/defaults.ldf}%
+
+% University
+\university(en):={University of Zurich}
+\university(de):={Univeristät Zürich}
+
+% Faculty / School
+\school(en):={Departement of Physics}
+\school(de):={Physik-Institut}
+
+% Comiittee printing order
+\committeeorder():={c,r,m}% 
+
+% Cover background images
+\thesiscover(1-1,bgcolor):={white}
+\thesiscover(1-1,image):={other-usz-cover}
+
+% Spine info
+\spine(logo)={other-esep-logo_horiz}
+\spine(logo,angle)={90}
+\spine(author)={\thedocauthor(name,short)}
+\spine(title)={\thedoctitle(\option{/novathesis/coverlang},main)}
+\spine(year)={\thentdocdate(year)}
+
+% Set margins for "normal" pages
+\margin(screen,top):={2.5cm}
+\margin(screen,bottom):={2.5cm}
+\margin(screen,left):={3.25cm}
+\margin(screen,right):={3.25cm}
+\margin(paper,top):={2.5cm}
+\margin(paper,bottom):={2.5cm}
+\margin(paper,left):={4cm}
+\margin(paper,right):={2.5cm}
+
+% Set margins for cover pages
+\margin(cover,top):={1.0cm}
+\margin(cover,bottom):={1.5cm}
+\margin(cover,left):={7cm}
+\margin(cover,right):={0.5cm}
+
+% TODO: Set up the front page
