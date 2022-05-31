@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="BN.svg"
+   id="svg171"
+   version="1.1"
+   overflow="hidden"
+   height="485"
+   width="373">
+  <metadata
+     id="metadata175">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:current-layer="svg171"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-8"
+     inkscape:window-x="2552"
+     inkscape:cy="238"
+     inkscape:cx="-92"
+     inkscape:zoom="0.81953125"
+     showgrid="false"
+     id="namedview173"
+     inkscape:window-height="1377"
+     inkscape:window-width="2560"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <defs
+     id="defs5">
+    <clipPath
+       id="clip0">
+      <path
+         id="path2"
+         clip-rule="evenodd"
+         fill-rule="evenodd"
+         d="M 0,0 H 1280 V 720 H 0 Z" />
+    </clipPath>
+  </defs>
+  <path
+     d="m 301,195.5 c 0,-19.054 15.67,-34.5 35,-34.5 19.33,0 35,15.446 35,34.5 0,19.054 -15.67,34.5 -35,34.5 -19.33,0 -35,-15.446 -35,-34.5 z"
+     stroke="#bfbfbf"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill="#bfbfbf"
+     fill-rule="evenodd"
+     id="path9" />
+  <text
+     y="209"
+     x="313.42004"
+     fill="#ffffff"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text13">𝑍<tspan
+   font-size="27px"
+   x="334.49341"
+   y="217"
+   id="tspan11">𝐼𝐼</tspan></text>
+  <path
+     d="m 301,69 c 0,-19.33 15.67,-35 35,-35 19.33,0 35,15.67 35,35 0,19.33 -15.67,35 -35,35 -19.33,0 -35,-15.67 -35,-35 z"
+     stroke="#bfbfbf"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill="#bfbfbf"
+     fill-rule="evenodd"
+     id="path15" />
+  <text
+     y="83"
+     x="318.75"
+     fill="#ffffff"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text19">𝑍<tspan
+   font-size="27px"
+   x="339.82336"
+   y="90"
+   id="tspan17">𝐼</tspan></text>
+  <path
+     d="m 301,322 c 0,-19.33 15.67,-35 35,-35 19.33,0 35,15.67 35,35 0,19.33 -15.67,35 -35,35 -19.33,0 -35,-15.67 -35,-35 z"
+     stroke="#bfbfbf"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill="#bfbfbf"
+     fill-rule="evenodd"
+     id="path21" />
+  <text
+     y="336"
+     x="308.08997"
+     fill="#ffffff"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text25">𝑍<tspan
+   font-size="27px"
+   x="329.16345"
+   y="343"
+   id="tspan23">𝐼𝐼𝐼</tspan></text>
+  <path
+     d="m 301,448.5 c 0,-19.054 15.67,-34.5 35,-34.5 19.33,0 35,15.446 35,34.5 0,19.054 -15.67,34.5 -35,34.5 -19.33,0 -35,-15.446 -35,-34.5 z"
+     stroke="#bfbfbf"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill="#bfbfbf"
+     fill-rule="evenodd"
+     id="path27" />
+  <text
+     y="462"
+     x="309.84998"
+     fill="#ffffff"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text31">𝑍<tspan
+   font-size="27px"
+   x="330.92334"
+   y="470"
+   id="tspan29">𝐼𝑉</tspan></text>
+  <path
+     d="m 285,179.5 c 0,-19.054 15.67,-34.5 35,-34.5 19.33,0 35,15.446 35,34.5 0,19.054 -15.67,34.5 -35,34.5 -19.33,0 -35,-15.446 -35,-34.5 z"
+     stroke="#7f7f7f"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill="#7f7f7f"
+     fill-rule="evenodd"
+     id="path33" />
+  <text
+     y="193"
+     x="297.42004"
+     fill="#ffffff"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text37">𝑍<tspan
+   font-size="27px"
+   x="318.49341"
+   y="201"
+   id="tspan35">𝐼𝐼</tspan></text>
+  <path
+     d="m 285,53 c 0,-19.33 15.67,-35 35,-35 19.33,0 35,15.67 35,35 0,19.33 -15.67,35 -35,35 -19.33,0 -35,-15.67 -35,-35 z"
+     stroke="#7f7f7f"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill="#7f7f7f"
+     fill-rule="evenodd"
+     id="path39" />
+  <text
+     y="67"
+     x="302.75"
+     fill="#ffffff"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text43">𝑍<tspan
+   font-size="27px"
+   x="323.82336"
+   y="74"
+   id="tspan41">𝐼</tspan></text>
+  <path
+     d="m 285,306 c 0,-19.33 15.67,-35 35,-35 19.33,0 35,15.67 35,35 0,19.33 -15.67,35 -35,35 -19.33,0 -35,-15.67 -35,-35 z"
+     stroke="#7f7f7f"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill="#7f7f7f"
+     fill-rule="evenodd"
+     id="path45" />
+  <text
+     y="320"
+     x="292.08997"
+     fill="#ffffff"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text49">𝑍<tspan
+   font-size="27px"
+   x="313.16345"
+   y="327"
+   id="tspan47">𝐼𝐼𝐼</tspan></text>
+  <path
+     d="m 285,432.5 c 0,-19.054 15.67,-34.5 35,-34.5 19.33,0 35,15.446 35,34.5 0,19.054 -15.67,34.5 -35,34.5 -19.33,0 -35,-15.446 -35,-34.5 z"
+     stroke="#7f7f7f"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill="#7f7f7f"
+     fill-rule="evenodd"
+     id="path51" />
+  <text
+     y="446"
+     x="293.84998"
+     fill="#ffffff"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text55">𝑍<tspan
+   font-size="27px"
+   x="314.92334"
+   y="454"
+   id="tspan53">𝐼𝑉</tspan></text>
+  <path
+     d="m 136,37 c 0,-19.33 15.67,-35 35,-35 19.33,0 35,15.67 35,35 0,19.33 -15.67,35 -35,35 -19.33,0 -35,-15.67 -35,-35 z"
+     stroke="#000000"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill="none"
+     fill-rule="evenodd"
+     id="path57" />
+  <text
+     y="50"
+     x="152.53998"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text61">𝑋<tspan
+   font-size="27px"
+   x="174.90002"
+   y="57"
+   id="tspan59">𝐼</tspan></text>
+  <path
+     d="m 136,163.5 c 0,-19.054 15.67,-34.5 35,-34.5 19.33,0 35,15.446 35,34.5 0,19.054 -15.67,34.5 -35,34.5 -19.33,0 -35,-15.446 -35,-34.5 z"
+     stroke="#000000"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill="none"
+     fill-rule="evenodd"
+     id="path63" />
+  <text
+     y="177"
+     x="147.37402"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text67">𝑋<tspan
+   font-size="27px"
+   x="169.73401"
+   y="185"
+   id="tspan65">𝐼𝐼</tspan></text>
+  <path
+     d="m 136,290 c 0,-19.33 15.67,-35 35,-35 19.33,0 35,15.67 35,35 0,19.33 -15.67,35 -35,35 -19.33,0 -35,-15.67 -35,-35 z"
+     stroke="#000000"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill="none"
+     fill-rule="evenodd"
+     id="path69" />
+  <text
+     y="304"
+     x="142.03998"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text73">𝑋<tspan
+   font-size="27px"
+   x="164.40002"
+   y="311"
+   id="tspan71">𝐼𝐼𝐼</tspan></text>
+  <path
+     d="m 136,416.5 c 0,-19.054 15.67,-34.5 35,-34.5 19.33,0 35,15.446 35,34.5 0,19.054 -15.67,34.5 -35,34.5 -19.33,0 -35,-15.446 -35,-34.5 z"
+     stroke="#000000"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill="none"
+     fill-rule="evenodd"
+     id="path75" />
+  <text
+     y="430"
+     x="143.82501"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text79">𝑋<tspan
+   font-size="27px"
+   x="166.185"
+   y="438"
+   id="tspan77">𝐼𝑉</tspan></text>
+  <path
+     d="m 72,161 h 60.689 v 4 H 72 Z m 54.006,-6.505 9.72,8.505 -9.721,8.505 c -0.831,0.728 -2.094,0.643 -2.822,-0.188 -0.727,-0.831 -0.643,-2.095 0.188,-2.822 l 8.001,-7 -0.001,3.01 -7.999,-7 c -0.832,-0.727 -0.916,-1.991 -0.189,-2.822 0.728,-0.831 1.991,-0.915 2.823,-0.188 z"
+     id="path81" />
+  <path
+     d="M 63.35242,140.69942 145.2483,65.5288 142.5434,62.582 60.64758,137.75258 Z m 81.37148,-65.85922 1.4097,-12.8387 -12.9122,0.307 c -1.1043,0.0263 -1.9782,0.9427 -1.9519,2.047 0.0262,1.1042 0.9427,1.9781 2.047,1.9519 l 10.6271,-0.2527 -2.0356,-2.2178 -1.1602,10.5667 c -0.1206,1.098 0.6718,2.0858 1.7698,2.2063 1.0979,0.1206 2.0857,-0.6718 2.2063,-1.7697 z"
+     id="path83" />
+  <path
+     d="m 63.352,186.527 81.896,75.17 -2.705,2.947 -81.895,-75.171 z m 81.372,65.859 1.409,12.839 -12.912,-0.307 c -1.104,-0.027 -1.978,-0.943 -1.952,-2.047 0.027,-1.104 0.943,-1.978 2.047,-1.952 l 10.627,0.253 -2.035,2.217 -1.16,-10.566 c -0.121,-1.098 0.672,-2.086 1.77,-2.207 1.097,-0.12 2.085,0.672 2.206,1.77 z"
+     id="path85" />
+  <path
+     d="m 14.769,138.067 132.002,250.298 -3.538,1.866 L 11.231,139.933 Z m 134.639,241.352 -2.989,12.565 -12.057,-4.63 c -1.032,-0.396 -1.546,-1.553 -1.15,-2.584 0.396,-1.031 1.552,-1.546 2.584,-1.15 l 9.923,3.811 -2.663,1.404 2.46,-10.342 c 0.256,-1.074 1.334,-1.738 2.409,-1.482 1.074,0.255 1.738,1.333 1.483,2.408 z"
+     id="path87" />
+  <path
+     d="M 2,163.5 C 2,144.446 17.67,129 37,129 56.33,129 72,144.446 72,163.5 72,182.554 56.33,198 37,198 17.67,198 2,182.554 2,163.5 Z"
+     stroke="#000000"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill-rule="evenodd"
+     id="path89" />
+  <text
+     y="176"
+     x="17.414978"
+     fill="#ffffff"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text93"> <tspan
+   x="25.748352"
+   y="176"
+   id="tspan91">𝑇</tspan></text>
+  <path
+     d="m 169,72 -1e-4,53.7797 h 4 L 173,72 Z m -6.50524,47.0966 8.50513,9.7202 8.50518,-9.7201 c 0.72736,-0.8313 0.64313,-2.0948 -0.18814,-2.8222 -0.83127,-0.7274 -2.0948,-0.6431 -2.82217,0.1881 l -7.00001,8 h 3.01031 l -6.99999,-8 c -0.72736,-0.8313 -1.99089,-0.9155 -2.82216,-0.1881 -0.83128,0.7273 -0.91551,1.9909 -0.18815,2.8221 z"
+     id="path95" />
+  <path
+     d="m 173,198 v 53.78 h -4 V 198 Z m 6.505,47.097 -8.505,9.72 -8.505,-9.72 c -0.727,-0.832 -0.643,-2.095 0.188,-2.822 0.831,-0.728 2.095,-0.644 2.822,0.188 l 7,8 h -3.01 l 7,-8 c 0.727,-0.832 1.991,-0.916 2.822,-0.189 0.831,0.728 0.916,1.991 0.188,2.823 z"
+     id="path97" />
+  <path
+     d="m 173,324.999 0.017,53.78 -4,10e-4 L 169,325.001 Z m 6.52,47.095 -8.502,9.723 -8.508,-9.718 c -0.728,-0.831 -0.644,-2.094 0.187,-2.822 0.831,-0.728 2.095,-0.644 2.822,0.187 l 7.003,7.998 -3.011,0.001 6.998,-8.002 c 0.727,-0.832 1.991,-0.916 2.822,-0.189 0.831,0.727 0.916,1.99 0.189,2.822 z"
+     id="path99" />
+  <path
+     d="m 269,163.5 c 0,-19.054 15.67,-34.5 35,-34.5 19.33,0 35,15.446 35,34.5 0,19.054 -15.67,34.5 -35,34.5 -19.33,0 -35,-15.446 -35,-34.5 z"
+     stroke="#000000"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill-rule="evenodd"
+     id="path101" />
+  <text
+     y="177"
+     x="281.41998"
+     fill="#ffffff"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text107">𝑍<tspan
+   font-size="27px"
+   x="302.49341"
+   y="186"
+   id="tspan103">𝐼𝐼</tspan><tspan
+   font-size="27px"
+   x="305.14001"
+   y="163"
+   id="tspan105">𝑎</tspan></text>
+  <path
+     d="m 269,37 c 0,-19.33 15.67,-35 35,-35 19.33,0 35,15.67 35,35 0,19.33 -15.67,35 -35,35 -19.33,0 -35,-15.67 -35,-35 z"
+     stroke="#000000"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill-rule="evenodd"
+     id="path109" />
+  <text
+     y="51"
+     x="282.35999"
+     fill="#ffffff"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text115">𝑍<tspan
+   font-size="27px"
+   x="303.43335"
+   y="59"
+   id="tspan111">𝐼</tspan><tspan
+   font-size="27px"
+   x="306.07996"
+   y="36"
+   id="tspan113">𝑎</tspan></text>
+  <path
+     d="m 269,290 c 0,-19.33 15.67,-35 35,-35 19.33,0 35,15.67 35,35 0,19.33 -15.67,35 -35,35 -19.33,0 -35,-15.67 -35,-35 z"
+     stroke="#000000"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill-rule="evenodd"
+     id="path117" />
+  <text
+     y="304"
+     x="276.09003"
+     fill="#ffffff"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text123">𝑍<tspan
+   font-size="27px"
+   x="297.16345"
+   y="312"
+   id="tspan119">𝐼𝐼𝐼</tspan><tspan
+   font-size="27px"
+   x="299.81006"
+   y="289"
+   id="tspan121">𝑎</tspan></text>
+  <path
+     d="m 269,416.5 c 0,-19.054 15.67,-34.5 35,-34.5 19.33,0 35,15.446 35,34.5 0,19.054 -15.67,34.5 -35,34.5 -19.33,0 -35,-15.446 -35,-34.5 z"
+     stroke="#000000"
+     stroke-width="4"
+     stroke-miterlimit="8"
+     fill-rule="evenodd"
+     id="path125" />
+  <text
+     y="430"
+     x="277.84998"
+     fill="#ffffff"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="37px"
+     id="text131">𝑍<tspan
+   font-size="27px"
+   x="298.92334"
+   y="439"
+   id="tspan127">𝐼𝑉</tspan><tspan
+   font-size="27px"
+   x="301.56995"
+   y="416"
+   id="tspan129">𝑎</tspan></text>
+  <path
+     d="m 206,35 h 60.688 v 4 H 206 Z m 54.005,-6.505 9.725,8.505 -9.725,8.505 c -0.831,0.728 -2.095,0.643 -2.822,-0.188 -0.727,-0.831 -0.643,-2.095 0.188,-2.822 l 8,-7 v 3.01 l -8,-7 c -0.831,-0.727 -0.915,-1.991 -0.188,-2.822 0.727,-0.831 1.991,-0.915 2.822,-0.188 z"
+     id="path133" />
+  <path
+     d="m 206.00001,165 60.68849,-3e-4 v -4 L 205.99999,161 Z m 54.00559,6.50489 9.7201,-8.5052 -9.7202,-8.50511 c -0.8313,-0.72736 -2.0948,-0.64312 -2.8222,0.18816 -0.7273,0.83128 -0.6431,2.0948 0.1882,2.82216 l 8,6.99996 v -3.01031 l -8,7.00004 c -0.8313,0.72737 -0.9155,1.9909 -0.1881,2.82217 0.7274,0.83127 1.9909,0.91549 2.8222,0.18813 z"
+     id="path135" />
+  <path
+     d="m 206.00002,292.001 60.68818,-6e-4 v -4 l -60.68822,6e-4 z m 54.00528,6.50462 9.7201,-8.50525 -9.7203,-8.50506 c -0.8313,-0.72735 -2.0948,-0.64311 -2.8221,0.18817 -0.7274,0.83129 -0.6432,2.09481 0.1881,2.82217 l 8.0001,6.99992 v -3.01031 l -8,7.00008 c -0.8312,0.72737 -0.9155,1.9909 -0.1881,2.82216 0.7274,0.83127 1.9909,0.91549 2.8222,0.18812 z"
+     id="path137" />
+  <path
+     d="m 206.00003,418.001 60.67017,-8e-4 -1e-4,-4 -60.67013,8e-4 z m 53.98717,6.50444 9.7201,-8.50528 -9.7203,-8.50503 c -0.8313,-0.72735 -2.0948,-0.6431 -2.8221,0.18819 -0.7274,0.83128 -0.6431,2.0948 0.1882,2.82216 l 8,6.99989 v -3.01031 l -7.9999,7.00011 c -0.8313,0.72737 -0.9155,1.9909 -0.1881,2.82216 0.7274,0.83127 1.9909,0.91549 2.8221,0.18811 z"
+     id="path139" />
+  <text
+     y="99"
+     x="182.41699"
+     font-family="'Cambria Math', 'Cambria Math_MSFontService', sans-serif"
+     font-weight="400"
+     font-size="27px"
+     id="text167">𝑡<tspan
+   font-size="20px"
+   x="191.90369"
+   y="105"
+   id="tspan141">12</tspan><tspan
+   x="177.45062"
+   y="226"
+   id="tspan143">𝑡</tspan><tspan
+   font-size="20px"
+   x="187.55731"
+   y="231"
+   id="tspan145">23</tspan><tspan
+   x="182.82861"
+   y="352"
+   id="tspan147">𝑡</tspan><tspan
+   font-size="20px"
+   x="192.93518"
+   y="358"
+   id="tspan149">34</tspan><tspan
+   x="89.959534"
+   y="137"
+   id="tspan151">𝑏</tspan><tspan
+   font-size="20px"
+   x="102.82623"
+   y="142"
+   id="tspan153">1</tspan><tspan
+   x="89.673279"
+   y="187"
+   id="tspan155">𝑏</tspan><tspan
+   font-size="20px"
+   x="103.15991"
+   y="193"
+   id="tspan157">2</tspan><tspan
+   x="89.65802"
+   y="250"
+   id="tspan159">𝑏</tspan><tspan
+   font-size="20px"
+   x="103.14471"
+   y="256"
+   id="tspan161">3</tspan><tspan
+   x="89.673279"
+   y="349"
+   id="tspan163">𝑏</tspan><tspan
+   font-size="20px"
+   x="103.15991"
+   y="355"
+   id="tspan165">4</tspan></text>
+</svg>

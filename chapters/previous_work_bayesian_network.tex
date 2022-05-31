@@ -50,10 +50,10 @@ For the graph in \cref{fig:unilateral_graph} we can write down the parametrized 
 In case of a more general network, in which some \glspl{lnl} receive efferent lymphatics from multiple other \glspl{lnl}, \cref{eq:bn_cpt} can be generalised and the conditional probability of the hidden state becomes
 %
 \begin{multline}
-    P_{BN} \left( X_v = x_v \mid \left\{ X_{\pa(v)} = x_{\pa(v)} \right\}, \left\{ t_{\pa(v)v} \right\} , b_v \right) \\
-    = x_v + (-1)^{x_v} (1 - b_v) \prod_{p \in \pa(v)}{\left( 1 - t_{pv} \right)}^{x_{\pa(v)}}
+    P_{BN} \left( X_v = x_v \mid \big\{ X_r = x_r \,,\, t_{rv} \big\}_{r \in \pa(v)} , b_v \right) \\
+    = x_v + (-1)^{x_v} (1 - b_v) \prod_{r \in \pa(v)}{\left( 1 - t_{rv} \right)}^{x_r}
 \end{multline}
 %
-where we marginalized over all hidden variables $X$. Here we have assumed that each patient's diagnosis $\mathbf{z} = \left\{ z_v \mid v \leq V \right\}$ is complete, meaning that we have a diagnosis for each \gls{lnl}. The likelihood can then be used to infer the model parameters via maximum likelihood inference or sampling.
+where we marginalized over all hidden variables $X$. Here we have assumed that each patient's diagnosis $\mathbf{z} = \left( z_1 \quad z_2 \quad \cdots \quad z_V \right)$ is complete, meaning that we have a diagnosis for each \gls{lnl}. The likelihood can then be used to infer the model parameters via maximum likelihood inference or sampling.
 
 \end{document}

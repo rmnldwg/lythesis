@@ -74,7 +74,7 @@ The square transition matrix $\mathbf{A}$ has $S = 2^{2V}$ entries and therefore
 \begin{multline} \label{eq:hmm_one_step}
     P_{HMM} \left( \mathbf{x}[t+1] \mid \mathbf{x}[t] \right)
     = \prod_{v \leq V}{Q \left( x_v[t+1]; x_v[t] \right) \\ 
-    \times \left[ P_{BN} \left( x_v[t+1] \mid \left\{ x_{\pa(v)}[t] \right\}, \left\{ \Tilde{t}_{\pa(v)v} \right\}, \Tilde{b}_v \right) \right]^{1-x_v[t]}}
+    \times \left[ P_{BN} \left( x_v[t+1] \mid \big\{ x_r[t] \, , \, \Tilde{t}_{rv} \big\}_{r \in \pa(v)}, \Tilde{b}_v \right) \right]^{1-x_v[t]}}
 \end{multline}
 %
 Here we have reused the conditional probability from the \gls{bn} for each \gls{lnl}, but we take it to the power of one minus that node’s previous value. This ensures that an involved node stays involved with probability 1. The parameters $\Tilde{t}_{\pa(v)v}$ and $\Tilde{b}_v$ take the same role as in the \gls{bn}, but they are now probability \emph{rates}, since they act per time-step. Lastly, the first term $Q$ in the product formalizes the fact that a metastatic lymph node level cannot become healthy again once it was involved. This also means that several entries in the transition matrix $\mathbf{A}$ must be zero. In a table the values of $Q\left( x_v[t+1]; x_v[t] \right)$ can be written like this:
@@ -197,7 +197,7 @@ were row number $t$ corresponds to the vector $\boldsymbol{\pi}^\top \cdot \left
     \sum_{t = 0}^{t_\text{max}}{p_T (t) \cdot \boldsymbol{\pi}^\top \cdot (\mathbf{A})^t} = p_T \left( \mathbf{t} \right) \cdot \boldsymbol{\Lambda}
 \end{equation}
 %
-with $p_T \left( \mathbf{t} \right) = \begin{pmatrix} p_T(0) & p_T(1) & \cdots & p_T(t_\text{max}) \end{pmatrix}$. The matrix $\boldsymbol{\Lambda}$ implicitly depends on the spread probabilities, while each of the $p_T(\mathbf{t})$ depends on the respective parametrization of the time prior. They are the only objects that depend on the parameters $\theta$ and they are independent of the data.
+with $p_T \left( \mathbf{t} \right) = \big( p_T(0) \quad p_T(1) \quad \cdots \quad p_T(t_\text{max}) \big)$. The matrix $\boldsymbol{\Lambda}$ implicitly depends on the spread probabilities, while each of the $p_T(\mathbf{t})$ depends on the respective parametrization of the time prior. They are the only objects that depend on the parameters $\theta$ and they are independent of the data.
 
 \subsection{Sampling}
 \label{subsec:hmm_sampling}
@@ -208,7 +208,7 @@ Many distributions in the form of histograms we show in this work are made by co
 \subsection{Risk assessment of microscopic involvement}
 \label{subsec:hmm_risk_assessment}
 
-With a parameter set $\theta = \left( \left\{ \Tilde{b}_v \right\}, \left\{ \Tilde{t}_{\pa(v)v} \right\} \right)$, we can assess the risk of nodal involvement, given a diagnosis $\mathbf{z}$, of a new patient. Using Bayes’ law, the risk for a certain \gls{lnl} $v$ being involved is given by the conditional probability
+With a parameter set $\theta = \left( \big\{ \Tilde{b}_v \big\}, \big\{ \Tilde{t}_{rv} \big\}_{r \in \pa(v)} \right) \ \forall v \leq V$, we can assess the risk of nodal involvement, given a diagnosis $\mathbf{z}$, of a new patient. Using Bayes’ law, the risk for a certain \gls{lnl} $v$ being involved is given by the conditional probability
 %
 \begin{equation} \label{eq:hmm_risk}
     \begin{aligned}
