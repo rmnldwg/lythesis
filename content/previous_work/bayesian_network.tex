@@ -1,6 +1,12 @@
-\documentclass[../ms.tex]{subfiles}
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\relativeRoot/figures/}}
+\addbibresource{\relativeRoot/references.bib}
 
 \begin{document}
+
+\section{Bayesian Network}
+\label{sec:previous_work:bayesian_network}
 
 We model the state of each \gls{lnl} as a hidden or unobserved binary random variable, which indicates via values 0 or 1 if an \gls{lnl} is healthy or involved, respectively. This state indicates if there is truly tumor present in an \gls{lnl}, including the presence of occult metastases for the involved state – motivating the term hidden or unobserved state. Every \gls{lnl} can be diagnosed using one or multiple modalities. Most used for diagnosis are imaging techniques like \gls{pet}, \gls{ct} and \gls{mri}, but palpation or \gls{fna} are also used. The diagnosis too, is modelled as binary random variable – this time an observed one – taking on 0 for negative and 1 for positive.
 

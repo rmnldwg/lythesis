@@ -1,31 +1,38 @@
-%% Load special font packages here if you wish
-% \usepackage{lmodern}
-\usepackage{mathpazo}
-% \usepackage{euler}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{{\relativeRoot/figures/}}
+
+%% Layout
+\usepackage[a4paper,top=25mm,bottom=25mm]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%% Bibliography
+\usepackage{biblatex}
+\addbibresource{\relativeRoot/references.bib}
+\usepackage{csquotes}
 
 %% Using Babel allows other languages to be used and mixed-in easily
 %\usepackage[ngerman,english]{babel}
 \usepackage[english]{babel}
 \selectlanguage{english}
 
-\usepackage{parskip}
-
-%% Citation system tweaks
-\usepackage{cite}
-
 %% Maths
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{centernot}
 \usepackage{mathtools}
 \input{math_operators}
 
+%% Glossary
 \usepackage[acronym]{glossaries}
 \makeglossaries
 \setacronymstyle{long-short}
 \loadglsentries[acronym]{glossary}
 
-\usepackage{hyperref}
+%% Cross-referencing
 \usepackage{cleveref}
+\usepackage{auxhook}
 
 %% Subfiles
 \usepackage{subfiles}

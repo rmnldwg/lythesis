@@ -1,9 +1,15 @@
-\documentclass[../ms.tex]{subfiles}
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\relativeRoot/figures/}}
+\addbibresource{\relativeRoot/references.bib}
 
 \begin{document}
 
-\subsection{Formulating lymphatic progression as \gls{hmm}}
-\label{subsec:hmm_formulation}
+\section{Unilateral}
+\label{sec:hmm:unilateral}
+
+\subsection{Formulating lymphatic progression as HMM}
+\label{subsec:hmm:unilateral:formulation}
 
 We consider discrete time-steps $t \in \{ 0, 1, 2, \ldots, t_\text{max} \}$. We will start by defining the hidden random variable for the state of the \gls{hmm} at time $t$ to be
 %
@@ -64,17 +70,17 @@ In our case, the starting state corresponds to a primary tumor being present but
     \item It is unclear how many time-steps it took from the starting state to the one observation we have at the time of diagnosis.
 \end{enumerate}
 
-In the remainder of this section, we will detail the \gls{hmm} step-by-step, starting with the parameterization of the transition matrix $\mathbf{A}$ in \cref{subsec:hmm_parametrization}. Afterwards, in \cref{subsec:hmm_marginalization}, I will tackle the aforementioned problems, followed up by explaining how we perform inference on this model (\cref{subsec:hmm_inference}), incorporate information about a patient’s T-stage (\cref{subsec:hmm_tstage}) and assess the risk of \gls{lnl} involvement in a new patient (\cref{subsec:hmm_risk_assessment}). Lastly, we will introduce a way to incorporate incomplete observations in \cref{subsec:hmm_incomplete_diag}.
+In the remainder of this section, we will detail the \gls{hmm} step-by-step, starting with the parameterization of the transition matrix $\mathbf{A}$ in \cref{subsec:hmm:unilateral:parametrization}. Afterwards, in \cref{subsec:hmm:unilateral:marginalization}, I will tackle the aforementioned problems, followed up by explaining how we perform inference on this model (\cref{subsec:hmm:unilateral:inference}), incorporate information about a patient’s T-stage (\cref{subsec:hmm:unilateral:tstage}) and assess the risk of \gls{lnl} involvement in a new patient (\cref{subsec:hmm:unilateral:risk_assessment}). Lastly, we will introduce a way to incorporate incomplete observations in \cref{subsec:hmm:unilateral:incomplete_diagnose}.
 
 \subsection{Parametrization of the transition matrix}
-\label{subsec:hmm_parametrization}
+\label{subsec:hmm:unilateral:parametrization}
 
 The square transition matrix $\mathbf{A}$ has $S = 2^{2V}$ entries and therefore $S(S-1)=2^{2V}-2^V$ degrees of freedom. Although searching the full space of viable transition matrices is possible via unparametrized sampling techniques, it is computationally challenging and hard to interpret. To achieve this reduction in degrees of freedom, and also preserve the anatomically and medically motivated structure of the Bayesian network from \cref{chap:bn_model}, we can represent the transition probability from one state $\mathbf{x}[t]$ to another state $\mathbf{x}[t+1]$ using the conditional probabilities defined for the \gls{bn}. The difference is that the probability of observing a certain state of \gls{lnl} $v$ now depends on the state of the patient one time-step before. Note that from here on, we will mostly drop the probabilistically correct notation $P(X=x)$ and just write $P(x)$ for brevity
 %
 \begin{multline} \label{eq:hmm_one_step}
     P_{HMM} \left( \mathbf{x}[t+1] \mid \mathbf{x}[t] \right)
-    = \prod_{v \leq V}{Q \left( x_v[t+1]; x_v[t] \right) \\ 
-    \times \left[ P_{BN} \left( x_v[t+1] \mid \big\{ x_r[t] \, , \, \Tilde{t}_{rv} \big\}_{r \in \pa(v)}, \Tilde{b}_v \right) \right]^{1-x_v[t]}}
+    = \prod_{v \leq V}{Q \left( x_v[t+1]; x_v[t] \right)} \\ 
+    \times \left[ P_{BN} \left( x_v[t+1] \mid \big\{ x_r[t] \, , \, \Tilde{t}_{rv} \big\}_{r \in \pa(v)}, \Tilde{b}_v \right) \right]^{1-x_v[t]}
 \end{multline}
 %
 Here we have reused the conditional probability from the \gls{bn} for each \gls{lnl}, but we take it to the power of one minus that node’s previous value. This ensures that an involved node stays involved with probability 1. The parameters $\Tilde{t}_{\pa(v)v}$ and $\Tilde{b}_v$ take the same role as in the \gls{bn}, but they are now probability \emph{rates}, since they act per time-step. Lastly, the first term $Q$ in the product formalizes the fact that a metastatic lymph node level cannot become healthy again once it was involved. This also means that several entries in the transition matrix $\mathbf{A}$ must be zero. In a table the values of $Q\left( x_v[t+1]; x_v[t] \right)$ can be written like this:
@@ -106,7 +112,7 @@ To illustrate \cref{eq:hmm_one_step}, it helps to look at a specific example. E.
 The interpretation of the last line is that this is the probability that \gls{lnl} I and IV do not become involved, while \gls{lnl} III gets infected through lymphatic drainage from either the main tumor or \gls{lnl} II. The probability of \gls{lnl} II remaining involved is 1, of course, which is why we take the respective term to the power of 0.
 
 \subsection{Marginalization}
-\label{subsec:hmm_marginalization}
+\label{subsec:hmm:unilateral:marginalization}
 
 To calculate the likelihood function, we have to calculate the probability of a given diagnostic observation. To that end, we first calculate the probability of observing a given diagnosis $\mathbf{z} = \boldsymbol{\zeta}_j$ at a fixed time-step $t$. As depicted in \cref{fig:hmm_paths}, we must consider every possible evolution of a patient’s disease that leads to the observed diagnosis. Mathematically, this means that we need to marginalize over all such paths. And here is where the HMM-formalism comes in very useful, because this marginalization happens automatically when we multiply the transition matrix with itself and eventually with the observation matrix:
 %
@@ -130,10 +136,10 @@ The problem that the number of time-steps until diagnosis is unknown cannot be s
     P\left( \mathbf{Z} = \boldsymbol{\zeta}_j \right) = \sum_{t = 0}^{t_\text{max}}{p(t) \cdot P\left( \mathbf{Z} = \boldsymbol{\zeta}_j \mid t \right)} = \left[ \sum_{t = 0}^{t_\text{max}}{p(t) \cdot \boldsymbol{\pi}^\top \cdot (\mathbf{A})^t \cdot \mathbf{B}} \right]_j
 \end{equation}
 %
-While the choice of the time-prior may seem unclear at this point, its role for including T-stage into this model will be discussed in \cref{subsec:hmm_tstage}.
+While the choice of the time-prior may seem unclear at this point, its role for including T-stage into this model will be discussed in \cref{subsec:hmm:unilateral:tstage}.
 
 \subsection{Inference of model parameters}
-\label{subsec:hmm_inference}
+\label{subsec:hmm:unilateral:inference}
 
 In the formalism of the last sections, the $P_{HMM}$ depends implicitly through $P_{BN}$ on parameters $\theta = \left\{ \Tilde{b}_v , \Tilde{t}_{pv} \mid v \leq V , p \in \pa(v) \right\}$, which – as mentioned – are now probability rates and have therefore a slightly different interpretation. Due to the marginalization over time-steps in \cref{eq:hmm_marginalize} the likelihood function additionally depends on the choice and parametrization of the prior $p(t)$. The parameters are to be inferred from a dataset of lymphatic progression patterns in a cohort of patients. We still assume that for each patient we record for every \gls{lnl} $v$ whether it is involved according to only one diagnostic modality. In other words, for each patient we observe one of the $2^V$ possible diagnoses. As mentioned before, we will expand this to multiple diagnostic modalities furhter down in \cref{subsec:hmm_unilateral_implementation}.
 
@@ -164,7 +170,7 @@ where $P(\theta)$ is the prior over these parameters. Since they are exclusively
 where $E$ is the number of edges in the \gls{dag} we use to represent the lymphatic system. While it is easy to compute the likelihood, it is not feasible to efficiently calculate the normalization constant in the denominator of \cref{eq:hmm_bayes_theorem}. Hence, we will use \gls{mcmc} sampling methods to estimate the parameters $\theta$ and their uncertainty.
 
 \subsection{Incorporation of T-stage}
-\label{subsec:hmm_tstage}
+\label{subsec:hmm:unilateral:tstage}
 
 We have introduced the \gls{hmm} with the promise that it could handle the concept of T-stages through its explicit modeling of dynamic processes. To keep up with that, we will now explain how this is achieved using the time-prior $p(t)$.
 
@@ -200,13 +206,13 @@ were row number $t$ corresponds to the vector $\boldsymbol{\pi}^\top \cdot \left
 with $p_T \left( \mathbf{t} \right) = \big( p_T(0) \quad p_T(1) \quad \cdots \quad p_T(t_\text{max}) \big)$. The matrix $\boldsymbol{\Lambda}$ implicitly depends on the spread probabilities, while each of the $p_T(\mathbf{t})$ depends on the respective parametrization of the time prior. They are the only objects that depend on the parameters $\theta$ and they are independent of the data.
 
 \subsection{Sampling}
-\label{subsec:hmm_sampling}
+\label{subsec:hmm:unilateral:sampling}
 
 For learning we employed the \verb|python| implementation of an advanced ensemble sampler called \verb|emcee| \cite{foreman-mackey_emcee_2013} based on an affine invariant ensemble sampler \cite{goodman_ensemble_2010} to draw parameter samples from the likelihood in \cref{eq:hmm_log_likelihood}. Although sampling is the slowest and least preferable option of inference it is also without doubt in a large number of cases the only available option and in our case even feasible; we get relatively short auto-correlation times (around a couple of hundred steps) and an average modern multi-core CPU can easily draw hundreds of thousands of samples within minutes.
 Many distributions in the form of histograms we show in this work are made by computing the respective quantity – e.g., the risk (see below) – for a subset of the sampled parameters. We typically randomly select between 1\% and 2\% of the 200,000 samples drawn after the so-called burn-in phase, when the sampling has already converged to the target distribution, as a subset. The learned parameter densities are depicted as a corner \cite{foreman-mackey_cornerpy_2016} plot (e.g. in \cref{fig:hmm_unilateral_corner}).
 
 \subsection{Risk assessment of microscopic involvement}
-\label{subsec:hmm_risk_assessment}
+\label{subsec:hmm:unilateral:risk_assessment}
 
 With a parameter set $\theta = \left( \big\{ \Tilde{b}_v \big\}, \big\{ \Tilde{t}_{rv} \big\}_{r \in \pa(v)} \right) \ \forall v \leq V$, we can assess the risk of nodal involvement, given a diagnosis $\mathbf{z}$, of a new patient. Using Bayes’ law, the risk for a certain \gls{lnl} $v$ being involved is given by the conditional probability
 %
@@ -229,7 +235,7 @@ The process of sampling randomly generates $L$ sets of parameters $\theta = \beg
 In the result sections below, we compute the individual risks for a large enough number $L$ of sampled parameters. Thereby, we can compute histograms for the risk that will approach the real probability density of the respective risk for $L \rightarrow \infty$. This provides additional information on the uncertainty in the predicted risk resulting from uncertainty in the model parameters.
 
 \subsection{Inference and risk assessment for incomplete diagnoses}
-\label{subsec:hmm_incomplete_diag}
+\label{subsec:hmm:unilateral:incomplete_diagnose}
 
 A diagnosis is often not complete, meaning that not all \glspl{lnl} might have been checked with a diagnostic modality. E.g., \gls{fna} is usually only performed in a subset of \glspl{lnl}. Hence, we must be able to deal with “incomplete” observations for some \glspl{lnl}. To do so, we first introduce a new observation variable
 %
@@ -301,7 +307,7 @@ so that the row-vector of likelihoods reads as
 \end{equation}
 %
 \subsection{Multiple diagnostic modalities}
-\label{subsec:hmm_unilateral_multimod}
+\label{subsec:hmm:unilateral:multimodality}
 
 Throughout the last sections, we have only dealt with diagnoses from a single modality. In practice, however, most patients undergo screening for metastases using different modalities, like \gls{ct}, \gls{mri} or \gls{fna}. The sensitivities and specificities of these might vary greatly and by combining them in a probabilistically rigorous way, we may gain a additional information.
 
@@ -332,7 +338,7 @@ where $k$ enumerates the elements in the set $\mathcal{O}$. We can use $\boldsym
 Completely analogous to how we enlarged the vector of binary \glspl{rv} $\mathbf{z}$, we can also extend the vectors $\mathbf{c}$ and $\mathbf{d}$ and then immediately use the entire formalism of the section before to model lymphatic progression with potentially incomplete diagnoses from multiple modalities. However, we will drop this way of continuously enumerating the observations in the next section again, because there is a slightly more efficient and elegant way to do it. This section only served to show that it is naturally possible to extend the formalism to combine findings from different diagnostic modalities.
 
 \subsection{Combining modalities and data}
-\label{subsec:hmm_unilateral_combine}
+\label{subsec:hmm:unilateral:combine}
 
 Note that the matrix $\mathbf{B}$ -- and also the matrix $\mathbf{C}$ -- can get very large very quickly: The former is of size $2^V \times 2^{V\cdot|\mathcal{O}|}$ and the latter has dimensions $2^{V\cdot|\mathcal{O}|} \times N$, meaning both grow exponentially with the number of \glspl{lnl} \emph{and} diagnostic modalities. And although neither $\mathbf{B}$ not $\mathbf{C}$ depend on the parameters $\theta$, meaning their product can be precomputed, we can simply iterate over all patients, possible hidden states and available diagnostic modalities to compute $\boldsymbol{\Omega} \coloneqq \mathbf{B} \cdot \mathbf{C}$ directly, which saves us building up and multiplying matrices with potentially millions of entries.
 
@@ -355,4 +361,5 @@ Now, the elements $\Omega_{mn}$ encode the observation likelihood of patient $n$
 \end{equation}
 %
 Again, the objects $p_T(\mathbf{t})$ and $\boldsymbol{\Lambda}$ depend on the parameters and hence need to be recalculated for every sample drawn during \gls{mcmc} inference. $\boldsymbol{\Omega}$ depends only on the patient data $\mathcal{D}$ and must therefore only be computed once at the beginning of the learning round.
+
 \end{document}

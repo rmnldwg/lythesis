@@ -1,6 +1,12 @@
-\documentclass[../ms.tex]{subfiles}
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\relativeRoot/figures/}}
+\addbibresource{\relativeRoot/references.bib}
 
 \begin{document}
+
+\section{Bilateral}
+\label{sec:hmm:bilateral}
 
 In the previous chapter we have set up the formalism to deal with only one side of the neck. Implicitly, we have assumed that to be the ipsilateral side, i.e. the side of the sagittal plane where the primary tumor is located. This is because we assume lymphatic drainage to a process that is somewhat symmetric w.r.t. the sagittal plane, which means there can only be limited lymph flow across this plane. But depending on the tumor's location and lateralization, drainage and hence metastatic spread to the contralateral lymphatic system of the neck may also occur. In current clinical practice, a bilateral neck dissection or irradiation is often prescribed when the tumor is close to the mid-sagittal plane. So, ideally, we would like to model the risk for involvement in both sides of the neck at the same time.
 
@@ -11,7 +17,7 @@ However, combining two such unilateral models naively would make the assumption 
 The following section will pick up the unilateral formalism, extend and modify it to come up with a less naive bilateral model.
 
 \subsection{Expanding the unilateral model}
-\label{subsec:hmm_expand_to_bilateral}
+\label{subsec:hmm:bilateral:expand}
 
 If we start by dissecting this joint conditional probability in the following way
 %
@@ -47,7 +53,7 @@ Similarily, we can now multiply the observation matrices $\mathbf{B}$ from the l
 Formally, all necessary terms can now be computed so that both inference and the subsequent risk prediction can be performed. However, in the next section we will go into more detail regarding how this was implemented.
 
 \subsection{Parameter symmetries and mid-line extension}
-\label{subsec:hmm_parameter_symmetries}
+\label{subsec:hmm:bilateral:parameter_symmetries}
 
 Although it has been omitted, \crefrange{eq:hmm_bilateral_bayes}{eq:hmm_bilateral_observation} are still functions of the same parameters as in the unilateral model, but each side now has their own set $\boldsymbol{\theta}^\text{c}$ and $\boldsymbol{\theta}^\text{i}$ of spread probabilities that are used to parameterize the transition matrices $\mathbf{A}^\text{c}$ and $\mathbf{A}^\text{i}$ respectively.
 
@@ -81,4 +87,5 @@ We can infer that in case 2 the spread probabilities to the contralateral \glspl
 %
 This new mixing parameter must be inferred from data just like the other spread probabilities and the parametrization of the time prior. \\
 When using the learned parameters to predict the risk of a new patient, the set of parameters for the risk computation $\boldsymbol{\hat{\theta}}_R$ is compiled from the total set of inferred parameters $\boldsymbol{\hat{\theta}} = \big\{ \Tilde{b}_v^\text{i} , \Tilde{b}_v^{\text{c} , \centernot{\text{e}}} , \alpha, \Tilde{t}_{rv}, p_T \big\}$, depending on the risk factors the patient presents with at the time of diagnosis. As always, for $\boldsymbol{\hat{\theta}}$ we have $v \leq V$, $r \in \pa(v)$ and the T-stage $T \in \{ 1, 2, 3, 4 \}$. We can look at a concrete example:
+
 \end{document}
