@@ -1,0 +1,38 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{\relativeRoot/figures/}
+\addbibresource{\relativeRoot/references.bib}
+
+\begin{document}
+
+\section{Possible further extension}
+\label{sec:hmm:other}
+
+In this section we will discuss possible extensions and improvements that we considered during the development. Ultimately, we decided against implementing them into the model we presented in the previous chapters due to reasons we will layout in the following subsections.
+
+\subsection{Trinary hidden random variables}
+\label{subsec:hmm:other:trinary}
+
+As mentioned in the beginning, the reason for developing a probabilistic model of lymphatic tumor progression in the first place is that modern imaging modalities cannot detect tumor cells directly, but only the (macroscopic) changes they exert on their region of growth, e.g. when they cause lymph nodes to swell. In contrast, a histopathological examination of a resected malignancy or biopsy sample uses various staining techniques in combination with microscopes to detect carcinoma cells directly.
+
+That raises the question whether clinical imaging and pathological examinations can both be modelled as observations of the same hidden random variable. The current resolution of the former is magnitudes away from being able to directly detect cancer cells and yet we consider the chance of detecting a microscopic involvement to be given by the sensitivity of \gls{mri}, \gls{ct}, etc., the same one even as the chance for detecting macroscopic metastases. In other words: The sensitivity for detecting lesions far smaller that the voxel resolution of imaging is zero.
+
+To account for this issue, one could categorize lymphatic involvement a little more finely: Instead of treating the true state of a \gls{lnl} as a binary random variable representing a health node and a metastaic node respectively, we could cosider micro- and macroscopic involvement separately. The hidden states were then modelled as \emph{trinary} hidden variables (see \cref{eq:bn:variables} for comparison):
+%
+\begin{equation}
+    \begin{aligned}
+        \text{hidden}& & \mathbf{X} &= \left( X_v \right) \rightarrow \left\{ 0, \mu, M \right\}^V \\
+        \text{observed}& & \mathbf{Z} &= \left( Z_v \right) \rightarrow \left\{ 0,1 \right\}^V
+    \end{aligned}
+\end{equation}
+%
+where $\mu$ and $M$ now respectively represent \emph{microscopic} and \emph{macroscopic} involvement separately.
+
+Diagnoses can still only be binary and in order to decide on a treatment , i.e. whetger to irradiate the \gls{lnl} in question, we also still only care about the distinction \emph{cancerous} -- meaning there are malign cells present -- vs /healthy. But this trinary hidden state gives us and the model the ability to draw somewhat more precise conclusions.
+% TODO: Write some more before here
+\begin{equation}
+  \rlap{$\overbrace{\phantom{0 \quad \mu}}^\text{healthy}$} 0 \quad
+  \underbrace{\mu \quad M}_\text{involved}
+\end{equation}
+%
+\end{document}
