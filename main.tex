@@ -1,0 +1,35 @@
+%% Specify root of repository relative to this file.
+\providecommand{\relativeRoot}{.}
+
+\documentclass[12pt,twoside]{report}
+
+%% Load preamble
+\input{preamble.tex}
+
+\graphicspath{{\relativeRoot/figures/}}
+\addbibresource{\relativeRoot/references.bib}
+
+%% Metadata
+\title{Modelling lymphatic progression in head and neck cancer}
+\author{Roman Ludwig}
+\date{\today}
+
+%% The actual document
+\begin{document}
+    
+    %% Titlepage
+    \maketitle
+
+    %% Frontmatter
+    \pagenumbering{roman}
+    \subfile{content/frontmatter}
+
+    \pagenumbering{arabic}
+    %% The Chapters as subfiles
+    \subfile{content/previous_work/_chapter}
+    \subfile{content/hmm/_chapter}
+
+    %% Backmatter
+    \subfile{content/backmatter}
+
+\end{document}
