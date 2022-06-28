@@ -1,0 +1,65 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\relativeRoot/figures/}}
+
+\begin{document}
+
+\section{Parameter symmetries and mid-line extension}
+\label{sec:bilateral:parameter_symmetries}
+
+Although it has been omitted, \crefrange{eq:hmm_bilateral_bayes}{eq:bilateral:expand:observation} are still functions of the same parameters as in the unilateral model, but each side now has their own set $\boldsymbol{\theta}^\text{c}$ and $\boldsymbol{\theta}^\text{i}$ of spread probabilities that are used to parameterize the transition matrices $\mathbf{A}^\text{c}$ and $\mathbf{A}^\text{i}$ respectively.
+
+In principle, the spread probabilities of the two sides are entirely indepent, and a lateralized primary tumor certainly spreads to a different extend to the ipsi- versus the contralateral side. But the spread probabilities among the \glspl{lnl} should be equal when assuming that the lymphatic network in the head and neck region is symmetric. This means
+%
+\begin{equation}
+    \begin{aligned}
+        \Tilde{b}^\text{c}_v &\neq \Tilde{b}^\text{i}_v \\
+        \Tilde{t}^\text{\,c}_{rv} &= \Tilde{t}^\text{\,i}_{rv}
+    \end{aligned}
+    \quad \forall \, v \leq V \, , \, r \in \pa(v)
+\end{equation}
+%
+Due to the reasoable assumption of a symmetric neck anatomy, we may avoid doubling the spread parameters when we model the bilateral lymphatic spread.
+
+However, there are cases in which the primary tumor lies almost or exactly on the mid-sagittal plane of the patient. In such cases, we cannot reasonably distinguish between the ipsi- and contralateral side. Consequently, we must assume the base probability rates as well to be symmetric: $\Tilde{b}^\text{c}_v = \Tilde{b}^\text{i}_v$ \\
+This means there must be a continuous increase in the spread probabilities from the primary tumor to the contralateral \glspl{lnl} if we were to move a patient's tumor from a clearly lateralized location closer and closer to that patient's mid-sagittal plane. Ideally, we would like to factor information about the tumor's "degree of asymmetry" into our model, e.g. by considering a normalized perpendicular distance from the mid-sagittal plane to the tumor's center of mass or by considering the tumor volume on either side of this plane. Data like this, however, is rarely available. What is frequently reported and also clinically considered as a risk factor for contralateral involvement is whether or not the tumor touches or extends over the mid-sagittal plane. With this binary variable (and the information on whether the tumor is central/symmetric w.r.t. to the sagittal symmetry plane) we can now distinguish three degrees of lateralizations:
+
+\begin{enumerate}
+    \item $\centernot{\text{s}} , \centernot{\text{e}}$: The tumor does not cross or touch the mid-sagittal plane and is thus clearly lateralized. The base spread probabilities are $\big\{ \Tilde{b}_v^\text{i} \big\}$ and $\big\{ \Tilde{b}_v^{\text{c},\centernot{\text{e}}} \big\}$.
+    \item $\centernot{\text{s}} , \text{e}$: The tumor is lateralized, but crosses or touches the mid-sagittal plane. We will discuss how to define the spread probabilities to the contralateral side below.
+    \item $\text{s} , \text{e}$: The tumor is symmetric w.r.t. to the sagittal plane, thus $\Tilde{b}_v^{\text{c},\text{s}} = \Tilde{b}_v^\text{i}$
+\end{enumerate}
+
+Note that $\text{s} \, (\centernot{\text{s}})$ and $\text{e} \, (\centernot{\text{e}})$ denote the two binary variables \emph{symmetric} (or \emph{not symmetric}) and \emph{extending} (or \emph{not extending}) over the mid-sagittal plane. \\
+We can infer that in case 2 the spread probabilities to the contralateral \glspl{lnl} must be between the ones for the clearly lateralized (1) and the symmetric (3) case. Hence, we introduce a new "mixing" parameter $\alpha$ that defines the contralateral spread from tumor to the \glspl{lnl} as a linear superposition between the two extremes:
+%
+\begin{equation}
+    \Tilde{b}_v^{\text{c} , \text{e}} = \alpha \cdot \Tilde{b}_v^\text{i} + (1 - \alpha) \cdot \Tilde{b}_v^{\text{c} , \centernot{\text{e}}}
+\end{equation}
+%
+This new mixing parameter must be inferred from data just like the other spread probabilities and the parametrization of the time prior. \\
+When using the learned parameters to predict the risk of a new patient $g$, the set of parameters for the risk computation $\boldsymbol{\hat{\theta}}_g$ is compiled from the total set of inferred parameters $\boldsymbol{\hat{\theta}} = \big\{ \Tilde{b}_v^\text{i} , \Tilde{b}_v^{\text{c} , \centernot{\text{e}}} , \alpha, \Tilde{t}_{rv}, p_T \big\}$, depending on the risk factors the patient presents with at the time of diagnosis. As always, for $\boldsymbol{\hat{\theta}}$ we have $v \leq V$, $r \in \pa(v)$ and the T-stage $T \in \{ 1, 2, 3, 4 \}$. For example, if patient $g$ has a T1 tumor that is clearly lateralized, their $\boldsymbol{\hat{\theta}}_g$ may be computed in the following way:
+%
+\begin{equation}
+    \boldsymbol{\hat{\theta}}_g = \left\{ \tilde{b}_v^\text{i} , \tilde{b}_v^\text{c} = \tilde{b}_v^{\text{c}, \centernot{\text{e}}} , \tilde{t}_{rv} , p_1 \right\}
+\end{equation}
+%
+while another patient $m$ with a T3 tumor that clearly crosses the mid-sagittal plane would have the following set of parameters used for their risk prediction:
+%
+\begin{equation}
+    \boldsymbol{\hat{\theta}}_m = \left\{ \tilde{b}_v^\text{i} , \tilde{b}_v^\text{c} = \alpha \cdot \Tilde{b}_v^\text{i} + (1 - \alpha) \cdot \Tilde{b}_v^{\text{c} , \centernot{\text{e}}} , \tilde{t}_{rv} , p_3 \right\}
+\end{equation}
+%
+In the actual computational implementation of this model, we essentially compute three different matrices $\boldsymbol{\Lambda}$ which are functions of different parameters:
+%
+\begin{equation}
+    \begin{aligned}
+        \boldsymbol{\Lambda}_\text{i} &= \boldsymbol{\Lambda} \left( \tilde{b}_v^\text{i} , \tilde{t}_{rv} \right) \\
+        \boldsymbol{\Lambda}_{\text{c} , \centernot{\text{e}}} &= \boldsymbol{\Lambda}\left( \tilde{b}_v^{\text{c} , \centernot{e}} , \tilde{t}_{rv} \right) \\
+        \boldsymbol{\Lambda}_{\text{c} , \text{e}} &= \boldsymbol{\Lambda} \left( \alpha , \tilde{b}_v^{\text{c} , \centernot{e}} , \tilde{b}_v^\text{i} , \tilde{t}_{rv} \right)
+    \end{aligned}
+\end{equation}
+%
+From those, the likelihoods of all patients in the training data can be computed when used with the respective $p_T$ -- that gives rise to the corresponding $\operatorname{diag}{p(\mathbf{t})}$ -- as in \cref{eq:bilateral:expand:observation}.
+
+\end{document}

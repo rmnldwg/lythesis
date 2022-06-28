@@ -1,0 +1,38 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\relativeRoot/figures/}}
+
+\begin{document}
+
+\section{Multiple diagnostic modalities}
+\label{sec:unilateral:multimodality}
+
+Throughout the last sections, we have only dealt with diagnoses from a single modality. In practice, however, most patients undergo screening for metastases using different modalities, like \gls{ct}, \gls{mri} or \gls{fna}. The sensitivities and specificities of these might vary greatly and by combining them in a probabilistically rigorous way, we may gain a additional information.
+
+Luckily, the introduced formalism requires very little changes to be able to incorporate multiple diagnostic modalities. Let $\mathcal{O} = \{ \text{CT}, \text{MRI}, \text{FNA}, \ldots \}$ be the set of modalities. Then we can extend the collection of observed binary \glspl{rv} $\mathbf{z}$ from a single modality
+%
+\begin{equation}
+    \mathbf{z} = \left( x_v \right)_{v \in [1,V]} =
+    \begin{pmatrix}
+        x_1 & \cdots & x_V
+    \end{pmatrix}
+\end{equation}
+%
+to multiple diagnostic modalities
+%
+\begin{equation}
+    \mathbf{z} = \left( x_v^k \right)_{v \in [1,V] \atop k \in [1, |\mathcal{O}|]} =
+    \begin{pmatrix}
+        x_1^1 & \cdots & x_V^1 & x_2^2 & \cdots & x_V^{|\mathcal{O}|}
+    \end{pmatrix}
+\end{equation}
+%
+where $k$ enumerates the elements in the set $\mathcal{O}$. We can use $\boldsymbol{\zeta}_j$ again and this time the counting variable $j$ goes from $1$ to $2^{V \cdot |\mathcal{O}|}$. Notice that this means the observation matrix $\mathbf{B}$ is not square anymore. Also, it now contains the sensitivities and specificities of all the modalities in $\mathcal{O}$. If we had separate square observation matrices $\mathbf{B}^k$ for each diagnostic modality, the new total matrix' rows $B_{i*}$ would be the outer products of the individual observation matrices:
+%
+\begin{equation}
+    B_{i*} = B_{i*}^1 \otimes B_{i*}^2 \otimes \cdots \otimes B_{i*}^{|\mathcal{O}|}
+\end{equation}
+%
+Completely analogous to how we enlarged the vector of binary \glspl{rv} $\mathbf{z}$, we can also extend the vectors $\mathbf{c}$ and $\mathbf{d}$ and then immediately use the entire formalism of the section before to model lymphatic progression with potentially incomplete diagnoses from multiple modalities. However, we will drop this way of continuously enumerating the observations in the next section again, because there is a slightly more efficient and elegant way to do it. This section only served to show that it is naturally possible to extend the formalism to combine findings from different diagnostic modalities.
+
+\end{document}

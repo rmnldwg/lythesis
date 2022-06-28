@@ -1,0 +1,79 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\relativeRoot/figures/}}
+
+\begin{document}
+
+\section{Inference and risk assessment for incomplete diagnoses}
+\label{sec:unilateral:incomplete_diagnose}
+
+A diagnosis is often not complete, meaning that not all \glspl{lnl} might have been checked with a diagnostic modality. E.g., \gls{fna} is usually only performed in a subset of \glspl{lnl}. Hence, we must be able to deal with “incomplete” observations for some \glspl{lnl}. To do so, we first introduce a new observation variable
+%
+\begin{equation}
+    d_v \in \{ 0, 1, \emptyset \}
+\end{equation}
+%
+where $\emptyset$ indicates \emph{unobserved}. Furthermore, we define a \emph{match function}
+%
+\begin{equation}
+    \operatorname{match}(\mathbf{d}, \mathbf{z}) \coloneqq 
+    \begin{cases}
+        \text{true} & \text{if} \,\, d_v = z_v \vee d_v = \emptyset ; \,\forall v \\
+        \text{false} & \text{else}
+    \end{cases}
+\end{equation}
+%
+which returns \emph{true} if a - potentially incomplete - diagnosis $\mathbf{d}$ is consistent with a complete observation $\mathbf{z}$. We will use this function for conveniently marginalizing over the missing observations. In analogy to \cref{eq:unilateral:risk_assessment:risk}, we can compute the risk for an incomplete observation as
+%
+\begin{equation} \label{eq:unilateral:incomplete_diagnose:marg_risk}
+    \begin{aligned}
+        R \left( X_v=1 \mid \mathbf{d}, \theta \right) 
+        &= \frac{P \left( \mathbf{d} \mid X_v=1, \theta \right) P \left( X_v=1 \mid \theta \right)}{P \left( \mathbf{d} \mid \theta \right)} \\
+        &= \sum_{i\,:\,\xi_{iv}=1}{\frac{P \left( \mathbf{d} \mid \boldsymbol{\xi}_i , \theta \right) P \left( \boldsymbol{\xi}_i \mid \theta \right)}{P \left( \mathbf{d} \mid \theta \right)}}
+    \end{aligned}
+\end{equation}
+%
+where the enumerator of the second line can now be rewritten using the $\operatorname{match}$ function:
+%
+\begin{equation}
+    \begin{aligned}
+        P \left( \mathbf{d} \mid \boldsymbol{\xi}_i , \theta \right) P \left( \boldsymbol{\xi}_i \mid \theta \right) 
+        &= \sum_{\left\{ j \,:\, \operatorname{match}(\mathbf{d}, \boldsymbol{\zeta}_j) \right\}}{ P \left( \boldsymbol{\zeta}_j \mid \boldsymbol{\xi}_i , \theta \right)} P \Big( \boldsymbol{\xi}_i \mid \theta \Big) \\
+        &= \sum_{\left\{ j \,:\, \operatorname{match}(\mathbf{d}, \boldsymbol{\zeta}_j) \right\}}{B_{ij} \Big[ p_T\left( \mathbf{t} \right) \cdot \boldsymbol{\Lambda} \Big]_i}
+    \end{aligned}
+\end{equation}
+%
+In this case $B_{ij}$ denotes the element of the observation matrix that corresponds to state $\boldsymbol{\xi}_i$ and observation $\boldsymbol{\zeta}_j$. Again, the indices $\left\{ i \,:\, \xi_{iv} = 1 \right\}$ in \cref{eq:unilateral:incomplete_diagnose:marg_risk} correspond to all possible states with a positive involvement in \acrlong{lnl} $X_v$. Essentially, the whole term is the likelihood of an observation $\mathbf{d}$ where we have removed all entries that correspond to states with $X_v \neq 1$ both from the observation matrix and the resulting probability vector of the evolution. It can therefore be easily computed algebraically, too.
+
+The evidence in the denominator of \cref{eq:unilateral:incomplete_diagnose:marg_risk} becomes a marginalization over all possible diagnoses that are not available to us or that we deem unimportant
+%
+\begin{equation} \label{eq:unilateral:risk_assessment:risk_denominator}
+    P \left( \mathbf{d} \mid \theta \right) = \sum_{\left\{ j \,:\, \operatorname{match}(\mathbf{d}, \boldsymbol{\zeta}_j) \right\}}{\Big[ p_T\left( \mathbf{t} \right) \cdot \boldsymbol{\Lambda} \Big]_j}
+\end{equation}
+%
+We can make this summation a bit more elegant using a column vector $\mathbf{c}^{\mathbf{d}}$ that has entries corresponding to the $\operatorname{match}$-function
+%
+\begin{equation}
+    c_i^{\mathbf{d}} = \operatorname{match}(\mathbf{d}, \boldsymbol{\zeta}_i)
+\end{equation}
+%
+where every \emph{true} corresponds to a 1 and every \emph{false} to a 0. This way we can rewrite \cref{eq:unilateral:risk_assessment:risk_denominator} in the following way:
+%
+\begin{equation}
+    P \left( \mathbf{d} \mid \theta \right) = p_T\left( \mathbf{t} \right) \cdot \boldsymbol{\Lambda} \cdot \mathbf{B} \cdot \mathbf{c}^{\mathbf{d}}
+\end{equation}
+%
+Using this notation for marginalizing over unknown or incomplete observations also allows us to encode entire datasets $\boldsymbol{\mathcal{D}} = \begin{pmatrix} \mathbf{d}_1 & \mathbf{d}_2 & \cdots & \mathbf{d}_N \end{pmatrix}$ of (potentially incomplete) observations in the form of a matrix
+%
+\begin{equation}
+    \mathbf{C} = 
+    \begin{pmatrix} \mathbf{c}^{\mathbf{d}_1} & \mathbf{c}^{\mathbf{d}_2} & \cdots & \mathbf{c}^{\mathbf{d}_N} \end{pmatrix}
+\end{equation}
+%
+so that the row-vector of likelihoods reads as
+%
+\begin{equation}
+    P \left( \boldsymbol{\mathcal{D}} \mid \theta \right) = \big( P \left( \mathbf{d}_n \mid \theta \right) \big)_{n \in [1,N]} = p_T\left( \mathbf{t} \right) \cdot \boldsymbol{\Lambda} \cdot \mathbf{B} \cdot \mathbf{C}
+\end{equation}
+
+\end{document}
