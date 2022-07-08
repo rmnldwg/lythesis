@@ -54,7 +54,7 @@
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{flowchart.pdf}}%
-    \put(0.16059125,0.18288872){\color[rgb]{1,1,1}\transparent{0.5}\makebox(0,0)[t]{\lineheight{0.94999999}\smash{\begin{tabular}[t]{c}28\\(10\%)\end{tabular}}}}%
+    %\put(0.16059125,0.18288872){\color[rgb]{1,1,1}\transparent{0.5}\makebox(0,0)[t]{\lineheight{0.94999999}\smash{\begin{tabular}[t]{c}28\\(10\%)\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{flowchart.pdf}}%
   \end{picture}%
 \endgroup%
