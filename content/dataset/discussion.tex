@@ -11,7 +11,7 @@ The purpose of this study was to provide detailed per-level-quantifications of c
 
 The main limitation of this dataset is that pathological involvement for the surgically treated patients was not available because neck dissection was performed en bloc. In addition, as a single-institution dataset, the number of patients is limited. However, dataset and \gls{gui} are made publicly available. The dataset can in the future be pooled with other datasets without loss of information, and the software platform and \gls{gui} developed may serve as the basis for collecting large multi-institutional datasets.
 
-\subsection{Comparison to previous works}
+\subsection*{Comparison to previous works}
 
 \subsubsection*{Prevalence of \gls{lnl} involvement}
 
@@ -30,11 +30,11 @@ A prominent example of treatment de-escalation is the sparing of the elective co
 
 Consistent with the findings of Bauwens et al \cite{bauwens_prevalence_2021} and the general clinical observation that \gls{hpv}-positive tumors seem to metastasize early despite small primaries, our data suggests that the dependence of lymph node involvement on T-category is less pronounced in \gls{hpv}-positive tumors (\cref{table:dataset:upstream}). Beyond that, our data does not provide evidence that lymphatic progression patterns differ between \gls{hpv}-positive versus negative tumors (consistent with Bauwens et al \cite{bauwens_prevalence_2021}).
 
-\subsection{From macroscopic progression patterns to microscopic involvement}
+\subsection*{From macroscopic progression patterns to microscopic involvement}
 
 In this work, we consider lymphatic progression patterns assessed through imaging. Hence, the distribution of macroscopic lymph node metastases is studied. For defining the elective \gls{ctv} or the extent of surgical resection, we are instead interested in the conditional probability of microscopic involvement in a \gls{lnl} given that no macroscopic metastases are seen in that level. This risk depends on two aspects: (1) The sensitivity and specificity of diagnostic imaging, i.e. the probability of not diagnosing lymph node metastases that are present; and (2) The probability that tumor cells have spread to a \gls{lnl}, given the observed state of tumor progression for that patient. The latter can be obtained from datasets of metastatic progression patterns in a cohort of patients as presented in this paper. Statistical methods that combine both aspects to calculate risk of microscopic involvement have been developed for ipsilateral levels I-IV \cite{pouymayou_bayesian_2019,ludwig_hidden_2021}. Future work will extend these statistical models to contralateral spread and levels V and VII, informed by the data presented here. However, this is not part of the current paper.
 
-\subsection{Summary and prospect}
+\subsection*{Summary and prospect}
 
 Detailed datasets of lymphatic progression patterns, meaning reporting the combination of simultaneously involved \glspl{lnl} together with tumor characteristics on a patient-individual basis, allows for better quantification of \gls{lnl} involvement. This may in turn allow for further personalization of elective \gls{ctv-n} definition based on the individual patient's state of tumor progression. In this paper we publish such a dataset together with a graphical user interface to explore the dataset. The software tools are made publicly available for others to study our dataset in detail and to contribute data for building larger multi-institutional datasets. Large datasets, possibly containing thousands of patients, together with the statistical methods for analysis, may eventually inform future clinical trials and guidelines on nodal \gls{ctv} definition in head \& neck cancer. Potential applications are to omit irradiation of ipsilateral level IV in selected patients, or to identify additional patients in whom contralateral neck irradiation can be omitted or limited to level II.
 
