@@ -1,0 +1,71 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+
+
+\begin{document}
+
+\section{Comparing bilateral models}
+\label{sec:bilateral:model_comp}
+
+Up to this point we have largely argued that the mixing parameter makes intuitive sense because of the thought experiment, where we moved the primary tumor from a clearly lateralized positition closer and closer to the mid-sagittal plane, until it was perferctly symmetric w.r.t. that plane. However, we now need to actually test whether or not our arguments hold. For that, we decided to compare three models:
+
+\begin{itemize}
+    \item Model $\mathcal{M}_\text{ag}$, which is agnostic to the tumor's extension $\text{e}$ over the mid-sagittal plane and treats the contralateral base spread in the same way for all patients.
+    \item Model $\mathcal{M}_\alpha$ that uses the linear combination of the ipsilateral base probabilities and the contralateral ones for the patients without mid-plane extension to describe the spread for tumors which do extend over that plane.
+    \item Model $\mathcal{M}_\text{full}$, going even further by defining a completely independent set of contralateral base probabilities for the patients whose tumor extends over the mid-sagittal plane.
+\end{itemize}
+
+Essentially, we now want to know which of these three models does the best job of describing the data. Intuitively, one would argue that it must be $\mathcal{M}_\text{full}$, but this model is also more complex than the other two. A natural choice for a metric that incorporates both the accuracy of the model and a penalty for model complexity -- often also called \emph{Occam's razor} -- is the \emph{model evidence} \cite{aponte_introduction_2022}.
+
+\subsection*{Model evidence and Bayes factor}
+\label{subsec:bilateral:model_comp:evidence}
+
+In Bayesian terms, we would like to know which model $\mathcal{M}$ has the highest probability $P\left( \mathcal{M} \mid \boldsymbol{\mathcal{D}} \right)$ given a dataset $\boldsymbol{\mathcal{D}}$. This probability is given by
+%
+\begin{equation}
+    P\left( \mathcal{M} \mid \boldsymbol{\mathcal{D}} \right) = \frac{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M} \right) P\left( \mathcal{M} \right)}{P \left( \boldsymbol{\mathcal{D}} \right)}
+\end{equation}
+%
+If a priori all models we want to consider have the same probability $P \left( \mathcal{M} \right)$ and we only make pairwise comparisons between models, then we can restrict ourselves to computing the \emph{Bayes factor}:
+%
+\begin{equation}
+    K_\text{1v2} = \frac{P\left( \mathcal{M}_1 \mid \boldsymbol{\mathcal{D}} \right)}{P\left( \mathcal{M}_2 \mid \boldsymbol{\mathcal{D}} \right)} = \frac{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_1 \right) P\left( \mathcal{M}_1 \right)}{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_2 \right) P\left( \mathcal{M}_2 \right)} = \frac{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_1 \right)}{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_2 \right)}
+\end{equation}
+%
+On the right side in the above equation, we see the ratio of the two model's evidences, which are merely their respective likelihoods, marginalized over all parameters:
+%
+\begin{equation} \label{eq:bilateral:evidence}
+    P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M} \right) = \int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right) p(\theta \mid \mathcal{M}) d\theta}
+\end{equation}
+%
+So, if we can compute this quantity for our models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$, the respecive pairwise Bayes factors will indicate which of them is \emph{most likely} to be the true one, given the observed data, in the probabilistic sense. Note that this does not mean it \emph{is} the true data-generating model and not even that we should \emph{believe} it is the true one. But only that among the models investigated, this one is probably the best.
+
+Harold Jeffreys gives a scale for interpreting values of the Bayes factor \cite{jeffreys_theory_1998}:
+
+\begin{center}
+    \begin{tabular}{ | c | c | c | }
+        \hline
+        $K_\text{1v2}$ & $\ln{K_\text{1v2}}$ & support for $\mathcal{M}_1$ \\
+        \hline
+        $< 10^0$ & $< 0$ & negative evidence (supports $\mathcal{M}_2$) \\
+        $10^0$ to $10^{\nicefrac{1}{2}}$ & 0 to 1.15 & barely worth a mention \\
+        $10^{\nicefrac{1}{2}}$ to $10^1$ & 1.15 to 2.3 & substantial \\
+        $10^1$ to $10^{\nicefrac{3}{2}}$ & 2.3 to 3.45 & strong \\
+        $10^{\nicefrac{3}{2}}$ to $10^2$ & 3.45 to 4.6 & very strong \\
+        $> 10^2$ & $> 4.6$ & decisive \\
+        \hline
+    \end{tabular}
+\end{center}
+
+We have also listed the natural logarithm $\ln{K_\text{1v2}}$ of the Bayes factor here, because what we will actually be doing is compute differences in the log-evidences.
+
+\subsection*{Thermodynamic integration}
+\label{subsec:bilateral:model_comp:thermo_int}
+
+Due to the integration over all model parameters, the quantity \cref{eq:bilateral:evidence} is usually impossible to calculate by brute force integration, even for models with just a dozen or so parameters, like ours. Unless analytical solutions exist -- which is rarely the case -- it is often prohibitively expensive to compute the model evidence. For this reason, a large amount of approximation methods has been developed; \cite{friel_estimating_2011} names only a few of the \gls{mcmc} methods available.
+
+Another method that is applicable in the context of \gls{mcmc} is \gls{ti}, which is very well introduced in \cite{aponte_introduction_2022} and only roughly sketched out in this section.
+
+
+
+\end{document}
