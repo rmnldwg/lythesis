@@ -38,7 +38,7 @@ On the right side in the above equation, we see the ratio of the two model's evi
     P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M} \right) = \int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right) p(\theta \mid \mathcal{M}) d\theta}
 \end{equation}
 %
-So, if we can compute this quantity for our models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$, the respecive pairwise Bayes factors will indicate which of them is \emph{most likely} to be the true one, given the observed data, in the probabilistic sense. Note that this does not mean it \emph{is} the true data-generating model and not even that we should \emph{believe} it is the true one. But only that among the models investigated, this one is probably the best.
+So, if we can compute this model evidence -- commonly also called \emph{marginal likelihood} or \emph{partition function} $Z$ from physics -- for our models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$, the respecive pairwise Bayes factors will indicate which of them is \emph{most likely} to be the true one, given the observed data, in the probabilistic sense. Note that this does not mean it \emph{is} the true data-generating model and not even that we should \emph{believe} it is the true one. But only that among the models investigated, this one is probably the best.
 
 Harold Jeffreys gives a scale for interpreting values of the Bayes factor \cite{jeffreys_theory_1998}:
 
@@ -62,10 +62,48 @@ We have also listed the natural logarithm $\ln{K_\text{1v2}}$ of the Bayes facto
 \subsection*{Thermodynamic integration}
 \label{subsec:bilateral:model_comp:thermo_int}
 
-Due to the integration over all model parameters, the quantity \cref{eq:bilateral:evidence} is usually impossible to calculate by brute force integration, even for models with just a dozen or so parameters, like ours. Unless analytical solutions exist -- which is rarely the case -- it is often prohibitively expensive to compute the model evidence. For this reason, a large amount of approximation methods has been developed; \cite{friel_estimating_2011} names only a few of the \gls{mcmc} methods available.
+Due to the integration over all model parameters, the quantity \cref{eq:bilateral:evidence} is usually impossible to calculate by brute force integration, even for models with only around a dozen parameters, as is the case for ours. Unless analytical solutions exist -- which is rarely the case -- it is often prohibitively expensive to compute the model evidence. For this reason, a large amount of approximation methods has been developed; \cite{friel_estimating_2011} names only a few of those methods that can be used in the context of \gls{mcmc}. Another method that is applicable in the context of \gls{mcmc} is \gls{ti}, which is very well introduced in \cite{aponte_introduction_2022} and only roughly sketched out in this section.
 
-Another method that is applicable in the context of \gls{mcmc} is \gls{ti}, which is very well introduced in \cite{aponte_introduction_2022} and only roughly sketched out in this section.
-
-
+The concept of \gls{ti} originates from the field of statistical mechanics and can be motivated from that standpoint. And although this path is certainly more educational and might convey a deeper understanding w.r.t. thermodynamics and information theory, we will take a more direct approach by starting with what we want to compute and subtracting a 0 from it:
+%
+\begin{equation} \label{eq:bilateral:subtract_zero}
+    \begin{aligned}
+        \ln{Z} &\coloneqq \ln{p(\boldsymbol{\mathcal{D}} \mid \mathcal{M})} = \ln{\int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right) p(\theta \mid \mathcal{M}) d\theta}} - \ln{1} \\
+        &= \ln{\int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right) p(\theta \mid \mathcal{M}) d\theta}} - \underbrace{ \ln{ \int{ p(\theta \mid \mathcal{M}) d\theta} } }_{\ln{Z_0}}
+    \end{aligned}
+\end{equation}
+%
+Writing it as this difference between two different log-evidences $\ln{Z}$ and $\ln{Z_0}$ itself does not get us far. But if we could somehow parametrize a differentiable path between the two, then maybe the integration
+%
+\begin{equation} \label{eq:bilateral:diff_as_int}
+    \ln{Z} - \ln{Z_0} = \int_0^1{ \frac{d}{d\beta} \ln{Z_\beta} d\beta}
+\end{equation}
+%
+we end up with can actually be computed. Just by inspection of \cref{eq:bilateral:subtract_zero} and \cref{eq:bilateral:diff_as_int}, one can see that on such differentiable path could be built using what we are going to call the \emph{power posterior} $p_\beta (\theta \mid \boldsymbol{\mathcal{D}}, \mathcal{M})$:
+%
+\begin{equation}
+    \begin{aligned}
+        \ln{Z_\beta} &= \ln{ \int{ p_\beta (\theta \mid \boldsymbol{\mathcal{D}}, \mathcal{M}) d\theta} } \\
+        &= \ln{\int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right)^\beta p(\theta \mid \mathcal{M}) d\theta}}
+    \end{aligned}
+\end{equation}
+%
+with the derivative
+%
+\begin{equation}
+    \begin{aligned}
+        \frac{d}{d\beta} \ln{Z_\beta} &= \int{ \frac{p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right)^\beta p(\theta \mid \mathcal{M})}{Z_\beta} \ln{p(\boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} )} d\theta} \\
+        &= \mathbb{E}\left[ \ln{ p(\boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M}) } \right]_{p_\beta (\theta \mid \boldsymbol{\mathcal{D}}, \mathcal{M})} \\
+        &\approx \frac{1}{S} \sum_{i=1}^S{ \ln{ p(\boldsymbol{\mathcal{D}} \mid \hat{\theta}_{\beta i}, \mathcal{M}) } } = A_\text{MC}(\beta)
+    \end{aligned}
+\end{equation}
+%
+The solution to computing the evidence now lies in sight: Using \gls{mcmc}, we can draw samples from the power posterior $p_\beta$ and use those samples to compute the expectation over the (unmodified) likelihood. Doing this for a sufficient number of steps in the interval $\left[ 0, 1 \right]$ and integrating over the resulting $A_\text{MC}(\beta)$ will then yield an approximation to the log-evidence.
+%
+\begin{equation}
+    \ln{Z} \approx \frac{1}{2} \sum_{j=1}^{N-1} \left( \beta_{j+1} - \beta_j \right) \big( A_\text{MC}(\beta_{j+1}) + A_\text{MC}(\beta_j) \big)
+\end{equation}
+%
+This approximation gets better with larger values for $S$ and $N$. But also how the $\beta_j$ are chosen is crucial for computing a good estimate: Usually, the $A_\text{MC}(\beta)$ -- which can be seen as accuracy terms -- rise steeply for increasing $\beta$ close to 0, while levelling off towards $\beta=1$. It therefore makes sense to distribute the ladder of these values unevenly. A common choice that we employed as well was $\beta_j = x_j^5$ where the $x_j$ are linearly spaced within the interval $[0, 1]$. This yields a very fine resolution for the first steps and gets successively coarser towards the end of the interval.
 
 \end{document}
