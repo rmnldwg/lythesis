@@ -133,7 +133,9 @@ Lastly, we restricted ourselves to modelling the \glspl{lnl} II, III and IV, bec
 \subsection*{Results}
 \label{subsec:bilateral:model_comp:results}
 
-First, we wanted to make sure that all three models are still able to describe the ipsilateral spread sufficiently well. We have plotted the prevalence our trained models predict in the forms of histograms against the Beta-posterior of the observed prevalence in the data (\cref{fig:bilateral:model_comp:ipsi})
+First, we wanted to make sure that all three models are still able to describe the ipsilateral spread sufficiently well. We have plotted the prevalence our trained models predict in the forms of histograms against the Beta-posterior of the observed prevalence in the data (\cref{fig:bilateral:model_comp:ipsi}). These plots were created by computing the respective prevalence for samples drawn during the final 250 steps at the end of the \gls{ti} process of which every fifth step was discarded.
+
+The shown differences between the model's predictions are miniscule. For late T-stages (bottom row of \cref{fig:bilateral:model_comp:ipsi}) it seems as if the model that is agnostic to the tumor's extension over the mid-sagittal plane slightly overestimates the prevalence, while the other two models seem to match them better or underestimate them by a small amount. Overall the fit of all models ipsilaterally is very good and shows no indication that one model performs better than the other.
 
 \begin{figure}
     \def\svgwidth{1.0\textwidth}
@@ -144,5 +146,6 @@ First, we wanted to make sure that all three models are still able to describe t
     \label{fig:bilateral:model_comp:ipsi}
 \end{figure}
 
+On the contralateral side, however, this does not hold anymore. Here, we do not only stratify the prevalence by T-stage, but also by midline extension. Naturally, this cannot be captured the agnostic model $\mathcal{M}_\text{ag}$ since it has no method of modelling this. What is of interest to us here is how the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ fare against each other and whether their improvements in predicting contralateral spread are worth the additional complexity.
 
 \end{document}
