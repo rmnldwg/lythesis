@@ -1,5 +1,6 @@
 \providecommand{\relativeRoot}{../..}
 \documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
 
 
 \begin{document}
@@ -132,7 +133,16 @@ Lastly, we restricted ourselves to modelling the \glspl{lnl} II, III and IV, bec
 \subsection*{Results}
 \label{subsec:bilateral:model_comp:results}
 
+First, we wanted to make sure that all three models are still able to describe the ipsilateral spread sufficiently well. We have plotted the prevalence our trained models predict in the forms of histograms against the Beta-posterior of the observed prevalence in the data (\cref{fig:bilateral:model_comp:ipsi})
 
+\begin{figure}
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/ipsi-comp.pdf_tex}
+    \caption{
+        Predicted prevalences (shaded histograms) and posterior beta distributions of observed prevalences (solid lines) for the ipsilateral levels II (blue), III (orange) and IV (green). These prevalences have each been plotted for early T-stage patients (top row) and late T-stage (bottom row) and for the three models $\mathcal{M}_\text{ag}$ (left column), $\mathcal{M}_\alpha$ (middle column) and for $\mathcal{M}_\text{full}$ (right column). The differences between the models are negligible.
+    }
+    \label{fig:bilateral:model_comp:ipsi}
+\end{figure}
 
 
 \end{document}

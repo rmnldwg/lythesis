@@ -1,0 +1,28 @@
+schema: '2.0'
+stages:
+  plot-ipsi-prevalences:
+    cmd: python prevalences_ipsi.py
+    deps:
+    - path: prevalences_ipsi.py
+      md5: e525c92fc0be52547620be4c32805e3c
+      size: 3835
+    outs:
+    - path: ipsi-comp.png
+      md5: 7023fcfa343a04c1f2ca2755815f27bf
+      size: 138696
+    - path: ipsi-comp.svg
+      md5: 752ef22868a9ed65ecb998d7322d26db
+      size: 433304
+  ipsi-prevalences-to-pdf:
+    cmd: inkscape --without-gui --file=ipsi-comp.svg --export-pdf=ipsi-comp.pdf --export-latex
+    deps:
+    - path: ipsi-comp.svg
+      md5: 752ef22868a9ed65ecb998d7322d26db
+      size: 433304
+    outs:
+    - path: ipsi-comp.pdf
+      md5: 0cf394c050764459249f69bcfe96b7e7
+      size: 87770
+    - path: ipsi-comp.pdf_tex
+      md5: 80f1050278812fb4760dff949aaa8ff7
+      size: 2059
