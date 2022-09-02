@@ -7,7 +7,7 @@
 \section{Comparing bilateral models}
 \label{sec:bilateral:model_comp}
 
-Up to this point we have largely argued that the mixing parameter makes intuitive sense because of the thought experiment, where we moved the primary tumor from a clearly lateralized positition closer and closer to the mid-sagittal plane, until it was perferctly symmetric w.r.t. that plane. However, we now need to actually test whether or not our arguments hold. For that, we decided to compare three models:
+Up to this point we have largely argued that the mixing parameter makes intuitive sense because of the thought experiment, where we moved the primary tumor from a clearly lateralized position closer and closer to the mid-sagittal plane, until it was perfectly symmetric w.r.t. that plane. However, we now need to actually test whether our arguments hold. For that, we decided to compare three models:
 
 \begin{itemize}
     \item Model $\mathcal{M}_\text{ag}$, which is agnostic to the tumor's extension $\text{e}$ over the mid-sagittal plane and treats the contralateral base spread in the same way for all patients.
@@ -104,6 +104,35 @@ The solution to computing the evidence now lies in sight: Using \gls{mcmc}, we c
     \ln{Z} \approx \frac{1}{2} \sum_{j=1}^{N-1} \left( \beta_{j+1} - \beta_j \right) \big( A_\text{MC}(\beta_{j+1}) + A_\text{MC}(\beta_j) \big)
 \end{equation}
 %
-This approximation gets better with larger values for $S$ and $N$. But also how the $\beta_j$ are chosen is crucial for computing a good estimate: Usually, the $A_\text{MC}(\beta)$ -- which can be seen as accuracy terms -- rise steeply for increasing $\beta$ close to 0, while levelling off towards $\beta=1$. It therefore makes sense to distribute the ladder of these values unevenly. A common choice that we employed as well was $\beta_j = x_j^5$ where the $x_j$ are linearly spaced within the interval $[0, 1]$. This yields a very fine resolution for the first steps and gets successively coarser towards the end of the interval.
+This approximation gets better with larger values for $S$ and $N$. But also how the $\beta_j$ are chosen is crucial for computing a good estimate: Usually, the $A_\text{MC}(\beta)$ -- which can be seen as accuracy terms -- rise steeply for increasing $\beta$ close to 0, while levelling off towards $\beta=1$. It therefore makes sense to distribute the ladder of these values unevenly. A common choice, that we employed as well, was $\beta_j = x_j^5$ where the $x_j$ are linearly spaced within the interval $[0, 1]$. This yields a very fine resolution for the first steps and gets successively coarser towards the end of the interval.
+
+\subsection*{Implementation}
+\label{subsec:bilateral:model_comp:implementation}
+
+To compare the introduced models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$, we performed \gls{ti} with a ladder of 64 $\beta$ values distributed as a power-5 series. For each of the steps in the ladder, we performed an ensemble sampling round using the \texttt{emcee} \cite{foreman-mackey_emcee_2013} Python package. The size of the ensemble -- consisting of so-called walkers that allow sampling in parallel and mutually influence each other's proposals -- was chosen to be 20 times the number of dimensions of the parameter space. We set the sampling algorithm to propose new samples according to a mixture of two procedures: with 80\% probability it selected a differential evolution move \cite{nelson_run_2013} and with 20\% probability a snooker move, also based on differential evolution \cite{ter_braak_differential_2008}. The reason for this choice was that in previous experiments, this combination of proposals yielded the fastest convergence of the chain. Every one of the 64 sampling rounds consisted of a burn-in phase lasting 1000 steps, followed by 250 steps of which every fifth step was kept for later analysis. This might seem like a relatively short chain, but since the change of the posterior we sampled from only changed very slightly from $\beta_j$ to $\beta_{j+1}$, fewer steps are required to reach convergence.
+
+The models were trained on the combination of two datasets: One from our institution, the University Hospital Zurich, which has been published and described in great detail in a separate publication \cite{ludwig_dataset_2021}. The other was kindly provided to us by researchers of the Centre Léon Bérard in Lyon, France and was the underlying data for one of their papers \cite{bauwens_prevalence_2021}. Both datasets have been published in our repository \repolink{lydata}.
+
+Different modalities were used to obtain the diagnoses for the patients in the two datasets. For the inference process, we combined all available diagnostic modalities using sensitivity and specificity values from the literature \cite{de_bondt_detection_2007} using a maximum likelihood estimate. We treated this resulting "consensus diagnosis" as if it were the ground truth, i.e., we set its sensitivity and specificity to 1 respectively. Our motivation to do so was that this allows us to compare predictions of the model with data prevalences to see which of the model exhibits more flexibility in adapting to the data. If we had directly provided the models with all available diagnostic modalities and allowed it to combine them itself, as outlined in \cref{sec:unilateral:multimodality}, this would not have been possible. Also, in this case we are not interested in learning the exact distribution over the posterior parameters of the model, i.e. the probability rates for spread along arcs of the lymphatic graph, but rather how well the different models are able to adapt to realistic data and make use of the additional information provided via the tumor's extension over the mid-sagittal plane.
+
+Lastly, we restricted ourselves to modelling the \glspl{lnl} II, III and IV, because contralaterally we rarely observe involvement outside those levels and it drastically speeds up the inference process.
+
+\begin{tcolorbox}[title=Reproducibility]
+    Each of the three models investigated here, are available in \repolink{lynference}, where we have run the respective pipeline, pushed it as a tagged commit to GitHub and published it as a release alongside the produced data in the form of a \href{https://dvc.org}{\gls{dvc}} remote.
+
+    The \texttt{README.md} file in this repository explains how one can reproduce an experiment and where to find documentation on the settings and configurations used.
+
+    \begin{itemize}
+        \item Model $\mathcal{M}_\text{ag}$: \href{https://github.com/rmnldwg/lynference/releases/tag/bilateral-v1}{\texttt{bilateral-v1}}
+        \item Model $\mathcal{M}_\alpha$: \href{https://github.com/rmnldwg/lynference/releases/tag/midline-with-mixing-v1}{\texttt{midline-with-mixing-v1}}
+        \item Model $\mathcal{M}_\text{full}$: \href{https://github.com/rmnldwg/lynference/releases/tag/midline-without-mixing-v1}{\texttt{midline-without-mixing-v1}}
+    \end{itemize}
+\end{tcolorbox}
+
+\subsection*{Results}
+\label{subsec:bilateral:model_comp:results}
+
+
+
 
 \end{document}
