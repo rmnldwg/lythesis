@@ -73,8 +73,7 @@ if __name__ == "__main__":
         hist_kwargs = {
             "bins": np.linspace(min_value, max_value, BINS),
             "density": True,
-            "alpha": 0.6,
-            "linewidth": 2.,
+            "alpha": 0.5,
             "histtype": "stepfilled"
         }
         x = np.linspace(min_value, max_value, 200)
@@ -100,14 +99,19 @@ if __name__ == "__main__":
             ax[name].hist(vals, color=color, **hist_kwargs)
             ax[name].plot(
                 x, posterior,
-                label=f"{int(a)}/{int(n)}",
+                label=f"{int(a)} / {int(n)}",
                 color=color,
             )
-            ax[name].annotate(text=lnl, xy=(max_x - 2.5, max_y + 0.075), color=color)
+            ax[name].annotate(
+                text=lnl,
+                xy=(max_x - 2.5, max_y + 0.075),
+                color=color,
+                fontweight="bold",
+            )
 
-            if modelname == "full":
+            if modelname == "$\\mathcal{M}_{full}$":
                 ax[name].legend()
-            elif modelname == "agnostic":
+            elif modelname == "$\\mathcal{M}_{ag}$":
                 ax[name].set_ylabel(stage)
     
     plt.savefig("ipsi-comp.svg")
