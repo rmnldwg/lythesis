@@ -109,7 +109,7 @@ This approximation gets better with larger values for $S$ and $N$. But also how 
 
 Lastly, we would like to give a final insight into the evidence that is quite naturally obtained when following the derivation from statistical physics, but hard to see with the brief, formal derivation we gave up to this point. Therefore, we will just state it below and point to a publication giving a nice example of how to get to this result \cite{aponte_introduction_2022}. According to this, the log-evidence can be written in the following form:
 %
-\begin{equation}
+\begin{equation} \label{eq:bilateral:acc_vs_kl}
     \ln{Z} = \underbrace{\int{ \ln{ \probofgiven{\boldsymbol{\mathcal{D}}}{\theta, \mathcal{M}} } \probofgiven{\theta}{\boldsymbol{\mathcal{D}}, \mathcal{M}} d\theta}}_{\text{accuracy} \; \mathcal{A}(\beta = 1)} - \underbrace{\int{ \ln{ \frac{\probofgiven{\theta}{\boldsymbol{\mathcal{D}}, \mathcal{M}}}{\probofgiven{\theta}{\mathcal{M}}} } \probofgiven{\theta}{\boldsymbol{\mathcal{D}}, \mathcal{M}} d\theta}}_\text{complexity (KL-divergence)}
 \end{equation}
 %
@@ -118,7 +118,17 @@ This shows how the evidence naturally incorporates Occam's razor. The second ter
 \subsection*{Implementation}
 \label{subsec:bilateral:model_comp:implementation}
 
-To compare the introduced models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$, we performed \gls{ti} with a ladder of 64 $\beta$ values distributed as a power-5 series. For each of the steps in the ladder, we performed an ensemble sampling round using the \texttt{emcee} \cite{foreman-mackey_emcee_2013} Python package. The size of the ensemble -- consisting of so-called walkers that allow sampling in parallel and mutually influence each other's proposals -- was chosen to be 20 times the number of dimensions of the parameter space. We set the sampling algorithm to propose new samples according to a mixture of two procedures: with 80\% probability it selected a differential evolution move \cite{nelson_run_2013} and with 20\% probability a snooker move, also based on differential evolution \cite{ter_braak_differential_2008}. The reason for this choice was that in previous experiments, this combination of proposals yielded the fastest convergence of the chain. Every one of the 64 sampling rounds consisted of a burn-in phase lasting 1000 steps, followed by 250 steps of which every fifth step was kept for later analysis. This might seem like a relatively short chain, but since the change of the posterior we sampled from only changed very slightly from $\beta_j$ to $\beta_{j+1}$, fewer steps are required to reach convergence.
+To compare the introduced models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$, we performed \gls{ti} with a ladder of 64 $\beta$ values with step sizes selected according to a fifth order power rule. For each of the steps in the ladder, we performed an ensemble sampling round using the \texttt{emcee} \cite{foreman-mackey_emcee_2013} Python package. The size of the ensemble -- consisting of so-called walkers that allow sampling in parallel and mutually influence each other's proposals -- was chosen to be 20 times the number of dimensions of the parameter space. We set the sampling algorithm to propose new samples according to a mixture of two procedures: with 80\% probability it selected a differential evolution move \cite{nelson_run_2013} and with 20\% probability a snooker move, also based on differential evolution \cite{ter_braak_differential_2008}. The reason for this choice was that in previous experiments, this combination of proposals yielded the fastest convergence of the chain. Every one of the 64 sampling rounds consisted of a burn-in phase lasting 1000 steps, followed by 250 steps of which every fifth step was kept for later analysis. This might seem like a relatively short chain, but since the change of the posterior we sampled from only changed very slightly from $\beta_j$ to $\beta_{j+1}$, fewer steps are required to reach convergence.
+
+In the end, we kept $S = 50 \cdot k$, where $k$ is the dimensionality of the model, samples for each of the 64 $\beta_j$. The dimensionality $k$ of the parameter spaces ranged from nine for the agnostic model $\mathcal{M}_\text{ag}$ over ten (mixing model $\mathcal{M}_\alpha$) to twelve in the case of the full model $\mathcal{M}_\text{full}$. Out of these $S$ samples we randomly drew $M = 1000$ per $\beta_j$ and integrated them over their range, yielding 1000 estimates for the log-evidence $\ln{Z}_l$ with $l \in [1, \ldots, M]$. Using this ensemble of estimates, we could compute both the mean and the standard deviation, giving us a simple measure of uncertainty for that value.
+
+From the samples drawn at $\beta_{64} = 1$, we also computed the \gls{bic}, which is in essence a first-order approximation of the log-evidence (actually, the negative one-half of the \gls{bic} is an approximation to the log-evidence) \cite{schwarz_estimating_1978}. It is defined as
+%
+\begin{equation}
+    \text{BIC} \coloneqq k \ln{N} - 2 \max_\theta{ \left( \ln{ \probofgiven{\boldsymbol{\mathcal{D}}}{\theta, \mathcal{M}} } \right)}
+\end{equation}
+%
+where -- again -- $k$ is the number of parameters $\theta$, while $N$ is the number of patients in the datatset $\boldsymbol{\mathcal{D}}$. How reliable the \gls{bic} is for a given model, depends on whether its core assumption hold: 1) the posterior must be unimodal and decay rapidly outside its maximum, while $N$ must be much larger than $k$ \cite{bhat_derivation_2010}. The second assumption is not quite fulfilled, but we will see shortly that the \gls{bic} seems to be a quite good measure for model comparison in our case.
 
 The models were trained on the combination of two datasets: One from our institution, the University Hospital Zurich, which has been published and described in great detail in a separate publication \cite{ludwig_dataset_2021}. The other was kindly provided to us by researchers of the Centre Léon Bérard in Lyon, France and was the underlying data for one of their papers \cite{bauwens_prevalence_2021}. Both datasets have been published in our repository \repolink{lydata}.
 
@@ -141,11 +151,7 @@ Lastly, we restricted ourselves to modelling the \glspl{lnl} II, III and IV, bec
 \subsection*{Results}
 \label{subsec:bilateral:model_comp:results}
 
-First, we wanted to make sure that all three models are still able to describe the ipsilateral spread sufficiently well. We have plotted the prevalence our trained models predict in the forms of histograms against the Beta-posterior of the observed prevalence in the data (\cref{fig:bilateral:model_comp:ipsi}). These plots were created by computing the respective prevalence for samples drawn during the final 250 steps at the end of the \gls{ti} process of which every fifth step was discarded.
-
-The shown differences between the model's predictions are miniscule. For late T-stages (bottom row of \cref{fig:bilateral:model_comp:ipsi}) it seems as if the model that is agnostic to the tumor's extension over the mid-sagittal plane slightly overestimates the prevalence, while the other two models seem to match them better or underestimate them by a small amount. Overall the fit of all models ipsilaterally is very good and shows no indication that one model performs better than the other.
-
-\begin{figure}[t!]
+\begin{figure}
     \def\svgwidth{1.0\textwidth}
     \input{figures/ipsi-comp.pdf_tex}
     \caption{
@@ -154,13 +160,13 @@ The shown differences between the model's predictions are miniscule. For late T-
     \label{fig:bilateral:model_comp:ipsi}
 \end{figure}
 
+First, we wanted to make sure that all three models are still able to describe the ipsilateral spread sufficiently well. We have plotted the prevalence our trained models predict in the forms of histograms against the Beta-posterior of the observed prevalence in the data (\cref{fig:bilateral:model_comp:ipsi}). These plots were created by computing the respective prevalence for samples drawn during the final 250 steps at the end of the \gls{ti} process of which every fifth step was discarded.
+
+The shown differences between the model's predictions are miniscule. For late T-stages (bottom row of \cref{fig:bilateral:model_comp:ipsi}) it seems as if the model that is agnostic to the tumor's extension over the mid-sagittal plane slightly overestimates the prevalence, while the other two models seem to match them better or underestimate them by a small amount. Overall the fit of all models ipsilaterally is very good and shows no indication that one model performs better than the other.
+
 On the contralateral side, however, this does not hold anymore. Here, we do not only stratify the prevalence by T-stage, but also by midline extension. Naturally, this cannot be captured the agnostic model $\mathcal{M}_\text{ag}$ since it has no method of modelling this. What is of interest to us here is how the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ fare against each other and whether their improvements in predicting contralateral spread are worth the additional complexity.
 
 The overall prevalence of contralateral involvement is plotted in \cref{fig:bilateral:model_comp:contra}. Again, the three different models are depicted in their own column and we have distinguished between four cases for each model: The prevalence of any contralateral involvement for patients with a) early T-stage and a cealry lateralized tumor (blue histograms and curves), b) early T-stage with a tumor extending over the mid-sagittal plane (orange), c) late T-stage with, again, a lateralized tumor (green) and finally d) where the tumor is both in late T-stage and does extend over the mid plane (red).
-
-As discussed, the agnostic model $\mathcal{M}_\text{ag}$ (left panel in \cref{fig:bilateral:model_comp:contra}) cannot model midline extension, which is why the two separate histograms overlap. Its spread probability rates from the tumor to the contralateral \glspl{lnl} attempt to find an average of the respective observed prevalence. Interestingly, both the model using the mixing parameter $\alpha$ and the full model, which has in total six parameters to model the spread from the tumor to the contralateral \glspl{lnl}, perform equally well regarding the overall contralateral spread. This, in combination with \cref{fig:bilateral:model_comp:ipsi}, indicates that the assumptions underlying the introduction of the mixing parameter $\alpha$ are feasible.
-
-Of course one would expect that maybe modelling the correlations between involvements of the contralateral \glspl{lnl} might suffer from this assumption, but this is hard to test, as cases where e.g. \gls{lnl} III is involved without \gls{lnl} II are very rare -- in this case it is only five patients. And also clinically it is debated whether to treat or to spare the contralateral side as a whole when performing elective \gls{rt} or elective bilateral \gls{nd}, not individual \glspl{lnl} \cite{biau_selection_2019,al-mamgani_contralateral_2017}. Therefore, a more complete model like $\mathcal{M}_\text{full}$, that might be able to capture correlations we cannot yet see due to insufficient data, are not worth the additional model complexity at this point.
 
 \begin{figure}
     \def\svgwidth{1.0\textwidth}
@@ -171,16 +177,39 @@ Of course one would expect that maybe modelling the correlations between involve
     \label{fig:bilateral:model_comp:contra}
 \end{figure}
 
-This is supported also by the evidence of the three models compared. 
+As discussed, the agnostic model $\mathcal{M}_\text{ag}$ (left panel in \cref{fig:bilateral:model_comp:contra}) cannot model midline extension, which is why the two separate histograms overlap. Its spread probability rates from the tumor to the contralateral \glspl{lnl} attempt to find an average of the respective observed prevalence. Interestingly, both the model using the mixing parameter $\alpha$ and the full model, which has in total six parameters to model the spread from the tumor to the contralateral \glspl{lnl}, perform equally well regarding the overall contralateral spread. This, in combination with \cref{fig:bilateral:model_comp:ipsi}, indicates that the assumptions underlying the introduction of the mixing parameter $\alpha$ are feasible.
+
+Of course one would expect that maybe modelling the correlations between involvements of the contralateral \glspl{lnl} might suffer from this assumption, but this is hard to test, as cases where e.g. \gls{lnl} III is involved without \gls{lnl} II are very rare -- in this case it is only five patients. And also clinically it is debated whether to treat or to spare the contralateral side as a whole when performing elective \gls{rt} or elective bilateral \gls{nd}, not individual \glspl{lnl} \cite{biau_selection_2019,al-mamgani_contralateral_2017}. Therefore, a more complete model like $\mathcal{M}_\text{full}$, that might be able to capture correlations we cannot yet see due to insufficient data, are not worth the additional model complexity at this point.
+
+This is supported also by the log-evidence of the three models compared, which we tabulated in . In \cref{fig:bilateral:model_comp:thermo_int} we have plotted the results from computing the log-evidence for the three models in question using \gls{ti}. It shows that the accuracy of the agnostic model $\mathcal{M}_\text{ag}$ is lower than of the other two models, which owe that to their ability to incorporate the tumor's extension over the mid plane into the prediction. However, while the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ achieve the same fit to the data, the full model's accuracy rises for later $\beta$ values, which results in a lower log-evidence and a higher complexity penalty (see \cref{eq:bilateral:acc_vs_kl}) compared to the simpler mixing model.
+
+\begin{table}
+    \centering
+    \begin{tabular}{|l|S|S|S|}
+        \hline
+        \multicolumn{1}{|c|}{Metric} & \multicolumn{1}{c|}{agnostic $\mathcal{M}_\text{ag}$} & \multicolumn{1}{c|}{mixing $\mathcal{M}_\alpha$} & \multicolumn{1}{c|}{full $\mathcal{M}_\text{full}$} \\
+        \hline
+        BIC & -1116.70 & -1093.08 & -1098.23 \\
+        log-evidence & -1118.23 & -1093.33 & -1099.73 \\
+        std of log-evidence & 1.77 & 1.91 & 1.99 \\
+        max likelihood & -1088.31 & -1061.53 & -1060.37 \\
+        $\mathcal{A}_\text{MC}(1)$ & -1092.25 & -1065.70 & -1065.50 \\
+        \hline
+    \end{tabular}
+    \caption{Metrics computed via \gls{ti} for the three bilateral models introduced in \cref{sec:bilateral:model_comp}: The \gls{bic} in the first row, the log-evidence $\ln{Z}$ with the respective standard deviation in the second and third row, as well as the maximum and mean likelihood of the sampling procedures in rows four and five respectively.}
+    \label{table:bilateral:model_comp}
+\end{table}
 
 \begin{figure}
     \centering
     % \def\svgwidth{1.0\textwidth}
     \input{figures/thermo_int.pdf_tex}
     \caption{
-        Expectation of the log-likelihood under the power posterior (\cref{eq:bilateral:power_post}) plotted against the inverse temperature $\beta$ for the three models 
+        Expectation of the log-likelihood under the power posterior (\cref{eq:bilateral:power_post}) plotted against 64 inverse temperature steps $\beta$ for the three models. The accuracy on the y-axis is plotted on a log-scale, while the $\beta$ values, which themselves represent a fifth order annealing schedule, were plotted on an x-axis where the ticks were spaced according to a seventh order power rule. This was done to nicely visualize both the differences in accuracy and to better depict at which $\beta$ values the accuracies begin to rise.
     }
     \label{fig:bilateral:model_comp:thermo_int}
 \end{figure}
 
 \end{document}
+
+
