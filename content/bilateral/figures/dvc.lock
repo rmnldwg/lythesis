@@ -3,34 +3,34 @@ stages:
   plot-ipsi-prevalences:
     cmd: python prevalences_ipsi.py
     deps:
-    - path: bilateral-v2-prevalences.hdf5
+    - path: ../data/bilateral-v2-prevalences.hdf5
       md5: 90242ec91d57fcea269fab2a62d89eea
       size: 739848
-    - path: midline-with-mixing-v2-prevalences.hdf5
+    - path: ../data/midline-with-mixing-v2-prevalences.hdf5
       md5: 35b95d695f9fb5193434304f9b250ed4
       size: 819848
-    - path: midline-without-mixing-v2-prevalences.hdf5
+    - path: ../data/midline-without-mixing-v2-prevalences.hdf5
       md5: f5df7dddae40020e8945795caa1fb6a7
       size: 979848
     - path: prevalences_ipsi.py
-      md5: 773e0a010713e8f38c28cad943b4d99f
-      size: 3934
+      md5: 3eaffd0dfc2961805c7212b873fc108d
+      size: 4032
     outs:
     - path: ipsi-comp.png
       md5: 3b98296b4f884a799f4e9e44f3ed83ba
       size: 161668
     - path: ipsi-comp.svg
-      md5: 31dda87ac777104ad4d070c09f836d61
+      md5: c14241e73ba03c63d0fff1b8fbb4a19b
       size: 442329
   ipsi-prevalences-to-pdf:
     cmd: inkscape --without-gui --file=ipsi-comp.svg --export-pdf=ipsi-comp.pdf --export-latex
     deps:
     - path: ipsi-comp.svg
-      md5: 31dda87ac777104ad4d070c09f836d61
+      md5: c14241e73ba03c63d0fff1b8fbb4a19b
       size: 442329
     outs:
     - path: ipsi-comp.pdf
-      md5: cad7910974983f4629e9c1454902754f
+      md5: 00736dd40d05652aea339a8dd85ef063
       size: 100238
     - path: ipsi-comp.pdf_tex
       md5: 80f1050278812fb4760dff949aaa8ff7
@@ -38,35 +38,35 @@ stages:
   plot-contra-prevalences:
     cmd: python prevalences_contra.py
     deps:
-    - path: bilateral-v2-prevalences.hdf5
+    - path: ../data/bilateral-v2-prevalences.hdf5
       md5: 90242ec91d57fcea269fab2a62d89eea
       size: 739848
-    - path: midline-with-mixing-v2-prevalences.hdf5
+    - path: ../data/midline-with-mixing-v2-prevalences.hdf5
       md5: 35b95d695f9fb5193434304f9b250ed4
       size: 819848
-    - path: midline-without-mixing-v2-prevalences.hdf5
+    - path: ../data/midline-without-mixing-v2-prevalences.hdf5
       md5: f5df7dddae40020e8945795caa1fb6a7
       size: 979848
     - path: prevalences_contra.py
-      md5: 9bb1d62c4148ee3166076f324e3ac30a
-      size: 2785
+      md5: 6101ec622df8747e51b5aa2d71c55808
+      size: 2832
     outs:
     - path: contra-comp.png
       md5: 14b3c6bd366923496d6718822839b898
       size: 129379
     - path: contra-comp.svg
-      md5: 8181d9c09eb52c875bfd43fca034e79b
+      md5: 6b4ff3d8262944a68cfbb2d0b2f08d42
       size: 157924
   contra-prevalences-to-pdf:
     cmd: inkscape --without-gui --file=contra-comp.svg --export-pdf=contra-comp.pdf
       --export-latex
     deps:
     - path: contra-comp.svg
-      md5: 8181d9c09eb52c875bfd43fca034e79b
+      md5: 6b4ff3d8262944a68cfbb2d0b2f08d42
       size: 157924
     outs:
     - path: contra-comp.pdf
-      md5: d83fa6853b298aef2c091405adc0d914
+      md5: b207090e2a6dfc5b0d5a9b34ef1a21a7
       size: 72888
     - path: contra-comp.pdf_tex
       md5: cf8db26b0703dd6f32de17af7a373f90
@@ -93,17 +93,17 @@ stages:
       md5: 4681d0a5c928fa7559edbbba34d068b6
       size: 43468
   plot-thermo-int:
-    cmd: "python -m lyscripts plot thermo_int bilateral-v2-accuracies.csv midline-with-mixing-v2-accuracies.csv\
-      \ midline-without-mixing-v2-accuracies.csv -o thermo_int --labels agnostic mixing\
-      \ full --mplstyle ../../../.mplstyle\n"
+    cmd: "python -m lyscripts plot thermo_int ../data/bilateral-v2-accuracies.csv\
+      \ ../data/midline-with-mixing-v2-accuracies.csv ../data/midline-without-mixing-v2-accuracies.csv\
+      \ -o thermo_int --labels agnostic mixing full --mplstyle ../../../.mplstyle\n"
     deps:
-    - path: bilateral-v2-accuracies.csv
+    - path: ../data/bilateral-v2-accuracies.csv
       md5: c9db81871f556cae3ca5ba10276d6929
       size: 3733
-    - path: midline-with-mixing-v2-accuracies.csv
+    - path: ../data/midline-with-mixing-v2-accuracies.csv
       md5: aa407f1d510485aa91a675e365dd9702
       size: 3725
-    - path: midline-without-mixing-v2-accuracies.csv
+    - path: ../data/midline-without-mixing-v2-accuracies.csv
       md5: 51d65e3eff5c352a14f5b4471d559f90
       size: 3731
     outs:
@@ -111,18 +111,18 @@ stages:
       md5: 1e86aa6710455ce0d2a87510bf5b8a64
       size: 83432
     - path: thermo_int.svg
-      md5: 1c0ada97d9841839dbf5be0a64f93635
+      md5: 895be18f833d8d0e20e5654835c4c9ae
       size: 43468
   thermo-int-to-pdf:
     cmd: inkscape --without-gui --file=thermo_int.svg --export-pdf=thermo_int.pdf
       --export-latex
     deps:
     - path: thermo_int.svg
-      md5: 1c0ada97d9841839dbf5be0a64f93635
+      md5: 895be18f833d8d0e20e5654835c4c9ae
       size: 43468
     outs:
     - path: thermo_int.pdf
-      md5: 7455b02443d29ec8fcf93ed5596c3977
+      md5: eb8efacadf70ede79db9b9a1a601081a
       size: 40435
     - path: thermo_int.pdf_tex
       md5: 030a8e07f116b87acf33897176462adb

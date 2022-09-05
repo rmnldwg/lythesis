@@ -13,6 +13,13 @@ from cycler import cycler
 import lyscripts.plot.histograms as lyhist
 from lyscripts.plot.histograms import COLORS
 
+
+MODELS = [
+    Path("../data/bilateral-v2-prevalences.hdf5",),
+    Path("../data/midline-with-mixing-v2-prevalences.hdf5",),
+    Path("../data/midline-without-mixing-v2-prevalences.hdf5"),
+]
+
 CYCLE = (
     cycler(
         stage=["early", "late"],
@@ -47,12 +54,8 @@ if __name__ == "__main__":
         constrained_layout=True,
     )
 
-    for i, filename in enumerate([
-        "bilateral-v2-prevalences.hdf5",
-        "midline-with-mixing-v2-prevalences.hdf5",
-        "midline-without-mixing-v2-prevalences.hdf5"
-    ]):
-        with h5py.File(name=filename, mode="r") as h5_file:
+    for i, filepath in enumerate(MODELS):
+        with h5py.File(name=filepath, mode="r") as h5_file:
             min = 0.
             max = 55.
             for stage in ["early", "late"]:
