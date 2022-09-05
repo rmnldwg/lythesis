@@ -128,7 +128,7 @@ From the samples drawn at $\beta_{64} = 1$, we also computed the \gls{bic}, whic
     \text{BIC} \coloneqq k \ln{N} - 2 \max_\theta{ \left( \ln{ \probofgiven{\boldsymbol{\mathcal{D}}}{\theta, \mathcal{M}} } \right)}
 \end{equation}
 %
-where -- again -- $k$ is the number of parameters $\theta$, while $N$ is the number of patients in the datatset $\boldsymbol{\mathcal{D}}$. How reliable the \gls{bic} is for a given model, depends on whether its core assumption hold: 1) the posterior must be unimodal and decay rapidly outside its maximum, while $N$ must be much larger than $k$ \cite{bhat_derivation_2010}. The second assumption is not quite fulfilled, but we will see shortly that the \gls{bic} seems to be a quite good measure for model comparison in our case.
+where -- again -- $k$ is the number of parameters $\theta$, while $N$ is the number of patients in the dataset $\boldsymbol{\mathcal{D}}$. How reliable the \gls{bic} is for a given model, depends on whether its core assumption hold: 1) the posterior must be unimodal and decay rapidly outside its maximum, while $N$ must be much larger than $k$ \cite{bhat_derivation_2010}. The second assumption is not quite fulfilled, but we will see shortly that the \gls{bic} seems to be a quite good measure for model comparison in our case.
 
 The models were trained on the combination of two datasets: One from our institution, the University Hospital Zurich, which has been published and described in great detail in a separate publication \cite{ludwig_dataset_2021}. The other was kindly provided to us by researchers of the Centre Léon Bérard in Lyon, France and was the underlying data for one of their papers \cite{bauwens_prevalence_2021}. Both datasets have been published in our repository \repolink{lydata}.
 
@@ -137,14 +137,14 @@ Different modalities were used to obtain the diagnoses for the patients in the t
 Lastly, we restricted ourselves to modelling the \glspl{lnl} II, III and IV, because contralaterally we rarely observe involvement outside those levels and it drastically speeds up the inference process.
 
 \begin{tcolorbox}[title=Reproducibility]
-    Each of the three models investigated here, are available in \repolink{lynference}, where we have run the respective pipeline, pushed it as a tagged commit to GitHub and published it as a release alongside the produced data in the form of a \href{https://dvc.org}{\gls{dvc}} remote.
+    Each of the three models investigated here are available in \repolink{lynference}, where we have run the respective pipeline, pushed it as a tagged commit to GitHub and published it as a release.
 
-    The \texttt{README.md} file in this repository explains how one can reproduce an experiment and where to find documentation on the settings and configurations used.
+    The \texttt{README.md} file in this repository explains how one can download the data our pipeline runs produced and how to reproduce an experiment yourself.
 
     \begin{itemize}
-        \item Model $\mathcal{M}_\text{ag}$: \href{https://github.com/rmnldwg/lynference/releases/tag/bilateral-v1}{\texttt{bilateral-v1}}
-        \item Model $\mathcal{M}_\alpha$: \href{https://github.com/rmnldwg/lynference/releases/tag/midline-with-mixing-v1}{\texttt{midline-with-mixing-v1}}
-        \item Model $\mathcal{M}_\text{full}$: \href{https://github.com/rmnldwg/lynference/releases/tag/midline-without-mixing-v1}{\texttt{midline-without-mixing-v1}}
+        \item Model $\mathcal{M}_\text{ag}$: \href{https://github.com/rmnldwg/lynference/releases/tag/bilateral-v2}{\texttt{bilateral-v2}}
+        \item Model $\mathcal{M}_\alpha$: \href{https://github.com/rmnldwg/lynference/releases/tag/midline-with-mixing-v2}{\texttt{midline-with-mixing-v2}}
+        \item Model $\mathcal{M}_\text{full}$: \href{https://github.com/rmnldwg/lynference/releases/tag/midline-without-mixing-v2}{\texttt{midline-without-mixing-v2}}
     \end{itemize}
 \end{tcolorbox}
 
@@ -185,13 +185,13 @@ This is supported also by the log-evidence of the three models compared, which w
 
 \begin{table}
     \centering
-    \begin{tabular}{|l|S|S|S|}
+    \begin{tabular}{|l|l|l|l|}
         \hline
-        \multicolumn{1}{|c|}{Metric} & \multicolumn{1}{c|}{agnostic $\mathcal{M}_\text{ag}$} & \multicolumn{1}{c|}{mixing $\mathcal{M}_\alpha$} & \multicolumn{1}{c|}{full $\mathcal{M}_\text{full}$} \\
+        \textbf{Metric} & \textbf{agnostic} $\mathcal{M}_\text{ag}$ & \textbf{mixing} $\mathcal{M}_\alpha$ & \textbf{full} $\mathcal{M}_\text{full}$ \\
         \hline
         BIC & -1116.70 & -1093.08 & -1098.23 \\
-        log-evidence & -1118.23 & -1093.33 & -1099.73 \\
-        std of log-evidence & 1.77 & 1.91 & 1.99 \\
+        log-evidence & -1118.23 $\pm$ 1.77 & -1093.33 $\pm$ 1.91 & -1099.73 $\pm$ 1.99 \\
+        % std of log-evidence & 1.77 & 1.91 & 1.99 \\
         max likelihood & -1088.31 & -1061.53 & -1060.37 \\
         $\mathcal{A}_\text{MC}(1)$ & -1092.25 & -1065.70 & -1065.50 \\
         \hline

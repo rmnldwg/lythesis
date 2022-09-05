@@ -45,9 +45,9 @@ if __name__ == "__main__":
     )
 
     for modelname, filename in [
-        ("$\\mathcal{M}_{ag}$", "bilateral-v1-prevalences.hdf5"),
-        ("$\\mathcal{M}_\\alpha$", "midline-with-mixing-v1-prevalences.hdf5"),
-        ("$\\mathcal{M}_{full}$", "midline-without-mixing-v1-prevalences.hdf5"),
+        ("$\\mathcal{M}_{ag}$", "bilateral-v2-prevalences.hdf5"),
+        ("$\\mathcal{M}_\\alpha$", "midline-with-mixing-v2-prevalences.hdf5"),
+        ("$\\mathcal{M}_{full}$", "midline-without-mixing-v2-prevalences.hdf5"),
     ]:
         with h5py.File(name=filename, mode="r") as h5_file:
             names, values, lnls, num_matches, num_totals, lines = [], [], [], [], [], [], 

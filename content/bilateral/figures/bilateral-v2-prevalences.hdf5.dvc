@@ -1,4 +1,4 @@
-md5: bab6640850f2e98757ea3403b6aeed04
+md5: 0108434f8c800ba4de9a273b352feb03
 frozen: true
 deps:
 - path: models/prevalences.hdf5
@@ -7,6 +7,6 @@ deps:
     rev: bilateral-v1
     rev_lock: 226536f27d1f723c28ac8d8fa130d7f188c195cc
 outs:
-- path: bilateral-v1-prevalences.hdf5
+- path: bilateral-v2-prevalences.hdf5
   md5: 90242ec91d57fcea269fab2a62d89eea
   size: 739848

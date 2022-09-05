@@ -1,6 +1,6 @@
-/bilateral-v1-prevalences.hdf5
-/midline-with-mixing-v1-prevalences.hdf5
-/midline-without-mixing-v1-prevalences.hdf5
+/bilateral-v2-prevalences.hdf5
+/midline-with-mixing-v2-prevalences.hdf5
+/midline-without-mixing-v2-prevalences.hdf5
 /ipsi-comp.png
 /ipsi-comp.svg
 /ipsi-comp.pdf
@@ -10,9 +10,9 @@
 /contra-comp.pdf
 /contra-comp.pdf_tex
 /accuracies.csv
-/bilateral-v1-accuracies.csv
-/midline-with-mixing-v1-accuracies.csv
-/midline-without-mixing-v1-accuracies.csv
+/bilateral-v2-accuracies.csv
+/midline-with-mixing-v2-accuracies.csv
+/midline-without-mixing-v2-accuracies.csv
 /test.svg
 /test.png
 /thermo_int.svg

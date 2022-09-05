@@ -1,4 +1,4 @@
-md5: c1799d57193d9b2b5a675c25685d8621
+md5: 0b1c336df416d601e9adf490c45b8a07
 frozen: true
 deps:
 - path: models/prevalences.hdf5
@@ -7,6 +7,6 @@ deps:
     rev: midline-without-mixing-v1
     rev_lock: a65129ab02f7818d4491654d9d595e70b362c958
 outs:
-- path: midline-without-mixing-v1-prevalences.hdf5
+- path: midline-without-mixing-v2-prevalences.hdf5
   md5: f5df7dddae40020e8945795caa1fb6a7
   size: 979848

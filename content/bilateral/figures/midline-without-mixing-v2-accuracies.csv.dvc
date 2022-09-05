@@ -1,4 +1,4 @@
-md5: a8969f49c7646095b0bc4c4ee60a8f72
+md5: f2920485fd9abf409f6d22d8a5b68af0
 frozen: true
 deps:
 - path: plots/ti/accuracies.csv
@@ -7,6 +7,6 @@ deps:
     rev: midline-without-mixing-v1
     rev_lock: a65129ab02f7818d4491654d9d595e70b362c958
 outs:
-- path: midline-without-mixing-v1-accuracies.csv
+- path: midline-without-mixing-v2-accuracies.csv
   md5: 51d65e3eff5c352a14f5b4471d559f90
   size: 3731

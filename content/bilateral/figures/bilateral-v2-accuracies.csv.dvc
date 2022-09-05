@@ -1,4 +1,4 @@
-md5: db7d6655d43070b39435d4771a04fdd8
+md5: 18ef4036cd1a48898dc7a5376c5b05d7
 frozen: true
 deps:
 - path: plots/ti/accuracies.csv
@@ -9,4 +9,4 @@ deps:
 outs:
 - md5: c9db81871f556cae3ca5ba10276d6929
   size: 3733
-  path: bilateral-v1-accuracies.csv
+  path: bilateral-v2-accuracies.csv

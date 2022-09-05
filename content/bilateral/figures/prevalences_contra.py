@@ -48,9 +48,9 @@ if __name__ == "__main__":
     )
 
     for i, filename in enumerate([
-        "bilateral-v1-prevalences.hdf5",
-        "midline-with-mixing-v1-prevalences.hdf5",
-        "midline-without-mixing-v1-prevalences.hdf5"
+        "bilateral-v2-prevalences.hdf5",
+        "midline-with-mixing-v2-prevalences.hdf5",
+        "midline-without-mixing-v2-prevalences.hdf5"
     ]):
         with h5py.File(name=filename, mode="r") as h5_file:
             min = 0.
