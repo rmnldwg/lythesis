@@ -37,7 +37,9 @@
 
 %% Bibliography
 \usepackage[
-    style=numeric
+    style=numeric,
+    minnames=3,
+    maxnames=4
 ]{biblatex}
 \addbibresource{\relativeRoot/references.bib}
 \usepackage{csquotes}
@@ -80,7 +82,8 @@
 %% Tables
 \usepackage{multirow}
 
-%% Boxes, admonitions and icons
+%% Bullet lists, boxes, admonitions and icons
+\usepackage{enumitem}
 \usepackage{tcolorbox}
 \usepackage{fontawesome5}
 

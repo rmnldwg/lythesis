@@ -6,15 +6,26 @@
 
 \begin{document}
 
-\chapter[Detailed reporting of involvement in OPSCC]{Detailed patient-individual reporting of lymph node involvement in oropharyngeal squamous cell carcinoma with an online interface}
+\chapter[Dataset on involvement in OPSCC]{Dataset on involvement in oropharyngeal squamous cell carcinoma}
 \label{chap:dataset}
+
+\begin{tcolorbox}[title=\faIcon{users} Contributions, parbox=false]
+    This chapter is based on the publication \textbf{\citetitle{ludwig_detailed_2021}} by \citeauthor{ludwig_detailed_2021} \cite{ludwig_detailed_2021} and presented below with minimal edits.
+    
+    The first authorship of this publication is shared among three authors, therefore I will briefly state their contributions per person:
+
+    \begin{itemize}[leftmargin=5.5mm]
+        \item[\faIcon{user}] \textbf{Roman Ludwig} (me): (Pre-)processing of extracted data; creating figures and tables for publication; hosting and maintenance of data repository; development, deployment and maintenance of online data visualization \gls{gui} \href{https://lyprox.org}{\faIcon{external-link-alt} LyProX}.
+        \item[\faIcon{user}] \textbf{Jean-Marc Hoffmann}: Extraction of digital patient records and review of diagnostic images.
+        \item[\faIcon{user}] \textbf{Bertrand Pouymayou}: Creation of Excel template for data extraction; development of prototype for data visualization \gls{gui}.
+    \end{itemize}
+
+    All other authors provided critical feedback to the results and the manuscript, which was originally drafted by the \gls{pi} of the project, \textbf{Jan Unkelbach}.
+\end{tcolorbox}
 
 One critical aspect of our effort to model and predict the lymphatic tumor progression is the data we use to train the model. As previously explained, our model essentially consumes tables with rows of patients and columns involvement by \gls{lnl}. Data in this relatively simple format has been extracted in the past to create studies like \cite{candela_patterns_1990} or \cite{shah_patterns_1990}. However, the authors then used the data to compute statistics of it -- e.g. the prevalence of involvement -- but stopped short of publishing that data in its raw format. From these statistics it is -- with one exception \cite{sanguineti_defining_2009} -- usually not possible to reconstruct the correlations between the involvement of \glspl{lnl}.
 
 With almost no usable data, of course, our methodology for modelling lymphatic progression cannot be tested or applied. So, we decided to start at the \gls{usz} to extract all patterns of lymphatic progression in patients with newly diagnosed \gls{opscc} between 2013 and 2019. We then not only used that data for inference on it, but also published it freely, hoping that other researchers might find it useful and that it may even motivate them to share their data in a similar fashion in the future.
-
-In the following, I will include large parts of the publication \cite{ludwig_detailed_2022}, in which we detailed the extraction of the dataset, its characteristics and how we made it available. It is important to note that the first authorship is shared in this publication: \textbf{Jean-Marc Hoffmann}, a radiation oncologist at the \gls{usz}, extracted most of the data from digital patient and imaging records. \textbf{Bertrand Pouymayou}, a medical physicist and postdoctoral researcher at the \gls{usz} built up a complex template for easier extraction and storage of the patient information. He also created the initial interface for viewing the data. My contribution to this work was the processing of the data, creating figures and tables for the publication, host the cohort in the form of a \gls{csv} table in online repositories and, lastly, develop and deploy an online interface akin to what Bertrand Pouymayou had implemented earlier (see \cref{chap:lyprox} for more details).
-
 
 \subfile{abstract}
 \subfile{introduction}
