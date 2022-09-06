@@ -12,6 +12,13 @@ import h5py
 import lyscripts.plot.histograms as lyhist
 
 
+# Define model names and location of computed values
+MODELS = {
+    "$\\mathcal{M}_{ag}$": Path("../data/bilateral-v2-prevalences.hdf5"),
+    "$\\mathcal{M}_\\alpha$": Path("../data/midline-with-mixing-v2-prevalences.hdf5"),
+    "$\\mathcal{M}_{full}$": Path("../data/midline-without-mixing-v2-prevalences.hdf5"),
+}
+
 # define USZ colors
 COLORS = {
     "blue": '#005ea8',
@@ -44,12 +51,8 @@ if __name__ == "__main__":
         figsize=lyhist.get_size(width="full")
     )
 
-    for modelname, filename in [
-        ("$\\mathcal{M}_{ag}$", "bilateral-v2-prevalences.hdf5"),
-        ("$\\mathcal{M}_\\alpha$", "midline-with-mixing-v2-prevalences.hdf5"),
-        ("$\\mathcal{M}_{full}$", "midline-without-mixing-v2-prevalences.hdf5"),
-    ]:
-        with h5py.File(name=filename, mode="r") as h5_file:
+    for modelname, filepath in MODELS.items():
+        with h5py.File(name=filepath, mode="r") as h5_file:
             names, values, lnls, num_matches, num_totals, lines = [], [], [], [], [], [], 
             min_value = 1.
             max_value = 0.
