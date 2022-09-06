@@ -14,8 +14,10 @@ stages:
     deps:
     - ipsi-comp.svg
     outs:
-    - ipsi-comp.pdf
-    - ipsi-comp.pdf_tex
+    - ipsi-comp.pdf:
+        cache: false
+    - ipsi-comp.pdf_tex:
+        cache: false
   plot-contra-prevalences:
     cmd: python prevalences_contra.py
     deps:
@@ -31,8 +33,10 @@ stages:
     deps:
     - contra-comp.svg
     outs:
-    - contra-comp.pdf
-    - contra-comp.pdf_tex
+    - contra-comp.pdf:
+        cache: false
+    - contra-comp.pdf_tex:
+        cache: false
   plot-thermo-int:
     cmd: >
       python -m lyscripts plot thermo_int
@@ -54,5 +58,7 @@ stages:
     deps:
     - thermo_int.svg
     outs:
-    - thermo_int.pdf
-    - thermo_int.pdf_tex
+    - thermo_int.pdf:
+        cache: false
+    - thermo_int.pdf_tex:
+        cache: false
