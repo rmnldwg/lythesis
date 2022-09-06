@@ -18,7 +18,7 @@ Up to this point we have largely argued that the mixing parameter makes intuitiv
 
 Essentially, we now want to know which of these three models does the best job of describing the data. Intuitively, one would argue that it must be $\mathcal{M}_\text{full}$, but this model is also more complex than the other two. A natural choice for a metric that incorporates both the accuracy of the model and a penalty for model complexity -- often also called \emph{Occam's razor} -- is the \emph{model evidence} \cite{aponte_introduction_2022}.
 
-\subsection*{Model evidence and Bayes factor}
+\subsection{* Model evidence and Bayes factor}
 \label{subsec:bilateral:model_comp:evidence}
 
 In Bayesian terms, we would like to know which model $\mathcal{M}$ has the highest probability $P\left( \mathcal{M} \mid \boldsymbol{\mathcal{D}} \right)$ given a dataset $\boldsymbol{\mathcal{D}}$. This probability is given by
@@ -41,9 +41,10 @@ On the right side in the above equation, we see the ratio of the two model's evi
 %
 So, if we can compute this model evidence -- commonly also called \emph{marginal likelihood} or \emph{partition function} $Z$ from physics -- for our models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$, the respecive pairwise Bayes factors will indicate which of them is \emph{most likely} to be the true one, given the observed data, in the probabilistic sense. Note that this does not mean it \emph{is} the true data-generating model and not even that we should \emph{believe} it is the true one. But only that among the models investigated, this one is probably the best.
 
-Harold Jeffreys gives a scale for interpreting values of the Bayes factor \cite{jeffreys_theory_1998}:
+Harold Jeffreys gives a scale for interpreting values of the Bayes factor \cite{jeffreys_theory_1998} in \cref{table:bilateral:model_comp:bayes_factor}, where we have also listed the natural logarithm $\ln{K_\text{1v2}}$ of the Bayes factor, because what we will actually be doing is compute differences in the log-evidences.
 
-\begin{center}
+\begin{table}
+    \centering
     \begin{tabular}{ | c | c | c | }
         \hline
         $K_\text{1v2}$ & $\ln{K_\text{1v2}}$ & support for $\mathcal{M}_1$ \\
@@ -56,11 +57,11 @@ Harold Jeffreys gives a scale for interpreting values of the Bayes factor \cite{
         $> 10^2$ & $> 4.6$ & decisive \\
         \hline
     \end{tabular}
-\end{center}
+    \caption{Interpretation of Bayes factors and their natural logarithms in terms of their support for or against one of the two compared models as introduced by Harold Jeffreys \cite{jeffreys_theory_1998}.}
+    \label{table:bilateral:model_comp:bayes_factor}
+\end{table}
 
-We have also listed the natural logarithm $\ln{K_\text{1v2}}$ of the Bayes factor here, because what we will actually be doing is compute differences in the log-evidences.
-
-\subsection*{Thermodynamic integration}
+\subsection{* Thermodynamic integration}
 \label{subsec:bilateral:model_comp:thermo_int}
 
 Due to the integration over all model parameters, the quantity \cref{eq:bilateral:evidence} is usually impossible to calculate by brute force integration, even for models with only around a dozen parameters, as is the case for ours. Unless analytical solutions exist -- which is rarely the case -- it is often prohibitively expensive to compute the model evidence. For this reason, a large amount of approximation methods has been developed; \cite{friel_estimating_2011} names only a few of those methods that can be used in the context of \gls{mcmc}. Another method that is applicable in the context of \gls{mcmc} is \gls{ti}, which is very well introduced in \cite{aponte_introduction_2022} and only roughly sketched out in this section.
@@ -115,7 +116,7 @@ Lastly, we would like to give a final insight into the evidence that is quite na
 %
 This shows how the evidence naturally incorporates Occam's razor. The second term on the right gets larger the more the likelihood restricts the prior and the resulting penalty grows exponentially with the dimensionality of the parameter space.
 
-\subsection*{Implementation}
+\subsection{Implementation}
 \label{subsec:bilateral:model_comp:implementation}
 
 To compare the introduced models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$, we performed \gls{ti} with a ladder of 64 $\beta$ values with step sizes selected according to a fifth order power rule. For each of the steps in the ladder, we performed an ensemble sampling round using the \texttt{emcee} \cite{foreman-mackey_emcee_2013} Python package. The size of the ensemble -- consisting of so-called walkers that allow sampling in parallel and mutually influence each other's proposals -- was chosen to be 20 times the number of dimensions of the parameter space. We set the sampling algorithm to propose new samples according to a mixture of two procedures: with 80\% probability it selected a differential evolution move \cite{nelson_run_2013} and with 20\% probability a snooker move, also based on differential evolution \cite{ter_braak_differential_2008}. The reason for this choice was that in previous experiments, this combination of proposals yielded the fastest convergence of the chain. Every one of the 64 sampling rounds consisted of a burn-in phase lasting 1000 steps, followed by 250 steps of which every fifth step was kept for later analysis. This might seem like a relatively short chain, but since the change of the posterior we sampled from only changed very slightly from $\beta_j$ to $\beta_{j+1}$, fewer steps are required to reach convergence.
@@ -134,7 +135,7 @@ The models were trained on the combination of two datasets: One from our institu
 
 Different modalities were used to obtain the diagnoses for the patients in the two datasets. For the inference process, we combined all available diagnostic modalities using sensitivity and specificity values from the literature \cite{de_bondt_detection_2007} using a maximum likelihood estimate. We treated this resulting "consensus diagnosis" as if it were the ground truth, i.e., we set its sensitivity and specificity to 1 respectively. Our motivation to do so was that this allows us to compare predictions of the model with data prevalences to see which of the model exhibits more flexibility in adapting to the data. If we had directly provided the models with all available diagnostic modalities and allowed it to combine them itself, as outlined in \cref{sec:unilateral:multimodality}, this would not have been possible. Also, in this case we are not interested in learning the exact distribution over the posterior parameters of the model, i.e. the probability rates for spread along arcs of the lymphatic graph, but rather how well the different models are able to adapt to realistic data and make use of the additional information provided via the tumor's extension over the mid-sagittal plane.
 
-Lastly, we restricted ourselves to modelling the \glspl{lnl} II, III and IV, because contralaterally we rarely observe involvement outside those levels and it drastically speeds up the inference process.
+Lastly, we restricted ourselves to modelling the \glspl{lnl} II, III and IV, because contralaterally we rarely observe involvement outside those levels, and it drastically speeds up the inference process.
 
 \begin{tcolorbox}[title=Reproducibility]
     Each of the three models investigated here are available in \repolink{lynference}, where we have run the respective pipeline, pushed it as a tagged commit to GitHub and published it as a release.
@@ -148,7 +149,7 @@ Lastly, we restricted ourselves to modelling the \glspl{lnl} II, III and IV, bec
     \end{itemize}
 \end{tcolorbox}
 
-\subsection*{Results}
+\subsection{Results}
 \label{subsec:bilateral:model_comp:results}
 
 \begin{figure}
@@ -164,9 +165,9 @@ First, we wanted to make sure that all three models are still able to describe t
 
 The shown differences between the model's predictions are miniscule. For late T-stages (bottom row of \cref{fig:bilateral:model_comp:ipsi}) it seems as if the model that is agnostic to the tumor's extension over the mid-sagittal plane slightly overestimates the prevalence, while the other two models seem to match them better or underestimate them by a small amount. Overall the fit of all models ipsilaterally is very good and shows no indication that one model performs better than the other.
 
-On the contralateral side, however, this does not hold anymore. Here, we do not only stratify the prevalence by T-stage, but also by midline extension. Naturally, this cannot be captured the agnostic model $\mathcal{M}_\text{ag}$ since it has no method of modelling this. What is of interest to us here is how the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ fare against each other and whether their improvements in predicting contralateral spread are worth the additional complexity.
+On the contralateral side, however, this does not hold anymore. Here, we do not only stratify the prevalence by T-stage, but also by midline extension. Naturally, this cannot be captured by the agnostic model $\mathcal{M}_\text{ag}$ since it has no method of modelling this. What is of interest to us here is how the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ fare against each other and whether their improvements in predicting contralateral spread are worth the additional complexity.
 
-The overall prevalence of contralateral involvement is plotted in \cref{fig:bilateral:model_comp:contra}. Again, the three different models are depicted in their own column and we have distinguished between four cases for each model: The prevalence of any contralateral involvement for patients with a) early T-stage and a cealry lateralized tumor (blue histograms and curves), b) early T-stage with a tumor extending over the mid-sagittal plane (orange), c) late T-stage with, again, a lateralized tumor (green) and finally d) where the tumor is both in late T-stage and does extend over the mid plane (red).
+The overall prevalence of contralateral involvement is plotted in \cref{fig:bilateral:model_comp:contra}. Again, the three different models are depicted in their own column and we have distinguished between four cases for each model: The prevalence of any contralateral involvement for patients with a) early T-stage and a clearly lateralized tumor (blue histograms and curves), b) early T-stage with a tumor extending over the mid-sagittal plane (orange), c) late T-stage with, again, a lateralized tumor (green) and finally d) where the tumor is both in late T-stage and does extend over the mid-plane (red).
 
 \begin{figure}
     \def\svgwidth{1.0\textwidth}
@@ -177,11 +178,17 @@ The overall prevalence of contralateral involvement is plotted in \cref{fig:bila
     \label{fig:bilateral:model_comp:contra}
 \end{figure}
 
-As discussed, the agnostic model $\mathcal{M}_\text{ag}$ (left panel in \cref{fig:bilateral:model_comp:contra}) cannot model midline extension, which is why the two separate histograms overlap. Its spread probability rates from the tumor to the contralateral \glspl{lnl} attempt to find an average of the respective observed prevalence. Interestingly, both the model using the mixing parameter $\alpha$ and the full model, which has in total six parameters to model the spread from the tumor to the contralateral \glspl{lnl}, overestimate the prevalence of contralateral, early T-stage involvement when the tumor extends over the mid-sagittal line. On the one hand, of the displayed cases, this is the rarest one, so it makes sense for the model to put less attention to it. On the other hand, we believe the reason also has to do with how the model treats the mid-plane extension in general: If this binary \gls{rv} is observed to be true, the model assumes increased spread probabilities from the primary tumor to the contralateral \glspl{lnl} from the onset. Realistically, however, this is probably not how the course of a typical patient plays out. As tumors grow over time, in many cases they will not cross the mid-sagittal plane right after they started to form, but only when they have become sufficiently large. Consequently, the spread from them to the contralateral side increases as they grow over the midline. The current model cannot capture this and therefore assume early T-stage patient's contralateral spread to be larger than observed. Despite this, the two models perform equally well regarding the overall contralateral spread. In combination with the unaffected capabilities to predict the ipsilateral prevalences, as shown in \cref{fig:bilateral:model_comp:ipsi}, this indicates that the assumptions underlying the introduction of the mixing parameter $\alpha$ are feasible.
+As discussed, the agnostic model $\mathcal{M}_\text{ag}$ (left panel in \cref{fig:bilateral:model_comp:contra}) cannot model midline extension, which is why the two separate histograms overlap. Its spread probability rates from the tumor to the contralateral \glspl{lnl} attempt to find an average of the respective observed prevalence.
 
-Of course one would expect that maybe modelling the correlations between involvements of the contralateral \glspl{lnl} might suffer from this assumption, but this is hard to test, as cases where e.g. \gls{lnl} III is involved without \gls{lnl} II are very rare -- in this case it is only five patients. And also clinically it is debated whether to treat or to spare the contralateral side as a whole when performing elective \gls{rt} or elective bilateral \gls{nd}, not individual \glspl{lnl} \cite{biau_selection_2019,al-mamgani_contralateral_2017}. Therefore, a more complete model like $\mathcal{M}_\text{full}$, that might be able to capture correlations we cannot yet see due to insufficient data, are not worth the additional model complexity at this point.
+Interestingly, both the model using the mixing parameter $\alpha$ and the full model, which has in total six parameters to model the spread from the tumor to the contralateral \glspl{lnl}, overestimate the prevalence of contralateral, early T-stage involvement when the tumor extends over the mid-sagittal line. This might be because, of the displayed cases, this is the rarest one, so it makes sense for the model to put less attention to it. On the other hand, we believe the reason also has to do with how the model treats the mid-plane extension in general: If this binary \gls{rv} is observed to be true, the model assumes increased spread probabilities from the primary tumor to the contralateral \glspl{lnl} from the onset. Realistically, however, this is probably not how the course of a typical patient plays out. As tumors grow over time, in many cases they will not cross the mid-sagittal plane right after they started to form, but only when they have become sufficiently large. Consequently, the spread from them to the contralateral side increases as they grow over the midline. The current model cannot capture this and therefore assumes early T-stage patient's contralateral spread to be larger than observed.
 
-This is supported also by the log-evidence of the three models compared, which we tabulated in . In \cref{fig:bilateral:model_comp:thermo_int} we have plotted the results from computing the log-evidence for the three models in question using \gls{ti}. It shows that the accuracy of the agnostic model $\mathcal{M}_\text{ag}$ is lower than of the other two models, which owe that to their ability to incorporate the tumor's extension over the mid plane into the prediction. However, while the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ achieve the same fit to the data, the full model's accuracy rises for later $\beta$ values, which results in a lower log-evidence and a higher complexity penalty (see \cref{eq:bilateral:acc_vs_kl}) compared to the simpler mixing model.
+Despite this, the two models perform equally well regarding the overall contralateral spread. In combination with the unaffected capabilities to predict the ipsilateral prevalences, as shown in \cref{fig:bilateral:model_comp:ipsi}, this indicates that the assumptions underlying the introduction of the mixing parameter $\alpha$ are feasible.
+
+One would expect that modelling the correlations between involvements of the contralateral \glspl{lnl} might suffer from the simplifying introduction of the mixing parameter $\alpha$, but this is hard to test, as cases where e.g. \gls{lnl} III is involved without \gls{lnl} II are very rare -- in this case it is only five patients. Also, the clinical debate centers around whether to treat or to spare the contralateral side as a whole when performing elective \gls{rt} or elective bilateral \gls{nd} \cite{biau_selection_2019,al-mamgani_contralateral_2017}. Sparing individual \glspl{lnl} is not yet debated. Therefore, a more complete model like $\mathcal{M}_\text{full}$, that might be able to capture correlations we cannot yet see due to insufficient data, are not worth the additional model complexity at this point.
+
+This is supported also by the log-evidence of the three models compared, which we provide in \cref{table:bilateral:model_comp:evidences}. Besides \emph{decisive} (according to \cref{table:bilateral:model_comp:bayes_factor}) evidence against the agnostic model, we also see that the accuracy $\mathcal{A}_\text{MC}(\beta=1)$ is almost the same for the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$. But the additional complexity from introducing two additional parameters is punished heavily both by the thermodynamically integrated log-evidence, and its approximation, the \gls{bic}. Therefore, from a Bayesian standpoint, we find \emph{decisive} evidence in favor of the mixing model $\mathcal{M}_\alpha$ with $\ln{K}_{\alpha\,\text{v}\,\text{full}} = 6.4$. Interestingly, the \gls{bic} seems to be a surprisingly good approximation, being always withing the standard deviation of the actual log-evidence for all shown models.
+
+\Cref{fig:bilateral:model_comp:thermo_int} displays how -- using \gls{ti} -- the expected log-likelihood under the power posterior evolves over the course of a \gls{ti} round for each of the three compared models. It shows that the final accuracy $\mathcal{A}_\text{MC}(\beta=1)$ of the agnostic model $\mathcal{M}_\text{ag}$ is lower than of the other two models, which owe that to their ability to incorporate the tumor's extension over the mid plane into the prediction. However, while the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ achieve the same fit to the data, the full model's accuracy rises for later $\beta$ values, which results in a lower log-evidence and a higher complexity penalty (see \cref{eq:bilateral:acc_vs_kl}) compared to the simpler mixing model.
 
 \begin{table}
     \centering
@@ -197,7 +204,7 @@ This is supported also by the log-evidence of the three models compared, which w
         \hline
     \end{tabular}
     \caption{Metrics computed via \gls{ti} for the three bilateral models introduced in \cref{sec:bilateral:model_comp}: The \gls{bic} in the first row, the log-evidence $\ln{Z}$ with the respective standard deviation in the second and third row, as well as the maximum and mean likelihood of the sampling procedures in rows four and five respectively.}
-    \label{table:bilateral:model_comp}
+    \label{table:bilateral:model_comp:evidences}
 \end{table}
 
 \begin{figure}

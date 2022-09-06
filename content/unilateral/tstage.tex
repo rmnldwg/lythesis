@@ -33,7 +33,7 @@ At this point, it makes sense to briefly introduce a notation of the above equat
     \end{pmatrix}
 \end{equation}
 %
-were row number $t$ corresponds to the vector $\boldsymbol{\pi}^\top \cdot \left( \mathbf{A} \right)^t$, i.e. the probabilities for all possible hidden states, given the diagnose time. So, the element $\boldsymbol{\Lambda}_{ti}$ corresponds to the probability $P \left( \boldsymbol{\xi}_i \mid t \right)$ of a patient arriving in the $i$th state after $t$ time steps. With this, we can rewrite the term in the square brackets of \cref{eq:hmm_log_likelihood} purely as a product of vectors and matrices:
+where row number $t$ corresponds to the vector $\boldsymbol{\pi}^\top \cdot \left( \mathbf{A} \right)^t$, i.e. the probabilities for all possible hidden states, given the diagnose time. So, the element $\boldsymbol{\Lambda}_{ti}$ corresponds to the probability $P \left( \boldsymbol{\xi}_i \mid t \right)$ of a patient arriving in the $i$th state after $t$ time steps. With this, we can rewrite the term in the square brackets of \cref{eq:hmm_log_likelihood} purely as a product of vectors and matrices:
 %
 \begin{equation}
     \sum_{t = 0}^{t_\text{max}}{p_T (t) \cdot \boldsymbol{\pi}^\top \cdot (\mathbf{A})^t} = p_T \left( \mathbf{t} \right) \cdot \boldsymbol{\Lambda}
