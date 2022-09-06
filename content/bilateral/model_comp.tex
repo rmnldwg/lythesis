@@ -119,6 +119,18 @@ This shows how the evidence naturally incorporates Occam's razor. The second ter
 \subsection{Implementation}
 \label{subsec:bilateral:model_comp:implementation}
 
+\begin{tcolorbox}[title=\faIcon{recycle} Reproducibility]
+    Each of the three models investigated here are available in \repolink{lynference}, where we have run the respective pipeline, pushed it as a tagged commit to GitHub and published it as a release.
+
+    The \href{https://github.com/rmnldwg/lynference#readme}{\faIcon{info-circle} \texttt{README.md}} file in this repository explains how one can download the data our pipeline runs produced and how to reproduce an experiment yourself.
+
+    \begin{itemize}
+        \item Model $\mathcal{M}_\text{ag}$: \href{https://github.com/rmnldwg/lynference/releases/tag/bilateral-v2}{\faIcon{tags} \texttt{bilateral-v2}}
+        \item Model $\mathcal{M}_\alpha$: \href{https://github.com/rmnldwg/lynference/releases/tag/midline-with-mixing-v2}{\faIcon{tags} \texttt{midline-with-mixing-v2}}
+        \item Model $\mathcal{M}_\text{full}$: \href{https://github.com/rmnldwg/lynference/releases/tag/midline-without-mixing-v2}{\faIcon{tags} \texttt{midline-without-mixing-v2}}
+    \end{itemize}
+\end{tcolorbox}
+
 To compare the introduced models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$, we performed \gls{ti} with a ladder of 64 $\beta$ values with step sizes selected according to a fifth order power rule. For each of the steps in the ladder, we performed an ensemble sampling round using the \texttt{emcee} \cite{foreman-mackey_emcee_2013} Python package. The size of the ensemble -- consisting of so-called walkers that allow sampling in parallel and mutually influence each other's proposals -- was chosen to be 20 times the number of dimensions of the parameter space. We set the sampling algorithm to propose new samples according to a mixture of two procedures: with 80\% probability it selected a differential evolution move \cite{nelson_run_2013} and with 20\% probability a snooker move, also based on differential evolution \cite{ter_braak_differential_2008}. The reason for this choice was that in previous experiments, this combination of proposals yielded the fastest convergence of the chain. Every one of the 64 sampling rounds consisted of a burn-in phase lasting 1000 steps, followed by 250 steps of which every fifth step was kept for later analysis. This might seem like a relatively short chain, but since the change of the posterior we sampled from only changed very slightly from $\beta_j$ to $\beta_{j+1}$, fewer steps are required to reach convergence.
 
 In the end, we kept $S = 50 \cdot k$, where $k$ is the dimensionality of the model, samples for each of the 64 $\beta_j$. The dimensionality $k$ of the parameter spaces ranged from nine for the agnostic model $\mathcal{M}_\text{ag}$ over ten (mixing model $\mathcal{M}_\alpha$) to twelve in the case of the full model $\mathcal{M}_\text{full}$. Out of these $S$ samples we randomly drew $M = 1000$ per $\beta_j$ and integrated them over their range, yielding 1000 estimates for the log-evidence $\ln{Z}_l$ with $l \in [1, \ldots, M]$. Using this ensemble of estimates, we could compute both the mean and the standard deviation, giving us a simple measure of uncertainty for that value.
@@ -136,18 +148,6 @@ The models were trained on the combination of two datasets: One from our institu
 Different modalities were used to obtain the diagnoses for the patients in the two datasets. For the inference process, we combined all available diagnostic modalities using sensitivity and specificity values from the literature \cite{de_bondt_detection_2007} using a maximum likelihood estimate. We treated this resulting "consensus diagnosis" as if it were the ground truth, i.e., we set its sensitivity and specificity to 1 respectively. Our motivation to do so was that this allows us to compare predictions of the model with data prevalences to see which of the model exhibits more flexibility in adapting to the data. If we had directly provided the models with all available diagnostic modalities and allowed it to combine them itself, as outlined in \cref{sec:unilateral:multimodality}, this would not have been possible. Also, in this case we are not interested in learning the exact distribution over the posterior parameters of the model, i.e. the probability rates for spread along arcs of the lymphatic graph, but rather how well the different models are able to adapt to realistic data and make use of the additional information provided via the tumor's extension over the mid-sagittal plane.
 
 Lastly, we restricted ourselves to modelling the \glspl{lnl} II, III and IV, because contralaterally we rarely observe involvement outside those levels, and it drastically speeds up the inference process.
-
-\begin{tcolorbox}[title=Reproducibility]
-    Each of the three models investigated here are available in \repolink{lynference}, where we have run the respective pipeline, pushed it as a tagged commit to GitHub and published it as a release.
-
-    The \texttt{README.md} file in this repository explains how one can download the data our pipeline runs produced and how to reproduce an experiment yourself.
-
-    \begin{itemize}
-        \item Model $\mathcal{M}_\text{ag}$: \href{https://github.com/rmnldwg/lynference/releases/tag/bilateral-v2}{\texttt{bilateral-v2}}
-        \item Model $\mathcal{M}_\alpha$: \href{https://github.com/rmnldwg/lynference/releases/tag/midline-with-mixing-v2}{\texttt{midline-with-mixing-v2}}
-        \item Model $\mathcal{M}_\text{full}$: \href{https://github.com/rmnldwg/lynference/releases/tag/midline-without-mixing-v2}{\texttt{midline-without-mixing-v2}}
-    \end{itemize}
-\end{tcolorbox}
 
 \subsection{Results}
 \label{subsec:bilateral:model_comp:results}

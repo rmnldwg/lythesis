@@ -73,7 +73,6 @@
 \usepackage{hyperref}
 \usepackage{cleveref}
 \usepackage{auxhook}
-\newcommand{\repolink}[2][rmnldwg]{\href{https://github.com/#1/#2}{\texttt{#2}}}
 
 %% Subfiles
 \usepackage{subfiles}
@@ -81,5 +80,9 @@
 %% Tables
 \usepackage{multirow}
 
-%% Boxes & admonitions
+%% Boxes, admonitions and icons
 \usepackage{tcolorbox}
+\usepackage{fontawesome5}
+
+%% Custom commands
+\newcommand{\repolink}[2][rmnldwg]{\href{https://github.com/#1/#2}{\faIcon{github} \texttt{#2}}}
