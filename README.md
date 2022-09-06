@@ -1,6 +1,6 @@
 ![social card](./github-social-card.png)
 
-* _University:_ **University of Zurich (UZH)**
+* _University:_ **University of Zurich ([UZH])**
 * _Department:_ **Department of Physics**
 * _Supervisor:_ **Prof. Jan Unkelbach**
 * _Time:_ **September 2019 - December 2022**
@@ -8,6 +8,14 @@
 ## Set up
 
 This repository contains the source code for my PhD dissertation. It is set up to be - above all - modular and reproducible. Below follows a quick guide to this repository's layout.
+
+### Requirements
+
+To compile this thesis, one needs...
+
+1. a TeX distribution (I used [TeX Live]).
+2. the tool _Data Version Control_ ([DVC]), a Python program that enables one to extend git's functionality to version large, binary data and pipelines.
+3. an installation of [Inkscape] to convert `.svg` plots into a `.pdf` and a `.pdf_tex` file each.
 
 ### Subfiles
 
@@ -22,7 +30,7 @@ Since it is set up such that every `.tex` file that has a `document` environment
 
 ### Data
 
-In every chapter folder I placed `data` directories that hold data that will be plotted in some form or another. The data is imported and versioned using a tool called _Data Version Control_ ([DVC]).
+In every chapter folder I placed `data` directories that hold data that will be plotted in some form or another. The data is imported and versioned using [DVC].
 
 I do not intend to put raw data here which then runs in an hours long inference process to produce a single figure in the end, but rather _outputs_ of such inference processes. In my case, the inference pipelines are stored in the repository [`lynference`].
 
@@ -30,13 +38,63 @@ I do not intend to put raw data here which then runs in an hours long inference 
 
 The root and every chapter folder also have `figures` directories in them. This is the place to store...
 
-1. ...static images to be displayed in the thesis (straightforward)
-2. ...scripts that produce plots of computed results (more intricate)
+1. static images to be displayed in the thesis
+2. scripts that produce plots of computed results
 
-For the second point, I again rely heavily on [DVC]. This tool defines which files in the respective `data` folder to use with which script to produce exactly which version (using MD5 hashes) of a plot.
+For the second point, I again rely heavily on [DVC]. This tool defines which files in the respective `data` folder to use with which (Python) script to produce exactly which version (using MD5 hashes) of a plot.
+
+## Reproduce
+
+If you want to reproduce the thesis, i.e. recompile it and recreate all the figures, do the following (ideally inside a virtual environment, like [`venv`]):
+
+First, install the dependencies:
+
+```
+pip install -U pip setuptools wheel
+pip install -r requirements.txt
+```
+
+Then, update all the data sources
+
+```
+dvc update -R ./content/<chapter-name>/data
+```
+
+Do this for all the chapters in the document. Next, reproduce all the plots
+
+```
+dvc repro -R .
+```
+
+And after this, you can build the entire document by running
+
+```
+pdflatex -output-directory="_build" "./main.tex"
+```
+
+After that, your `_build` directory at the root of the repo should contain a beautifully rendered `main.pdf` 👍
+
+## Make this _YOUR_ thesis
+
+In order to use this thesis as a template, first delete the content of all `_build` folders. Then, delete all the directories inside the `content` folder and replace them with your chapters.
+
+You also need to adapt some stuff in the `frontmatter.tex`, `backmatter.tex` and of course the title, author and date in the `main.tex`.
+
+Finally, replace the `references.bib` with your list of references and adapt/extend the `math_operators.tex` and `glossary.tex` to what you need.
+
+### Troubleshooting with figures
+
+I often stumbled over the `graphicspath` setting and how it interacts with the `subfiles` package. If the build fails because some figure has not been found, this is likely the issue.
+
+In that case, make sure that in the `preamble.tex` the path to all `figures` directories is listed (each in their own `{}` bracket pair and **not** separated by commas). Also make sure each `_chapter.tex` lists `\subfix{./figures/}` in their `graphicspath` setting. And the same goes for the other section files in each chapter's directory.
+
+That _should_ fix all errors regarding LaTeX not being able to find figures.
 
 
-
+[UZH]: https://www.uzh.ch/en.html
+[TeX Live]: https://tug.org/texlive/
+[DVC]: https://dvc.org
+[Inkscape]: https://inkscape.org/
 [`subfiles`]: https://www.ctan.org/pkg/subfiles
 [`lynference`]: https://github.com/rmnldwg/lynference
-[DVC]: https://dvc.org
+[`venv`]: https://docs.python.org/3/library/venv.html
