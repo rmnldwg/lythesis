@@ -4,10 +4,12 @@
     {\relativeRoot/figures/}
     {\relativeRoot/content/dataset/figures/}
     {\relativeRoot/content/unilateral/figures/}
+    {\relativeRoot/content/bilateral/figures/}
 }
 
 %% Layout
 \usepackage[a4paper,top=25mm,bottom=25mm]{geometry}
+\usepackage{parskip}
 
 %% Setting up the headers and footers
 \usepackage{fancyhdr}
@@ -51,6 +53,15 @@
 \usepackage{centernot}
 \usepackage{mathtools}
 \input{math_operators}
+\usepackage{nicefrac}
+\usepackage{siunitx}
+\sisetup{
+    group-digits=false
+}
+
+\usepackage{ntheorem}
+\theoremseparator{:}
+\newtheorem{hyp}{Hypothesis}
 
 %% Glossary
 \usepackage[acronym]{glossaries}
@@ -68,3 +79,10 @@
 
 %% Tables
 \usepackage{multirow}
+
+%% Boxes, admonitions and icons
+\usepackage{tcolorbox}
+\usepackage{fontawesome5}
+
+%% Custom commands
+\newcommand{\repolink}[2][rmnldwg]{\href{https://github.com/#1/#2}{\faIcon{github} \texttt{#2}}}

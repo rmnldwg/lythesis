@@ -1,0 +1,12 @@
+md5: 3112bad0539b582f30dbf60f7e391f49
+frozen: true
+deps:
+- path: models/prevalences.hdf5
+  repo:
+    url: https://github.com/rmnldwg/lynference
+    rev: bilateral-v2
+    rev_lock: 0a5ced71e67bf0e823af5a48328de7dbb2046361
+outs:
+- path: bilateral-v2-prevalences.hdf5
+  md5: 90242ec91d57fcea269fab2a62d89eea
+  size: 739848

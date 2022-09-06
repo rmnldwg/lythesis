@@ -1,0 +1,12 @@
+md5: 2acf008b8e2473c979542f870b1a15ba
+frozen: true
+deps:
+- path: plots/ti/accuracies.csv
+  repo:
+    url: https://github.com/rmnldwg/lynference
+    rev: midline-with-mixing-v2
+    rev_lock: 6065516b6dcfc93e70ebb00bbee89be867360aa3
+outs:
+- path: midline-with-mixing-v2-accuracies.csv
+  md5: aa407f1d510485aa91a675e365dd9702
+  size: 3725
