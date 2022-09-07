@@ -1,12 +1,12 @@
-md5: 3e85545061a5d9f9b12bcf12b4f7bca3
+md5: 66ba71229ab432d7b165dd38a5fb888e
 frozen: true
 deps:
 - path: notebook/figures/HMM_evolution.svg
   repo:
     url: https://github.com/rmnldwg/lymph
-    rev: 0.4.3
-    rev_lock: bc14ebb04687272969c3ee809bbc0bd6b920ddbf
+    rev: 0.1.0
+    rev_lock: bb89445aa20e5f2f643017c4a5fa014237f20f8c
 outs:
-- md5: 316a262d928352bcf4e53a3bd5b57209
-  size: 111655
+- md5: 00e0ab88caf5b5f6c077d6a1f75dd986
+  size: 135984
   path: ../figures/HMM_evolution.svg

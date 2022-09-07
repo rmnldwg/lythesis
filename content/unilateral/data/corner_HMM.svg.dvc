@@ -1,12 +1,12 @@
-md5: bcc97cd6cb8a91773f98af63d773c0b1
+md5: c465c2907fe660bf7487c5410cad0faa
 frozen: true
 deps:
 - path: notebook/figures/corner_HMM.svg
   repo:
     url: https://github.com/rmnldwg/lymph
-    rev: 0.4.3
-    rev_lock: bc14ebb04687272969c3ee809bbc0bd6b920ddbf
+    rev: 0.1.0
+    rev_lock: bb89445aa20e5f2f643017c4a5fa014237f20f8c
 outs:
-- md5: 8d2b8505f2e0e1e0e67146724ae03cfe
-  size: 1787807
+- md5: b8feef8d3a22f5c6e4a02ff4b8ed988f
+  size: 1826295
   path: ../figures/corner_HMM.svg

@@ -1,12 +1,12 @@
-md5: b4e5c2d1de67e69b739d7c8207bc58c0
+md5: 8e4335bad1c02c916bd3abd854c68c87
 frozen: true
 deps:
 - path: notebook/figures/simultaneous_risk.svg
   repo:
     url: https://github.com/rmnldwg/lymph
-    rev: 0.4.3
-    rev_lock: bc14ebb04687272969c3ee809bbc0bd6b920ddbf
+    rev: 0.1.0
+    rev_lock: bb89445aa20e5f2f643017c4a5fa014237f20f8c
 outs:
-- md5: 1f343c3703953036c43e362b0168b4f5
-  size: 106838
+- md5: 95449e28279de23a5a2be170b1140b02
+  size: 134741
   path: ../figures/simultaneous_risk.svg
