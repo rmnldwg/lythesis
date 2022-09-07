@@ -1,0 +1,12 @@
+md5: 83e61fe5cbff3d65b8fa80daa7dc9a67
+frozen: true
+deps:
+- path: notebook/figures/HMM_risk_increaseP.svg
+  repo:
+    url: https://github.com/rmnldwg/lymph
+    rev: 0.4.3
+    rev_lock: bc14ebb04687272969c3ee809bbc0bd6b920ddbf
+outs:
+- md5: c10793bb9a065d757b725fecc9aa88bf
+  size: 59207
+  path: ../figures/HMM_risk_increaseP.svg

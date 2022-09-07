@@ -1,0 +1,156 @@
+schema: '2.0'
+stages:
+  convert-to-pdf@simultaneous_learnedP:
+    cmd: "inkscape --without-gui --file=simultaneous_learnedP.svg --export-pdf=simultaneous_learnedP.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: simultaneous_learnedP.svg
+      md5: 307a856855dece3ef799640aed50502d
+      size: 84069
+    outs:
+    - path: simultaneous_learnedP.pdf
+      md5: 0df6de34b2e7ebea8362f9e554849740
+      size: 112610
+    - path: simultaneous_learnedP.pdf_tex
+      md5: a940435886ed18bdb91f1fb82efc5ede
+      size: 2083
+  convert-to-pdf@HMM_risk_increaseP:
+    cmd: "inkscape --without-gui --file=HMM_risk_increaseP.svg --export-pdf=HMM_risk_increaseP.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: HMM_risk_increaseP.svg
+      md5: c10793bb9a065d757b725fecc9aa88bf
+      size: 59207
+    outs:
+    - path: HMM_risk_increaseP.pdf
+      md5: 82e210ece7c6645d0b4a91fab26129ef
+      size: 56247
+    - path: HMM_risk_increaseP.pdf_tex
+      md5: 74541730da9bcbc168fc8fbeaac0fc51
+      size: 2077
+  convert-to-pdf@simple_rate_decay:
+    cmd: "inkscape --without-gui --file=simple_rate_decay.svg --export-pdf=simple_rate_decay.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: simple_rate_decay.svg
+      md5: 949890ef161f7108f247b7e0dcf95d71
+      size: 41032
+    outs:
+    - path: simple_rate_decay.pdf
+      md5: b50a82693e11b8b6f4771092bb5832d7
+      size: 50010
+    - path: simple_rate_decay.pdf_tex
+      md5: f0567d769af3c08757da3ecd84ff9797
+      size: 2074
+  convert-to-pdf@rate_decay_theory_vs_sampled:
+    cmd: "inkscape --without-gui --file=rate_decay_theory_vs_sampled.svg --export-pdf=rate_decay_theory_vs_sampled.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: rate_decay_theory_vs_sampled.svg
+      md5: 9d9740e7651c8ad0d2920390f51df5e3
+      size: 117289
+    outs:
+    - path: rate_decay_theory_vs_sampled.pdf
+      md5: ac531a194da93bb1537912f6129718aa
+      size: 169998
+    - path: rate_decay_theory_vs_sampled.pdf_tex
+      md5: afde2a973aff606a38f0b9e1cd255ef9
+      size: 2096
+  convert-to-pdf@simultaneous_risk:
+    cmd: "inkscape --without-gui --file=simultaneous_risk.svg --export-pdf=simultaneous_risk.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: simultaneous_risk.svg
+      md5: 1f343c3703953036c43e362b0168b4f5
+      size: 106838
+    outs:
+    - path: simultaneous_risk.pdf
+      md5: 93c64e0d1a6bbba784986139fa72e75f
+      size: 195047
+    - path: simultaneous_risk.pdf_tex
+      md5: 0486973d5bd5ef0aa133947ca8e6e9bf
+      size: 2075
+  convert-to-pdf@multi_length_risk:
+    cmd: "inkscape --without-gui --file=multi_length_risk.svg --export-pdf=multi_length_risk.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: multi_length_risk.svg
+      md5: d86b3e29bf45c2153b18bc8616e6131e
+      size: 359509
+    outs:
+    - path: multi_length_risk.pdf
+      md5: 1cf6dd33810b0a916f77ecc08511ce45
+      size: 230196
+    - path: multi_length_risk.pdf_tex
+      md5: 5cb556c7e5d7d1ebefb4cc26f1e91625
+      size: 2075
+  convert-to-pdf@HMM_BN_risk_comparison:
+    cmd: "inkscape --without-gui --file=HMM_BN_risk_comparison.svg --export-pdf=HMM_BN_risk_comparison.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: HMM_BN_risk_comparison.svg
+      md5: 2d2cc1a663cc06fabcb9a7f4b2af35ed
+      size: 271828
+    outs:
+    - path: HMM_BN_risk_comparison.pdf
+      md5: d50a3a332ca0ac29faa2d53fd3e55ac0
+      size: 232868
+    - path: HMM_BN_risk_comparison.pdf_tex
+      md5: 42186cae1c1aa8141353018135f3fbb1
+      size: 2085
+  convert-to-pdf@transition_matrix:
+    cmd: "inkscape --without-gui --file=transition_matrix.svg --export-pdf=transition_matrix.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: transition_matrix.svg
+      md5: 8f2eb09871e8cfd9fc780125f9a0a151
+      size: 69930
+    outs:
+    - path: transition_matrix.pdf
+      md5: 6675acb154e372ab40f66195c566df5e
+      size: 232286
+    - path: transition_matrix.pdf_tex
+      md5: 7571a82e17078604874567781370d8f3
+      size: 2066
+  convert-to-pdf@corner_HMM:
+    cmd: "inkscape --without-gui --file=corner_HMM.svg --export-pdf=corner_HMM.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: corner_HMM.svg
+      md5: 8d2b8505f2e0e1e0e67146724ae03cfe
+      size: 1787807
+    outs:
+    - path: corner_HMM.pdf
+      md5: 5938e54140cb4b60bf68103aa8786094
+      size: 3700381
+    - path: corner_HMM.pdf_tex
+      md5: 8067815e4c9ec924053838aef9bb5fee
+      size: 2061
+  convert-to-pdf@HMM_evolution:
+    cmd: "inkscape --without-gui --file=HMM_evolution.svg --export-pdf=HMM_evolution.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: HMM_evolution.svg
+      md5: 316a262d928352bcf4e53a3bd5b57209
+      size: 111655
+    outs:
+    - path: HMM_evolution.pdf
+      md5: 48b232e8838a298a38c0ce47f32304a0
+      size: 135148
+    - path: HMM_evolution.pdf_tex
+      md5: f0a2441390968b2c64cb00fb671893fd
+      size: 2067
+  convert-to-pdf@HMM_evo_matrix:
+    cmd: "inkscape --without-gui --file=HMM_evo_matrix.svg --export-pdf=HMM_evo_matrix.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: HMM_evo_matrix.svg
+      md5: 003cf7206f41da3ca435caf9d4103858
+      size: 108782
+    outs:
+    - path: HMM_evo_matrix.pdf
+      md5: e19011e6ed6b1f46f1f2036cc8ea47af
+      size: 298899
+    - path: HMM_evo_matrix.pdf_tex
+      md5: f0e25deedbe0fc6e61c08ae337eb1308
+      size: 2069
