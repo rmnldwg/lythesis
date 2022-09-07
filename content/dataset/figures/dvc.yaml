@@ -15,6 +15,10 @@ stages:
     - statistics.pdf_tex
   
   crop-figure:
+    desc:
+      This command replaces the line in the auto-generated `statistics.pdf_tex` with an
+      almost identical line, plus some margin trimming/cropping that is necessary to
+      make the figure look good on paper.
     vars:
     - left: 14mm
     - bottom: 25mm
