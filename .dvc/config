@@ -1,6 +1,4 @@
 [core]
     remote = azure
-['remote "onedrive"']
-    url = /mnt/c/Users/roman/OneDrive - USZ/lynference.dvc
 ['remote "azure"']
     url = https://dvcpipelines.blob.core.windows.net/lynference

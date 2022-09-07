@@ -72,7 +72,7 @@ And after this, you can build the entire document by running
 pdflatex -output-directory="_build" "./main.tex"
 ```
 
-After that, your `_build` directory at the root of the repo should contain a beautifully rendered `main.pdf` 👍
+After that, your `_build` directory at the root of the repo should contain a beautifully rendered `main.pdf` :+1:
 
 ## Make this _YOUR_ thesis
 
