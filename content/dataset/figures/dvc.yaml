@@ -1,0 +1,31 @@
+stages:
+  export-to-pdf:
+    cmd: >
+      inkscape
+      --without-gui
+      --file=../data/combined_plots.svg
+      --export-pdf=statistics.pdf
+      --export-latex
+      --export-area=0:0:0.5:0.5
+    deps:
+    - ../data/combined_plots.svg
+    outs:
+    - statistics.pdf:
+        cache: false
+    - statistics.pdf_tex
+  
+  crop-figure:
+    vars:
+    - left: 14mm
+    - bottom: 25mm
+    - right: 15mm
+    - top: 30mm
+    cmd: >
+      sed statistics.pdf_tex
+      -e '56s/.*/    \\put(0,0){\\includegraphics[width=\\unitlength,page=1,trim=${left} ${bottom} ${right} ${top}]{statistics.pdf}}%/'
+      > statistics_crop.pdf_tex
+    deps:
+    - statistics.pdf_tex
+    outs:
+    - statistics_crop.pdf_tex:
+        cache: false
