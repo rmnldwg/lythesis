@@ -1,0 +1,28 @@
+stages:
+  convert-to-pdf:
+    foreach:
+    - HMM_BN_risk_comparison
+    - HMM_evo_matrix
+    - HMM_evolution
+    - HMM_risk_increaseP
+    - corner_HMM
+    - multi_length_risk
+    - rate_decay_theory_vs_sampled
+    - simple_rate_decay
+    - simultaneous_learnedP
+    - simultaneous_risk
+    - transition_matrix
+    do:
+      cmd: >
+        inkscape
+        --without-gui
+        --file=${item}.svg
+        --export-pdf=${item}.pdf
+        --export-latex
+      deps:
+      - ${item}.svg
+      outs:
+      - ${item}.pdf:
+          cache: false
+      - ${item}.pdf_tex:
+          cache: false

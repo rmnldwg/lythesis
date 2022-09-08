@@ -1,0 +1,12 @@
+md5: 657f51b4638cfc82053a4c679b9d9187
+frozen: true
+deps:
+- path: notebook/figures/multi_length_risk.svg
+  repo:
+    url: https://github.com/rmnldwg/lymph
+    rev: 0.1.1
+    rev_lock: d794bd9561e473950e6134be933ff090c40f4825
+outs:
+- md5: 58e2080c4b49ae6c0d6bbac2e15367b0
+  size: 352978
+  path: ../figures/multi_length_risk.svg

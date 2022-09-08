@@ -57,7 +57,19 @@ to
     \end{pmatrix}
 \end{equation}
 %
-in this case of $V = 4$. The exact ordering does not matter, it is just a convenience for the notation. our ordering of the states can be seen in the axes of \cref{fig:trans_matrix}. In analogy, we order the observations $\boldsymbol{\zeta}_j$ from 1 to $2^V$. Note that for now we will not consider multiple diagnostic modalities and how to combine them. We will get back to that topic in \cref{subsec:hmm_unilateral_implementation}.
+in this case of $V = 4$. The exact ordering does not matter, it is just a convenience for the notation. our ordering of the states can be seen in the axes of \cref{fig:unilateral:trans_matrix}. In analogy, we order the observations $\boldsymbol{\zeta}_j$ from 1 to $2^V$. Note that for now we will not consider multiple diagnostic modalities and how to combine them. We will get back to that topic in \cref{subsec:hmm_unilateral_implementation}.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{0.8\textwidth}
+    \input{figures/transition_matrix.pdf_tex}
+    \caption{Transition matrix. All gray pixels in this image correspond to
+    entries in the matrix being zero. The colored pixels take on values $\in [0, 1]$
+    which are here overlaid in \%. The exact values stem from the mean of the
+    learned parameters in \cref{sec:unilateral:application}. The
+    exact shape of the gray ``mask'' depends on how one orders the states.}
+    \label{fig:unilateral:trans_matrix}
+\end{figure}
 
 In our case, the starting state corresponds to a primary tumor being present but all \glspl{lnl} are still in the healthy state. The observation matrix $\mathbf{B}$ is specified via sensitivity and specificity as described in \cref{eq:unilateral:formulation:obs_matrix}. The main task is to infer the transition matrix $\mathbf{A}$. Usually, it is inferred from a series of observations and there exist efficient algorithms for that, e.g. the sum-product algorithm, which is particularly efficient in chains. Unfortunately, these algorithms cannot be applied for our problem for two profound reasons:
 

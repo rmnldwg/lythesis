@@ -1,0 +1,12 @@
+md5: 126287742c6e64d5a1c107ac5bdeea72
+frozen: true
+deps:
+- path: notebook/figures/simultaneous_learnedP.svg
+  repo:
+    url: https://github.com/rmnldwg/lymph
+    rev: 0.1.1
+    rev_lock: d794bd9561e473950e6134be933ff090c40f4825
+outs:
+- md5: f9f21bd350c5fac9a5bd728b0975c068
+  size: 61853
+  path: ../figures/simultaneous_learnedP.svg

@@ -9,19 +9,7 @@
 \chapter[Dataset on involvement in OPSCC]{Dataset on involvement in oropharyngeal squamous cell carcinoma}
 \label{chap:dataset}
 
-\begin{tcolorbox}[title=\faIcon{users} Contributions, parbox=false]
-    This chapter is based on the publication \textbf{\citetitle{ludwig_detailed_2021}} by \citeauthor{ludwig_detailed_2021} \cite{ludwig_detailed_2021} and presented below with minimal edits.
-    
-    The first authorship of this publication is shared among three authors, therefore I will briefly state their contributions per person:
-
-    \begin{itemize}[leftmargin=5.5mm]
-        \item[\faIcon{user}] \textbf{Roman Ludwig} (me): (Pre-)processing of extracted data; creating figures and tables for publication; hosting and maintenance of data repository; development, deployment and maintenance of online data visualization \gls{gui} \href{https://lyprox.org}{\faIcon{external-link-alt} LyProX}.
-        \item[\faIcon{user}] \textbf{Jean-Marc Hoffmann}: Extraction of digital patient records and review of diagnostic images.
-        \item[\faIcon{user}] \textbf{Bertrand Pouymayou}: Creation of Excel template for data extraction; development of prototype for data visualization \gls{gui}.
-    \end{itemize}
-
-    All other authors provided critical feedback to the results and the manuscript, which was originally drafted by the \gls{pi} of the project, \textbf{Jan Unkelbach}.
-\end{tcolorbox}
+\input{_contributions.tex}
 
 One critical aspect of our effort to model and predict the lymphatic tumor progression is the data we use to train the model. As previously explained, our model essentially consumes tables with rows of patients and columns involvement by \gls{lnl}. Data in this relatively simple format has been extracted in the past to create studies like \cite{candela_patterns_1990} or \cite{shah_patterns_1990}. However, the authors then used the data to compute statistics of it -- e.g. the prevalence of involvement -- but stopped short of publishing that data in its raw format. From these statistics it is -- with one exception \cite{sanguineti_defining_2009} -- usually not possible to reconstruct the correlations between the involvement of \glspl{lnl}.
 

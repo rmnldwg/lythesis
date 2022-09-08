@@ -1,0 +1,27 @@
+schema: '2.0'
+stages:
+  export-to-pdf:
+    cmd: "inkscape --without-gui --file=../data/combined_plots.svg --export-pdf=statistics.pdf\
+      \ --export-latex --export-area=0:0:0.5:0.5\n"
+    deps:
+    - path: ../data/combined_plots.svg
+      md5: 2c757bd903a9eb31aff7f0ad8f04770f
+      size: 120937
+    outs:
+    - path: statistics.pdf
+      md5: a65467731eede61c99afa24466824e11
+      size: 156774
+    - path: statistics.pdf_tex
+      md5: 9d274af715254a3e8d6ef19ceb06e9f0
+      size: 2061
+  crop-figure:
+    cmd: "sed statistics.pdf_tex -e '56s/.*/    \\\\put(0,0){\\\\includegraphics[width=\\\
+      \\unitlength,page=1,trim=13mm 20mm 15mm 30mm]{statistics.pdf}}%/' > statistics_crop.pdf_tex\n"
+    deps:
+    - path: statistics.pdf_tex
+      md5: 9d274af715254a3e8d6ef19ceb06e9f0
+      size: 2061
+    outs:
+    - path: statistics_crop.pdf_tex
+      md5: 1729c6a3fed2888f48a051094d1e59a7
+      size: 2086

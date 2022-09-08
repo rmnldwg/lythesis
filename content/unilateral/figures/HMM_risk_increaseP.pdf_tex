@@ -1,6 +1,6 @@
 %% Creator: Inkscape inkscape 0.92.5, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
-%% Accompanies image file 'multi_length_risk.pdf' (pdf, eps, ps)
+%% Accompanies image file 'HMM_risk_increaseP.pdf' (pdf, eps, ps)
 %%
 %% To include the image in your LaTeX document, write
 %%   \input{<filename>.pdf_tex}
@@ -53,6 +53,6 @@
   \begin{picture}(1,0.62903916)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
-    \put(0,0){\includegraphics[width=\unitlength,page=1]{multi_length_risk.pdf}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{HMM_risk_increaseP.pdf}}%
   \end{picture}%
 \endgroup%
