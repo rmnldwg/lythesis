@@ -1,12 +1,12 @@
-md5: 2d782c8d75e5be386e073732936de190
+md5: cef40069bcf60dcad925e018ea9b0e36
 frozen: true
 deps:
 - path: 2021-usz-oropharynx/figures/combined_plots.svg
   repo:
     url: https://github.com/rmnldwg/lydata
-    rev: 2021-usz-oropharynx
-    rev_lock: 30ccb4da1aebcc4d5942c3bba0d47a5b1866796a
+    rev: 2021-usz-oropharynx-v2
+    rev_lock: 7d76088bb261535213c06dae066c29db93bc9e8e
 outs:
-- md5: bfed4afd0a7b571886c8991fc0207066
-  size: 151236
+- md5: 2c757bd903a9eb31aff7f0ad8f04770f
+  size: 120937
   path: combined_plots.svg

@@ -20,8 +20,8 @@ stages:
       almost identical line, plus some margin trimming/cropping that is necessary to
       make the figure look good on paper.
     vars:
-    - left: 14mm
-    - bottom: 25mm
+    - left: 13mm
+    - bottom: 20mm
     - right: 15mm
     - top: 30mm
     cmd: >
