@@ -1,5 +1,6 @@
 \providecommand{\relativeRoot}{../..}
 \documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
 
 
 \begin{document}
@@ -13,7 +14,15 @@ We consider discrete time-steps $t \in \{ 0, 1, 2, \ldots, t_\text{max} \}$. We 
     \mathbf{X}[t] = \left( X_v[t] \right)
 \end{equation}
 %
-which represents the patient’s state of \gls{lnl} involvement as in the \gls{bn}, but for each time-step we have an instance of it. For the diagnosis $\mathbf{Z}$ on the other hand, we do not need to differentiate between different times, since in practice we will only ever see one diagnosis. This is illustrated in \cref{fig:hmm_schema}. The reason for this is that, if we diagnose a patient with cancer, treatment starts timely and we no longer observe the natural progression of the disease. From a modeling standpoint however, this is a problem that we will address later.
+which represents the patient's state of \gls{lnl} involvement as in the \gls{bn}, but for each time-step we have an instance of it. For the diagnosis $\mathbf{Z}$ on the other hand, we do not need to differentiate between different times, since in practice we will only ever see one diagnosis. This is illustrated in \cref{fig:unilateral:hmm_schema}. The reason for this is that, if we diagnose a patient with cancer, treatment starts timely and we no longer observe the natural progression of the disease. From a modeling standpoint however, this is a problem that we will address later.
+
+\begin{figure}[h]
+    \centering
+    \def\svgwidth{0.65\textwidth}
+    \input{figures/hmm_schema.pdf_tex}
+    \caption{Hidden Markov model with only one observation. $\boldsymbol{\pi}$ denotes the healthy starting state. Horizontal arcs represent the transitions from a state $\mathbf{x}[t-1]$ to the state at the next time step $\mathbf{x}[t]$. The final state is then diagnosed (vertical arc, parametrized via sensitivity and specificity) and we observe $\mathbf{z}$.}
+    \label{fig:unilateral:hmm_schema}
+\end{figure}
 
 A hidden Markov model is fully described by the starting state $\mathbf{X}[0] \coloneqq \boldsymbol{\pi}$ and the two conditional probability functions that govern the progression from a state $X[t]$ at time $t$ to a state $X[t+1]$ at the following time-step
 %
@@ -63,11 +72,7 @@ in this case of $V = 4$. The exact ordering does not matter, it is just a conven
     \centering
     \def\svgwidth{0.8\textwidth}
     \input{figures/transition_matrix.pdf_tex}
-    \caption{Transition matrix. All gray pixels in this image correspond to
-    entries in the matrix being zero. The colored pixels take on values $\in [0, 1]$
-    which are here overlaid in \%. The exact values stem from the mean of the
-    learned parameters in \cref{sec:unilateral:application}. The
-    exact shape of the gray ``mask'' depends on how one orders the states.}
+    \caption{Transition matrix. All gray pixels in this image correspond to entries in the matrix being zero. The colored pixels take on values $\in [0, 1]$ which are here overlaid in \%. The exact values stem from the mean of the learned parameters in \cref{sec:unilateral:application}. The exact shape of the gray ``mask'' depends on how one orders the states.}
     \label{fig:unilateral:trans_matrix}
 \end{figure}
 

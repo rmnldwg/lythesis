@@ -1,6 +1,7 @@
 stages:
   convert-to-pdf:
     foreach:
+    - hmm_schema
     - HMM_BN_risk_comparison
     - HMM_evo_matrix
     - HMM_evolution

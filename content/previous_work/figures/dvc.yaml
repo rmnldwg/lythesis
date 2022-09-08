@@ -1,0 +1,18 @@
+stages:
+  convert-to-pdf:
+    foreach:
+    - graph
+    do:
+      cmd: >
+        inkscape
+        --without-gui
+        --file=${item}.svg
+        --export-pdf=${item}.pdf
+        --export-latex
+      deps:
+      - ${item}.svg
+      outs:
+      - ${item}.pdf:
+          cache: false
+      - ${item}.pdf_tex:
+          cache: false

@@ -154,3 +154,17 @@ stages:
     - path: HMM_evo_matrix.pdf_tex
       md5: 520c34d73cfd15d7be340b2ae9c60e1e
       size: 2068
+  convert-to-pdf@hmm_schema:
+    cmd: "inkscape --without-gui --file=hmm_schema.svg --export-pdf=hmm_schema.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: hmm_schema.svg
+      md5: 010b4a16174727ec05c63651b3e300eb
+      size: 30116
+    outs:
+    - path: hmm_schema.pdf
+      md5: fdb9603ed5d29c6f6c7327d345f629e6
+      size: 7758
+    - path: hmm_schema.pdf_tex
+      md5: 3abafa62ffa85914181ea520c8d62255
+      size: 2053

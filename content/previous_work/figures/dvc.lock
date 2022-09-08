@@ -1,0 +1,15 @@
+schema: '2.0'
+stages:
+  convert-to-pdf@graph:
+    cmd: "inkscape --without-gui --file=graph.svg --export-pdf=graph.pdf --export-latex\n"
+    deps:
+    - path: graph.svg
+      md5: 1478c0b0668622459f7af98f0ed3351e
+      size: 165807
+    outs:
+    - path: graph.pdf
+      md5: 9915412039869a0a28fabb70685afd8f
+      size: 38898
+    - path: graph.pdf_tex
+      md5: 109a2f6db63ed3384584a5e511aa41b8
+      size: 2045
