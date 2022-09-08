@@ -5,12 +5,12 @@ stages:
       \ --export-latex\n"
     deps:
     - path: simultaneous_learnedP.svg
-      md5: 1663bf48d014e6a1485b05c8fba1b40b
-      size: 103034
+      md5: f9f21bd350c5fac9a5bd728b0975c068
+      size: 61853
     outs:
     - path: simultaneous_learnedP.pdf
-      md5: 82f9a298bf35eef198b257465d34adc3
-      size: 106678
+      md5: 85de43253a623b97a7daa62b067ef81c
+      size: 58659
     - path: simultaneous_learnedP.pdf_tex
       md5: a940435886ed18bdb91f1fb82efc5ede
       size: 2083
@@ -19,54 +19,54 @@ stages:
       \ --export-latex\n"
     deps:
     - path: HMM_risk_increaseP.svg
-      md5: ad07e3de749e9105ca4f18a65127be1d
-      size: 78092
+      md5: 6be61c9b04ad7ef7a108518053b7aa8a
+      size: 50599
     outs:
     - path: HMM_risk_increaseP.pdf
-      md5: 7b97cdc72d278321261512ee7169cce9
-      size: 56247
+      md5: dfd6242d2da4efcc1829d3661556780c
+      size: 35306
     - path: HMM_risk_increaseP.pdf_tex
-      md5: 74541730da9bcbc168fc8fbeaac0fc51
+      md5: b08f6c8b7305fbd540c2381e88827ee2
       size: 2077
   convert-to-pdf@simple_rate_decay:
     cmd: "inkscape --without-gui --file=simple_rate_decay.svg --export-pdf=simple_rate_decay.pdf\
       \ --export-latex\n"
     deps:
     - path: simple_rate_decay.svg
-      md5: 5a2b6d8ba2894dc6f020d21dc32da62a
-      size: 58247
+      md5: d7fb7929d100f7105f4eeafd168b0749
+      size: 29799
     outs:
     - path: simple_rate_decay.pdf
-      md5: dd8e13c7f6aa6f3a3840d711d540a9ec
-      size: 50010
+      md5: c4acac1ed4728ccdad3c32c95a08ff33
+      size: 25304
     - path: simple_rate_decay.pdf_tex
-      md5: f0567d769af3c08757da3ecd84ff9797
-      size: 2074
+      md5: 7f286498b2b8a60ed9c111b6cb2fe073
+      size: 2075
   convert-to-pdf@rate_decay_theory_vs_sampled:
     cmd: "inkscape --without-gui --file=rate_decay_theory_vs_sampled.svg --export-pdf=rate_decay_theory_vs_sampled.pdf\
       \ --export-latex\n"
     deps:
     - path: rate_decay_theory_vs_sampled.svg
-      md5: b72893f99dfabab39e0e0b410c23fc5f
-      size: 119152
+      md5: 10e247cfbeb769a4f7f78445d55ebfbe
+      size: 78429
     outs:
     - path: rate_decay_theory_vs_sampled.pdf
-      md5: 2cc1c0e6cef6063c177b4c8f75b60f15
-      size: 169998
+      md5: 36e28823ec33b135b9bf3a6e493d27e9
+      size: 90193
     - path: rate_decay_theory_vs_sampled.pdf_tex
-      md5: afde2a973aff606a38f0b9e1cd255ef9
-      size: 2096
+      md5: f2419385b6915d2cc09b0a7aeb0d83b2
+      size: 2097
   convert-to-pdf@simultaneous_risk:
     cmd: "inkscape --without-gui --file=simultaneous_risk.svg --export-pdf=simultaneous_risk.pdf\
       \ --export-latex\n"
     deps:
     - path: simultaneous_risk.svg
-      md5: 95449e28279de23a5a2be170b1140b02
-      size: 134741
+      md5: e3a8491958b8b0e944bf7d164ca7fc08
+      size: 87867
     outs:
     - path: simultaneous_risk.pdf
-      md5: 8e60bffb6d29c219d6ff00db5d725230
-      size: 197047
+      md5: 5e2afbfa17567df2083d791fb063f8bc
+      size: 77713
     - path: simultaneous_risk.pdf_tex
       md5: 0486973d5bd5ef0aa133947ca8e6e9bf
       size: 2075
@@ -75,68 +75,68 @@ stages:
       \ --export-latex\n"
     deps:
     - path: multi_length_risk.svg
-      md5: 237797b21b1378b1e0f8ee2535424f2c
-      size: 385538
+      md5: 58e2080c4b49ae6c0d6bbac2e15367b0
+      size: 352978
     outs:
     - path: multi_length_risk.pdf
-      md5: 5e466c40bf0fea21c67f753db5ed358b
-      size: 159434
+      md5: fe6531e33508a996648f27f60ed73b15
+      size: 129828
     - path: multi_length_risk.pdf_tex
-      md5: 2f41d540f12875d87f8ac186c0693c6b
+      md5: f6e78cd708a3c629ce7029d25b0b539c
       size: 2075
   convert-to-pdf@HMM_BN_risk_comparison:
     cmd: "inkscape --without-gui --file=HMM_BN_risk_comparison.svg --export-pdf=HMM_BN_risk_comparison.pdf\
       \ --export-latex\n"
     deps:
     - path: HMM_BN_risk_comparison.svg
-      md5: b9c748c091d350075f238fd82751c353
-      size: 296246
+      md5: 6793f91450e86f01895bbe79662f1a6a
+      size: 263976
     outs:
     - path: HMM_BN_risk_comparison.pdf
-      md5: fe2fbaea27b66485d013b025f9af2e50
-      size: 226195
+      md5: 5e2bfc68b4c0cb894fd6a307ca65b5cc
+      size: 128961
     - path: HMM_BN_risk_comparison.pdf_tex
-      md5: 42186cae1c1aa8141353018135f3fbb1
+      md5: 52ac58292b49e48862421d47100afd86
       size: 2085
   convert-to-pdf@transition_matrix:
     cmd: "inkscape --without-gui --file=transition_matrix.svg --export-pdf=transition_matrix.pdf\
       \ --export-latex\n"
     deps:
     - path: transition_matrix.svg
-      md5: bcd2e8cd2cffc3ddbc94ef32aa3946bb
-      size: 78716
+      md5: 63772ba12998d42fde1ee92a832edb30
+      size: 70371
     outs:
     - path: transition_matrix.pdf
-      md5: f2c226ef722e546d1b52f0833ff74c7d
-      size: 232286
+      md5: 327e4e19138ce9bea06f5c902cfbf047
+      size: 82948
     - path: transition_matrix.pdf_tex
-      md5: 7571a82e17078604874567781370d8f3
-      size: 2066
+      md5: 6127a7616c96863c6f1ca14a3dde61bd
+      size: 2075
   convert-to-pdf@corner_HMM:
     cmd: "inkscape --without-gui --file=corner_HMM.svg --export-pdf=corner_HMM.pdf\
       \ --export-latex\n"
     deps:
     - path: corner_HMM.svg
-      md5: b8feef8d3a22f5c6e4a02ff4b8ed988f
-      size: 1826295
+      md5: 2ee8c0c8bb98b763649cc3ba29f71316
+      size: 2021359
     outs:
     - path: corner_HMM.pdf
-      md5: cf6f82afdd46ed60f717b0a86b73deee
-      size: 3677853
+      md5: 8e682e34fa35125c30895101bb3ec250
+      size: 2940429
     - path: corner_HMM.pdf_tex
-      md5: 31f4258138f140646106ddaa55870071
+      md5: af648e289c1f95a853838eb85af68df6
       size: 2061
   convert-to-pdf@HMM_evolution:
     cmd: "inkscape --without-gui --file=HMM_evolution.svg --export-pdf=HMM_evolution.pdf\
       \ --export-latex\n"
     deps:
     - path: HMM_evolution.svg
-      md5: 00e0ab88caf5b5f6c077d6a1f75dd986
-      size: 135984
+      md5: ec9962040002f1d0a5cbdd1cbf0ed824
+      size: 99749
     outs:
     - path: HMM_evolution.pdf
-      md5: 5527bd54d9e389224319d5674f022f48
-      size: 135136
+      md5: c7eefccc0acc3c2deacb8ab4bfc1834b
+      size: 89211
     - path: HMM_evolution.pdf_tex
       md5: f0a2441390968b2c64cb00fb671893fd
       size: 2067
@@ -145,12 +145,12 @@ stages:
       \ --export-latex\n"
     deps:
     - path: HMM_evo_matrix.svg
-      md5: cbb8e15680d86aa2df782774b2d7a98e
-      size: 138949
+      md5: 3f86fa61b28e3945c30e23ff88008ac3
+      size: 86354
     outs:
     - path: HMM_evo_matrix.pdf
-      md5: c8d7a23ff4fc4f360bd789454c894084
-      size: 298920
+      md5: ef822cd5f44c1498d2186a4de9f1a656
+      size: 115793
     - path: HMM_evo_matrix.pdf_tex
-      md5: f64fd7f59abcc438dff0e90fe31122ce
+      md5: 520c34d73cfd15d7be340b2ae9c60e1e
       size: 2068

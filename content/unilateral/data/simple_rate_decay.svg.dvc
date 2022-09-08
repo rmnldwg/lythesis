@@ -1,12 +1,12 @@
-md5: 9b513b7cda7417039f4e3141a62ec816
+md5: dd484f4f177b6d60857477d934690dd9
 frozen: true
 deps:
 - path: notebook/figures/simple_rate_decay.svg
   repo:
     url: https://github.com/rmnldwg/lymph
-    rev: 0.1.0
-    rev_lock: bb89445aa20e5f2f643017c4a5fa014237f20f8c
+    rev: 0.1.1
+    rev_lock: d794bd9561e473950e6134be933ff090c40f4825
 outs:
-- md5: 5a2b6d8ba2894dc6f020d21dc32da62a
-  size: 58247
+- md5: d7fb7929d100f7105f4eeafd168b0749
+  size: 29799
   path: ../figures/simple_rate_decay.svg

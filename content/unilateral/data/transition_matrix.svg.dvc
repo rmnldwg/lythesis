@@ -1,12 +1,12 @@
-md5: 053929c9f6cdb6fbf789786c9438b245
+md5: 04d7aeca1ac8435cd660b83d60498b17
 frozen: true
 deps:
 - path: notebook/figures/transition_matrix.svg
   repo:
     url: https://github.com/rmnldwg/lymph
-    rev: 0.1.0
-    rev_lock: bb89445aa20e5f2f643017c4a5fa014237f20f8c
+    rev: 0.1.1
+    rev_lock: d794bd9561e473950e6134be933ff090c40f4825
 outs:
-- md5: bcd2e8cd2cffc3ddbc94ef32aa3946bb
-  size: 78716
+- md5: 63772ba12998d42fde1ee92a832edb30
+  size: 70371
   path: ../figures/transition_matrix.svg
