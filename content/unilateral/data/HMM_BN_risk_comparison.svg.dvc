@@ -1,11 +1,11 @@
-md5: a14b91b3c7b93ccd5b79aa27f019eaf3
+md5: 36c4fafea399614e3597889e4cd37eee
 frozen: true
 deps:
 - path: notebook/figures/HMM_BN_risk_comparison.svg
   repo:
     url: https://github.com/rmnldwg/lymph
     rev: 0.1.1
-    rev_lock: d794bd9561e473950e6134be933ff090c40f4825
+    rev_lock: 9d0773cf2307e230047d705e234998d188273cf3
 outs:
 - md5: 6793f91450e86f01895bbe79662f1a6a
   size: 263976

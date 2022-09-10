@@ -27,25 +27,25 @@ which represents the patient's state of \gls{lnl} involvement as in the \gls{bn}
 A hidden Markov model is fully described by the starting state $\mathbf{X}[0] \coloneqq \boldsymbol{\pi}$ and the two conditional probability functions that govern the progression from a state $X[t]$ at time $t$ to a state $X[t+1]$ at the following time-step
 %
 \begin{equation}
-    P_{HMM}\left( \mathbf{X}[t+1] \mid \mathbf{X}[t] \right)
+    P_\text{HMM}\left( \mathbf{X}[t+1] \mid \mathbf{X}[t] \right)
 \end{equation}
 %
 and the probability of a diagnostic observation given the true state of the patient
 %
 \begin{equation}
-    P_{HMM}\left( \mathbf{Z} \mid \mathbf{X}[t] \right)
+    P_\text{HMM}\left( \mathbf{Z} \mid \mathbf{X}[t] \right)
 \end{equation}
 %
 Since both our state space and our observation space are discrete and finite, it is possible to enumerate all possible states and observations and collect them in a table or matrix. This so-called \emph{transition matrix} would then be
 %
 \begin{equation}
-    \mathbf{A} = \left( A_{ij} \right) = \left( P_{HMM} \left( \mathbf{X}[t+1] = \boldsymbol{\xi}_i \mid \mathbf{X}[t] = \boldsymbol{\xi}_j \right) \right)
+    \mathbf{A} = \left( A_{ij} \right) = \left( P_\text{HMM} \left( \mathbf{X}[t+1] = \boldsymbol{\xi}_i \mid \mathbf{X}[t] = \boldsymbol{\xi}_j \right) \right)
 \end{equation}
 %
 and the \emph{observation matrix}
 %
 \begin{equation}
-    \mathbf{B} = \left( B_{ij} \right) = \left( P_{HMM} \left( \mathbf{Z} = \boldsymbol{\zeta}_i \mid \mathbf{X}[t] = \boldsymbol{\xi}_j \right) \right)
+    \mathbf{B} = \left( B_{ij} \right) = \left( P_\text{HMM} \left( \mathbf{Z} = \boldsymbol{\zeta}_i \mid \mathbf{X}[t] = \boldsymbol{\xi}_j \right) \right)
 \end{equation}
 %
 Here, $\boldsymbol{\xi}_i$ and $\boldsymbol{\zeta}_j$ are no new variables, but just $\mathbf{x}$ and $\mathbf{z}$ renamed and reordered. The indices $i$ and $j$ for one of the possible states or observations for the entire patient, not for an individual \gls{lnl}. In total, there are $S = |\{ 0,1 \}|^V$ different states and the same number of different possible observations per diagnostic modality. We order the hidden states from
@@ -72,7 +72,7 @@ in this case of $V = 4$. The exact ordering does not matter, it is just a conven
     \centering
     \def\svgwidth{0.8\textwidth}
     \input{figures/transition_matrix.pdf_tex}
-    \caption{Transition matrix. All gray pixels in this image correspond to entries in the matrix being zero. The colored pixels take on values $\in [0, 1]$ which are here overlaid in \%. The exact values stem from the mean of the learned parameters in \cref{sec:unilateral:application}. The exact shape of the gray ``mask'' depends on how one orders the states.}
+    \caption{Transition matrix. All gray pixels in this image correspond to entries in the matrix being zero. The colored pixels take on values $\in [0, 1]$ which are here overlaid in\%. The exact values stem from the mean of the learned parameters in \cref{sec:unilateral:application}. The exact shape of the gray ``mask'' depends on how one orders the states.}
     \label{fig:unilateral:trans_matrix}
 \end{figure}
 

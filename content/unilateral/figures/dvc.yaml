@@ -13,6 +13,7 @@ stages:
     - simultaneous_learnedP
     - simultaneous_risk
     - transition_matrix
+    - hmm_paths
     do:
       cmd: >
         inkscape
@@ -27,3 +28,24 @@ stages:
           cache: false
       - ${item}.pdf_tex:
           cache: false
+
+  crop-figure:
+    desc:
+      This command replaces the line in the auto-generated `hmm_bn_comp.pdf_tex` with an
+      almost identical line, plus some margin trimming/cropping that is necessary to
+      make the figure look good on paper.
+    vars:
+    - source: HMM_BN_risk_comparison
+    - left: 4mm
+    - bottom: 0mm
+    - right: 3mm
+    - top: 0mm
+    cmd: >
+      sed ${source}.pdf_tex
+      -e '56s/.*/    \\put(0,0){\\includegraphics[width=\\unitlength,page=1,trim=${left} ${bottom} ${right} ${top}]{${source}.pdf}}%/'
+      > ${source}_crop.pdf_tex
+    deps:
+    - ${source}.pdf_tex
+    outs:
+    - ${source}_crop.pdf_tex:
+        cache: false

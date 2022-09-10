@@ -10,6 +10,14 @@
 
 It turns out that length and shape of $p(t)$ have almost no effect on the risk predictions as long as we are not concerned with different T-categories. So, if we learn our parameters from a dataset that only contains T1 patients and then compute risks for T1 patients only, the result will not differ almost regardless of the time-prior that was used for learning and risk assessment. Only too few time-steps may pose a problem, since then the system might not be able to spread to all \glspl{lnl} via all pathways. And too many time-steps could introduce numerical problems, because the learned probability rates $\tilde{b}_v$ and $\tilde{t}_{\pa(v)v}$  become smaller for longer time-priors.
 
+\begin{figure}
+    \centering
+    \def\svgwidth{0.7\textwidth}
+    \input{figures/simple_rate_decay.pdf_tex}
+    \caption{Solutions to \cref{eq:unilateral:tprior:analytical_result} for the base probability rate $\tilde{b}_1$ given a $p^{\star}$ of 0.4 and $T$ increasing from 1 to 15.}
+    \label{fig:unilateral:tprior:rate_decay_analytic}
+\end{figure}
+
 To understand the impact of the number of time-steps $T$ on the results, we looked at a simple analytical model: Assume that there is a system with only one \gls{lnl} that the primary tumor can spread to that is empirically involved with probability $p^{\star} = 0.4$. For this situation, we can now derive how the base probability rate $\tilde{b}_v$ changes for a uniform time-prior
 %
 \begin{equation}
@@ -63,21 +71,13 @@ The right-hand side essentially contains the partial sum of the geometric series
 %
 \begin{figure}
     \centering
-    \def\svgwidth{0.7\textwidth}
-    \input{figures/simple_rate_decay.pdf_tex}
-    \caption{Solutions to \cref{eq:unilateral:tprior:analytical_result} for the base probability rate $\tilde{b}_1$ given a $p^{\star}$ of 0.4 and $T$ increasing from 1 to 15.}
-    \label{fig:unilateral:tprior:rate_decay_analytic}
-\end{figure}
-
-It is not possible to analytically solve for $\tilde{b}_1$ in the case of arbitrary $T$, but numerical solutions are very easy to find and are plotted in \cref{fig:unilateral:tprior:rate_decay_analytic}. This confirms the intuition, that the base and transition probability rates become smaller when the total time over which the tumor spreads is divided into more but shorter time-steps.
-
-\begin{figure}
-    \centering
     \def\svgwidth{1.0\textwidth}
     \input{figures/rate_decay_theory_vs_sampled.pdf_tex}
     \caption{Decay of base probability rates as a function of the number of time-steps the time-prior has. Circles depict the results from learning the same dataset with different time-priors while solid lines show the analytical result starting with a $p^{\star}$ corresponding to the prevalence of involvement of \gls{lnl} I and II respectively.}
     \label{fig:unilateral:tprior:rate_decay_sampled}
 \end{figure}
+
+It is not possible to analytically solve for $\tilde{b}_1$ in the case of arbitrary $T$, but numerical solutions are very easy to find and are plotted in \cref{fig:unilateral:tprior:rate_decay_analytic}. This confirms the intuition, that the base and transition probability rates become smaller when the total time over which the tumor spreads is divided into more but shorter time-steps.
 
 Now we compare this idealized result to the decay of the probability rates for the full system. To that end, the model with \glspl{lnl} I-IV was trained as in the same way as for the figures in the section above, but with differently long uniform time-priors instead of a Binomial prior. So, the probability for every time-step is $p(t)=1/T$ for all $t \geq 1$, but zero for the starting state $\pi$. \cref{fig:unilateral:tprior:rate_decay_sampled} shows the expected value of the parameters as a function of $T$. It is important to stress again that the risk predicted by the models using all those different-length uniform time-priors was the same for $T \geq 2$. For the one-step model with $T=1$ the risk prediction of a \gls{lnl} does not depend on the diagnose. For example, we expect the risk in level III is higher, when level II is involved, due to the spread from \gls{lnl} II to III. With such a short time-prior, however, the model cannot capture this, and all risk predictions will just yield the prevalence of involvement. This effect can be seen in Figure A3 and shows what has been stated earlier: The support of the time-prior has little effect on the model's predictions, as long as it is sufficient to capture the spread through the lymphatic system.
 
