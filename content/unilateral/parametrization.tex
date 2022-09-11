@@ -15,7 +15,7 @@ The square transition matrix $\mathbf{A}$ has $S = 2^{2V}$ entries and therefore
     \times \left[ P_\text{BN} \left( x_v[t+1] \mid \big\{ x_r[t] \, , \, \Tilde{t}_{rv} \big\}_{r \in \pa(v)}, \Tilde{b}_v \right) \right]^{1-x_v[t]}
 \end{multline}
 %
-Here we have reused the conditional probability from the \gls{bn} for each \gls{lnl}, but we take it to the power of one minus that node’s previous value. This ensures that an involved node stays involved with probability 1. The parameters $\Tilde{t}_{\pa(v)v}$ and $\Tilde{b}_v$ take the same role as in the \gls{bn}, but they are now probability \emph{rates}, since they act per time-step. Lastly, the first term $Q$ in the product formalizes the fact that a metastatic lymph node level cannot become healthy again once it was involved. This also means that several entries in the transition matrix $\mathbf{A}$ must be zero. In a table the values of $Q\left( x_v[t+1]; x_v[t] \right)$ can be written like this:
+Here we have reused the conditional probability from the \gls{bn} for each \gls{lnl}, but we take it to the power of one minus that node's previous value. This ensures that an involved node stays involved with probability 1. The parameters $\Tilde{t}_{\pa(v)v}$ and $\Tilde{b}_v$ take the same role as in the \gls{bn}, but they are now probability \emph{rates}, since they act per time-step. Lastly, the first term $Q$ in the product formalizes the fact that a metastatic lymph node level cannot become healthy again once it was involved. This also means that several entries in the transition matrix $\mathbf{A}$ must be zero. In a table the values of $Q\left( x_v[t+1]; x_v[t] \right)$ can be written like this:
 %
 \begin{equation}
     \begin{aligned}
