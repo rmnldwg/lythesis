@@ -4,8 +4,8 @@
 
 \begin{document}
 
-\section{Parametrization of the transition matrix}
-\label{sec:unilateral:parametrization}
+\subsection{Parametrization of the transition matrix}
+\label{subsec:unilateral:parametrization}
 
 The square transition matrix $\mathbf{A}$ has $S = 2^{2V}$ entries and therefore $S(S-1)=2^{2V}-2^V$ degrees of freedom. Although searching the full space of viable transition matrices is possible via unparametrized sampling techniques, it is computationally challenging and hard to interpret. To achieve this reduction in degrees of freedom, and also preserve the anatomically and medically motivated structure of the Bayesian network from \cref{chap:bn_model}, we can represent the transition probability from one state $\mathbf{x}[t]$ to another state $\mathbf{x}[t+1]$ using the conditional probabilities defined for the \gls{bn}. The difference is that the probability of observing a certain state of \gls{lnl} $v$ now depends on the state of the patient one time-step before. Note that from here on, we will mostly drop the probabilistically correct notation $P(X=x)$ and just write $P(x)$ for brevity
 %
