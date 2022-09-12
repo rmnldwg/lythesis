@@ -1,0 +1,142 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
+
+
+\begin{document}
+
+\section{Application to oropharyngeal SCC}
+\label{sec:unilateral:application}
+
+\input{_reproducibility.tex}
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/corner_HMM.pdf_tex}
+    \caption{Corner plot of the sampled parameters for the \gls{hmm} model parameters. The histograms on the diagonal show the 1D marginals, while the lower triangle shows all possible combinations of 2D marginals. The black lines are the iso-lines enclosing 20\%, 50\% and 80\% of the sampled points respectively. Correlations between the parameters can at most be seen between $\tilde{t}_{23}$ and $\tilde{b}_3$.}
+    \label{fig:unilateral:corner_hmm}
+\end{figure}
+
+For applying the introduced methodology, we considered the graph in \cref{fig:bn:graph} as the underlying abstract representation of the lymphatic flow with only one diagnostic modality per \gls{lnl}. Just as Pouymayou et al. \cite{pouymayou_bayesian_2019}, we used the reconstructed dataset of early T-category patients with oropharyngeal carcinomas detailing ipsilateral nodal involvement of the \glspl{lnl} I to IV from Sanguineti et al. \cite{sanguineti_defining_2009} for inference. Because this publication only reported on 103 $N_+$ patients, we added 44 $N_0$ entries to reflect that around 30\% of early T-category patients with pharyngeal HNSCC are observed to be node negative \cite{gregoire_selection_2000}. During training of the \gls{hmm} we fixed both sensitivity and specificity to 1, since we assumed the pathological report to be the ground truth. For the subsequent risk assessment, we set the sensitivity to $s_N = 81\%$ and the specificity to $s_p = 76\%$, which represent values for CT imaging \cite{de_bondt_detection_2007} analogous to the work on \gls{bn} \cite{pouymayou_bayesian_2019}.
+    
+For the time-prior $p(t)$ we chose a Binomial distribution illustrated in \cref{fig:unilateral:hmm_evo_matrix} because it has finite support, its mean can be controlled by one parameter $p$, and its shape reflects the intuitive assumption that the probability of diagnosing a patient with cancer is small for very early time-steps (when the tumor is small) and very late time-steps (when a patient's symptoms are so severe that it is unlikely that they did not notice their disease earlier). The number of time-steps was fixed to 10 and the parameter $p$ was set to $p = 0.4$ for early T-category patients, meaning that the probability of diagnosis peaks around $t = 4$, but is non-zero for earlier or later times. While it is important to have enough time-steps, so the system can evolve, we have shown in \cref{sec:unilateral:tprior} that the results presented below are mostly independent of the exact choice of the time-prior shape and the number of time-steps.
+
+The learning process itself was implemented using the Python library of an advanced \gls{mcmc} sampler called \repolink[dfm]{emcee} \cite{foreman-mackey_emcee_2013} based on an affine invariant ensemble sampler \cite{goodman_ensemble_2010} to draw parameter samples from the likelihood in \cref{eq:hmm_log_likelihood}. Although sampling is the slowest and least preferable option of inference it is also without doubt in many cases the only available option and in our case even feasible; we get relatively short auto-correlation times (around a couple of hundred steps) and an average modern multicore CPU can easily draw hundreds of thousands of samples within minutes.
+
+Many distributions in the form of histograms we show in this work are made by computing the respective quantity -- e.g., the risk -- for a subset of the sampled parameters. We typically randomly select between 1 and 2\% of the 200,000 samples drawn after the so-called burn-in phase, when the sampling has already converged to the target distribution, as a subset. The learned parameter densities are depicted as a \repolink[dfm]{corner.py} \cite{foreman-mackey_cornerpy_2016} plot (e.g. in \cref{fig:unilateral:corner_hmm}).
+
+\subsection{A patient's evolution}
+\label{subsec:unilateral:application:evolution}
+
+Having inferred the parameters $\tilde{t}_{\pa{(v)}v}$ and $\tilde{b}_v$, we can model how the state of \gls{lnl} involvement evolves over the time-steps that support the chosen prior. In \cref{fig:unilateral:hmm_evo_matrix,fig:unilateral:hmm_evolution} (left), we have plotted the probability of each hidden state $\boldsymbol{\xi}_i$ for each time-step (calculated for the mean over all parameter samples). At time-step zero the patient is healthy, and the system is by definition in the initial state with probability 1. One time-step later the individual lymph nodes are involved with the base probability rates $\tilde{b}_v$ (\cref{fig:unilateral:corner_hmm}).
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/HMM_evo_matrix.pdf_tex}
+    \caption{Probability of being in each hidden state as a function of time (left). The color indicates low (green) and high (red) probabilities, which are also written on the respective pixel in percent if larger than 1\%. We used the mean of the inferred parameter samples to compute the probabilities. On the right, the used time-prior is plotted with which each column on the left will be weighted.}
+    \label{fig:unilateral:hmm_evo_matrix}
+\end{figure}
+
+For example, after one time-step the state $\boldsymbol{\xi}_5 = \begin{bmatrix} 0 & 1 & 0 & 0 \end{bmatrix}$ has a probability of involvement of $\Probofgiven{\mathbf{X}[1] = \boldsymbol{\xi}_5}{\mathbf{X}[0]=\boldsymbol{\pi}} = 22.7\%$ while the respective base probability rate is $\tilde{b}_2 \approx 24\%$. They are not quite the same, since state $\boldsymbol{\xi}_5$ is only one of the eight states that include involvement of \gls{lnl} II. After the first time-step, the transmission between the \glspl{lnl} starts to play a role. From $t=2$ onwards, we can e.g. see an increase in the joint involvement of \gls{lnl} II and III $\boldsymbol{\xi}_7 = \begin{bmatrix} 0 & 1 & 1 & 0 \end{bmatrix}$ whereas the probability of involvement in \gls{lnl} III only ($\boldsymbol{\xi}_7 = \begin{bmatrix} 0 & 0 & 1 & 0 \end{bmatrix}$) is low. In Fig. 5, this corresponds to a high rate of spread from level II to III ($\tilde{t}_{23} \approx 18\%$), since the base probability rate for level III is rather low ($\tilde{b}_3 \approx 3\%$). After the tenth time-step, we find state $\boldsymbol{\xi}_8 = \begin{bmatrix} 0 & 1 & 1 & 1 \end{bmatrix}$, representing the involvement of the whole lymphatic chain from \gls{lnl} II down to \gls{lnl} IV, to be the most likely state. If we continued to evolve the system beyond this time-step, we would find that the probability of the final and worst state $\boldsymbol{\xi}_{16} = \begin{bmatrix} 1 & 1 & 1 & 1 \end{bmatrix}$ grows to 1 for $t \rightarrow \infty$. However, this occurs at a time much later than the typical time of diagnosis.
+
+In contrast to the probability of hidden states, the probability of a single \gls{lnl}'s involvement can only increase over time, as depicted in \cref{fig:unilateral:hmm_evolution} (middle), since it is a marginalization of all the eight states that contain the respective \gls{lnl}'s involvement. One of these eight states is always the final state $\boldsymbol{\xi}_{16}$ and hence the probability for involvement in any \gls{lnl} must approach 1 for increasing $t$. Intuitively, this naturally arises as every time-step harbors the risk of a level becoming involved, while self-healing is forbidden.
+
+Finally, in the right panel of \cref{fig:unilateral:hmm_evolution} shows the probability of a \gls{lnl}'s involvement marginalized over all time-steps using the time-prior. The probabilities plotted in this window are the result of marginalizations of the matrix plotted in \cref{fig:unilateral:hmm_evo_matrix}: first, selectively along the x-axis; and secondly, weighted along the y-axis. These marginalized probabilities are compared to the prevalence of \gls{lnl} involvement in the dataset used during learning. The agreement between our model and the data observed in \cref{fig:unilateral:hmm_evolution} (right) verifies that the model can accurately describe the data.
+
+\subsection{Comparison to the BN model}
+\label{subsec:unilateral:application:comp_to_bn}
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.01\textwidth}
+    \input{figures/HMM_evolution.pdf_tex}
+    \caption{(left) Probability of certain hidden state vs time; (middle) Probability of \gls{lnl}'s involvement marginalized over the other \gls{lnl}'s involvement vs time; (right) The same probabilities as in the middle, but also marginalized over the time-prior and depicted as violin plots. The dashed lines represent the prevalence in the dataset8 that was used for training.}
+    \label{fig:unilateral:hmm_evolution}
+\end{figure}
+
+In \cref{fig:unilateral:hmm_evo_matrix,fig:unilateral:hmm_evolution}, we have considered the intrinsic time evolution of the hidden state describing lymphatic progression in the patient population. Now, we calculate the risk of \gls{lnl} involvement conditioned on a given diagnostic observation as described in \cref{subsec:unilateral:formalism:risk_assessment}. \Cref{fig:unilateral:hmm_bn_comp} shows the estimated risk of involvement for four possible observational states. The risk is shown in the form of a histogram, which is obtained by taking a random subset of the sampled parameters and computing the risk for each sample as explained in \cref{subsec:unilateral:formalism:risk_assessment}.
+
+As \gls{lnl} II is involved in the majority of patients, the probability of involvement is high even for negative imaging findings ($\approx 25\%$ for $N_0$ patients). Positive imaging findings of involvement in level III further increases the risk for metastases in level II to almost 40\% since the main cause of \gls{lnl} III's involvement is the spread from an already involved level II. Vice versa, the risk in level III doubles from around 5\% for $N_0$ patients to approximately 10\% when II is diagnosed with metastases. But we can also observe this correlation the other way around: If the CT image indicates involvement in \gls{lnl} III, but not in II, then there is actually a 60\% chance that this has been a false positive finding, considering how rarely level III alone is involved. Finally, also the risk of involvement in level IV is increased from 2 to 4\% and 6\% when observing metastases in level III or in both level II and III, respectively. It is important to note that these predictions do not only depend on the dataset that was used to train the model, but also on the sensitivity and specificity used to produce a new patient's diagnosis.
+
+It can be seen that the risk for involvement in level I is low, regardless of diagnostic findings in the levels II and/or III. This is because the base probability rate $\tilde{b}_2 \approx 2\%$ is very small and there is no other \gls{lnl} that drains into this one. Because level I is metastatic so rarely, involvement of level II is dominated by the base probability rate $\tilde{b}_2$ while the probability of spread from level I to II is almost inconsequential. This leads to the very broad distribution over the transmission probability $\tilde{t}_{12}$ seen in \cref{fig:unilateral:corner_hmm} as almost any value of $\tilde{t}_{12}$ is consistent with the data.
+
+\cref{fig:unilateral:hmm_bn_comp} also compares risk estimation for \gls{hmm}-based model to the previously published \gls{bn} model \cite{pouymayou_bayesian_2019} described in \cref{sec:previous_work:bayesian_network}. To that end, parameters of the \gls{bn} model have been sampled from the likelihood function \cref{eq:bn:likelihood}. The histograms of estimated risk are nearly identical, which verifies that the \gls{hmm}-based model and the \gls{bn}-based model yield the same risk predictions—a feature which is expected from the \gls{hmm} when only considering a single T-category and thus no time information is present. \cref{fig:unilateral:hmm_bn_comp} further shows that risk predictions of the \gls{bn} model using the maximum likelihood estimators of its parameters \cite{pouymayou_bayesian_2019}, agree with the mean of the histogram. However, the sampling method presented here has the additional advantage over previously published model that if provides confidence intervals for the predicted risk.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/HMM_BN_risk_comparison_crop.pdf_tex}
+    \caption{Risk assessment for the involvement of different \glspl{lnl} (rows), given positive observational findings in specified \glspl{lnl} (columns or labels next to histograms). E.g., row 3 depicts the risk of involvement in \gls{lnl} III, given different observed involvements (from left to right: no involvement, \gls{lnl} II only, \gls{lnl} III only, and \gls{lnl} II and III but no others). The orange line depicts the maximum likelihood result from Pouymayou et al. \cite{pouymayou_bayesian_2019}, the blue outline histogram represents the \gls{bn} sampling solutions and the solid colored histograms are the results from the \gls{hmm}. The color goes from green (low risk) to red (high risk). Of 200,000 parameter samples, 2\% were used to create this plot.}
+    \label{fig:unilateral:hmm_bn_comp}
+\end{figure}
+
+\subsection{Risk prediction for later T-category}
+\label{subsec:unilateral:application:late_risk}
+
+To illustrate the capability of the model to incorporate T-category into the risk prediction via the time-prior, we increased the parameter $p$ in the Binomial distribution while keeping the learned parameters $\tilde{b}$, $\tilde{t}$ from the previous section, which were inferred from a dataset of early T-category patients.
+
+In \cref{fig:unilateral:hmm_risk_increase} we consider the risk of microscopic involvement in \gls{lnl} III, given observed positive involvement only in \gls{lnl} II and negative observations in all other \glspl{lnl}. Increasing the mean of the time-prior yields higher risk of microscopic involvement. This makes intuitive sense since the expected number of time-steps between healthy state and diagnose increases, and therefore the probability of being in a more involved hidden state. Consequently, also the predicted risk of microscopic involvement despite negative diagnostic observation increases (orange and red histograms in \cref{fig:unilateral:hmm_risk_increase}). The variance of that risk increases as well, since predictions typically become more and more uncertain the further one extrapolates into the future. This shows that the principal idea behind the choice of an HMM works as intended.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{0.7\textwidth}
+    \input{figures/HMM_risk_increaseP.pdf_tex}
+    \caption{Risk prediction for \gls{lnl} III, given observed positive involvement in \gls{lnl} II and negative observations in all other \glspl{lnl} (assuming $s_N = 81\%$ and $s_P = 76\%$) \cite{de_bondt_detection_2007}. The Binomial parameter $p$ was fixed to 0.4 for parameter learning (green), representing early T-category patients. Increasing this parameter results in higher risk. The blue outline shows the risk in level III obtained for the Bayesian network model. The histograms correspond to 1\% of the 200,000 samples.}
+    \label{fig:unilateral:hmm_risk_increase}
+\end{figure}
+
+\subsection{Learning the time-prior}
+\label{subsec:unilateral:application:tprior}
+
+Although we have now shown how shifting the mass of the time prior towards later time steps generally increases the risk of involvement, we are not yet able to identify the different T-categories with certain time prior distributions. Throughout this work we will continue to use the Binomial distribution as time prior. But even with this simplifying choice, the question remains: Which Binomial parameter should one choose for the different T-categories? Our approach to this issue is to fix the Binomial time prior's $p$ parameter for one T-category and simultaneously learn the transition matrix parameters $\tilde{b}$ and $\tilde{t}_{\pa{(v)}v}$ together with the Binomial time prior's $p$ parameters for all other T-categories based on the likelihood function \cref{eq:hmm_log_likelihood} described in \cref{subsec:unilateral:formalism:tstage}. If we do not fix the time prior parameter for any T-category, the system becomes overdetermined and very strong correlations between the spread parameters and the Binomial parameter appear (see also \cref{sec:unilateral:tprior}). Then, if the model is presented with different degrees of involvement at different T-categories it can separate them by shifting the mass of the respective time priors apart, but it will learn the common spread parameters. This approach requires a dataset containing nodal involvement reports for patients with different T-categories.
+
+To the best of our knowledge, the dataset of surgically treated early T-category (T1 and T2) patients in \cite{sanguineti_defining_2009} was -- at the time of writing \cite{ludwig_hidden_2021} -- the only dataset containing detailed information on \gls{lnl} involvement, and no corresponding dataset exists for late T-category patients (T3 and T4). However, the literature provides estimates on the ratio of $N_0$ (no nodal involvement) and $N_+$ (at least one involved \gls{lnl}) patients for advanced T-categories. Here, we show that this information is sufficient to estimate the Binomial time prior's p for late T-category patients. This situation can be considered as a special case of learning from incomplete observations as described in \cref{subsec:unilateral:formalism:risk_assessment}.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/simultaneous_learnedP.pdf_tex}
+    \caption{Sampled late T-category $p$ parameter given an early T-category cohort and a fixed fraction of $N_0$ patients (20\%) for late T-category (left). Plots of the \glspl{pmf} of the fixed early T-category Binomial distribution and the distribution for the expected value of the late T-category parameter (right).}
+    \label{fig:unilateral:simultaneous_learned}
+\end{figure}
+
+As an example for the simultaneous learning, let us consider a patient database $\boldsymbol{\mathcal{Z}}_\text{early}$ for early T-category patterns of involvement and one for late T-category $\boldsymbol{\mathcal{Z}}_\text{late}$ together with the respective frequency vectors $\mathbf{f}_\text{early}$ and $\mathbf{f}_\text{late}$. Then the log-likelihood for combined learning is given by
+%
+\begin{multline}
+    \ln{ P_\text{HMM} \left( \boldsymbol{\mathcal{Z}}_\text{early}, \boldsymbol{\mathcal{Z}}_\text{late} \mid \theta, p_\text{late} \right) } =\\
+    \begin{aligned}
+        &\ln{ \left[ \sum_{t = 0}^n{ \mathfrak{B} \left( p_\text{early}, n \right) \cdot \boldsymbol{\pi}^\top \cdot \left( \mathbf{A} \right)^t \cdot \mathbf{B} } \right] } \cdot \mathbf{f}_\text{early} \\
+        + &\ln{ \left[ \sum_{t = 0}^n{ \mathfrak{B} \left( p_\text{late}, n \right) \cdot \boldsymbol{\pi}^\top \cdot \left( \mathbf{A} \right)^t \cdot \mathbf{B} \cdot \mathbf{C} } \right] } \cdot \mathbf{f}_\text{late}
+    \end{aligned}
+\end{multline}
+%
+where $\mathfrak{B}(p,n)$ is the Binomial distribution with parameters $p \in [0,1]$ and $n \in N$, where the early T-category parameter $p_\text{early}$ (along with the number of time steps $n$) must be fixed beforehand. $\mathbf{C}$ is a matrix for handling incomplete observations as introduced in \cref{subsec:unilateral:formalism:incomplete_diagnose}, which in this case is a $\{ 0,1 \}^{2 \times N}$ matrix
+%
+\begin{equation}
+    \mathbf{C} = \begin{pmatrix}
+        1 & 0 \\
+        0 & 1 \\
+        \vdots & \vdots \\
+        0 & 1
+    \end{pmatrix}
+\end{equation}
+%
+that marginalizes over all diagnoses that indicate some nodal involvement ($N_+$). The resulting vector after the matrix multiplication with $\mathbf{C}$ has only two components which correspond to the probability of observing the $N_0$ diagnosis and any other diagnosis ($N_+$) respectively.
+
+This approach allows us to infer the spread parameters and the late T-category's Binomial parameter plate if we do not have a database of late T-category patients. Simply the percentage of patients without nodal involvement in addition to an early T-category cohort is enough. We show this in \cref{fig:unilateral:simultaneous_learned}, where we used the same dataset of early T-category patients as in the sections before, but we added the information that for late T-category the $N_0$ portion would reduce from 30 to 20\%. More specifically, this amounts to creating a second “database” of another 147 patients, but instead of detailed patterns of involvement, each patient has either no nodal involvement (healthy state w.r.t. \glspl{lnl}) or have some ($\mathbf{f}_\text{early} = \begin{pmatrix} 29 & 118 \end{pmatrix}$). In the latter case, the system marginalizes over all possible observations except the healthy diagnosis. Sensitivity and specificity were kept the same as before. The learned spread parameters $\tilde{b}_v$ and $\tilde{t}_{\pa{(v)}v}$ are the same as before, since the sampler is not presented with different patterns of progression, but we additionally infer the parameter plate of a Binomial distribution representing the late T-category's time-prior just based on a reduction of the $N_0$ portion.
+
+A comparison of the involvement risk for \glspl{lnl} III and IV for different combinations of early and late T-category given different observed diagnoses is shown in \cref{fig:unilateral:simultaneous_risk}. The risk of microscopic involvement in level III is around 5\% for early T-category patients which are observed $N_0$. When only level II is observed to harbor metastases, the risk increases to approximately 10\%. If, in addition, the patient has late T-category tumor, the risk increases further to 15\%. Similarly, the risk of microscopic involvement in level IV is low ($\approx 2\%$) for early T-category patients without diagnosed metastases but increases to substantially higher values ($\approx 10\%$) for late T-category patients with observed metastases in \gls{lnl} II and III.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/simultaneous_risk.pdf_tex}
+    \caption{Distributions over risk of involvement for \gls{lnl} III (left) and \gls{lnl} IV (right), each for early and late T-category as well as depending on the given observed involvement. The sampled parameters displayed here are a randomly selected subset (1\% of 200,000) from simultaneous learning. Comparison with \cref{fig:unilateral:simultaneous_learned} shows that these predictions still agree with the results from the early stage only learning.}
+    \label{fig:unilateral:simultaneous_risk}
+\end{figure}
+
+The absolute numbers for risk of involvement depend on the dataset of progression patterns, the fraction of $N_0$ patients, and the assumed values for sensitivity and specificity of imaging. Larger datasets are warranted before clinical decisions can be based on the model. Nevertheless, \cref{fig:unilateral:simultaneous_risk} illustrates the potential of the HMM-based model to personalize microscopic involvement risk based on the individual patient's state of disease progression. For example, one could consider excluding level IV from the elective \gls{ctv} for early T-category patients without visible metastatic disease in level III.
+
+\end{document}

@@ -117,14 +117,14 @@ stages:
       \ --export-latex\n"
     deps:
     - path: corner_HMM.svg
-      md5: 2ee8c0c8bb98b763649cc3ba29f71316
-      size: 2021359
+      md5: 6fe80f61bb40e6aaf5cf7c3226dcc3dc
+      size: 2011665
     outs:
     - path: corner_HMM.pdf
-      md5: 8e682e34fa35125c30895101bb3ec250
-      size: 2940429
+      md5: 40c8ef7941efe0ec4c73b26f7479fb5d
+      size: 2939758
     - path: corner_HMM.pdf_tex
-      md5: af648e289c1f95a853838eb85af68df6
+      md5: 55af8e3797c468b2acd8617ef1da7f8a
       size: 2061
   convert-to-pdf@HMM_evolution:
     cmd: "inkscape --without-gui --file=HMM_evolution.svg --export-pdf=HMM_evolution.pdf\
@@ -154,3 +154,42 @@ stages:
     - path: HMM_evo_matrix.pdf_tex
       md5: 520c34d73cfd15d7be340b2ae9c60e1e
       size: 2068
+  convert-to-pdf@hmm_schema:
+    cmd: "inkscape --without-gui --file=hmm_schema.svg --export-pdf=hmm_schema.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: hmm_schema.svg
+      md5: 010b4a16174727ec05c63651b3e300eb
+      size: 30116
+    outs:
+    - path: hmm_schema.pdf
+      md5: fdb9603ed5d29c6f6c7327d345f629e6
+      size: 7758
+    - path: hmm_schema.pdf_tex
+      md5: 3abafa62ffa85914181ea520c8d62255
+      size: 2053
+  convert-to-pdf@hmm_paths:
+    cmd: "inkscape --without-gui --file=hmm_paths.svg --export-pdf=hmm_paths.pdf --export-latex\n"
+    deps:
+    - path: hmm_paths.svg
+      md5: b51dde398fdbac6559d5aa0112930487
+      size: 122280
+    outs:
+    - path: hmm_paths.pdf
+      md5: 0340faab60a590dbc4355d722962ee72
+      size: 34105
+    - path: hmm_paths.pdf_tex
+      md5: 5d5ec0d1d1cfb53cc8de010bc3d45845
+      size: 2051
+  crop-figure:
+    cmd: "sed HMM_BN_risk_comparison.pdf_tex -e '56s/.*/    \\\\put(0,0){\\\\includegraphics[width=\\\
+      \\unitlength,page=1,trim=4mm 0mm 3mm 0mm]{HMM_BN_risk_comparison.pdf}}%/' >\
+      \ HMM_BN_risk_comparison_crop.pdf_tex\n"
+    deps:
+    - path: HMM_BN_risk_comparison.pdf_tex
+      md5: 52ac58292b49e48862421d47100afd86
+      size: 2085
+    outs:
+    - path: HMM_BN_risk_comparison_crop.pdf_tex
+      md5: 96595cbf2321ae873a16f37be5adf443
+      size: 2106

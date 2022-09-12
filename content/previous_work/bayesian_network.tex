@@ -1,5 +1,6 @@
 \providecommand{\relativeRoot}{../..}
 \documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
 
 
 \begin{document}
@@ -7,7 +8,7 @@
 \section{Bayesian Network}
 \label{sec:previous_work:bayesian_network}
 
-We model the state of each \gls{lnl} as a hidden or unobserved binary random variable, which indicates via values 0 or 1 if an \gls{lnl} is healthy or involved, respectively. This state indicates if there is truly tumor present in an \gls{lnl}, including the presence of occult metastases for the involved state – motivating the term hidden or unobserved state. Every \gls{lnl} can be diagnosed using one or multiple modalities. Most used for diagnosis are imaging techniques like \gls{pet}, \gls{ct} and \gls{mri}, but palpation or \gls{fna} are also used. The diagnosis too, is modelled as binary random variable – this time an observed one – taking on 0 for negative and 1 for positive.
+We model the state of each \gls{lnl} as a hidden or unobserved binary random variable, which indicates via values 0 or 1 if an \gls{lnl} is healthy or involved, respectively. This state indicates if there is truly tumor present in an \gls{lnl}, including the presence of occult metastases for the involved state -- motivating the term hidden or unobserved state. Every \gls{lnl} can be diagnosed using one or multiple modalities. Most used for diagnosis are imaging techniques like \gls{pet}, \gls{ct} and \gls{mri}, but palpation or \gls{fna} are also used. The diagnosis too, is modelled as binary random variable -- this time an observed one -- taking on 0 for negative and 1 for positive.
 
 For notational convenience, we collect the hidden and observed random variables in a random vector each:
 %
@@ -21,42 +22,58 @@ For notational convenience, we collect the hidden and observed random variables 
 where $V$ is the number of \glspl{lnl} $v \in \{ 1,2,\ldots,V \}$ in the graph. The conditional probabilities that link the hidden state to the observations can be written as follows:
 %
 \begin{multline}
-    P_{BN} \left( Z_v = z_v \mid X_v = x_v \right) = \left( z_v + (-1)^{z_v} \cdot s_P \right)(1 - x_v) \\ 
+    P_\text{BN} \left( Z_v = z_v \mid X_v = x_v \right) = \left( z_v + (-1)^{z_v} \cdot s_P \right)(1 - x_v) \\ 
     + \left( (1 - z_v) + (-1)^{1 - z_v} \cdot s_N \right) x_v
 \end{multline}
 %
 with $s_N$ and $s_P$ being the sensitivity and specificity of the used diagnostic method. For example, for the probability of a false negative observation, i.e. diagnostic modality misses the presence of tumor, we get
 %
 \begin{equation}
-    P_{BN} \left( Z_v = 0 \mid X_v = 1 \right) = 1 - s_N
+    P_\text{BN} \left( Z_v = 0 \mid X_v = 1 \right) = 1 - s_N
 \end{equation}
 %
-Spread of the tumor through the lymphatic network is represented in this model by directed arcs to and between \glspl{lnl} as illustrated in \cref{fig:unilateral_graph}. We introduce an additional vertex to the graph representing the primary tumor, which we assume to be the only one. Directed arcs from the primary tumor to an \gls{lnl} represent direct spread of tumor cells from the primary tumor to the \gls{lnl}. These arcs are associated with parameters $b_v$ that we call base probabilities, and which indicate the probability that the tumor spreads directly to \gls{lnl} $v$. When \gls{lnl} $s$ receives efferent lymphatics from \gls{lnl} $r$, this too is represented by a directed arc from \gls{lnl} $r$ to $s$, and $r=\pa{(s)}$ which is called a parent node of $s$. These arcs are associated with a transition probability $t_{rs}$ from $r$ to $s$. The resulting \gls{dag} is shown in \cref{fig:unilateral_graph}, comprising ipsilateral levels I, II, II, through IV, and will be used throughout this work. However, when more data of detailed \gls{lnl} involvement including additional levels becomes available and/or contralateral involvement, the model can be extended.
+Spread of the tumor through the lymphatic network is represented in this model by directed arcs to and between \glspl{lnl} as illustrated in \cref{fig:bn:graph}. We introduce an additional vertex to the graph representing the primary tumor, which we assume to be the only one. Directed arcs from the primary tumor to an \gls{lnl} represent direct spread of tumor cells from the primary tumor to the \gls{lnl}. These arcs are associated with parameters $b_v$ that we call base probabilities, and which indicate the probability that the tumor spreads directly to \gls{lnl} $v$. When \gls{lnl} $s$ receives efferent lymphatics from \gls{lnl} $r$, this too is represented by a directed arc from \gls{lnl} $r$ to $s$, and $r=\pa{(s)}$ which is called a parent node of $s$. These arcs are associated with a transition probability $t_{rs}$ from $r$ to $s$. The resulting \gls{dag} is shown in \cref{fig:bn:graph}, comprising ipsilateral levels I, II, II, through IV, and will be used throughout this work. However, when more data of detailed \gls{lnl} involvement including additional levels becomes available and/or contralateral involvement, the model can be extended.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{0.35\textwidth}
+    \input{figures/graph.pdf_tex}
+    \caption{Bayesian network for modelling lymphatic metastatic spread as described by (Pouymayou et al. \cite{pouymayou_bayesian_2019}). It consists of the primary tumor $T$ (red circle), hidden binary variables $X_v$ for the involvement of \gls{lnl} $v$ (blue outlined circles) and observed (or diagnostic) variables $Z_v^\mathcal{O}$ (orange, filled squares), where $\mathcal{O}$ denotes the diagnostic modality, since there are potentially many observations per hidden variable. Annotated arcs depict the direction of lymphatic flow where the parameter next to it ($b$ in red and $t$ in blue) represents the probability of metastatic spread. Arrows connecting the \glspl{lnl} to their diagnoses via sensitivity and specificity in orange.}
+    \label{fig:bn:graph}
+\end{figure}
+
 The parameters $b_v$ and $t_{rs}$   associated with the directed arcs represent conditional probabilities, i.e. $b_v$ answers the question given that all parent nodes are healthy, how likely is it that the primary tumor spreads to node v? $t_{rs}$ on the other hand, can answer the question assuming no efferent spread from the primary tumor and given that all parent nodes except $r$ are healthy, what is the likelihood of spread to node $s$? The conditional probability for involvement of \gls{lnl} $v$ given the state of its parent nodes is then given by
 %
 \begin{multline}
-    P_{BN} \left( X_v = x_v \mid X_{\pa(v)} = x_{\pa(v)}, b_v, t_{\pa(v)v} \right) \\
+    P_\text{BN} \left( X_v = x_v \mid X_{\pa(v)} = x_{\pa(v)}, b_v, t_{\pa(v)v} \right) \\
     = x_v + (-1)^{x_v} (1 - b_v) (1 - t_{\pa(v)v})^{x_{\pa(v)}}
 \end{multline}
 %
 We note here that this parametrization assumes the \gls{ici}, thereby allowing us to describe the model using only a few interpretable parameters. Dropping this assumption, a \gls{bn} can also be defined using \gls{cpt} that have columns for every possible combinations of parent states. However, with the increase of the number of parent nodes (causes) in the graph, the number of parameters in the respective \gls{cpt} would grow exponentially.
 
-For the graph in \cref{fig:unilateral_graph} we can write down the parametrized \gls{cpt} in the following manner:
+For the graph in \cref{fig:bn:graph} we can write down the parametrized \gls{cpt} in the following manner:
 %
 \begin{equation} \label{eq:bn_cpt}
     \begin{aligned}
-        P_{BN} \left( X_v = 0 \mid X_{\pa(v)} = 0 \right) &= 1 - b_v \\
-        P_{BN} \left( X_v = 1 \mid X_{\pa(v)} = 0 \right) &= b_v \\
-        P_{BN} \left( X_v = 0 \mid X_{\pa(v)} = 1 \right) &= (1 - b_v) \left(1 - t_{\pa(v)v}\right) \\
-        P_{BN} \left( X_v = 1 \mid X_{\pa(v)} = 1 \right) &= 1 - (1 - b_v) \left(1 - t_{\pa(v)v}\right) 
+        P_\text{BN} \left( X_v = 0 \mid X_{\pa(v)} = 0 \right) &= 1 - b_v \\
+        P_\text{BN} \left( X_v = 1 \mid X_{\pa(v)} = 0 \right) &= b_v \\
+        P_\text{BN} \left( X_v = 0 \mid X_{\pa(v)} = 1 \right) &= (1 - b_v) \left(1 - t_{\pa(v)v}\right) \\
+        P_\text{BN} \left( X_v = 1 \mid X_{\pa(v)} = 1 \right) &= 1 - (1 - b_v) \left(1 - t_{\pa(v)v}\right) 
     \end{aligned}
 \end{equation}
 %
-In case of a more general network, in which some \glspl{lnl} receive efferent lymphatics from multiple other \glspl{lnl}, \cref{eq:bn_cpt} can be generalised and the conditional probability of the hidden state becomes
+In case of a more general network, in which some \glspl{lnl} receive efferent lymphatics from multiple other \glspl{lnl}, \cref{eq:bn_cpt} can be generalized and the conditional probability of the hidden state becomes
 %
 \begin{multline}
-    P_{BN} \left( X_v = x_v \mid \big\{ X_r = x_r \,,\, t_{rv} \big\}_{r \in \pa(v)} , b_v \right) \\
+    P_\text{BN} \left( X_v = x_v \mid \big\{ X_r = x_r \,,\, t_{rv} \big\}_{r \in \pa(v)} , b_v \right) \\
     = x_v + (-1)^{x_v} (1 - b_v) \prod_{r \in \pa(v)}{\left( 1 - t_{rv} \right)}^{x_r}
+\end{multline}
+%
+We can now connect the probability of observing certain $Z_v^k$ given hidden involvement with the conditional probabilities above. Then the likelihood of observing a cohort of patients $\mathcal{Z} = \begin{Bmatrix} z_{nv}^k \mid n \leq N, v \leq V, k \in \mathcal{O} \end{Bmatrix}$ given a set of parameters $\theta = \begin{Bmatrix} b_v, t_{\pa{(v)}v} \mid v \leq V \end{Bmatrix}$ can be written as
+%
+\begin{multline} \label{eq:bn:likelihood}
+    P_\text{BN}\left( \mathcal{Z} \mid \theta \right) =\\
+    \prod_{n=1}^N{ \sum_{\mathbf{x} \in \{ 0,1 \}^V }{\prod_{v=1}^V{ \prod_{k \in \mathcal{O}}{ P_\text{BN} \left( z_{nv}^k \mid x_v \right) P_\text{BN} \left(  x_v \mid \{ x_{\pa{(v)}v} \}, \{ t_{pa{(v)}v} \}, b_v  \right) } } } }
 \end{multline}
 %
 where we marginalized over all hidden variables $X$. Here we have assumed that each patient's diagnosis $\mathbf{z} = \left( z_1 \quad z_2 \quad \cdots \quad z_V \right)$ is complete, meaning that we have a diagnosis for each \gls{lnl}. The likelihood can then be used to infer the model parameters via maximum likelihood inference or sampling.

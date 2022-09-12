@@ -1,13 +1,13 @@
 \begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
-    All results in this chapter are in principle reproducible. However, when the mentioned work \cite{ludwig_hidden_2021} was published, my experience w.r.t. setting up such workflows was still lacking the foresight necessary and hence the process is not as user-friendly as it should be. Below, I will give instructions that should work regardless:
+    All results of the section below are reproducible using a notebook we have published within the \repolink{lymph} repository at the time of submitting \cite{ludwig_hidden_2021}. The state of the repository at that time was just recently updated to make the notebook's reproduction a bit more user-friendly:
 
     \begin{enumerate}
-        \item Clone the \repolink{lymph} repository and checkout a working commit after we published the paper \cite{ludwig_hidden_2021}:
+        \item Clone the \repolink{lymph} repository and checkout the tagged version \href{https://github.com/rmnldwg/lymph/tree/0.1.1}{\faIcon{tags} 0.1.1}:
         \begin{itemize}[leftmargin=10mm]
             \setlength\itemsep{-0.5em}
             \item[\texttt{\$}] \verb|git clone https://github.com/rmnldwg/lymph|
             \item[\texttt{\$}] \verb|cd lymph|
-            \item[\texttt{\$}] \verb|git checkout bd437794|
+            \item[\texttt{\$}] \verb|git checkout 0.1.1|
         \end{itemize}
 
         \item Set up a virtual environment that supports installing packages using \href{https://pypi.org/project/pip/}{\texttt{pip}}. I recommend \href{https://docs.python.org/3/library/venv.html}{\texttt{venv}}:
@@ -21,8 +21,7 @@
         \item Install the necessary packages:
         \begin{itemize}[leftmargin=10mm]
             \setlength\itemsep{-0.5em}
-            \item[\texttt{\$}] \verb|pip install corner emcee tqdm jupyter|
-            \item[\texttt{\$}] \verb|pip install .|
+            \item[\texttt{\$}] \verb|pip install -r requirements.txt|
         \end{itemize}
 
         \item Open the Jupyter notebook:
@@ -31,9 +30,7 @@
             \item[\texttt{\$}] \verb|cd notebook|
             \item[\texttt{\$}] \verb|jupyter notebook results_and_plots.ipynb|
         \end{itemize}
-
-        \item Change the \verb|DRAW_SAMPLES| boolean variable to \texttt{True}, otherwise the inference cell will be skipped.
     \end{enumerate}
 
-    Now, it should be possible to execute the cells of the notebook. There might be some cells that raise errors, but those are most likely related to fonts and styling settings for the generated plots and can hence be ignored. The inference will likely run for several minutes, but should continuously report its progress. Subsequent cells will produce the figures shown in this chapter and store them inside the \faIcon{folder} \texttt{figures} folder relative to the notebook.
+    Now, it should be possible to execute the cells of the notebook in order. The inference precesses will likely run for a while, but should continuously report its progress. Subsequent cells will produce the figures shown in this chapter and store them inside the \faIcon{folder} \texttt{figures} folder relative to the notebook.
 \end{tcolorbox}
