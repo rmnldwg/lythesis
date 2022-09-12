@@ -1,0 +1,393 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
+
+
+\begin{document}
+
+\section{Formalism and mathematical description}
+\label{sec:unilateral:formalism}
+
+\subsection{Lymphatic progression as hidden Markov model}
+\label{subsec:unilateral:formalism:spread_as_hmm}
+
+We consider discrete time-steps $t \in \{ 0, 1, 2, \ldots, t_\text{max} \}$. We will start by defining the hidden random variable for the state of the \gls{hmm} at time $t$ to be
+%
+\begin{equation}
+    \mathbf{X}[t] = \left( X_v[t] \right)
+\end{equation}
+%
+which represents the patient's state of \gls{lnl} involvement as in the \gls{bn}, but for each time-step we have an instance of it. For the diagnosis $\mathbf{Z}$ on the other hand, we do not need to differentiate between different times, since in practice we will only ever see one diagnosis. This is illustrated in \cref{fig:unilateral:hmm_schema}. The reason for this is that, if we diagnose a patient with cancer, treatment starts timely, and we no longer observe the natural progression of the disease. From a modeling standpoint however, this is a problem that we will address later.
+
+\begin{figure}[h]
+    \centering
+    \def\svgwidth{0.65\textwidth}
+    \input{figures/hmm_schema.pdf_tex}
+    \caption{Hidden Markov model with only one observation. $\boldsymbol{\pi}$ denotes the healthy starting state. Horizontal arcs represent the transitions from a state $\mathbf{x}[t-1]$ to the state at the next time step $\mathbf{x}[t]$. The final state is then diagnosed (vertical arc, parametrized via sensitivity and specificity) and we observe $\mathbf{z}$.}
+    \label{fig:unilateral:hmm_schema}
+\end{figure}
+
+A hidden Markov model is fully described by the starting state $\mathbf{X}[0] \coloneqq \boldsymbol{\pi}$ and the two conditional probability functions that govern the progression from a state $X[t]$ at time $t$ to a state $X[t+1]$ at the following time-step
+%
+\begin{equation}
+    P_\text{HMM}\left( \mathbf{X}[t+1] \mid \mathbf{X}[t] \right)
+\end{equation}
+%
+and the probability of a diagnostic observation given the true state of the patient
+%
+\begin{equation}
+    P_\text{HMM}\left( \mathbf{Z} \mid \mathbf{X}[t] \right)
+\end{equation}
+%
+Since both our state space and our observation space are discrete and finite, it is possible to enumerate all possible states and observations and collect them in a table or matrix. This so-called \emph{transition matrix} would then be
+%
+\begin{equation}
+    \mathbf{A} = \left( A_{ij} \right) = \left( P_\text{HMM} \left( \mathbf{X}[t+1] = \boldsymbol{\xi}_i \mid \mathbf{X}[t] = \boldsymbol{\xi}_j \right) \right)
+\end{equation}
+%
+and the \emph{observation matrix}
+%
+\begin{equation}
+    \mathbf{B} = \left( B_{ij} \right) = \left( P_\text{HMM} \left( \mathbf{Z} = \boldsymbol{\zeta}_i \mid \mathbf{X}[t] = \boldsymbol{\xi}_j \right) \right)
+\end{equation}
+%
+Here, $\boldsymbol{\xi}_i$ and $\boldsymbol{\zeta}_j$ are no new variables, but just $\mathbf{x}$ and $\mathbf{z}$ renamed and reordered. The indices $i$ and $j$ for one of the possible states or observations for the entire patient, not for an individual \gls{lnl}. In total, there are $S = |\{ 0,1 \}|^V$ different states and the same number of different possible observations per diagnostic modality. We order the hidden states from
+%
+\begin{equation}
+    \boldsymbol{\xi}_1 = 
+    \begin{pmatrix}
+        0 & 0 & 0 & 0
+    \end{pmatrix}
+\end{equation}
+%
+to
+%
+\begin{equation} \label{eq:unilateral:formulation:obs_matrix}
+    \boldsymbol{\xi}_{16} = 
+    \begin{pmatrix}
+        1 & 1 & 1 & 1
+    \end{pmatrix}
+\end{equation}
+%
+in this case of $V = 4$. The exact ordering does not matter, it is just a convenience for the notation. our ordering of the states can be seen in the axes of \cref{fig:unilateral:trans_matrix}. In analogy, we order the observations $\boldsymbol{\zeta}_j$ from 1 to $2^V$. Note that for now we will not consider multiple diagnostic modalities and how to combine them. We will get back to that topic in \cref{subsec:unilateral:formalism:multimodality}.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{0.8\textwidth}
+    \input{figures/transition_matrix.pdf_tex}
+    \caption{Transition matrix. All gray pixels in this image correspond to entries in the matrix being zero. The colored pixels take on values $\in [0, 1]$ which are here overlaid in\%. The exact values stem from the mean of the learned parameters in \cref{sec:unilateral:application}. The exact shape of the gray ``mask'' depends on how one orders the states.}
+    \label{fig:unilateral:trans_matrix}
+\end{figure}
+
+In our case, the starting state corresponds to a primary tumor being present, but all \glspl{lnl} are still in the healthy state. The observation matrix $\mathbf{B}$ is specified via sensitivity and specificity as described in \cref{eq:unilateral:formulation:obs_matrix}. The main task is to infer the transition matrix $\mathbf{A}$. Usually, it is inferred from a series of observations and there exist efficient algorithms for that, e.g. the sum-product algorithm, which is particularly efficient in chains. Unfortunately, these algorithms cannot be applied for our problem for two profound reasons:
+
+\begin{enumerate}
+    \item We only have a single observation instead of a consecutive series of observations. 
+    \item It is unclear how many time-steps it took from the starting state to the one observation we have at the time of diagnosis.
+\end{enumerate}
+
+In the remainder of this section, we will detail the \gls{hmm} step-by-step, starting with the parameterization of the transition matrix $\mathbf{A}$ in \cref{subsec:unilateral:formalism:parametrization}. Afterwards, in \cref{subsec:unilateral:formalism:marginalizing}, I will tackle the aforementioned problems, followed up by explaining how we perform inference on this model (\cref{subsec:unilateral:formalism:inference}), incorporate information about a patient's T-stage (\cref{subsec:unilateral:formalism:tstage}) and assess the risk of \gls{lnl} involvement in a new patient (\cref{subsec:unilateral:formalism:risk_assessment}). Lastly, we will introduce a way to incorporate incomplete observations in \cref{subsec:unilateral:formalism:incomplete_diagnose}.
+
+\subsection{Parameterization of the transition matrix}
+\label{subsec:unilateral:formalism:parametrization}
+
+The square transition matrix $\mathbf{A}$ has $S = 2^{2V}$ entries and therefore $S(S-1)=2^{2V}-2^V$ degrees of freedom. Although searching the full space of viable transition matrices is possible via unparameterized sampling techniques, it is computationally challenging and hard to interpret. To achieve this reduction in degrees of freedom, and also preserve the anatomically and medically motivated structure of the Bayesian network from \cref{sec:previous_work:bayesian_network}, we can represent the transition probability from one state $\mathbf{x}[t]$ to another state $\mathbf{x}[t+1]$ using the conditional probabilities defined for the \gls{bn}. The difference is that the probability of observing a certain state of \gls{lnl} $v$ now depends on the state of the patient one time-step before. Note that from here on, we will mostly drop the probabilistically correct notation $P(X=x)$ and just write $P(x)$ for brevity
+%
+\begin{multline} \label{eq:unilateral:parametrization:one_step}
+    P_\text{HMM} \left( \mathbf{x}[t+1] \mid \mathbf{x}[t] \right)
+    = \prod_{v \leq V}{Q \left( x_v[t+1]; x_v[t] \right)} \\ 
+    \times \left[ P_\text{BN} \left( x_v[t+1] \mid \big\{ x_r[t] \, , \, \Tilde{t}_{rv} \big\}_{r \in \pa(v)}, \Tilde{b}_v \right) \right]^{1-x_v[t]}
+\end{multline}
+%
+Here we have reused the conditional probability from the \gls{bn} for each \gls{lnl}, but we take it to the power of one minus that node's previous value. This ensures that an involved node stays involved with probability 1. The parameters $\Tilde{t}_{\pa(v)v}$ and $\Tilde{b}_v$ take the same role as in the \gls{bn}, but they are now probability \emph{rates}, since they act per time-step. Lastly, the first term $Q$ in the product formalizes the fact that a metastatic lymph node level cannot become healthy again once it was involved. This also means that several entries in the transition matrix $\mathbf{A}$ must be zero. In a table the values of $Q\left( x_v[t+1]; x_v[t] \right)$ can be written like this:
+%
+\begin{equation}
+    \begin{aligned}
+        Q \left( X_v[t+1] = 0; X_v[t] = 0 \right) &= 1 \\
+        Q \left( X_v[t+1] = 0; X_v[t] = 1 \right) &= 0 \\
+        Q \left( X_v[t+1] = 1; X_v[t] = 0 \right) &= 1 \\
+        Q \left( X_v[t+1] = 1; X_v[t] = 1 \right) &= 1 
+    \end{aligned}
+\end{equation}
+%
+which gives rise to a "mask" for $\mathbf{A}$ which can be seen in \cref{fig:unilateral:trans_matrix}.
+
+To illustrate \cref{eq:unilateral:parametrization:one_step}, it helps to look at a specific example. E.g., the transition probability from state $\boldsymbol{\xi}_5 = \begin{pmatrix} 0 & 1 & 0 & 0 \end{pmatrix}$ to state $\boldsymbol{\xi}_7 = \begin{pmatrix} 0 & 1 & 1 & 0 \end{pmatrix}$, which represents starting with involvement only in \gls{lnl} II and asking for the probability that \gls{lnl} III becomes involved as well over the next time-step:
+%
+\begin{equation}
+    \begin{aligned}
+        P_\text{HMM} &\left( \mathbf{X}[t+1] = \boldsymbol{\xi}_7 \mid \mathbf{X}[t] = \boldsymbol{\xi}_5 \right) \\
+        = &Q \left( X_1[t+1] = 0; X_1[t] = 0 \right) P_\text{BN} \left( X_1[t+1] = 0 \mid \Tilde{b}_1 \right)^1 \\
+        \times &Q \left( X_2[t+1] = 1; X_2[t] = 1 \right) P_\text{BN} \left( X_2[t+1] = 1 \mid X_1[t] = 0, \Tilde{t}_{12}, \Tilde{b}_2 \right)^0 \\
+        \times &Q \left( X_3[t+1] = 1; X_3[t] = 0 \right) P_\text{BN} \left( X_3[t+1] = 1 \mid X_2[t] = 1, \Tilde{t}_{23}, \Tilde{b}_3 \right)^1 \\
+        \times &Q \left( X_4[t+1] = 0; X_4[t] = 0 \right) P_\text{BN} \left( X_4[t+1] = 0 \mid X_3[t] = 0, \Tilde{t}_{34}, \Tilde{b}_4 \right)^1 \\
+        = &\left( 1 - \Tilde{b}_1 \right) \cdot 1 \cdot \left( \Tilde{b}_3 + \Tilde{t}_{23} - \Tilde{b}_3 \Tilde{t}_23 \right) \cdot \left( 1 - \Tilde{b}_4 \right)
+    \end{aligned}
+\end{equation}
+%
+The interpretation of the last line is that this is the probability that \gls{lnl} I and IV do not become involved, while \gls{lnl} III gets infected through lymphatic drainage from either the main tumor or \gls{lnl} II. The probability of \gls{lnl} II remaining involved is 1, of course, which is why we take the respective term to the power of 0.
+
+\subsection{Marginalizing over evolutions and diagnose times}
+\label{subsec:unilateral:formalism:marginalizing}
+
+To calculate the likelihood function, we have to calculate the probability of a given diagnostic observation. To that end, we first calculate the probability of observing a given diagnosis $\mathbf{z} = \boldsymbol{\zeta}_j$ at a fixed time-step $t$. As depicted in \cref{fig:unilateral:hmm_paths}, we must consider every possible evolution of a patient's disease that leads to the observed diagnosis. Mathematically, this means that we need to marginalize over all such paths. And here is where the HMM-formalism comes in very useful, because this marginalization happens automatically when we multiply the transition matrix with itself and eventually with the observation matrix:
+%
+\begin{equation} \label{eq:unilateral:marginalization:cond_time}
+    P_\text{HMM} \left( \mathbf{Z} = \boldsymbol{\zeta}_j \mid t \right) = \left[ \boldsymbol{\pi}^\top \cdot (\mathbf{A})^t \cdot \mathbf{B} \right]_j
+\end{equation}
+%
+where the $\boldsymbol{\pi}$ is the column vector for the healthy starting state. $\mathbf{A}$ is multiplied with itself $t$ times and thereby produces a matrix that describes the transition probability from the healthy state to all possible states $\mathbf{x}[t]$ in exactly $t$ time-steps marginalized over the actual pathway of the patient's disease. The index $[\ldots]_j$ here means that from the resulting (row-)vector of probabilities we take the component that corresponds to the diagnosis $\mathbf{z} = \boldsymbol{\zeta}_j$.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{0.9\textwidth}
+    \input{figures/hmm_paths.pdf_tex}
+    \caption{Illustration of possible paths from the starting state $\boldsymbol{\pi}$ to a diagnosis $\mathbf{z}$ at time $T$ on a discrete grid of time vs state. Only 4 states (corresponding to 2 \glspl{lnl}) are shown, where green indicates healthy and purple involved. Following the arrows from $\boldsymbol{\pi}$ to $\mathbf{z}$ yields a possible path. Some connections between states are forbidden due to $Q$ (no self-healing). To calculate the probability of a diagnosis $\mathbf{z}$, we must marginalize over all paths.}
+    \label{fig:unilateral:hmm_paths}
+\end{figure}
+
+So, essentially, \cref{eq:unilateral:marginalization:cond_time} first computes the probability vector of all possible true hidden states, given a time step $t$
+%
+\begin{equation} \label{eq:unilateral:marginalization:risk_cond_time}
+    P_\text{HMM} \left( \mathbf{X} = \boldsymbol{\xi}_i \mid t \right) = \left[ \boldsymbol{\pi}^\top \cdot (\mathbf{A})^t \right]_i
+\end{equation}
+%
+and then multiplies it with the respective observation probability vector, which is a column of the $\mathbf{B}$ matrix, to finally marginalize over all possible true hidden states -- effectively a sum over $i$ in \cref{eq:unilateral:marginalization:risk_cond_time} -- at the time $t$ of diagnosis.
+
+The problem that the number of time-steps until diagnosis is unknown cannot be solved in such an elegant fashion. Therefore, we must resort to brute force marginalization and introduce a prior $p(t)$, which is a discrete distribution over a finite number of time-steps. It describes the prior probability that a patient's cancer is diagnosed at a particular time-step $t$. To get the probability of a diagnosis $\mathbf{z}$ we must compute
+%
+\begin{equation} \label{eq:unilateral:hmm_marginalize}
+    P_\text{HMM} \left( \mathbf{Z} = \boldsymbol{\zeta}_j \right) = \sum_{t = 0}^{t_\text{max}}{p(t) \cdot P\left( \mathbf{Z} = \boldsymbol{\zeta}_j \mid t \right)} = \left[ \sum_{t = 0}^{t_\text{max}}{p(t) \cdot \boldsymbol{\pi}^\top \cdot (\mathbf{A})^t \cdot \mathbf{B}} \right]_j
+\end{equation}
+%
+While the choice of the time-prior may seem unclear at this point, its role for including T-stage into this model will be discussed in \cref{subsec:unilateral:formalism:tstage}.
+
+\subsection{Inference of model parameters}
+\label{subsec:unilateral:formalism:inference}
+
+In the formalism of the last sections, the $P_\text{HMM}$ depends implicitly through $P_\text{BN}$ on parameters $\theta = \left\{ \Tilde{b}_v , \Tilde{t}_{pv} \mid v \leq V , p \in \pa(v) \right\}$, which -- as mentioned -- are now probability rates and have therefore a slightly different interpretation. Due to the marginalization over time-steps in \cref{eq:unilateral:hmm_marginalize} the likelihood function additionally depends on the choice and parameterization of the prior $p(t)$. The parameters are to be inferred from a dataset of lymphatic progression patterns in a cohort of patients. We still assume that for each patient we record for every \gls{lnl} $v$ whether it is involved according to only one diagnostic modality. In other words, for each patient we observe one of the $2^V$ possible diagnoses. As mentioned before, we will expand this to multiple diagnostic modalities further down in \cref{subsec:unilateral:formalism:multimodality}.
+
+Formally, we can then express the dataset $\boldsymbol{\mathcal{Z}}$ of $N$ patients as vector $\mathbf{f}$ of the number of patients $f_i$ for which the diagnosis corresponds to the observational state $\boldsymbol{\zeta}_i$. The likelihood $P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right)$ of observing this dataset, given a particular choice of parameters, is then given by
+%
+\begin{equation}
+    P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right) = \prod_{i=1}^{2^V}{P \left( \boldsymbol{\zeta}_i \mid \theta \right)^{f_i}}
+\end{equation}
+%
+with the probability $P \left( \boldsymbol{\zeta}_i \mid \theta \right)$ specified by \cref{eq:unilateral:hmm_marginalize}. The product runs formally over all possible observational states. In reality, $f_i$ will likely be zero for a number of rare or implausible states that are not in the dataset. Note that $\sum_{i}{f_i} = N$.
+
+By Bayes' rule, the posterior distribution of those parameters is 
+%
+\begin{equation} \label{eq:unilateral:inference:bayes_theorem}
+    P \left( \theta \mid \boldsymbol{\mathcal{Z}} \right) = \frac{P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right) P\left( \theta \right)}{\int{P \left( \boldsymbol{\mathcal{Z}} \mid \theta' \right) P \left( \theta' \right) \,d\theta'}}
+\end{equation}
+%
+where $P(\theta)$ is the prior over these parameters. Since they are exclusively probability rates, they must all come from the interval $[0,1] \in \mathbb{R}$. In this work we will choose the most uninformative prior
+%
+\begin{equation}
+    p(\theta) = 
+    \begin{cases}
+        1 & \text{if} \ \ \theta_r \in \left[ 0,1 \right]; \forall r \leq E \\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+%
+where $E$ is the number of edges in the \gls{dag} we use to represent the lymphatic system. While it is easy to compute the likelihood, it is not feasible to efficiently calculate the normalization constant in the denominator of \cref{eq:unilateral:inference:bayes_theorem}. Hence, we will use \gls{mcmc} sampling methods to estimate the parameters $\theta$ and their uncertainty.
+
+\subsection{Incorporation of T-stage}
+\label{subsec:unilateral:formalism:tstage}
+
+We have introduced the \gls{hmm} with the promise that it could handle the concept of T-stages through its explicit modeling of dynamic processes. To keep up with that, we will now explain how this is achieved using the time-prior $p(t)$.
+
+The core idea is to assume that early T-stage and late T-stage tumors share the same patterns of metastatic progression, except that late T-stage tumors are on average diagnosed at a later point in time, and thereby also show, on average, higher \gls{lnl} involvement. Formally, this can be described by assuming a different time-prior $p_T (t)$ for every T-stage $T$.  On the other hand, the transition matrix $\mathbf{A}$ is assumed to be the same for all T-stages.
+
+For the inference of model parameters, the training data is split into subgroups according to T-stage. We now define a column-vector $\mathbf{f}_T$ separately for each T-stage, which counts the number of patients in the dataset that were diagnosed with one of the possible observational states and a given T-stage. The log-likelihood from which we want to sample is then simply a sum of the likelihoods as above, where the essential difference is that we equip each marginalization over time with a different time-prior $p_T (t)$, according to its T-stage:
+%
+\begin{equation} \label{eq:hmm_log_likelihood}
+    \log{P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right)} = \sum_{T=1}^{4}{\log{\left[ \sum_{t = 0}^{t_\text{max}}{p_T (t) \cdot \boldsymbol{\pi}^\top \cdot (\mathbf{A})^t \cdot \mathbf{B}} \right]} \cdot \mathbf{f}_T}
+\end{equation}
+%
+The logarithm must be taken element-wise for the resulting row-vector inside the square brackets. The only data-dependent term here is the vector $\mathbf{f}_T$ counting the occurrences of all possible observations. It is again important to note that the only difference between the part of the log-likelihood for the different T-stages is the exact shape or parameterization of the time-prior. The transition probabilities, and hence also the transition matrix $\mathbf{A}$, are the same for all T-stages. For this to work, we rely on the assumption that different typical patterns of nodal involvement for the same primary tumor location are caused mainly by different progression times
+
+At this point, it makes sense to briefly introduce a notation of the above equation that is more suitable for the actual programmatic implementation of the inference and the extension we will discuss later. We can rewrite the term in the square brackets of \cref{eq:hmm_log_likelihood} by using the matrix
+%
+\begin{equation} \label{eq:hmm_matrix_lambda}
+    \boldsymbol{\Lambda} \coloneqq 
+    P \left( \mathbf{X} \mid \mathbf{t} \right) = 
+    \begin{pmatrix}
+        \boldsymbol{\pi}^\top \cdot \left( \mathbf{A} \right)^0 \\
+        \boldsymbol{\pi}^\top \cdot \left( \mathbf{A} \right)^1 \\
+        \vdots \\
+        \boldsymbol{\pi}^\top \cdot \left( \mathbf{A} \right)^{t_\text{max}}
+    \end{pmatrix}
+\end{equation}
+%
+where row number $t$ corresponds to the vector $\boldsymbol{\pi}^\top \cdot \left( \mathbf{A} \right)^t$, i.e. the probabilities for all possible hidden states, given the diagnose time. So, the element $\boldsymbol{\Lambda}_{ti}$ corresponds to the probability $P \left( \boldsymbol{\xi}_i \mid t \right)$ of a patient arriving in the $i$th state after $t$ time steps. With this, we can rewrite the term in the square brackets of \cref{eq:hmm_log_likelihood} purely as a product of vectors and matrices:
+%
+\begin{equation}
+    \sum_{t = 0}^{t_\text{max}}{p_T (t) \cdot \boldsymbol{\pi}^\top \cdot (\mathbf{A})^t} = p_T \left( \mathbf{t} \right) \cdot \boldsymbol{\Lambda}
+\end{equation}
+%
+with $p_T \left( \mathbf{t} \right) = \big( p_T(0) \quad p_T(1) \quad \cdots \quad p_T(t_\text{max}) \big)$. The matrix $\boldsymbol{\Lambda}$ implicitly depends on the spread probabilities, while each of the $p_T(\mathbf{t})$ depends on the respective parameterization of the time prior. They are the only objects that depend on the parameters $\theta$, and they are independent of the data.
+
+
+\subsubsection*{* Interpretation of time-steps and time-priors}
+\label{subsubsec:unilateral:formalism:tstage:interpretation}
+
+To add more interpretability to the time-prior $p(t)$ introduced in \cref{subsec:unilateral:formalism:marginalizing}, we want to give some insights here to what we think the time-steps and the distribution over them is supposed to mean.
+
+First, the time that passes in the real world between the abstract time-steps $t$ and $t+1$ should not be seen as a somewhat arbitrarily chosen fixed time, measured in days or weeks. To how much real-world time that corresponds for a specific patient is irrelevant for our risk assessment, although it might prove very valuable for other research on tumor growth. Also, the time between two time-steps does not need to be constant; the model makes no assumptions about this. It merely assumes the probability of transition between states to be the same from $t$ to $t+1$ and for all $t$.
+
+The time-prior $p(t)$ is essentially the probability that a patient is diagnosed after exactly $t$ time-steps. If we knew how long a patient had cancer before getting diagnosed, and we also knew how long a typical time-step for this patient and his/her type of cancer was, then we could just fix $p(t)=1$ for the appropriate number of time-steps $t$ and set $p(t') = 0, \forall t' \neq t$. Since it is likely almost never known, we need to spread the probability over a range of time-steps, reflecting the fact that the diagnosis of cancer happens spontaneously, e.g. during a routine checkup.
+
+\subsection{Risk assessment of microscopic involvement}
+\label{subsec:unilateral:formalism:risk_assessment}
+
+With a parameter set $\hat{\theta} = \left( \big\{ \Tilde{b}_v \big\}, \big\{ \Tilde{t}_{rv} \big\}_{r \in \pa(v)} \right) \ \forall v \leq V$, we can assess the risk of nodal involvement, given a diagnosis $\mathbf{z}$, of a new patient. Using Bayes' law, the risk for a certain \gls{lnl} $v$ being involved is given by the conditional probability
+%
+\begin{equation} \label{eq:unilateral:sampling:risk}
+    \begin{aligned}
+        R \left( X_v=1 \mid \mathbf{z}, \hat{\theta} \right) 
+        &= \frac{P \left( \mathbf{Z}=\mathbf{z} \mid X_v=1, \hat{\theta} \right) P \left( X_v=1 \mid \hat{\theta} \right)}{P \left( \mathbf{Z}=\mathbf{z} \mid \hat{\theta} \right)} \\
+        &= \sum_{i\,:\,\xi_{iv}=1}{\frac{P \left( \mathbf{Z}=\mathbf{z} \mid \boldsymbol{\xi}_i , \hat{\theta} \right) P \left( \boldsymbol{\xi}_i \mid \hat{\theta} \right)}{P \left( \mathbf{Z}=\mathbf{z} \mid \hat{\theta} \right)}}
+    \end{aligned}
+\end{equation}
+%
+Note that in the second line, we have explicitly written out the marginalization over all hidden states $\boldsymbol{\xi}_i$ that have \gls{lnl} $v$ involved. We have written the state of \gls{lnl} $v$ in the state $\boldsymbol{\xi}_i$ as $\xi_{iv}$. The denominator can be computed using \cref{eq:unilateral:hmm_marginalize}, which already includes the marginalization over all hidden states $\boldsymbol{\xi}_i$.
+
+Instead of just using one estimate of a parameter set $\hat{\theta}$ however, we are going to employ \gls{mcmc}. This allows us to draw $L$ sets of parameters $\boldsymbol{\hat{\theta}} = \begin{pmatrix} \hat{\theta}_1 & \hat{\theta}_2 & \ldots & \hat{\theta}_L \end{pmatrix}$ that are distributed like the posterior $\Probofgiven{\hat{\theta}}{\boldsymbol{\mathcal{Z}}}$. Since those sampled $\boldsymbol{\hat{\theta}}$ are random variables, the risk $R \left( X_v \mid \mathbf{z}, \hat{\theta} \right)$ being a function of $\hat{\theta}$ is too. Using the Monte Carlo estimator, we can therefore compute the moments of the distribution over the risk, including e.g. the expectation value
+%
+\begin{equation}
+    \mathbb{E}_{\boldsymbol{\hat{\theta}}} \left[ R \left( X_v = 1 \mid \mathbf{z} \right) \right] = \frac{1}{L} \sum_{k=1}^{L}{R \left( X_v = 1 \mid \mathbf{z}, \hat{\theta}_k \right)}
+\end{equation}
+%
+In the result sections below, we compute the individual risks for a large number $L$ of sampled parameters. Thereby, we can compute histograms for the risk that will approach the real probability density of the respective risk for $L \rightarrow \infty$. This provides additional information on the uncertainty in the predicted risk resulting from uncertainty in the model parameters.
+
+\subsection{Handling incomplete diagnoses}
+\label{subsec:unilateral:formalism:incomplete_diagnose}
+
+A diagnosis is often not complete, meaning that not all \glspl{lnl} might have been checked with a diagnostic modality. E.g., \gls{fna} is usually only performed in a subset of \glspl{lnl}. Hence, we must be able to deal with “incomplete” observations for some \glspl{lnl}. To do so, we first introduce a new observation variable
+%
+\begin{equation}
+    d_v \in \{ 0, 1, \emptyset \}
+\end{equation}
+%
+where $\emptyset$ indicates \emph{unobserved}. Furthermore, we define a \emph{match function}
+%
+\begin{equation}
+    \operatorname{match}(\mathbf{d}, \mathbf{z}) \coloneqq 
+    \begin{cases}
+        \text{true} & \text{if} \,\, d_v = z_v \vee d_v = \emptyset ; \,\forall v \\
+        \text{false} & \text{else}
+    \end{cases}
+\end{equation}
+%
+which returns \emph{true} if a - potentially incomplete - diagnosis $\mathbf{d}$ is consistent with a complete observation $\mathbf{z}$. We will use this function for conveniently marginalizing over the missing observations. In analogy to \cref{eq:unilateral:risk_assessment:risk_denominator}, we can compute the risk for an incomplete observation as
+%
+\begin{equation} \label{eq:unilateral:incomplete_diagnose:marg_risk}
+    \begin{aligned}
+        R \left( X_v=1 \mid \mathbf{d}, \theta \right) 
+        &= \frac{P \left( \mathbf{d} \mid X_v=1, \theta \right) P \left( X_v=1 \mid \theta \right)}{P \left( \mathbf{d} \mid \theta \right)} \\
+        &= \sum_{i\,:\,\xi_{iv}=1}{\frac{P \left( \mathbf{d} \mid \boldsymbol{\xi}_i , \theta \right) P \left( \boldsymbol{\xi}_i \mid \theta \right)}{P \left( \mathbf{d} \mid \theta \right)}}
+    \end{aligned}
+\end{equation}
+%
+where the enumerator of the second line can now be rewritten using the $\operatorname{match}$ function:
+%
+\begin{equation}
+    \begin{aligned}
+        P \left( \mathbf{d} \mid \boldsymbol{\xi}_i , \theta \right) P \left( \boldsymbol{\xi}_i \mid \theta \right) 
+        &= \sum_{\left\{ j \,:\, \operatorname{match}(\mathbf{d}, \boldsymbol{\zeta}_j) \right\}}{ P \left( \boldsymbol{\zeta}_j \mid \boldsymbol{\xi}_i , \theta \right)} P \Big( \boldsymbol{\xi}_i \mid \theta \Big) \\
+        &= \sum_{\left\{ j \,:\, \operatorname{match}(\mathbf{d}, \boldsymbol{\zeta}_j) \right\}}{B_{ij} \Big[ p_T\left( \mathbf{t} \right) \cdot \boldsymbol{\Lambda} \Big]_i}
+    \end{aligned}
+\end{equation}
+%
+In this case $B_{ij}$ denotes the element of the observation matrix that corresponds to state $\boldsymbol{\xi}_i$ and observation $\boldsymbol{\zeta}_j$. Again, the indices $\left\{ i \,:\, \xi_{iv} = 1 \right\}$ in \cref{eq:unilateral:incomplete_diagnose:marg_risk} correspond to all possible states with a positive involvement in \acrlong{lnl} $X_v$. Essentially, the whole term is the likelihood of an observation $\mathbf{d}$ where we have removed all entries that correspond to states with $X_v \neq 1$ both from the observation matrix and the resulting probability vector of the evolution. It can therefore be easily computed algebraically, too.
+
+The evidence in the denominator of \cref{eq:unilateral:incomplete_diagnose:marg_risk} becomes a marginalization over all possible diagnoses that are not available to us or that we deem unimportant
+%
+\begin{equation} \label{eq:unilateral:risk_assessment:risk_denominator}
+    P \left( \mathbf{d} \mid \theta \right) = \sum_{\left\{ j \,:\, \operatorname{match}(\mathbf{d}, \boldsymbol{\zeta}_j) \right\}}{\Big[ p_T\left( \mathbf{t} \right) \cdot \boldsymbol{\Lambda} \Big]_j}
+\end{equation}
+%
+We can make this summation a bit more elegant using a column vector $\mathbf{c}^{\mathbf{d}}$ that has entries corresponding to the $\operatorname{match}$-function
+%
+\begin{equation}
+    c_i^{\mathbf{d}} = \operatorname{match}(\mathbf{d}, \boldsymbol{\zeta}_i)
+\end{equation}
+%
+where every \emph{true} corresponds to a 1 and every \emph{false} to a 0. This way we can rewrite \cref{eq:unilateral:risk_assessment:risk_denominator} in the following way:
+%
+\begin{equation}
+    P \left( \mathbf{d} \mid \theta \right) = p_T\left( \mathbf{t} \right) \cdot \boldsymbol{\Lambda} \cdot \mathbf{B} \cdot \mathbf{c}^{\mathbf{d}}
+\end{equation}
+%
+Using this notation for marginalizing over unknown or incomplete observations also allows us to encode entire datasets $\boldsymbol{\mathcal{D}} = \begin{pmatrix} \mathbf{d}_1 & \mathbf{d}_2 & \cdots & \mathbf{d}_N \end{pmatrix}$ of (potentially incomplete) observations in the form of a matrix
+%
+\begin{equation}
+    \mathbf{C} = 
+    \begin{pmatrix} \mathbf{c}^{\mathbf{d}_1} & \mathbf{c}^{\mathbf{d}_2} & \cdots & \mathbf{c}^{\mathbf{d}_N} \end{pmatrix}
+\end{equation}
+%
+so that the row-vector of likelihoods reads as
+%
+\begin{equation}
+    P \left( \boldsymbol{\mathcal{D}} \mid \theta \right) = \big( P \left( \mathbf{d}_n \mid \theta \right) \big)_{n \in [1,N]} = p_T\left( \mathbf{t} \right) \cdot \boldsymbol{\Lambda} \cdot \mathbf{B} \cdot \mathbf{C}
+\end{equation}
+
+\subsection{Multiple diagnostic modalities}
+\label{subsec:unilateral:formalism:multimodality}
+
+Throughout the last sections, we have only dealt with diagnoses from a single modality. In practice, however, most patients undergo screening for metastases using different modalities, like \gls{ct}, \gls{mri} or \gls{fna}. The sensitivities and specificities of these might vary greatly and by combining them in a probabilistically rigorous way, we may gain additional information.
+
+Luckily, the introduced formalism requires very little changes to be able to incorporate multiple diagnostic modalities. Let $\mathcal{O} = \{ \text{CT}, \text{MRI}, \text{FNA}, \ldots \}$ be the set of modalities. Then we can extend the collection of observed binary \glspl{rv} $\mathbf{z}$ from a single modality
+%
+\begin{equation}
+    \mathbf{z} = \left( x_v \right)_{v \in [1,V]} =
+    \begin{pmatrix}
+        x_1 & \cdots & x_V
+    \end{pmatrix}
+\end{equation}
+%
+to multiple diagnostic modalities
+%
+\begin{equation}
+    \mathbf{z} = \left( x_v^k \right)_{v \in [1,V] \atop k \in [1, |\mathcal{O}|]} =
+    \begin{pmatrix}
+        x_1^1 & \cdots & x_V^1 & x_2^2 & \cdots & x_V^{|\mathcal{O}|}
+    \end{pmatrix}
+\end{equation}
+%
+where $k$ enumerates the elements in the set $\mathcal{O}$. We can use $\boldsymbol{\zeta}_j$ again and this time the counting variable $j$ goes from $1$ to $2^{V \cdot |\mathcal{O}|}$. Notice that this means the observation matrix $\mathbf{B}$ is not square anymore. Also, it now contains the sensitivities and specificities of all the modalities in $\mathcal{O}$. If we had separate square observation matrices $\mathbf{B}^k$ for each diagnostic modality, the new total matrix' rows $B_{i*}$ would be the outer products of the individual observation matrices:
+%
+\begin{equation}
+    B_{i*} = B_{i*}^1 \otimes B_{i*}^2 \otimes \cdots \otimes B_{i*}^{|\mathcal{O}|}
+\end{equation}
+%
+Completely analogous to how we enlarged the vector of binary \glspl{rv} $\mathbf{z}$, we can also extend the vectors $\mathbf{c}$ and $\mathbf{d}$ and then immediately use the entire formalism of the section before to model lymphatic progression with potentially incomplete diagnoses from multiple modalities. However, we will drop this way of continuously enumerating the observations in the next section again, because there is a slightly more efficient and elegant way to do it. This section only served to show that it is naturally possible to extend the formalism to combine findings from different diagnostic modalities.
+
+\subsection{Combining modalities and data}
+\label{subsec:unilateral:formalism:combine}
+
+Note that the matrix $\mathbf{B}$ -- and also the matrix $\mathbf{C}$ -- can get very large very quickly: The former is of size $2^V \!\!\!\; \times 2^{V\cdot|\mathcal{O}|}$ and the latter has dimensions $2^{V\cdot|\mathcal{O}|} \times N$, meaning both grow exponentially with the number of \glspl{lnl} \emph{and} diagnostic modalities. And although neither $\mathbf{B}$ not $\mathbf{C}$ depend on the parameters $\theta$, meaning their product can be precomputed, we can simply iterate over all patients, possible hidden states and available diagnostic modalities to compute $\boldsymbol{\Omega} \coloneqq \mathbf{B} \cdot \mathbf{C}$ directly, which saves us building up and multiplying matrices with potentially millions of entries.
+
+To compute this matrix $\boldsymbol{\Omega}$, we first abandon the just-introduced way of combining diagnoses for all modalities into one large vector and separate them again, so that we have complete and incomplete observations $\boldsymbol{\zeta}_j^k$ and $\mathbf{d}_n^k$ respectively for each modality, where $n \in [1,N]$ enumerates the patients in the data.
+%
+\begin{equation}
+    \begin{aligned}
+        \Omega_{mn} 
+        &= P \left( \mathbf{d}_n \mid \boldsymbol{\xi}_m  \right)
+        = \prod_{k=1}^{|\mathcal{O}|}{ P \left( \mathbf{d}_n^k \mid \boldsymbol{\xi}_m \right) } \\
+        &=  \prod_{k=1}^{|\mathcal{O}|}{ \left[ \sum_{j \,:\, \operatorname{match}(\mathbf{d}_n^k, \boldsymbol{\zeta}_j^k) }{ P \left( \boldsymbol{\zeta}_j \mid \boldsymbol{\xi}_m \right)} \right] }
+        = \prod_{k=1}^{|\mathcal{O}|}{ \left[ \sum_{j \,:\, \operatorname{match}(\mathbf{d}_n^k, \boldsymbol{\zeta}_j^k) }{B_{mj}^{\,k}} \right] }
+    \end{aligned}
+\end{equation}
+%
+Now, the elements $\Omega_{mn}$ encode the observation likelihood of patient $n$'s diagnose $\mathbf{d}_n$ given their true state of involvement is $\boldsymbol{\xi}_m$. Finally, with this the row-vector of likelihoods of a cohort of patients, given the model's spread parameters, becomes
+%
+\begin{equation}
+    P \left( \boldsymbol{\mathcal{D}} \mid \theta \right) = p_T\left( \mathbf{t} \right) \cdot \boldsymbol{\Lambda} \cdot \boldsymbol{\Omega}
+\end{equation}
+%
+Again, the objects $p_T(\mathbf{t})$ and $\boldsymbol{\Lambda}$ depend on the parameters and hence need to be recalculated for every sample drawn during \gls{mcmc} inference. $\boldsymbol{\Omega}$ depends only on the patient data $\mathcal{D}$ and must therefore only be computed once at the beginning of the learning round.
+
+\end{document}
