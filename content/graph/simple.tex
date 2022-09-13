@@ -7,7 +7,7 @@
 
 \begin{document}
 
-\section{The simplest graph}
+\section{The simplest graphs}
 \label{sec:graph:simple}
 
 Before turning to the full problem where we want to find the best graph(s) connecting all clinically interesting \glspl{lnl} we have data on, let us consider a much simpler ``toy problem'': In this section we will only look at \glspl{lnl} II and III, which are the two most frequently involved levels.
@@ -31,7 +31,7 @@ Before turning to the full problem where we want to find the best graph(s) conne
 
 Anatomically, \gls{lnl} II sits directly above \gls{lnl} III, so we would expect the direction of lymphatic spread to follow the pull of gravity and build the graph as displayed by the second graph from the left in \cref{fig:graph:simple}. However, we need to keep in mind that our model -- although anatomically motivated and designed to represent the mechanics of lymphatic spread -- is ultimately only capable of modelling correlations and does not necessarily allow us to draw conclusions about the causal relations. In other words, we need to be careful not to trust our abstract representation of the lymphatic network too much, as that might be misleading.
 
-We can look back at \acrlongpl{bn}, as introduced in \cref{sec:previous_works:bayesian_network}. They represent factorizations of joint probability distributions of a number of \glspl{rv}. In our simplified case we want to find the factorizations of the joint which are all visualized in the three \glspl{dag} on the left of \cref{fig:graph:simple}:
+We can look back at \acrlongpl{bn}, as introduced in \cref{sec:previous_work:bayesian_network}. They represent factorizations of joint probability distributions of a number of \glspl{rv}. In our simplified case we want to find the factorizations of the joint which are all visualized in the three \glspl{dag} on the left of \cref{fig:graph:simple}:
 %
 \begin{equation}
     \begin{aligned}

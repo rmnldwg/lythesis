@@ -52,7 +52,7 @@ Lastly, we restricted ourselves to modelling the \glspl{lnl} II, III and IV, bec
 \begin{figure}
     \def\svgwidth{1.0\textwidth}
     \input{figures/ipsi-comp.pdf_tex}
-    \caption{
+    \caption[Comparison of ipsilateral prevalences]{
         Predicted prevalences (shaded histograms) and posterior beta distributions of observed prevalences (solid lines) for the ipsilateral levels II (blue), III (orange) and IV (green). These prevalences have each been plotted for early T-stage patients (top row) and late T-stage (bottom row) and for the three models $\mathcal{M}_\text{ag}$ (left column), $\mathcal{M}_\alpha$ (middle column) and for $\mathcal{M}_\text{full}$ (right column). The differences between the models are negligible.
     }
     \label{fig:bilateral:model_comp:ipsi}
@@ -75,7 +75,7 @@ The overall prevalence of contralateral involvement is plotted in \cref{fig:bila
 \begin{figure}
     \def\svgwidth{1.0\textwidth}
     \input{figures/contra-comp.pdf_tex}
-    \caption{
+    \caption[Comparison of contralateral prevalences]{
         Predicted prevalences (shaded histograms) and posterior beta distributions of observed prevalences (solid lines) for the contralateral overall involvement (anything \emph{not} clinically N0, on that side of the neck). Predicted and observed prevalence for early T-stage is colored blue and orange, while for late T-stage it is green and red. The prevalence for patients whose tumor does not extend over the mid-sagittal line is labelled \texttt{noext} and colored blue or green, while the same quantity for those with said extension is labelled \texttt{ext} and colored orange and red. The three models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$ are depicted in the left, middle and right panel respectively.
     }
     \label{fig:bilateral:model_comp:contra}
@@ -106,7 +106,7 @@ This is supported also by the log-evidence of the three models compared, which w
         $\mathcal{A}_\text{MC}(1)$ & -1092.25 & -1065.70 & -1065.50 \\
         \hline
     \end{tabular}
-    \caption{Metrics computed via \gls{ti} for the three bilateral models introduced in \cref{sec:bilateral:model_comp}: The \gls{bic} in the first row, the log-evidence $\ln{Z}$ with the respective standard deviation in the second and third row, as well as the maximum and mean likelihood of the sampling procedures in rows four and five respectively.}
+    \caption[Metrics for assessing three bilateral models]{Metrics computed via \gls{ti} for the three bilateral models introduced in \cref{sec:bilateral:model_comp}: The \gls{bic} in the first row, the log-evidence $\ln{Z}$ with the respective standard deviation in the second and third row, as well as the maximum and mean likelihood of the sampling procedures in rows four and five respectively.}
     \label{table:bilateral:model_comp:evidences}
 \end{table}
 
@@ -114,7 +114,7 @@ This is supported also by the log-evidence of the three models compared, which w
     \centering
     % \def\svgwidth{1.0\textwidth}
     \input{figures/thermo_int.pdf_tex}
-    \caption{
+    \caption[Plotted accuracy over the course of a thermodynamic integration round]{
         Expectation of the log-likelihood under the power posterior (\cref{eq:bilateral:power_post}) plotted against 64 inverse temperature steps $\beta$ for the three models. The accuracy on the y-axis is plotted on a log-scale, while the $\beta$ values, which themselves represent a fifth order annealing schedule, were plotted on an x-axis where the ticks were spaced according to a seventh order power rule. This was done to nicely visualize both the differences in accuracy and to better depict at which $\beta$ values the accuracies begin to rise.
     }
     \label{fig:bilateral:model_comp:thermo_int}

@@ -14,7 +14,7 @@ It turns out that length and shape of $p(t)$ have almost no effect on the risk p
     \centering
     \def\svgwidth{0.7\textwidth}
     \input{figures/simple_rate_decay.pdf_tex}
-    \caption{Solutions to \cref{eq:unilateral:tprior:analytical_result} for the base probability rate $\tilde{b}_1$ given a $p^{\star}$ of 0.4 and $T$ increasing from 1 to 15.}
+    \caption[Analytic solutions for the decay of spread probability rates]{Solutions to \cref{eq:unilateral:tprior:analytical_result} for the base probability rate $\tilde{b}_1$ given a $p^{\star}$ of 0.4 and $T$ increasing from 1 to 15.}
     \label{fig:unilateral:tprior:rate_decay_analytic}
 \end{figure}
 
@@ -73,7 +73,7 @@ The right-hand side essentially contains the partial sum of the geometric series
     \centering
     \def\svgwidth{1.0\textwidth}
     \input{figures/rate_decay_theory_vs_sampled.pdf_tex}
-    \caption{Decay of base probability rates as a function of the number of time-steps the time-prior has. Circles depict the results from learning the same dataset with different time-priors while solid lines show the analytical result starting with a $p^{\star}$ corresponding to the prevalence of involvement of \gls{lnl} I and II respectively.}
+    \caption[Sampled spread probabilities and their decay for longer evolutions of the HMM]{Decay of base probability rates as a function of the number of time-steps the time-prior has. Circles depict the results from learning the same dataset with different time-priors while solid lines show the analytical result starting with a $p^{\star}$ corresponding to the prevalence of involvement of \gls{lnl} I and II respectively.}
     \label{fig:unilateral:tprior:rate_decay_sampled}
 \end{figure}
 
@@ -90,7 +90,7 @@ This again shows that, while looking at one T-category only, the time-prior's pa
     \centering
     \def\svgwidth{0.7\textwidth}
     \input{figures/multi_length_risk.pdf_tex}
-    \caption{Prediction for the risk of involvement in \gls{lnl} III, given that no \gls{lnl} was observed to be involved. Computed by training our \gls{hmm} with 15 different-length uniform time-priors (transparent red) as well as the \gls{bn} model (blue line). The one outlier is the \gls{hmm} with a time-prior covering only one time-step. It is centered on the prevalence of involvement for \gls{lnl} III, regardless of the given diagnose.}
+    \caption[A risk prediction for varying lengths of time priors]{Prediction for the risk of involvement in \gls{lnl} III, given that no \gls{lnl} was observed to be involved. Computed by training our \gls{hmm} with 15 different-length uniform time-priors (transparent red) as well as the \gls{bn} model (blue line). The one outlier is the \gls{hmm} with a time-prior covering only one time-step. It is centered on the prevalence of involvement for \gls{lnl} III, regardless of the given diagnose.}
     \label{fig:unilateral:tprior:multi_length_risk}
 \end{figure}
 

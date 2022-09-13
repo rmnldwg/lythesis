@@ -23,7 +23,7 @@ which represents the patient's state of \gls{lnl} involvement as in the \gls{bn}
     \centering
     \def\svgwidth{0.65\textwidth}
     \input{figures/hmm_schema.pdf_tex}
-    \caption{Hidden Markov model with only one observation. $\boldsymbol{\pi}$ denotes the healthy starting state. Horizontal arcs represent the transitions from a state $\mathbf{x}[t-1]$ to the state at the next time step $\mathbf{x}[t]$. The final state is then diagnosed (vertical arc, parametrized via sensitivity and specificity) and we observe $\mathbf{z}$.}
+    \caption[Schema of how the HMM starts healthy and gets diagnosed eventually]{Hidden Markov model with only one observation. $\boldsymbol{\pi}$ denotes the healthy starting state. Horizontal arcs represent the transitions from a state $\mathbf{x}[t-1]$ to the state at the next time step $\mathbf{x}[t]$. The final state is then diagnosed (vertical arc, parametrized via sensitivity and specificity) and we observe $\mathbf{z}$.}
     \label{fig:unilateral:hmm_schema}
 \end{figure}
 
@@ -75,7 +75,7 @@ in this case of $V = 4$. The exact ordering does not matter, it is just a conven
     \centering
     \def\svgwidth{0.8\textwidth}
     \input{figures/transition_matrix.pdf_tex}
-    \caption{Transition matrix. All gray pixels in this image correspond to entries in the matrix being zero. The colored pixels take on values $\in [0, 1]$ which are here overlaid in\%. The exact values stem from the mean of the learned parameters in \cref{sec:unilateral:application}. The exact shape of the gray ``mask'' depends on how one orders the states.}
+    \caption[The HMM's transition matrix]{Transition matrix. All gray pixels in this image correspond to entries in the matrix being zero. The colored pixels take on values $\in [0, 1]$ which are here overlaid in\%. The exact values stem from the mean of the learned parameters in \cref{sec:unilateral:application}. The exact shape of the gray ``mask'' depends on how one orders the states.}
     \label{fig:unilateral:trans_matrix}
 \end{figure}
 
@@ -142,7 +142,7 @@ where the $\boldsymbol{\pi}$ is the column vector for the healthy starting state
     \centering
     \def\svgwidth{0.9\textwidth}
     \input{figures/hmm_paths.pdf_tex}
-    \caption{Illustration of possible paths from the starting state $\boldsymbol{\pi}$ to a diagnosis $\mathbf{z}$ at time $T$ on a discrete grid of time vs state. Only 4 states (corresponding to 2 \glspl{lnl}) are shown, where green indicates healthy and purple involved. Following the arrows from $\boldsymbol{\pi}$ to $\mathbf{z}$ yields a possible path. Some connections between states are forbidden due to $Q$ (no self-healing). To calculate the probability of a diagnosis $\mathbf{z}$, we must marginalize over all paths.}
+    \caption[Schematic illustrating possible evolution paths of the HMM for a simple case]{Illustration of possible paths from the starting state $\boldsymbol{\pi}$ to a diagnosis $\mathbf{z}$ at time $T$ on a discrete grid of time vs state. Only 4 states (corresponding to 2 \glspl{lnl}) are shown, where green indicates healthy and purple involved. Following the arrows from $\boldsymbol{\pi}$ to $\mathbf{z}$ yields a possible path. Some connections between states are forbidden due to $Q$ (no self-healing). To calculate the probability of a diagnosis $\mathbf{z}$, we must marginalize over all paths.}
     \label{fig:unilateral:hmm_paths}
 \end{figure}
 
