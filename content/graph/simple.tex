@@ -16,7 +16,16 @@ Before turning to the full problem where we want to find the best graph(s) conne
     \centering
     \def\svgwidth{1.0\textwidth}
     \input{figures/simple_graphs.pdf_tex}
-    \caption{All possible graphs that could represent the lymphatic flow from a primary tumor in the oropharynx to the \glspl{lnl} II and III, as well as among them. On the left, no correlations between the involvements of the two levels can be modelled. The two graphs in the middle each assume a different direction of lymphatic spread, while the rightmost graph allows for spread among \gls{lnl} II and III in both directions.}
+    \caption[
+        Possible graphs for modelling unilateral spread in \glspl{lnl} II and II
+    ]{
+        All possible graphs that could represent the lymphatic flow from a primary tumor in the oropharynx to the \glspl{lnl} II and III, as well as among them.
+        \begin{enumerate*}[label={(\arabic*)}]
+            \item On the left, no correlations between the involvements of the two levels can be modelled.
+            \item The next graph assumes the anatomically most sensible spread direction from \gls{lnl} II to III, while
+            \item flips this connection.
+            \item The rightmost graph allows for spread among \gls{lnl} II and III in both directions.
+        \end{enumerate*}}
     \label{fig:graph:simple}
 \end{figure}
 

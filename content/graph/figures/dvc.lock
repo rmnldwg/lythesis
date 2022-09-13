@@ -5,12 +5,12 @@ stages:
       \ --export-latex\n"
     deps:
     - path: simple_graphs.svg
-      md5: 274b9f943916cbe7dd524742792b89b8
-      size: 16823
+      md5: eaae865806949bdb5311cf6cf08654b2
+      size: 27676
     outs:
     - path: simple_graphs.pdf
-      md5: 4e2bdba9a3591e676eeb6d19889bbcd4
-      size: 6218
+      md5: 21fad26b85f16b387da464c1077a3ff1
+      size: 10932
     - path: simple_graphs.pdf_tex
-      md5: 2dd90205b14548f02632f9777d457670
-      size: 2066
+      md5: cbeccdb0a2098e6fd0fee52e84f10928
+      size: 2061
