@@ -18,104 +18,6 @@ Up to this point we have largely argued that the mixing parameter makes intuitiv
 
 Essentially, we now want to know which of these three models does the best job of describing the data. Intuitively, one would argue that it must be $\mathcal{M}_\text{full}$, but this model is also more complex than the other two. A natural choice for a metric that incorporates both the accuracy of the model and a penalty for model complexity -- often also called \emph{Occam's razor} -- is the \emph{model evidence} \cite{aponte_introduction_2022}.
 
-\subsection{* Model evidence and Bayes factor}
-\label{subsec:bilateral:model_comp:evidence}
-
-In Bayesian terms, we would like to know which model $\mathcal{M}$ has the highest probability $P\left( \mathcal{M} \mid \boldsymbol{\mathcal{D}} \right)$ given a dataset $\boldsymbol{\mathcal{D}}$. This probability is given by
-%
-\begin{equation}
-    P\left( \mathcal{M} \mid \boldsymbol{\mathcal{D}} \right) = \frac{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M} \right) P\left( \mathcal{M} \right)}{P \left( \boldsymbol{\mathcal{D}} \right)}
-\end{equation}
-%
-If a priori all models we want to consider have the same probability $P \left( \mathcal{M} \right)$ and we only make pairwise comparisons between models, then we can restrict ourselves to computing the \emph{Bayes factor}:
-%
-\begin{equation}
-    K_\text{1v2} = \frac{P\left( \mathcal{M}_1 \mid \boldsymbol{\mathcal{D}} \right)}{P\left( \mathcal{M}_2 \mid \boldsymbol{\mathcal{D}} \right)} = \frac{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_1 \right) P\left( \mathcal{M}_1 \right)}{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_2 \right) P\left( \mathcal{M}_2 \right)} = \frac{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_1 \right)}{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_2 \right)}
-\end{equation}
-%
-On the right side in the above equation, we see the ratio of the two model's evidences, which are merely their respective likelihoods, marginalized over all parameters:
-%
-\begin{equation} \label{eq:bilateral:evidence}
-    P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M} \right) = \int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right) p(\theta \mid \mathcal{M}) d\theta}
-\end{equation}
-%
-So, if we can compute this model evidence -- commonly also called \emph{marginal likelihood} or \emph{partition function} $Z$ from physics -- for our models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$, the respecive pairwise Bayes factors will indicate which of them is \emph{most likely} to be the true one, given the observed data, in the probabilistic sense. Note that this does not mean it \emph{is} the true data-generating model and not even that we should \emph{believe} it is the true one. But only that among the models investigated, this one is probably the best.
-
-Harold Jeffreys gives a scale for interpreting values of the Bayes factor \cite{jeffreys_theory_1998} in \cref{table:bilateral:model_comp:bayes_factor}, where we have also listed the natural logarithm $\ln{K_\text{1v2}}$ of the Bayes factor, because what we will actually be doing is compute differences in the log-evidences.
-
-\begin{table}
-    \centering
-    \begin{tabular}{ | c | c | c | }
-        \hline
-        $K_\text{1v2}$ & $\ln{K_\text{1v2}}$ & support for $\mathcal{M}_1$ \\
-        \hline
-        $< 10^0$ & $< 0$ & negative evidence (supports $\mathcal{M}_2$) \\
-        $10^0$ to $10^{\nicefrac{1}{2}}$ & 0 to 1.15 & barely worth a mention \\
-        $10^{\nicefrac{1}{2}}$ to $10^1$ & 1.15 to 2.3 & substantial \\
-        $10^1$ to $10^{\nicefrac{3}{2}}$ & 2.3 to 3.45 & strong \\
-        $10^{\nicefrac{3}{2}}$ to $10^2$ & 3.45 to 4.6 & very strong \\
-        $> 10^2$ & $> 4.6$ & decisive \\
-        \hline
-    \end{tabular}
-    \caption{Interpretation of Bayes factors and their natural logarithms in terms of their support for or against one of the two compared models as introduced by Harold Jeffreys \cite{jeffreys_theory_1998}.}
-    \label{table:bilateral:model_comp:bayes_factor}
-\end{table}
-
-\subsection{* Thermodynamic integration}
-\label{subsec:bilateral:model_comp:thermo_int}
-
-Due to the integration over all model parameters, the quantity \cref{eq:bilateral:evidence} is usually impossible to calculate by brute force integration, even for models with only around a dozen parameters, as is the case for ours. Unless analytical solutions exist -- which is rarely the case -- it is often prohibitively expensive to compute the model evidence. For this reason, a large amount of approximation methods has been developed; \cite{friel_estimating_2011} names only a few of those methods that can be used in the context of \gls{mcmc}. Another method that is applicable in the context of \gls{mcmc} is \gls{ti}, which is very well introduced in \cite{aponte_introduction_2022} and only roughly sketched out in this section.
-
-The concept of \gls{ti} originates from the field of statistical mechanics and can be motivated from that standpoint. And although this path is certainly more educational and might convey a deeper understanding w.r.t. thermodynamics and information theory, we will take a more direct approach by starting with what we want to compute and subtracting a 0 from it:
-%
-\begin{equation} \label{eq:bilateral:subtract_zero}
-    \begin{aligned}
-        \ln{Z} &\coloneqq \ln{p(\boldsymbol{\mathcal{D}} \mid \mathcal{M})} = \ln{\int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right) p(\theta \mid \mathcal{M}) d\theta}} - \ln{1} \\
-        &= \ln{\int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right) p(\theta \mid \mathcal{M}) d\theta}} - \underbrace{ \ln{ \int{ p(\theta \mid \mathcal{M}) d\theta} } }_{\ln{Z_0}}
-    \end{aligned}
-\end{equation}
-%
-Writing it as this difference between two different log-evidences $\ln{Z}$ and $\ln{Z_0}$ itself does not get us far. But if we could somehow parametrize a differentiable path between the two, then maybe the integration
-%
-\begin{equation} \label{eq:bilateral:diff_as_int}
-    \ln{Z} - \ln{Z_0} = \int_0^1{ \frac{d}{d\beta} \ln{Z_\beta} d\beta}
-\end{equation}
-%
-we end up with can actually be computed. Just by inspection of \cref{eq:bilateral:subtract_zero} and \cref{eq:bilateral:diff_as_int}, one can see that on such differentiable path could be built using what we are going to call the \emph{power posterior} $p_\beta (\theta \mid \boldsymbol{\mathcal{D}}, \mathcal{M})$:
-%
-\begin{equation} \label{eq:bilateral:power_post}
-    \begin{aligned}
-        \ln{Z_\beta} &= \ln{ \int{ p_\beta (\theta \mid \boldsymbol{\mathcal{D}}, \mathcal{M}) d\theta} } \\
-        &= \ln{\int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right)^\beta p(\theta \mid \mathcal{M}) d\theta}}
-    \end{aligned}
-\end{equation}
-%
-with the derivative
-%
-\begin{equation}
-    \begin{aligned}
-        \frac{d}{d\beta} \ln{Z_\beta} &= \int{ \frac{p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right)^\beta p(\theta \mid \mathcal{M})}{Z_\beta} \ln{p(\boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} )} d\theta} \\
-        &= \mathbb{E}\left[ \ln{ p(\boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M}) } \right]_{p_\beta (\theta \mid \boldsymbol{\mathcal{D}}, \mathcal{M})} \\
-        &\approx \frac{1}{S} \sum_{i=1}^S{ \ln{ p(\boldsymbol{\mathcal{D}} \mid \hat{\theta}_{\beta i}, \mathcal{M}) } } = \mathcal{A}_\text{MC}(\beta)
-    \end{aligned}
-\end{equation}
-%
-The solution to computing the evidence now lies in sight: Using \gls{mcmc}, we can draw samples from the power posterior $p_\beta$ and use those samples to compute the expectation over the (unmodified) likelihood. Doing this for a sufficient number of steps in the interval $\left[ 0, 1 \right]$ and integrating over the resulting $\mathcal{A}_\text{MC}(\beta)$ will then yield an approximation to the log-evidence.
-%
-\begin{equation}
-    \ln{Z} \approx \frac{1}{2} \sum_{j=1}^{N-1} \left( \beta_{j+1} - \beta_j \right) \big( \mathcal{A}_\text{MC}(\beta_{j+1}) + \mathcal{A}_\text{MC}(\beta_j) \big)
-\end{equation}
-%
-This approximation gets better with larger values for $S$ and $N$. But also how the $\beta_j$ are chosen is crucial for computing a good estimate: Usually, the $\mathcal{A}_\text{MC}(\beta)$ -- which can be seen as accuracy terms -- rise steeply for increasing $\beta$ close to 0, while levelling off towards $\beta=1$. It therefore makes sense to distribute the ladder of these values unevenly. A common choice, that we employed as well, was $\beta_j = x_j^5$ where the $x_j$ are linearly spaced within the interval $[0, 1]$. This yields a very fine resolution for the first steps and gets successively coarser towards the end of the interval.
-
-Lastly, we would like to give a final insight into the evidence that is quite naturally obtained when following the derivation from statistical physics, but hard to see with the brief, formal derivation we gave up to this point. Therefore, we will just state it below and point to a publication giving a nice example of how to get to this result \cite{aponte_introduction_2022}. According to this, the log-evidence can be written in the following form:
-%
-\begin{equation} \label{eq:bilateral:acc_vs_kl}
-    \ln{Z} = \underbrace{\int{ \ln{ \probofgiven{\boldsymbol{\mathcal{D}}}{\theta, \mathcal{M}} } \probofgiven{\theta}{\boldsymbol{\mathcal{D}}, \mathcal{M}} d\theta}}_{\text{accuracy} \; \mathcal{A}(\beta = 1)} - \underbrace{\int{ \ln{ \frac{\probofgiven{\theta}{\boldsymbol{\mathcal{D}}, \mathcal{M}}}{\probofgiven{\theta}{\mathcal{M}}} } \probofgiven{\theta}{\boldsymbol{\mathcal{D}}, \mathcal{M}} d\theta}}_\text{complexity (KL-divergence)}
-\end{equation}
-%
-This shows how the evidence naturally incorporates Occam's razor. The second term on the right gets larger the more the likelihood restricts the prior and the resulting penalty grows exponentially with the dimensionality of the parameter space.
-
 \subsection{Implementation}
 \label{subsec:bilateral:model_comp:implementation}
 
@@ -162,7 +64,13 @@ The shown differences between the model's predictions are miniscule. For late T-
 
 On the contralateral side, however, this does not hold anymore. Here, we do not only stratify the prevalence by T-stage, but also by midline extension. Naturally, this cannot be captured by the agnostic model $\mathcal{M}_\text{ag}$ since it has no method of modelling this. What is of interest to us here is how the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ fare against each other and whether their improvements in predicting contralateral spread are worth the additional complexity.
 
-The overall prevalence of contralateral involvement is plotted in \cref{fig:bilateral:model_comp:contra}. Again, the three different models are depicted in their own column and we have distinguished between four cases for each model: The prevalence of any contralateral involvement for patients with a) early T-stage and a clearly lateralized tumor (blue histograms and curves), b) early T-stage with a tumor extending over the mid-sagittal plane (orange), c) late T-stage with, again, a lateralized tumor (green) and finally d) where the tumor is both in late T-stage and does extend over the mid-plane (red).
+The overall prevalence of contralateral involvement is plotted in \cref{fig:bilateral:model_comp:contra}. Again, the three different models are depicted in their own column, and we have distinguished between four cases for each model: The prevalence of any contralateral involvement for patients with
+\begin{enumerate*}[label={(\arabic*)}]
+    \item early T-stage and a clearly lateralized tumor (blue histograms and curves),
+    \item early T-stage with a tumor extending over the mid-sagittal plane (orange),
+    \item late T-stage with, again, a lateralized tumor (green) and finally
+    \item where the tumor is both in late T-stage and does extend over the mid-plane (red).
+\end{enumerate*}
 
 \begin{figure}
     \def\svgwidth{1.0\textwidth}

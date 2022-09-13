@@ -1,0 +1,16 @@
+schema: '2.0'
+stages:
+  convert-to-pdf@simple_graphs:
+    cmd: "inkscape --without-gui --file=simple_graphs.svg --export-pdf=simple_graphs.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: simple_graphs.svg
+      md5: 274b9f943916cbe7dd524742792b89b8
+      size: 16823
+    outs:
+    - path: simple_graphs.pdf
+      md5: 4e2bdba9a3591e676eeb6d19889bbcd4
+      size: 6218
+    - path: simple_graphs.pdf_tex
+      md5: 2dd90205b14548f02632f9777d457670
+      size: 2066
