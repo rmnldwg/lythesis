@@ -1,0 +1,12 @@
+md5: 240aa5ac9774c9d31b6ef81ddb8ea416
+frozen: true
+deps:
+- path: models/samples.hdf5
+  repo:
+    url: https://github.com/rmnldwg/lynference
+    rev: simple-both-v1
+    rev_lock: 1ae000528e9ffe38ec0acde02f19eb07c0063353
+outs:
+- md5: e84351b4c70b708a4ee2a8a2697a2fa0
+  size: 73711808
+  path: simple-both-v1-samples.hdf5
