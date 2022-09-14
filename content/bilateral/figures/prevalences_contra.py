@@ -90,4 +90,3 @@ if __name__ == "__main__":
                     ax[i].legend()
 
     plt.savefig("contra-comp.svg")
-    plt.savefig("contra-comp.png", dpi=300)

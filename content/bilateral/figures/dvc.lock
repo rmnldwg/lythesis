@@ -13,24 +13,21 @@ stages:
       md5: f5df7dddae40020e8945795caa1fb6a7
       size: 979848
     - path: prevalences_ipsi.py
-      md5: 3eaffd0dfc2961805c7212b873fc108d
-      size: 4032
+      md5: 38d9d39a366b3d809ff5b06aaf1c4b41
+      size: 3990
     outs:
-    - path: ipsi-comp.png
-      md5: 3b98296b4f884a799f4e9e44f3ed83ba
-      size: 161668
     - path: ipsi-comp.svg
-      md5: 60034468fb1c8087c631c99926e6e3bc
+      md5: bebb64aebd4c911dfebf1ab9859e8498
       size: 442329
   ipsi-prevalences-to-pdf:
     cmd: inkscape --without-gui --file=ipsi-comp.svg --export-pdf=ipsi-comp.pdf --export-latex
     deps:
     - path: ipsi-comp.svg
-      md5: 60034468fb1c8087c631c99926e6e3bc
+      md5: bebb64aebd4c911dfebf1ab9859e8498
       size: 442329
     outs:
     - path: ipsi-comp.pdf
-      md5: 00e745bb0bbf7b7232f56973d1afdfdd
+      md5: f17dc1cae4d58935a8076c61130ef121
       size: 100238
     - path: ipsi-comp.pdf_tex
       md5: 80f1050278812fb4760dff949aaa8ff7
@@ -48,25 +45,22 @@ stages:
       md5: f5df7dddae40020e8945795caa1fb6a7
       size: 979848
     - path: prevalences_contra.py
-      md5: 6101ec622df8747e51b5aa2d71c55808
-      size: 2832
+      md5: eae0533e107e9c4551200f11c8278f0f
+      size: 2788
     outs:
-    - path: contra-comp.png
-      md5: 14b3c6bd366923496d6718822839b898
-      size: 129379
     - path: contra-comp.svg
-      md5: 8935e9a6093bb3e8a2352e19ddde78bd
+      md5: 0c8150688a6c2b32bffcda20e0514aa3
       size: 157924
   contra-prevalences-to-pdf:
     cmd: inkscape --without-gui --file=contra-comp.svg --export-pdf=contra-comp.pdf
       --export-latex
     deps:
     - path: contra-comp.svg
-      md5: 8935e9a6093bb3e8a2352e19ddde78bd
+      md5: 0c8150688a6c2b32bffcda20e0514aa3
       size: 157924
     outs:
     - path: contra-comp.pdf
-      md5: fcf79ad87377f015867782631819fa3f
+      md5: 07d12a9daed541b82c63c0735a4e6319
       size: 72888
     - path: contra-comp.pdf_tex
       md5: cf8db26b0703dd6f32de17af7a373f90
@@ -95,7 +89,8 @@ stages:
   plot-thermo-int:
     cmd: "python -m lyscripts plot thermo_int ../data/bilateral-v2-accuracies.csv\
       \ ../data/midline-with-mixing-v2-accuracies.csv ../data/midline-without-mixing-v2-accuracies.csv\
-      \ -o thermo_int --labels agnostic mixing full --mplstyle ../../../.mplstyle\n"
+      \ -o thermo_int --labels agnostic mixing full --mplstyle ../../../.mplstyle\
+      \ && rm thermo_int.png\n"
     deps:
     - path: ../data/bilateral-v2-accuracies.csv
       md5: c9db81871f556cae3ca5ba10276d6929
@@ -107,22 +102,19 @@ stages:
       md5: 51d65e3eff5c352a14f5b4471d559f90
       size: 3731
     outs:
-    - path: thermo_int.png
-      md5: 1e86aa6710455ce0d2a87510bf5b8a64
-      size: 83432
     - path: thermo_int.svg
-      md5: 3f9d8c4137a87590d5d53da47adcad58
+      md5: eecb22801a9be23c581a9aa1d6276e80
       size: 43468
   thermo-int-to-pdf:
     cmd: inkscape --without-gui --file=thermo_int.svg --export-pdf=thermo_int.pdf
       --export-latex
     deps:
     - path: thermo_int.svg
-      md5: 3f9d8c4137a87590d5d53da47adcad58
+      md5: eecb22801a9be23c581a9aa1d6276e80
       size: 43468
     outs:
     - path: thermo_int.pdf
-      md5: 66ac7ca1e7ea51bc85a1365337a66058
+      md5: 04db8c95a6671653696d6710c93f9b28
       size: 40435
     - path: thermo_int.pdf_tex
       md5: 030a8e07f116b87acf33897176462adb

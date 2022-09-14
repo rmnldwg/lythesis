@@ -96,5 +96,4 @@ if __name__ == "__main__":
     ax["both/early"].set_xlabel("early T-stage prevalences [%]")
     ax["both/late"].set_xlabel("late T-stage prevalences [%]")
 
-    plt.savefig("simple-prevalences.png", dpi=300)
     plt.savefig("simple-prevalences.svg")

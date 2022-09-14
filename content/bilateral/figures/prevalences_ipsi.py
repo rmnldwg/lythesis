@@ -118,4 +118,3 @@ if __name__ == "__main__":
                 ax[name].set_ylabel(stage)
     
     plt.savefig("ipsi-comp.svg")
-    plt.savefig("ipsi-comp.png", dpi=300)

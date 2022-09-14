@@ -26,5 +26,4 @@ stages:
     - ../data/simple-nocon-v1-prevalences.hdf5
     - simple-prevalences.py
     outs:
-    - simple-prevalences.png
     - simple-prevalences.svg

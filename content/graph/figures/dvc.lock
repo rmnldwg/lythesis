@@ -30,25 +30,22 @@ stages:
       md5: 43b594b8d79b04542aabf34c141eaa80
       size: 207048
     - path: simple-prevalences.py
-      md5: 5435c7ae6d753caf7256b3cff84536ac
-      size: 3233
+      md5: 07680834ac07b39fbaf9720259024a59
+      size: 3182
     outs:
-    - path: simple-prevalences.png
-      md5: dede568bf28d34eb6adca41d6f739816
-      size: 241482
     - path: simple-prevalences.svg
-      md5: f541ba44b101cb72dcaa08f3b5fedafe
+      md5: ead63de9a9093cc254c41265c8928ba8
       size: 739927
   convert-to-pdf@simple-prevalences:
     cmd: "inkscape --without-gui --file=simple-prevalences.svg --export-pdf=simple-prevalences.pdf\
       \ --export-latex\n"
     deps:
     - path: simple-prevalences.svg
-      md5: f541ba44b101cb72dcaa08f3b5fedafe
+      md5: ead63de9a9093cc254c41265c8928ba8
       size: 739927
     outs:
     - path: simple-prevalences.pdf
-      md5: 39edb15aa9fb33c1072b81191be7f6bb
+      md5: 60dad606a35adf95db8dd51001a5bc00
       size: 151455
     - path: simple-prevalences.pdf_tex
       md5: b5d4595d0cfbfbe8083d20d915a645ff

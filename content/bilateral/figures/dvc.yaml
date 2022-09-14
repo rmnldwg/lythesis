@@ -2,13 +2,13 @@ stages:
   plot-ipsi-prevalences:
     cmd: python prevalences_ipsi.py
     outs:
-    - ipsi-comp.png
     - ipsi-comp.svg
     deps:
     - ../data/bilateral-v2-prevalences.hdf5
     - ../data/midline-with-mixing-v2-prevalences.hdf5
     - ../data/midline-without-mixing-v2-prevalences.hdf5
     - prevalences_ipsi.py
+
   ipsi-prevalences-to-pdf:
     cmd: inkscape --without-gui --file=ipsi-comp.svg --export-pdf=ipsi-comp.pdf --export-latex
     deps:
@@ -18,6 +18,7 @@ stages:
         cache: false
     - ipsi-comp.pdf_tex:
         cache: false
+
   plot-contra-prevalences:
     cmd: python prevalences_contra.py
     deps:
@@ -26,8 +27,8 @@ stages:
     - ../data/midline-without-mixing-v2-prevalences.hdf5
     - prevalences_contra.py
     outs:
-    - contra-comp.png
     - contra-comp.svg
+
   contra-prevalences-to-pdf:
     cmd: inkscape --without-gui --file=contra-comp.svg --export-pdf=contra-comp.pdf --export-latex
     deps:
@@ -37,6 +38,7 @@ stages:
         cache: false
     - contra-comp.pdf_tex:
         cache: false
+
   plot-thermo-int:
     cmd: >
       python -m lyscripts plot thermo_int
@@ -46,13 +48,14 @@ stages:
       -o thermo_int
       --labels agnostic mixing full
       --mplstyle ../../../.mplstyle
+      && rm thermo_int.png
     deps:
     - ../data/bilateral-v2-accuracies.csv
     - ../data/midline-with-mixing-v2-accuracies.csv
     - ../data/midline-without-mixing-v2-accuracies.csv
     outs:
     - thermo_int.svg
-    - thermo_int.png
+
   thermo-int-to-pdf:
     cmd: inkscape --without-gui --file=thermo_int.svg --export-pdf=thermo_int.pdf --export-latex
     deps:
