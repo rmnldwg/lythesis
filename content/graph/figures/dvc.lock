@@ -14,3 +14,42 @@ stages:
     - path: simple_graphs.pdf_tex
       md5: cbeccdb0a2098e6fd0fee52e84f10928
       size: 2061
+  simple-prevalences:
+    cmd: python simple-prevalences.py
+    deps:
+    - path: ../data/simple-IIItoII-v1-prevalences.hdf5
+      md5: a7f5ecbb8c29aef6bafd4cfb60ea1bc2
+      size: 271048
+    - path: ../data/simple-IItoIII-v1-prevalences.hdf5
+      md5: 37abc7ceae42e369aebd7caf212f5630
+      size: 271048
+    - path: ../data/simple-both-v1-prevalences.hdf5
+      md5: 4cd9d0bf5e0661f22aad2043c77d4ca1
+      size: 335048
+    - path: ../data/simple-nocon-v1-prevalences.hdf5
+      md5: 43b594b8d79b04542aabf34c141eaa80
+      size: 207048
+    - path: simple-prevalences.py
+      md5: 5435c7ae6d753caf7256b3cff84536ac
+      size: 3233
+    outs:
+    - path: simple-prevalences.png
+      md5: dede568bf28d34eb6adca41d6f739816
+      size: 241482
+    - path: simple-prevalences.svg
+      md5: f541ba44b101cb72dcaa08f3b5fedafe
+      size: 739927
+  convert-to-pdf@simple-prevalences:
+    cmd: "inkscape --without-gui --file=simple-prevalences.svg --export-pdf=simple-prevalences.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: simple-prevalences.svg
+      md5: f541ba44b101cb72dcaa08f3b5fedafe
+      size: 739927
+    outs:
+    - path: simple-prevalences.pdf
+      md5: 39edb15aa9fb33c1072b81191be7f6bb
+      size: 151455
+    - path: simple-prevalences.pdf_tex
+      md5: b5d4595d0cfbfbe8083d20d915a645ff
+      size: 2077

@@ -34,16 +34,32 @@ Anatomically, \gls{lnl} II sits directly above \gls{lnl} III, so we would expect
 We can look back at \acrlongpl{bn}, as introduced in \cref{sec:previous_work:bayesian_network}. They represent factorizations of joint probability distributions of a number of \glspl{rv}. In our simplified case we want to find the factorizations of the joint which are all visualized in the three \glspl{dag} on the left of \cref{fig:graph:simple}:
 %
 \begin{equation}
-    \begin{aligned}
-        \Probofgiven{X_\text{II}, X_\text{III}}{T=1} &= \Probofgiven{X_\text{II}}{T=1} \Probofgiven{X_\text{III}}{T=1} \\
-        &= \Probofgiven{X_\text{III}}{X_\text{II}, T=1} \Probofgiven{X_\text{II}}{T=1} \\
-        &= \Probofgiven{X_\text{II}}{X_\text{III}, T=1} \Probofgiven{X_\text{III}}{T=1}
-    \end{aligned}
+    \Probofgiven{X_\text{II}, X_\text{III}}{T=1} = \begin{cases}
+        \Probofgiven{X_\text{II}}{T=1} \Probofgiven{X_\text{III}}{T=1} \\
+        \Probofgiven{X_\text{III}}{X_\text{II}, T=1} \Probofgiven{X_\text{II}}{T=1} \\
+        \Probofgiven{X_\text{II}}{X_\text{III}, T=1} \Probofgiven{X_\text{III}}{T=1}
+    \end{cases}
 \end{equation}
 %
 The rightmost graph in \cref{fig:graph:simple} cannot represent a \gls{bn} and hence also no valid factorization, since it is not acyclic. In the \gls{hmm} model however, this is perfectly fine, since in that case different \glspl{rv} are connected across time-steps, which resolves the cycle.
 
-Let $\boldsymbol{\mathcal{D}}$ now be a made-up dataset of 100 patients. Let us say 80 of those have metastases in \gls{lnl} II and of those 80 patients, 40 also harbor metastases in \gls{lnl} III. This constructed case is so simple that we can easily go through it in our heads: For the leftmost graph, this would lead to the maximum likelihood estimate of the spread probabilities from the tumor to the levels taking on the values $b_\text{II} = 80\%$ and $b_\text{III} = 40\%$. This would describe the prevalences of involvement for each level separately quite well, but it would also predict a probability of
+\begin{table}
+    \centering
+    \begin{tabular}{|c|cc|}
+        \hline
+        Number & $X_\text{II}$ & $X_\text{III}$ \\
+        \hline
+        20 & 0 & 0 \\
+        40 & 1 & 0 \\
+         0 & 0 & 1 \\
+        40 & 1 & 1 \\
+        \hline
+    \end{tabular}
+    \caption{Mockup dataset $\boldsymbol{\mathcal{D}}$ for illustrating the ambiguity between the two possible spread directions from and two the \glspl{lnl} II and III.}
+    \label{table:graph:simple:mockup}
+\end{table}
+
+Let $\boldsymbol{\mathcal{D}}$ now be a made-up dataset of 100 patients. Let us say 80 of those have metastases in \gls{lnl} II and of those 80 patients, 40 also harbor metastases in \gls{lnl} III. See also \cref{table:graph:simple:mockup} for how this data is supposed to look like. This constructed case is so simple that we can easily go through it in our heads: For the leftmost graph, this would lead to the maximum likelihood estimate of the spread probabilities from the tumor to the levels taking on the values $b_\text{II} = 80\%$ and $b_\text{III} = 40\%$. This would describe the prevalences of involvement for each level separately quite well, but it would also predict a probability of
 %
 \begin{equation}
     \begin{aligned}
@@ -65,5 +81,23 @@ Although this clearly is a constructed example, the illustrated ambiguity exists
 
 \input{_reproducibility.tex}
 
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/simple-prevalences.pdf_tex}
+    \caption[
+        Predicted prevalences of the models based on the simple graphs
+    ]{
+        Prevalences of involvement as histograms, predicted by the models based on the four different graphs (four rows respectively), computed for all possible involvement scenarios 
+        (\begin{enumerate*}
+            \item[(green)] all \glspl{lnl} are healthy,
+            \item[(orange)] only \gls{lnl} II harbors metastases,
+            \item[(blue)] vice versa, only \gls{lnl} II is metastatic and lastly,
+            \item[(red)] both \glspl{lnl} are involved 
+        \end{enumerate*})
+        and early (left column), as well as late T-stage (right column). The corresponding data prevalence is plotted as a Beta posterior in the same color as the prediction. The legend in the top row shows how many patients of the respective T-stage showed the involvement of interest.
+    }
+    \label{fig:graph:simple:prevalenes}
+\end{figure}
 
 \end{document}

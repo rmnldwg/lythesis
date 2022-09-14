@@ -2,6 +2,7 @@ stages:
   convert-to-pdf:
     foreach:
     - simple_graphs
+    - simple-prevalences
     do:
       cmd: >
         inkscape
@@ -16,3 +17,14 @@ stages:
           cache: false
       - ${item}.pdf_tex:
           cache: false
+  simple-prevalences:
+    cmd: python simple-prevalences.py
+    deps:
+    - ../data/simple-IIItoII-v1-prevalences.hdf5
+    - ../data/simple-IItoIII-v1-prevalences.hdf5
+    - ../data/simple-both-v1-prevalences.hdf5
+    - ../data/simple-nocon-v1-prevalences.hdf5
+    - simple-prevalences.py
+    outs:
+    - simple-prevalences.png
+    - simple-prevalences.svg
