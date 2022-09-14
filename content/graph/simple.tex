@@ -79,7 +79,19 @@ Although this clearly is a constructed example, the illustrated ambiguity exists
 \subsection{Comparisons}
 \label{subsec:graph:simple:comp}
 
+\input{_data.tex}
+
 \input{_reproducibility.tex}
+
+In this experiment, we performed one \gls{ti} round for each of the  four graphs in \cref{fig:graph:simple}, consisting of 64 inverse temperature $\beta$ steps spaced according to a fifth order power rule. This means that
+%
+\begin{equation}
+    \beta_i = \left( \frac{i - 1}{64 - 1} \right)^5
+\end{equation}
+%
+At each point of this \gls{ti} schedule, we ran the sampling for 1000 steps, simultaneously drawing $20 \cdot k$ burn-in samples, where $k$ is the number of dimensions of the model. This dimensionality $k = 3$ for the model without any connections between \gls{lnl} II and III (graph no. 1 in \cref{fig:graph:simple}), $k = 4$ for the models with one connection between these \glspl{lnl} (graphs 2 and 3 in \cref{fig:graph:simple}) and $k = 5$ for the model connecting the two levels in both directions.
+
+After the burn-in phase, we drew another $250 \cdot 20 \cdot k$ samples and discarded every fifth. With the remaining $1000 \cdot k$ samples, we computed the log-likelihood 1000 times for each $\beta_i$ and were therefore able to calculate 1000 \gls{ti} estimates of the evidence, which could then be used to compute the expected evidence and its standard deviation. The log-evidence, along with \gls{bic} has been printed in \cref{table:graph:simple:comp}.
 
 \begin{figure}
     \centering
@@ -99,5 +111,31 @@ Although this clearly is a constructed example, the illustrated ambiguity exists
     }
     \label{fig:graph:simple:prevalenes}
 \end{figure}
+
+\begin{table}
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+        \hline
+        \textbf{Metric} & \textbf{graph no. 1} & \textbf{graph no. 2} & \textbf{graph no. 3} & \textbf{graph no. 4} \\
+        \hline
+        $\text{BIC} / 2$ & 662.10 & 660.74 & 661.04 & 663.87 \\
+        $- \text{log-evidence}$ & 661.22 $\pm$ 0.99 & 658.90 $\pm$ 1.11 & 657.37 $\pm$ 0.97 & 658.78 $\pm$ 1.08 \\
+        $- \text{max llh}$ & 652.64 & 648.12 & 648.42 & 648.10 \\
+        $- \mathcal{A}_\text{MC}(1)$ & 654.07 & 650.07 & 650.09 & 649.93 \\
+        \hline
+    \end{tabular}
+    \caption[
+        Comparison of performance metrics for four different simple graphs
+    ]{
+        Comparison of performance metrics for the models based on the four different graphs in \cref{fig:graph:simple}. Displayed are the computed values for the \acrlong{bic}, the log-evidence (computed by performing \acrlong{ti}), the maximum and expected likelihood for the last step in the \gls{ti} schedule $\beta_{64} = 1$. Note that we give one half of the \gls{bic} and the negative of the other metrics to bring all values into a similar range and get rid of all the negative signs.
+    }
+    \label{table:graph:simple:comp}
+\end{table}
+
+Both \cref{table:graph:simple:comp} and \cref{fig:graph:simple:prevalenes} show that graph no. 1 (\cref{fig:graph:simple}, left) is not able to capture the observed data very well. This is simply because it lacks any mechanism to model the correlation between \gls{lnl} II's and \gls{lnl} III's involvement. Therefore, not only are the predicted prevalences off compared to the data prevalences, but also the log-evidence is -- with a difference of 2.32 to the next worst model -- between ``substantial'' and ``strong'', according to \cref{table:bayes_factor}. This is despite the fact that it has the fewest parameters, which gives the model an advantage, since the evidence automatically penalizes complex models (Occam's razor, see \cref{eq:ti:acc_vs_kl}).
+
+As indicated during the thought experiment using the \acrlong{bn}, the graphs no. 2 and 3 present an ambiguity: They both seem to model the data almost equally well, which can be seen in the mean and maximum likelihood in \cref{table:graph:simple:comp}, as well as in the good fits of the predicted prevalences in the second and thirds row in \cref{fig:graph:simple:prevalenes}. The log-evidence in this table shows a barely ``substantial'' preference, surprisingly for the graph that is less intuitive from an anatomical point of view. Finally, when connecting \glspl{lnl} II and III in both directions, the predictions do get slightly -- though not noticeably in \cref{fig:graph:simple:prevalenes} -- better, but the penalty for the increased model complexity negates this advantage.
+
+Lastly, we want to point to the \gls{bic} as a metric for comparing models: From \cref{table:graph:simple:comp} it seems as if the \gls{bic} -- or rather the negative one half of the \gls{bic} -- is not always a reliable approximation of the log-evidence. We believe this is due to the shape of the posterior distribution over the parameters, which we have plotted for the first graph (\cref{fig:graph:simple:corner_nocon}) and the last (\cref{fig:graph:simple:corner_both}).
 
 \end{document}

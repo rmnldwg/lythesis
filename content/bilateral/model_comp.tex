@@ -16,10 +16,12 @@ Up to this point we have largely argued that the mixing parameter makes intuitiv
     \item Model $\mathcal{M}_\text{full}$, going even further by defining a completely independent set of contralateral base probabilities for the patients whose tumor extends over the mid-sagittal plane.
 \end{itemize}
 
-Essentially, we now want to know which of these three models does the best job of describing the data. Intuitively, one would argue that it must be $\mathcal{M}_\text{full}$, but this model is also more complex than the other two. A natural choice for a metric that incorporates both the accuracy of the model and a penalty for model complexity -- often also called \emph{Occam's razor} -- is the \emph{model evidence} \cite{aponte_introduction_2022}.
+Essentially, we now want to know which of these three models does the best job of describing the data. Intuitively, one would argue that it must be $\mathcal{M}_\text{full}$, but this model is also more complex than the other two. A natural choice for a metric that incorporates both the accuracy of the model and a penalty for model complexity -- often also called \emph{Occam's razor} -- is the \emph{model evidence} \cite{aponte_introduction_2022}, which we introduced in \cref{sec:graph:model_comp}.
 
 \subsection{Implementation}
 \label{subsec:bilateral:model_comp:implementation}
+
+\input{_data.tex}
 
 \input{_reproducibility.tex}
 
@@ -40,11 +42,7 @@ where -- again -- $k$ is the number of parameters $\theta$, while $N$ is the num
 \end{enumerate*}
 \cite{bhat_derivation_2010}. The second assumption is not quite fulfilled, but we will see shortly that the \gls{bic} seems to be a quite good measure for model comparison in our case.
 
-The models were trained on the combination of two datasets: One from our institution, the University Hospital Zurich, which has been published and described in great detail in a separate publication \cite{ludwig_dataset_2021}. The other was kindly provided to us by researchers of the Centre Léon Bérard in Lyon, France and was the underlying data for one of their papers \cite{bauwens_prevalence_2021}. Both datasets have been published in our repository \repolink{lydata}.
-
-Different modalities were used to obtain the diagnoses for the patients in the two datasets. For the inference process, we combined all available diagnostic modalities using sensitivity and specificity values from the literature \cite{de_bondt_detection_2007} using a maximum likelihood estimate. We treated this resulting ``consensus diagnosis'' as if it were the ground truth, i.e., we set its sensitivity and specificity to 1 respectively. Our motivation to do so was that this allows us to compare predictions of the model with data prevalences to see which of the model exhibits more flexibility in adapting to the data. If we had directly provided the models with all available diagnostic modalities and allowed it to combine them itself, as outlined in \cref{subsec:unilateral:formalism:multimodality}, this would not have been possible. Also, in this case we are not interested in learning the exact distribution over the posterior parameters of the model, i.e. the probability rates for spread along arcs of the lymphatic graph, but rather how well the different models are able to adapt to realistic data and make use of the additional information provided via the tumor's extension over the mid-sagittal plane.
-
-Lastly, we restricted ourselves to modelling the \glspl{lnl} II, III and IV, because contralaterally we rarely observe involvement outside those levels, and it drastically speeds up the inference process.
+We restricted ourselves to the bilateral modelling of the \glspl{lnl} II, III and IV, because contralaterally we rarely observe involvement outside those levels, and it drastically speeds up the inference process, when fewer \glspl{lnl} are considered.
 
 \subsection{Results}
 \label{subsec:bilateral:model_comp:results}
@@ -89,9 +87,9 @@ Despite this, the two models perform equally well regarding the overall contrala
 
 One would expect that modelling the correlations between involvements of the contralateral \glspl{lnl} might suffer from the simplifying introduction of the mixing parameter $\alpha$, but this is hard to test, as cases where e.g. \gls{lnl} III is involved without \gls{lnl} II are very rare -- in this case it is only five patients. Also, the clinical debate centers around whether to treat or to spare the contralateral side as a whole when performing elective \gls{rt} or elective bilateral \gls{nd} \cite{biau_selection_2019,al-mamgani_contralateral_2017}. Sparing individual \glspl{lnl} is not yet debated. Therefore, a more complete model like $\mathcal{M}_\text{full}$, that might be able to capture correlations we cannot yet see due to insufficient data, are not worth the additional model complexity at this point.
 
-This is supported also by the log-evidence of the three models compared, which we provide in \cref{table:bilateral:model_comp:evidences}. Besides \emph{decisive} (according to \cref{table:bilateral:model_comp:bayes_factor}) evidence against the agnostic model, we also see that the accuracy $\mathcal{A}_\text{MC}(\beta=1)$ is almost the same for the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$. But the additional complexity from introducing two additional parameters is punished heavily both by the thermodynamically integrated log-evidence, and its approximation, the \gls{bic}. Therefore, from a Bayesian standpoint, we find \emph{decisive} evidence in favor of the mixing model $\mathcal{M}_\alpha$ with $\ln{K}_{\alpha\,\text{v}\,\text{full}} = 6.4$. Interestingly, the \gls{bic} seems to be a surprisingly good approximation, being always withing the standard deviation of the actual log-evidence for all shown models.
+This is supported also by the log-evidence of the three models compared, which we provide in \cref{table:bilateral:model_comp:evidences}. Besides \emph{decisive} (according to \cref{table:bayes_factor}) evidence against the agnostic model, we also see that the accuracy $\mathcal{A}_\text{MC}(\beta=1)$ is almost the same for the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$. But the additional complexity from introducing two additional parameters is punished heavily both by the thermodynamically integrated log-evidence, and its approximation, the \gls{bic}. Therefore, from a Bayesian standpoint, we find \emph{decisive} evidence in favor of the mixing model $\mathcal{M}_\alpha$ with $\ln{K}_{\alpha\,\text{v}\,\text{full}} = 6.4$. Interestingly, the \gls{bic} seems to be a surprisingly good approximation, being always withing the standard deviation of the actual log-evidence for all shown models.
 
-\Cref{fig:bilateral:model_comp:thermo_int} displays how -- using \gls{ti} -- the expected log-likelihood under the power posterior evolves over the course of a \gls{ti} round for each of the three compared models. It shows that the final accuracy $\mathcal{A}_\text{MC}(\beta=1)$ of the agnostic model $\mathcal{M}_\text{ag}$ is lower than of the other two models, which owe that to their ability to incorporate the tumor's extension over the mid plane into the prediction. However, while the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ achieve the same fit to the data, the full model's accuracy rises for later $\beta$ values, which results in a lower log-evidence and a higher complexity penalty (see \cref{eq:bilateral:acc_vs_kl}) compared to the simpler mixing model.
+\Cref{fig:bilateral:model_comp:thermo_int} displays how -- using \gls{ti} -- the expected log-likelihood under the power posterior evolves over the course of a \gls{ti} round for each of the three compared models. It shows that the final accuracy $\mathcal{A}_\text{MC}(\beta=1)$ of the agnostic model $\mathcal{M}_\text{ag}$ is lower than of the other two models, which owe that to their ability to incorporate the tumor's extension over the mid plane into the prediction. However, while the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ achieve the same fit to the data, the full model's accuracy rises for later $\beta$ values, which results in a lower log-evidence and a higher complexity penalty (see \cref{eq:ti:acc_vs_kl}) compared to the simpler mixing model.
 
 \begin{table}
     \centering
@@ -99,7 +97,7 @@ This is supported also by the log-evidence of the three models compared, which w
         \hline
         \textbf{Metric} & \textbf{agnostic} $\mathcal{M}_\text{ag}$ & \textbf{mixing} $\mathcal{M}_\alpha$ & \textbf{full} $\mathcal{M}_\text{full}$ \\
         \hline
-        BIC & -1116.70 & -1093.08 & -1098.23 \\
+        $-\text{BIC}/2$ & -1116.70 & -1093.08 & -1098.23 \\
         log-evidence & -1118.23 $\pm$ 1.77 & -1093.33 $\pm$ 1.91 & -1099.73 $\pm$ 1.99 \\
         % std of log-evidence & 1.77 & 1.91 & 1.99 \\
         max likelihood & -1088.31 & -1061.53 & -1060.37 \\
@@ -115,7 +113,7 @@ This is supported also by the log-evidence of the three models compared, which w
     % \def\svgwidth{1.0\textwidth}
     \input{figures/thermo_int.pdf_tex}
     \caption[Plotted accuracy over the course of a thermodynamic integration round]{
-        Expectation of the log-likelihood under the power posterior (\cref{eq:bilateral:power_post}) plotted against 64 inverse temperature steps $\beta$ for the three models. The accuracy on the y-axis is plotted on a log-scale, while the $\beta$ values, which themselves represent a fifth order annealing schedule, were plotted on an x-axis where the ticks were spaced according to a seventh order power rule. This was done to nicely visualize both the differences in accuracy and to better depict at which $\beta$ values the accuracies begin to rise.
+        Expectation of the log-likelihood under the power posterior (\cref{eq:ti:power_post}) plotted against 64 inverse temperature steps $\beta$ for the three models. The accuracy on the y-axis is plotted on a log-scale, while the $\beta$ values, which themselves represent a fifth order annealing schedule, were plotted on an x-axis where the ticks were spaced according to a seventh order power rule. This was done to nicely visualize both the differences in accuracy and to better depict at which $\beta$ values the accuracies begin to rise.
     }
     \label{fig:bilateral:model_comp:thermo_int}
 \end{figure}
