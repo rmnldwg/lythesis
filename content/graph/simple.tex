@@ -138,4 +138,16 @@ As indicated during the thought experiment using the \acrlong{bn}, the graphs no
 
 Lastly, we want to point to the \gls{bic} as a metric for comparing models: From \cref{table:graph:simple:comp} it seems as if the \gls{bic} -- or rather the negative one half of the \gls{bic} -- is not always a reliable approximation of the log-evidence. We believe this is due to the shape of the posterior distribution over the parameters, which we have plotted for the first graph (\cref{fig:graph:simple:corner_nocon}) and the last (\cref{fig:graph:simple:corner_both}).
 
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/simple-corner.pdf_tex}
+    \caption[
+        Corner plots of the graphs no. 1 and no. 4
+    ]{
+        Corner plot of the distribution of the sampled parameters for the model based on graph no. 4 (blue) and for the model based on graph no. 1 (green). A corner plot represents shows all 1D and all 2D marginals of any $n$-dimensional distribution aligned.
+    }
+    \label{fig:graph:simple:corner}
+\end{figure}
+
 \end{document}

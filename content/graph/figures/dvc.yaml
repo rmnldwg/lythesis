@@ -17,6 +17,7 @@ stages:
           cache: false
       - ${item}.pdf_tex:
           cache: false
+
   simple-prevalences:
     cmd: python simple-prevalences.py
     deps:
@@ -27,3 +28,13 @@ stages:
     - simple-prevalences.py
     outs:
     - simple-prevalences.svg
+
+  simple-corners:
+    cmd: python simple-corner.py
+    deps:
+    - simple-corner.py
+    - ../data/simple-both-v1-samples.hdf5
+    - ../data/simple-nocon-v1-samples.hdf5
+    outs:
+    - simple-nocon-corner.svg
+    - simple-both-corner.svg

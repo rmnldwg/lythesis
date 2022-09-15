@@ -34,19 +34,38 @@ stages:
       size: 3182
     outs:
     - path: simple-prevalences.svg
-      md5: ead63de9a9093cc254c41265c8928ba8
+      md5: 17a9fdec27fbc5a184c2c69c654a075e
       size: 739927
   convert-to-pdf@simple-prevalences:
     cmd: "inkscape --without-gui --file=simple-prevalences.svg --export-pdf=simple-prevalences.pdf\
       \ --export-latex\n"
     deps:
     - path: simple-prevalences.svg
-      md5: ead63de9a9093cc254c41265c8928ba8
+      md5: 17a9fdec27fbc5a184c2c69c654a075e
       size: 739927
     outs:
     - path: simple-prevalences.pdf
-      md5: 60dad606a35adf95db8dd51001a5bc00
+      md5: 509f4ee5d9bcdb5c6ed96b3ba423d5d2
       size: 151455
     - path: simple-prevalences.pdf_tex
       md5: b5d4595d0cfbfbe8083d20d915a645ff
       size: 2077
+  simple-corners:
+    cmd: python simple-corner.py
+    deps:
+    - path: ../data/simple-both-v1-samples.hdf5
+      md5: e84351b4c70b708a4ee2a8a2697a2fa0
+      size: 73711808
+    - path: ../data/simple-nocon-v1-samples.hdf5
+      md5: c71d7652ec12224eefa2f4fa9bc49da2
+      size: 40189568
+    - path: simple-corner.py
+      md5: caa0359f5b290c1470cd0a23f2a1550e
+      size: 3081
+    outs:
+    - path: simple-both-corner.svg
+      md5: 8b26c1d7a2aaf9ad813f2b53017d46d1
+      size: 994092
+    - path: simple-nocon-corner.svg
+      md5: 284cb6189abafdbd1e1644db00aa7f48
+      size: 319934
