@@ -1,0 +1,21 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{
+    {\subfix{./figures/}}
+}
+
+
+\begin{document}
+
+\section{Considering additional LNLs V and VII}
+\label{sec:graph:all_lnls}
+
+\input{_contributions.tex}
+
+Up to this point, we have introduced a model to infer ipsilateral lymphatic spread from data and shown how it works on reconstructed data -- which was the only data available at the time of writing \cref{chap:unilateral} -- that reported pathological findings on the \glspl{lnl} I, II, III and IV. Now, we have access to more detailed datasets that both include lymphatic patterns of progression for the levels I through V and also \gls{lnl} VII. Hence, we will ow extend the graph shown in \cref{fig:bn:graph} to include the additional \glspl{lnl} V and VII, making use of model comparisons similar to what we have illustrated in \cref{sec:graph:simple}.
+
+Following \cite{pouymayou_bayesian_2019}, we have so far connected the \glspl{lnl} I through IV in a chain. The data presented in \cref{chap:dataset} seems to support at least the connections from \gls{lnl} II to III and further from there into \gls{lnl} IV (see e.g. \cref{fig:dataset:flowchart}). However, neither the data nor the anatomy, as displayed in the schematics in \cref{fig:intro:schematics_head} or -- more detailed -- in Lengelé et al. \cite{lengele_anatomical_2007}, strongly support neither a flow from \gls{lnl} I to II, nor the other way around. This will be the first connection to be investigated.
+
+Looking back at the anatomy, in \cref{fig:intro:schematics_head} we can see
+
+\end{document}

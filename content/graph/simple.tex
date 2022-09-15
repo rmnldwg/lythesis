@@ -89,7 +89,7 @@ In this experiment, we performed one \gls{ti} round for each of the  four graphs
     \beta_i = \left( \frac{i - 1}{64 - 1} \right)^5
 \end{equation}
 %
-At each point of this \gls{ti} schedule, we ran the sampling for 1000 steps, simultaneously drawing $20 \cdot k$ burn-in samples, where $k$ is the number of dimensions of the model. This dimensionality $k = 3$ for the model without any connections between \gls{lnl} II and III (graph no. 1 in \cref{fig:graph:simple}), $k = 4$ for the models with one connection between these \glspl{lnl} (graphs 2 and 3 in \cref{fig:graph:simple}) and $k = 5$ for the model connecting the two levels in both directions.
+At each point of this \gls{ti} schedule, we ran the sampling for 1000 steps, simultaneously drawing $20 \cdot k$ burn-in samples, where $k$ is the number of dimensions of the model. This dimensionality $k = 3$ for the model without any connections between \gls{lnl} II and III (graph 1 in \cref{fig:graph:simple}), $k = 4$ for the models with one connection between these \glspl{lnl} (graphs 2 and 3 in \cref{fig:graph:simple}) and $k = 5$ for the model connecting the two levels in both directions.
 
 After the burn-in phase, we drew another $250 \cdot 20 \cdot k$ samples and discarded every fifth. With the remaining $1000 \cdot k$ samples, we computed the log-likelihood 1000 times for each $\beta_i$ and were therefore able to calculate 1000 \gls{ti} estimates of the evidence, which could then be used to compute the expected evidence and its standard deviation. The log-evidence, along with \gls{bic} has been printed in \cref{table:graph:simple:comp}.
 
@@ -116,7 +116,7 @@ After the burn-in phase, we drew another $250 \cdot 20 \cdot k$ samples and disc
     \centering
     \begin{tabular}{|l|l|l|l|l|}
         \hline
-        \textbf{Metric} & \textbf{graph no. 1} & \textbf{graph no. 2} & \textbf{graph no. 3} & \textbf{graph no. 4} \\
+        \textbf{Metric} & \textbf{graph 1} & \textbf{graph 2} & \textbf{graph 3} & \textbf{graph 4} \\
         \hline
         $\text{BIC} / 2$ & 662.10 & 660.74 & 661.04 & 663.87 \\
         $- \text{log-evidence}$ & 661.22 $\pm$ 0.99 & 658.90 $\pm$ 1.11 & 657.37 $\pm$ 0.97 & 658.78 $\pm$ 1.08 \\
@@ -132,7 +132,7 @@ After the burn-in phase, we drew another $250 \cdot 20 \cdot k$ samples and disc
     \label{table:graph:simple:comp}
 \end{table}
 
-Both \cref{table:graph:simple:comp} and \cref{fig:graph:simple:prevalenes} show that graph no. 1 (\cref{fig:graph:simple}, left) is not able to capture the observed data very well. This is simply because it lacks any mechanism to model the correlation between \gls{lnl} II's and \gls{lnl} III's involvement. Therefore, not only are the predicted prevalences off compared to the data prevalences, but also the log-evidence is -- with a difference of 2.32 to the next worst model -- between ``substantial'' and ``strong'', according to \cref{table:bayes_factor}. This is despite the fact that it has the fewest parameters, which gives the model an advantage, since the evidence automatically penalizes complex models (Occam's razor, see \cref{eq:ti:acc_vs_kl}).
+Both \cref{table:graph:simple:comp} and \cref{fig:graph:simple:prevalenes} show that graph 1 (\cref{fig:graph:simple}, left) is not able to capture the observed data very well. This is simply because it lacks any mechanism to model the correlation between \gls{lnl} II's and \gls{lnl} III's involvement. Therefore, not only are the predicted prevalences off compared to the data prevalences, but also the log-evidence is -- with a difference of 2.32 to the next worst model -- between ``substantial'' and ``strong'', according to \cref{table:bayes_factor}. This is despite the fact that it has the fewest parameters, which gives the model an advantage, since the evidence automatically penalizes complex models (Occam's razor, see \cref{eq:ti:acc_vs_kl}).
 
 As indicated during the thought experiment using the \acrlong{bn}, the graphs no. 2 and 3 present an ambiguity: They both seem to model the data almost equally well, which can be seen in the mean and maximum likelihood in \cref{table:graph:simple:comp}, as well as in the good fits of the predicted prevalences in the second and thirds row in \cref{fig:graph:simple:prevalenes}. The log-evidence in this table shows a barely ``substantial'' preference, surprisingly for the graph that is less intuitive from an anatomical point of view. Finally, when connecting \glspl{lnl} II and III in both directions, the predictions do get slightly -- though not noticeably in \cref{fig:graph:simple:prevalenes} -- better, but the penalty for the increased model complexity negates this advantage.
 
@@ -145,7 +145,7 @@ Lastly, we want to point to the \gls{bic} as a metric for comparing models: From
     \caption[
         Corner plots of the graphs no. 1 and no. 4
     ]{
-        Corner plot of the distribution of the sampled parameters for the model based on graph no. 4 (blue) and for the model based on graph no. 1 (green). A corner plot represents shows all 1D and all 2D marginals of any $n$-dimensional distribution aligned.
+        Corner plot of the distribution of the sampled parameters for the model based on graph 4 (blue) and for the model based on graph 1 (green). A corner plot represents shows all 1D and all 2D marginals of any $n$-dimensional distribution aligned.
     }
     \label{fig:graph:simple:corner}
 \end{figure}

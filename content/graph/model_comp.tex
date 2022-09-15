@@ -110,4 +110,20 @@ Lastly, we would like to give a final insight into the evidence that is quite na
 %
 This shows how the evidence naturally incorporates Occam's razor. The second term on the right gets larger the more the likelihood restricts the prior and the resulting penalty grows exponentially with the dimensionality of the parameter space.
 
+\subsection{* Bayesian information criterion}
+\label{subsec:graph:model_comp:bic}
+
+Because \acrlong{ti} -- as well as many other ways of computing the model evidence -- is computationally prohibitive for most use cases, there exist a number of approximations. One of them is the \gls{bic}, which is in essence a first-order approximation of the log-evidence (actually, the negative one-half of the \gls{bic} is an approximation to the log-evidence) that fits a normal distribution to the maximum likelihood estimate of the target distribution \cite{schwarz_estimating_1978}. It is defined as
+%
+\begin{equation}
+    \text{BIC} \coloneqq k \ln{N} - 2 \max_\theta{ \left( \ln{ \probofgiven{\boldsymbol{\mathcal{D}}}{\theta, \mathcal{M}} } \right)}
+\end{equation}
+%
+where $k$ is the number of parameters of the model, while $N$ is the number of data points. How reliable the \gls{bic} is for a given model, depends on whether its core assumptions hold: The posterior must be 
+\begin{enumerate*}[label={(\arabic*)}]
+    \item close to a normal distribution, i.e. unimodal and decaying quickly around its maximum, while
+    \item $N$ must be much larger than $k$
+\end{enumerate*}
+\cite{bhat_derivation_2010}.
+
 \end{document}
