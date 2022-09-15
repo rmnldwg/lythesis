@@ -69,3 +69,30 @@ stages:
     - path: simple-nocon-corner.svg
       md5: 284cb6189abafdbd1e1644db00aa7f48
       size: 319934
+  convert-to-pdf@all_lnls:
+    cmd: "inkscape --without-gui --file=all_lnls.svg --export-pdf=all_lnls.pdf --export-latex\n"
+    deps:
+    - path: all_lnls.svg
+      md5: a695b14f14af72462cb304263cf6aac1
+      size: 48045
+    outs:
+    - path: all_lnls.pdf
+      md5: b60d62a2e0cdd7a2f34d295e4842ed2f
+      size: 13526
+    - path: all_lnls.pdf_tex
+      md5: 3e2f4a65e849130f6647e31b01b9e857
+      size: 2051
+  convert-to-pdf@extended-graph:
+    cmd: "inkscape --without-gui --file=extended-graph.svg --export-pdf=extended-graph.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: extended-graph.svg
+      md5: a695b14f14af72462cb304263cf6aac1
+      size: 48045
+    outs:
+    - path: extended-graph.pdf
+      md5: 808dbd37dc1f0b08505278ade0bad179
+      size: 13526
+    - path: extended-graph.pdf_tex
+      md5: 5de424bb2ee608debaf10bc53126ec54
+      size: 2063

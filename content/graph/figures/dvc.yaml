@@ -3,6 +3,7 @@ stages:
     foreach:
     - simple_graphs
     - simple-prevalences
+    - extended-graph
     do:
       cmd: >
         inkscape
