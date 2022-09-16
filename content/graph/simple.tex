@@ -114,20 +114,20 @@ After the burn-in phase, we drew another $250 \cdot 20 \cdot k$ samples and disc
 
 \begin{table}
     \centering
-    \begin{tabular}{|l|l|l|l|l|}
+    \begin{tabular}{|l|l|l|l|l|l|}
         \hline
-        \textbf{Metric} & \textbf{graph 1} & \textbf{graph 2} & \textbf{graph 3} & \textbf{graph 4} \\
+        \textbf{Model} & \textbf{-- log-evidence} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
         \hline
-        $\text{BIC} / 2$ & 662.10 & 660.74 & 661.04 & 663.87 \\
-        $- \text{log-evidence}$ & 661.22 $\pm$ 0.99 & 658.90 $\pm$ 1.11 & 657.37 $\pm$ 0.97 & 658.78 $\pm$ 1.08 \\
-        $- \text{max llh}$ & 652.64 & 648.12 & 648.42 & 648.10 \\
-        $- \mathcal{A}_\text{MC}(1)$ & 654.07 & 650.07 & 650.09 & 649.93 \\
+        Graph 1 & 661.2 $\pm$ 1.0 & 662.1 & 652.64 & 654.1 \\ 
+        Graph 2 & 658.9 $\pm$ 1.1 & 660.7 & 648.12 & 650.1 \\
+        Graph 3 & 657.4 $\pm$ 1.0 & 661.0 & 648.42 & 650.1 \\ 
+        Graph 4 & 658.8 $\pm$ 1.1 & 663.9 & 648.1 & 649.9 \\ 
         \hline
     \end{tabular}
     \caption[
         Comparison of performance metrics for four different simple graphs
     ]{
-        Comparison of performance metrics for the models based on the four different graphs in \cref{fig:graph:simple}. Displayed are the computed values for the \acrlong{bic}, the log-evidence (computed by performing \acrlong{ti}), the maximum and expected likelihood for the last step in the \gls{ti} schedule $\beta_{64} = 1$. Note that we give one half of the \gls{bic} and the negative of the other metrics to bring all values into a similar range and get rid of all the negative signs.
+        Comparison of performance metrics for the models based on the four different graphs in \cref{fig:graph:simple}. Displayed are the computed values for the log-evidence (computed by performing \acrlong{ti}), the \gls{bic}, the maximum and expected likelihood for the last step in the \gls{ti} schedule $\beta_{64} = 1$. Note that we give one half of the \gls{bic} and the negative of the other metrics to bring all values into a similar range and get rid of all the negative signs. Therefore, smaller values correspond to a better model performance.
     }
     \label{table:graph:simple:comp}
 \end{table}

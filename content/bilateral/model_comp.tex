@@ -80,18 +80,20 @@ This is supported also by the log-evidence of the three models compared, which w
 
 \begin{table}
     \centering
-    \begin{tabular}{|l|l|l|l|}
+    \begin{tabular}{|l|l|l|l|l|l|}
         \hline
-        \textbf{Metric} & \textbf{agnostic} $\mathcal{M}_\text{ag}$ & \textbf{mixing} $\mathcal{M}_\alpha$ & \textbf{full} $\mathcal{M}_\text{full}$ \\
+        \textbf{Model} & \textbf{-- log-evidence} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
         \hline
-        $-\text{BIC}/2$ & -1116.70 & -1093.08 & -1098.23 \\
-        log-evidence & -1118.23 $\pm$ 1.77 & -1093.33 $\pm$ 1.91 & -1099.73 $\pm$ 1.99 \\
-        % std of log-evidence & 1.77 & 1.91 & 1.99 \\
-        max likelihood & -1088.31 & -1061.53 & -1060.37 \\
-        $\mathcal{A}_\text{MC}(1)$ & -1092.25 & -1065.70 & -1065.50 \\
+        $\mathcal{M}_\text{ag}$ & 1118.2 $\pm$ 1.8 & 1116.7 & 1088.3 & 1092.3 \\
+        $\mathcal{M}_\alpha$ & 1093.3 $\pm$ 1.9 & 1093.1 & 1061.5 & 1065.7 \\
+        $\mathcal{M}_\text{full}$ & 1099.7 $\pm$ 2.0 & 1098.2 & 1060.4 & 1065.5 \\
         \hline
     \end{tabular}
-    \caption[Metrics for assessing three bilateral models]{Metrics computed via \gls{ti} for the three bilateral models introduced in \cref{sec:bilateral:model_comp}: The \gls{bic} in the first row, the log-evidence $\ln{Z}$ with the respective standard deviation in the second and third row, as well as the maximum and mean likelihood of the sampling procedures in rows four and five respectively.}
+    \caption[
+        Metrics for assessing three bilateral models
+    ]{
+        Metrics computed via \gls{ti} for the three bilateral models introduced in \cref{sec:bilateral:model_comp}: The negative log-evidence $\ln{Z}$ with the respective standard deviation in the first column, one half of the \gls{bic} in the second column, as well as the negative of the maximum and mean likelihood of the sampling procedures in columns three and four respectively. Note that the smaller the values given here, the better the performance of the respective model.
+    }
     \label{table:bilateral:model_comp:evidences}
 \end{table}
 
