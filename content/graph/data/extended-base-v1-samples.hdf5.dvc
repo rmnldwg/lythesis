@@ -1,11 +1,11 @@
-md5: ccfa7250bedc3a49638a14b12c49541d
+md5: 536146388bb385c50941b6e7186ea7e2
 frozen: true
 deps:
 - path: models/samples.hdf5
   repo:
     url: https://github.com/rmnldwg/lynference
     rev: extended-base-v1
-    rev_lock: a251ff80f7052ae25ea5a8dd85e0579d36814ac4
+    rev_lock: a58a75912860a6f1113b45da94fe4e558010dad8
 outs:
 - md5: 2942e68809b0a473d16f326d332cec6f
   size: 45389688

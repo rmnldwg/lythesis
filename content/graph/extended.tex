@@ -71,6 +71,15 @@ As mentioned, we started with establishing a baseline, using a unilateral model 
 \subsection{Direction of the arc between LNL I and II}
 \label{subsec:graph:extended:IandII}
 
+\begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
+    The results of the two models that are being compared to the base graph in this subsection can be reproduced with the help of the following tagged and released commits in the \repolink{lynference} repository:
+
+    \begin{itemize}
+        \item \textbf{I \faIcon{long-arrow-alt-right} II}: \href{https://github.com/rmnldwg/lynference/releases/tag/extended-add12-v1}{\faIcon{tags} \texttt{extended-add12-v1}}
+        \item \textbf{II \faIcon{long-arrow-alt-right} I}: \href{https://github.com/rmnldwg/lynference/releases/tag/extended-add21-v1}{\faIcon{tags} \texttt{extended-add21-v1}}
+    \end{itemize}
+\end{tcolorbox}
+
 The first question we want to answer is whether we should add the connection from \gls{lnl} I to II or the other way around. We sampled two identical models -- except for the direction between \glspl{lnl} I and II -- until convergence and compared metrics and predicted prevalences for both. ``Sampling until convergence'' in this case means that we stopped the inference process when the following two requirements were met:
 
 \begin{itemize}
@@ -85,6 +94,27 @@ The first question we want to answer is whether we should add the connection fro
     where $N$ is the number of drawn samples. This means we only trust the estimate once we have a sufficiently large number of samples.
 \end{itemize}
 
+Looking at the \gls{bic} in \cref{table:graph:extend:12or21}, the results suggest that adding the connection as we originally intended from level I to II is barely worth the additional complexity compared to the base graph. The other way around, however, the differences in one half of the \glspl{bic} show a \emph{very strong} (see \cref{table:bayes_factor}) support for the added connection from \gls{lnl} II into \gls{lnl} I over the base graph, despite having one parameter more.
 
+This can also intuitively be seen in \cref{fig:graph:extended:12or21}, where we have plotted the predicted and observed prevalences for a selection of progression patterns. 
+
+\begin{table}
+    \centering
+        \begin{tabular}{|l|l|l|l|}
+            \hline
+            \textbf{Graph} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
+            \hline
+            base graph & 1212.0 & 1180.4 & 1184.7 \\
+            $+ \text{I} \rightarrow \text{II}$ & 1211.7 & 1177.0 & 1180.6 \\
+            $+ \text{II} \rightarrow \text{I}$ & 1208.2 & 1173.5 & 1177.9 \\
+            \hline
+        \end{tabular}
+        \caption[
+            Comparison of performance metrics for connection between LNL I and II
+        ]{
+            Metrics -- namely \gls{bic}, maximum and mean likelihood -- computed for the base-graph, as well as for the graph with an added connection from \gls{lnl} I to II, and for the model based on the graph with the same connection, but from \gls{lnl} II to I. A lower value corresponds to a better performance.
+        }
+        \label{table:graph:extend:12or21}
+\end{table}
 
 \end{document}
