@@ -4,6 +4,7 @@ stages:
     - simple_graphs
     - simple-prevalences
     - extended-graph
+    - extended-base-corner
     do:
       cmd: >
         inkscape

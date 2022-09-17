@@ -1,0 +1,90 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{
+    {\subfix{./figures/}}
+}
+
+
+\begin{document}
+
+\section{Extending the network to LNLs V and VII}
+\label{sec:graph:extended}
+
+\input{_contributions.tex}
+
+\begin{figure}
+    \centering
+    \def\svgwidth{0.4\textwidth}
+    \input{figures/extended-graph.pdf_tex}
+    \caption[
+        Base graph of the extended ipsilateral model with possible additional edges
+    ]{
+        Minimal base graph connecting the extended ipsilateral network of \glspl{lnl}. Red arcs connect the tumor $T$ to the \glspl{lnl} $X_v$ for $v \in \{ \text{I}, \text{II}, \text{III}, \text{IV}, \text{V}, \text{VII} \}$, while the levels themselves are connected to each other with the blue arcs. Green arcs depict possible additional connections and deciding whether they should be added to better describe the data is the aim of this section.
+    }
+    \label{fig:graph:extended_graph}
+\end{figure}
+
+Up to this point, we have introduced a model to infer ipsilateral lymphatic spread from data and shown how it works on reconstructed data -- which was the only data available at the time of writing \cref{chap:unilateral} -- that reported pathological findings on the \glspl{lnl} I, II, III and IV. Now, we have access to two more detailed datasets that both include lymphatic patterns of progression for the levels I through V and also \gls{lnl} VII. Hence, we will now extend the graph shown in \cref{fig:bn:graph} to include the additional \glspl{lnl} V and VII, making use of model comparisons similar to what we have illustrated in \cref{sec:graph:simple}.
+
+Following \cite{pouymayou_bayesian_2019}, we have so far connected the \glspl{lnl} I through IV in a chain. The data presented in \cref{chap:dataset} seems to support at least the connections from \gls{lnl} II to III and further from there into \gls{lnl} IV (see e.g. \cref{fig:dataset:flowchart}). However, the data does not strongly support a flow from \gls{lnl} I to II, or the other way around, although the anatomy suggests indeed the lymphatics flow from \gls{lnl} I to \gls{lnl} II \cite{lengele_anatomical_2007}. Lengelé et al. \cite{lengele_anatomical_2007} also describe the \emph{posterior accessory pathway} that originates in \gls{lnl} II and runs down through \gls{lnl} V, indicating that level V should receive an incoming connection from level II.
+
+The way we are going to perform inference on the combined data from the \gls{usz} and the \gls{clb}, further requires us to draw connections from the primary tumor in the oropharynx to all \glspl{lnl} we are considering now. This is because after computing the maximum likelihood estimate for the true involvement of each patient in the dataset based on their diagnoses and pathology reports, we set the sensitivity and specificity of this combined assessment to 1. By doing so we assume -- perhaps wrongly -- that all observations represent the ground truth. We can then look at patients that e.g. show \emph{only} involvement in \gls{lnl} VII, which leaves us with e.g. 5 patients. If there were no direct arc from the tumor to \gls{lnl} VII, this would be impossible and render the likelihood zero regardless of the choice of parameter values. Hence, our inference algorithm, which essentially selects those parameter values based on the respective likelihood, would break down.
+
+Based on the data, as well as anatomical and practical considerations mentioned above, we can now draw a \emph{base graph} that allows us to do inference and compare it to models that are based on graphs with additional connections between the \glspl{lnl}. We have sketched this graph in \cref{fig:graph:extended_graph} (considering only the red and blue edges). Note that this base graph is not set up such that it allows modelling cause and effect of the lymphatic spread, which is anyway not how our models work, as we have shown in \cref{sec:graph:simple}. Rather, it is the other way around: We fix those arcs to make our model more interpretable, as it allows e.g. a clinician or patient, getting informed by the model, to assign meaning to the parameters an abstract model has inferred from correlations in data.
+
+In \cref{fig:graph:all_lnls:base_graph}, we have also drawn green edges between the \glspl{lnl}. These additional connections are the subject of this section's experiments, as we are assessing whether adding them individually improves the model's accuracy enough to justify the greater model complexity.
+
+\subsection{Starting point: Base graph}
+\label{subsec:graph:extended:base}
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.04\textwidth}
+    \input{figures/extended-base-corner.pdf_tex}
+    \caption[
+        Corner plot displaying the posterior over parameters for the extended base graph
+    ]{
+        Corner plot showing all 1D and 2D marginals of the sampled posterior distribution over the parameters of the model based on the extended base graph, as shown in \cref{fig:graph:extended_graph} (leaving out the green arcs). The distribution is unimodal, shows few correlations among the parameters and falls off similarly as a normal distribution. The \gls{bic} is therefore a good approximation for the log-evidence.
+    }
+    \label{fig:graph:extended:base:corner}
+\end{figure}
+
+As mentioned, we started with establishing a baseline, using a unilateral model that is based on the graph in \cref{fig:graph:extended_graph} and trained with the data detailed in \cref{box:graph:data}. We performed a \gls{ti} using 15 inverse temperature steps that were spaced according to a fifth order power urle again. The inferred posterior distribution over the nine parameters is plotted in \cref{fig:graph:extended:base:corner}. Notably, the distribution seems well suited to approximate its log-evidence using the \gls{bic}, since it is unimodal, not skewed and falls off quickly to all sides. This is supported by \cref{table:graph:extended:base}, where we give the performance metrics we will compare the other graphs to. Since the \gls{bic} is so close to the log-evidence and \gls{ti} is computationally very expensive -- especially now that we modelled six \glspl{lnl} and the model scales exponentially with the number of levels -- we will only use the \gls{bic} to assess the additional arcs.
+
+\begin{table}
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+        \hline
+        \textbf{-- log-evidence} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
+        \hline
+        1212.3 $\pm$ 3.7 & 1212.0 & 1180.4 & 1184.7 \\ 
+        \hline
+    \end{tabular}
+    \caption[
+        Performance of the extended base graph
+    ]{
+        Performance metrics for the base graph of the extended network's model. Note that due to the coarser steps during the \acrlong{ti} the standard deviation of the log-evidence is quite large. Also, the \gls{bic} appears to be a very close approximation to the log-evidence.
+    }
+    \label{table:graph:extended:base}
+\end{table}
+
+\subsection{Direction of the arc between LNL I and II}
+\label{subsec:graph:extended:IandII}
+
+The first question we want to answer is whether we should add the connection from \gls{lnl} I to II or the other way around. We sampled two identical models -- except for the direction between \glspl{lnl} I and II -- until convergence and compared metrics and predicted prevalences for both. ``Sampling until convergence'' in this case means that we stopped the inference process when the following two requirements were met:
+
+\begin{itemize}
+    \item A stable estimate of the integrated auto-correlation time $\hat{\tau}$, meaning
+    \begin{equation}
+        \left| 1 - \left( \frac{\hat{\tau}_{i-1}}{\hat{\tau}_i} \right) \right| \leq 0.075
+    \end{equation}
+    \item The estimate, which was computed every 100 sampling steps, fulfilled
+    \begin{equation}
+        30 \cdot \hat{\tau}_i \geq N
+    \end{equation}
+    where $N$ is the number of drawn samples. This means we only trust the estimate once we have a sufficiently large number of samples.
+\end{itemize}
+
+
+
+\end{document}

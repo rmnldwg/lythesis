@@ -96,3 +96,17 @@ stages:
     - path: extended-graph.pdf_tex
       md5: 5de424bb2ee608debaf10bc53126ec54
       size: 2063
+  convert-to-pdf@extended-base-corner:
+    cmd: "inkscape --without-gui --file=extended-base-corner.svg --export-pdf=extended-base-corner.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: extended-base-corner.svg
+      md5: 0041ba2dc9be8d71f91fd6beeaaf2b78
+      size: 3859092
+    outs:
+    - path: extended-base-corner.pdf
+      md5: 1819f283c3f6f012a765421b9320d620
+      size: 6754268
+    - path: extended-base-corner.pdf_tex
+      md5: cae252ad013e92db83ff87464cc316b4
+      size: 2081
