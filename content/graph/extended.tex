@@ -107,8 +107,8 @@ Looking at the \gls{bic} in \cref{table:graph:extend:12or21}, the results sugges
             \textbf{Graph} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
             \hline
             base graph & 1212.0 & 1180.4 & 1184.7 \\
-            $+ \text{I} \rightarrow \text{II}$ & 1211.7 & 1177.0 & 1180.6 \\
-            $+ \text{II} \rightarrow \text{I}$ & 1208.2 & 1173.5 & 1177.9 \\
+            + I $\rightarrow$ II & 1211.7 & 1177.0 & 1180.6 \\
+            + II $\rightarrow$ I & 1208.2 & 1173.5 & 1177.9 \\
             \hline
         \end{tabular}
         \caption[
@@ -166,5 +166,29 @@ To conclude this comparison, we can compare the actual values for the inferred s
 \end{tcolorbox}
 
 Due to the anatomical proximity of \glspl{lnl} III and IV to \gls{lnl} V it is possible that those levels, like \gls{lnl} II, may spread lymphatically into the \emph{posterior accessory pathway}. Therefore, in this section we will investigate how additional arcs from level III or from level IV to level V affect the model's performance.
+
+\begin{table}
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Graph} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
+        \hline
+        base graph & 1212.0 & 1180.4 & 1184.7 \\
+        + III $\rightarrow$ V & 1212.4 & 1177.7 & 1182.1 \\
+        + IV $\rightarrow$ V & 1213.6 & 1178.9 & 1183.1 \\
+        \hline
+    \end{tabular}
+    \caption[
+        Metrics assessing the performance of graphs with added connections to LNL V.
+    ]{
+        Performance metrics for the model with
+        \begin{enumerate*}[label={(\alph*)}]
+            \item an additional arc from \gls{lnl} III to level V and
+            \item the same connection, but from \gls{lnl} IV to V
+        \end{enumerate*},
+        both compared to the base graph in the top row. As before, one half of the \gls{bic} is shown and the negative likelihoods. Lower values correspond to better performance.
+    }
+    \label{table:graph:extended:toV}
+\end{table}
 
 \end{document}
