@@ -115,9 +115,11 @@ if __name__ == "__main__":
                     
                     if stage == "early":
                         if i == 0:
+                            ax[i,j].set_ylabel("I➜II")
                             ax[i,j].legend()
                             ax[i,j].set_title("early T-stage")
                         else:
+                            ax[i,j].set_ylabel("II➜I")
                             ax[i,j].set_xlabel("prevalence [%]")
                         ax[i,j].set_xlim(0., 10.)
                     else:
@@ -128,7 +130,7 @@ if __name__ == "__main__":
                             ax[i,j].set_xlabel("prevalence [%]")
                         ax[i,j].set_xlim(0., 16.)
     
-    plt.savefig("extended-connection12-low-prevalences.png")
+    plt.savefig("extended-connection12-low-prevalences.svg")
 
     # HIGH RISK SCENARIOS
     COLORS = {
@@ -139,7 +141,7 @@ if __name__ == "__main__":
         # "gray": '#c5d5db',
     }
     COLOR_CYCLE = cycle(COLORS.values())
-    BINS = np.linspace(50., 100., 100)
+    BINS = np.linspace(50., 90., 80)
     SCENARIOS = {
         "IInotI": "LNL II without I",
         "II": "LNL II overall",
@@ -196,23 +198,25 @@ if __name__ == "__main__":
                         color=color,
                         zorder=3,
                     )
-                    # ax[i,j].set_xlim(BINS[0], BINS[-1])
+                    ax[i,j].set_xlim(BINS[0], BINS[-1])
                     # ax[i,j].set_ylim(0., 1.5)
                     # ax[i,j].set_yticks([0., 0.5, 1., 1.5])
                     
                     if stage == "early":
                         if i == 0:
-                            ax[i,j].legend()
+                            ax[i,j].set_ylabel("I➜II")
+                            ax[i,j].legend(fontsize=7.)
                             ax[i,j].set_title("early T-stage")
                         else:
+                            ax[i,j].set_ylabel("II➜I")
                             ax[i,j].set_xlabel("prevalence [%]")
-                        ax[i,j].set_xlim(55., 75.)
+                        # ax[i,j].set_xlim(55., 75.)
                     else:
                         if i == 0:
-                            ax[i,j].legend()
+                            ax[i,j].legend(fontsize=7.)
                             ax[i,j].set_title("late T-stage")
                         else:
                             ax[i,j].set_xlabel("prevalence [%]")
-                        ax[i,j].set_xlim(65., 85.)
+                        # ax[i,j].set_xlim(65., 85.)
     
-    plt.savefig("extended-connection12-high-prevalences.png")
+    plt.savefig("extended-connection12-high-prevalences.svg")

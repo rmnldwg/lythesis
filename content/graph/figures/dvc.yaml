@@ -5,6 +5,8 @@ stages:
     - simple-prevalences
     - extended-graph
     - extended-base-corner
+    - extended-connection12-low-prevalences
+    - extended-connection12-high-prevalences
     do:
       cmd: >
         inkscape
@@ -40,3 +42,14 @@ stages:
     outs:
     - simple-nocon-corner.svg
     - simple-both-corner.svg
+
+  extended-connection12-prevalences:
+    cmd: python extended-connection12-comp.py
+    deps:
+    - extended-connection12-comp.py
+    - ../data/extended-base-v1-prevalences.hdf5
+    - ../data/extended-add12-v1-prevalences.hdf5
+    - ../data/extended-add21-v1-prevalences.hdf5
+    outs:
+    - extended-connection12-low-prevalences.svg
+    - extended-connection12-high-prevalences.svg

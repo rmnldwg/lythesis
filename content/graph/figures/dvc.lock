@@ -110,3 +110,53 @@ stages:
     - path: extended-base-corner.pdf_tex
       md5: cae252ad013e92db83ff87464cc316b4
       size: 2081
+  extended-connection12-prevalences:
+    cmd: python extended-connection12-comp.py
+    deps:
+    - path: ../data/extended-add12-v1-prevalences.hdf5
+      md5: b2cc08fdab5d60b8f626ae42e30fd1a8
+      size: 896872
+    - path: ../data/extended-add21-v1-prevalences.hdf5
+      md5: 2897f2a2e9abcd3bd1ee64b77f08e01a
+      size: 896872
+    - path: ../data/extended-base-v1-prevalences.hdf5
+      md5: 9a49e7ef412ab6c6542262506b9eb99b
+      size: 2765440
+    - path: extended-connection12-comp.py
+      md5: 1ed944e483a2a124dc0f241a907b7ed1
+      size: 8233
+    outs:
+    - path: extended-connection12-high-prevalences.svg
+      md5: e8f20f8408389ea9a843eed2e79e4ed6
+      size: 178307
+    - path: extended-connection12-low-prevalences.svg
+      md5: 99f9ddef8ca5a5ee0152654f20e04c76
+      size: 141306
+  convert-to-pdf@extended-connection12-high-prevalences:
+    cmd: "inkscape --without-gui --file=extended-connection12-high-prevalences.svg\
+      \ --export-pdf=extended-connection12-high-prevalences.pdf --export-latex\n"
+    deps:
+    - path: extended-connection12-high-prevalences.svg
+      md5: e8f20f8408389ea9a843eed2e79e4ed6
+      size: 178307
+    outs:
+    - path: extended-connection12-high-prevalences.pdf
+      md5: 7e89ead3b3281629f758a62c94956b88
+      size: 117187
+    - path: extended-connection12-high-prevalences.pdf_tex
+      md5: 1322720196b860ebf915254cc37ec58e
+      size: 2110
+  convert-to-pdf@extended-connection12-low-prevalences:
+    cmd: "inkscape --without-gui --file=extended-connection12-low-prevalences.svg\
+      \ --export-pdf=extended-connection12-low-prevalences.pdf --export-latex\n"
+    deps:
+    - path: extended-connection12-low-prevalences.svg
+      md5: 99f9ddef8ca5a5ee0152654f20e04c76
+      size: 141306
+    outs:
+    - path: extended-connection12-low-prevalences.pdf
+      md5: ff08818e3dda1cc5b8d534fc812e5345
+      size: 98019
+    - path: extended-connection12-low-prevalences.pdf_tex
+      md5: 2edeb76c060225e34f5f4262bfd7f501
+      size: 2108

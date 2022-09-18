@@ -37,6 +37,10 @@ In \cref{fig:graph:all_lnls:base_graph}, we have also drawn green edges between 
 \subsection{Starting point: Base graph}
 \label{subsec:graph:extended:base}
 
+\begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
+    The base graph that will be used as a baseline for additional connections can be reproduced from the \repolink{lynference} repository, using the tagged release \href{https://github.com/rmnldwg/lynference/releases/tag/extended-base-v1}{\faIcon{tags} \texttt{extended-base-v1}}.
+\end{tcolorbox}
+
 \begin{figure}
     \centering
     \def\svgwidth{1.04\textwidth}
@@ -49,7 +53,7 @@ In \cref{fig:graph:all_lnls:base_graph}, we have also drawn green edges between 
     \label{fig:graph:extended:base:corner}
 \end{figure}
 
-As mentioned, we started with establishing a baseline, using a unilateral model that is based on the graph in \cref{fig:graph:extended_graph} and trained with the data detailed in \cref{box:graph:data}. We performed a \gls{ti} using 15 inverse temperature steps that were spaced according to a fifth order power urle again. The inferred posterior distribution over the nine parameters is plotted in \cref{fig:graph:extended:base:corner}. Notably, the distribution seems well suited to approximate its log-evidence using the \gls{bic}, since it is unimodal, not skewed and falls off quickly to all sides. This is supported by \cref{table:graph:extended:base}, where we give the performance metrics we will compare the other graphs to. Since the \gls{bic} is so close to the log-evidence and \gls{ti} is computationally very expensive -- especially now that we modelled six \glspl{lnl} and the model scales exponentially with the number of levels -- we will only use the \gls{bic} to assess the additional arcs.
+As mentioned, we started with establishing a baseline, using a unilateral model that is based on the graph in \cref{fig:graph:extended_graph} and trained with the data detailed in \cref{box:graph:data}. We performed a \gls{ti} using 16 inverse temperature steps that were spaced according to a fifth order power urle again. The inferred posterior distribution over the nine parameters is plotted in \cref{fig:graph:extended:base:corner}. Notably, the distribution seems well suited to approximate its log-evidence using the \gls{bic}, since it is unimodal, not skewed and falls off quickly to all sides. This is supported by \cref{table:graph:extended:base}, where we give the performance metrics we will compare the other graphs to. Since the \gls{bic} is so close to the log-evidence and \gls{ti} is computationally very expensive -- especially now that we modelled six \glspl{lnl} and the model scales exponentially with the number of levels -- we will only use the \gls{bic} to assess the additional arcs.
 
 \begin{table}
     \centering
@@ -96,8 +100,6 @@ The first question we want to answer is whether we should add the connection fro
 
 Looking at the \gls{bic} in \cref{table:graph:extend:12or21}, the results suggest that adding the connection as we originally intended from level I to II is barely worth the additional complexity compared to the base graph. The other way around, however, the differences in one half of the \glspl{bic} show a \emph{very strong} (see \cref{table:bayes_factor}) support for the added connection from \gls{lnl} II into \gls{lnl} I over the base graph, despite having one parameter more.
 
-This can also intuitively be seen in \cref{fig:graph:extended:12or21}, where we have plotted the predicted and observed prevalences for a selection of progression patterns. 
-
 \begin{table}
     \centering
         \begin{tabular}{|l|l|l|l|}
@@ -116,5 +118,53 @@ This can also intuitively be seen in \cref{fig:graph:extended:12or21}, where we 
         }
         \label{table:graph:extend:12or21}
 \end{table}
+
+This can also intuitively be seen in the two figures, where we have plotted the predicted and observed prevalences for a selection of progression patterns, namely the case of \gls{lnl} I involvement overall and in conjunction with \gls{lnl} II being healthy (\cref{fig:graph:extended:low12or21}), as well as the case of \gls{lnl} II involvement overall together with the pattern of an involved \gls{lnl} II, but healthy \gls{lnl} I (\cref{fig:graph:extended:high12or21}).
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.04\textwidth}
+    \input{figures/extended-connection12-low-prevalences.pdf_tex}
+    \caption[
+        Comparison of prevalences of low-risk scenarios for the two directions of the arc between LNL I and II
+    ]{
+        Predicted (histograms) vs observed prevalences (line plots) for two low-risk scenarios: The involvement of \gls{lnl} I overall and the involvement of \gls{lnl} I without \gls{lnl} II. The left column shows these scenarios for early T-stage, the right column for late T-stage. In the top row we have plotted these predictions for the graph where the connections go from \gls{lnl} I to II and in the bottom row we show the predictions of the model with the reversed arc. The gray, hatched histogram shows the respective scenarios as predicted by the base graph.
+    }
+    \label{fig:graph:extended:low12or21}
+\end{figure}
+
+What can be seen in those plots is that the main improvement of adding either a connection from level I to II or from II to I is a better modelling of how rarely \gls{lnl} I is metastatic without \gls{lnl} II (green histograms in \cref{fig:graph:extended:low12or21,fig:graph:extended:high12or21}). Without any connection between the two \glspl{lnl}, the model has no way of capturing this negative correlation.
+
+The second model, with the arc from \gls{lnl} II to I, does an even better job at modelling this particular scenario. It also slightly improves the fit for the overall involvement in \gls{lnl} I (blue histograms in \cref{fig:graph:extended:low12or21}) as they move towards the posterior over the observed prevalences both for early and for late T-stages.
+
+Our main goal with investigating an additional arc from or to \gls{lnl} I is to improve how well the model can predict that level's frequency of harboring metastases. But to make sure the introduction of the additional spread parameter does not negatively affect the model's ability of capturing \gls{lnl} II's involvement, we have drawn histograms for that as well. The red historgams in \cref{fig:graph:extended:high12or21} show the overall prevalence of seeing a metastatic level II and regardless of model choice, it is captured well. For the involvement of \gls{lnl} II with level I being healthy (orange histograms), the change is miniscule in the first case, where the arcs span from level I to II. When connected the other way around, this scenario is not captured as well anymore for early T-stage, as it worsens underestimating the prevalence, but for late T-stage this scenario's overestimation reduces significantly.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.04\textwidth}
+    \input{figures/extended-connection12-high-prevalences.pdf_tex}
+    \caption[
+        Comparison of prevalences of high-risk scenarios for the two directions of the arc between LNL I and II
+    ]{
+        Predicted (histograms) vs observed prevalences (line plots) for two high-risk scenarios: The involvement of \gls{lnl} II overall and the involvement of \gls{lnl} II without \gls{lnl} I. The left column shows these scenarios for early T-stage, the right column for late T-stage. In the top row we have plotted these predictions for the graph where the connections go from \gls{lnl} I to II and in the bottom row we show the predictions of the model with the reversed arc. The gray, hatched histogram shows the respective scenarios as predicted by the base graph.
+    }
+    \label{fig:graph:extended:high12or21}
+\end{figure}
+
+To conclude this comparison, we can compare the actual values for the inferred spread parameters. We would expect e.g. the base probability rate for level I $\tilde{b}_1$ to be higher, when that \gls{lnl} is connected via $\tilde{t}_{12}$ to level II, compared to when connected the other way around with $\tilde{t}_{21}$. This is exactly, what we observe: $\tilde{b}_1 = 3 \pm 0.5 \%$ for the former case and $\tilde{b}_1 = 1 \pm 0.5 \%$ for the latter. Also, as expected from our thought experiment in \cref{sec:graph:simple}, the transition probability rate modelling spread from \gls{lnl} I to II is pushed to very high values to capture the fact that level I is rarely involved without II. It takes on values of $\tilde{t}_{12} = 77 \pm 19.5 \%$, while the reversed connection achieves the same or an even better fit with $\tilde{t}_{21} = 5 \pm 1 \%$. The above analysis suggests improving the model by adding an arc from \gls{lnl} II towards \gls{lnl} I.
+
+\subsection{Direct spread to LNL V}
+\label{subsec:graph:extended:toV}
+
+\begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
+    All values and results from the models based on the graphs with an additional arc from \gls{lnl} III to V and from level IV to V respectively are reproducible using the \repolink{lynference} repository:
+
+    \begin{itemize}
+        \item \textbf{III \faIcon{long-arrow-alt-right} V}: \href{https://github.com/rmnldwg/lynference/releases/tag/extended-add35-v1}{\faIcon{tags} \texttt{extended-add35-v1}}
+        \item \textbf{IV \faIcon{long-arrow-alt-right} V}: \href{https://github.com/rmnldwg/lynference/releases/tag/extended-add45-v1}{\faIcon{tags} \texttt{extended-add45-v1}}
+    \end{itemize}
+\end{tcolorbox}
+
+Due to the anatomical proximity of \glspl{lnl} III and IV to \gls{lnl} V it is possible that those levels, like \gls{lnl} II, may spread lymphatically into the \emph{posterior accessory pathway}. Therefore, in this section we will investigate how additional arcs from level III or from level IV to level V affect the model's performance.
 
 \end{document}
