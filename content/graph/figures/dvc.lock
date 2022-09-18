@@ -137,11 +137,11 @@ stages:
       \ --export-pdf=extended-connection12-high-prevalences.pdf --export-latex\n"
     deps:
     - path: extended-connection12-high-prevalences.svg
-      md5: e8f20f8408389ea9a843eed2e79e4ed6
+      md5: f5dee05e811e8938b54fb88badaa4048
       size: 178307
     outs:
     - path: extended-connection12-high-prevalences.pdf
-      md5: 7e89ead3b3281629f758a62c94956b88
+      md5: ac246af7ca016e40feb70b3346fc854e
       size: 117187
     - path: extended-connection12-high-prevalences.pdf_tex
       md5: 1322720196b860ebf915254cc37ec58e
@@ -151,12 +151,50 @@ stages:
       \ --export-pdf=extended-connection12-low-prevalences.pdf --export-latex\n"
     deps:
     - path: extended-connection12-low-prevalences.svg
-      md5: 99f9ddef8ca5a5ee0152654f20e04c76
+      md5: 5db93d113607b013e2b56f07c755e653
       size: 141306
     outs:
     - path: extended-connection12-low-prevalences.pdf
-      md5: ff08818e3dda1cc5b8d534fc812e5345
+      md5: 7539680ee6642c8772657eec903cf022
       size: 98019
     - path: extended-connection12-low-prevalences.pdf_tex
       md5: 2edeb76c060225e34f5f4262bfd7f501
       size: 2108
+  extended-connection12-prevalences@high:
+    cmd: python extended-connection12-high.py
+    deps:
+    - path: ../data/extended-add12-v1-prevalences.hdf5
+      md5: b2cc08fdab5d60b8f626ae42e30fd1a8
+      size: 896872
+    - path: ../data/extended-add21-v1-prevalences.hdf5
+      md5: 2897f2a2e9abcd3bd1ee64b77f08e01a
+      size: 896872
+    - path: ../data/extended-base-v1-prevalences.hdf5
+      md5: 9a49e7ef412ab6c6542262506b9eb99b
+      size: 2765440
+    - path: extended-connection12-high.py
+      md5: 685ba9164935893f68e937edcc613b77
+      size: 4546
+    outs:
+    - path: extended-connection12-high-prevalences.svg
+      md5: 401d06fe78456d2670f797bdd5128985
+      size: 178307
+  extended-connection12-prevalences@low:
+    cmd: python extended-connection12-low.py
+    deps:
+    - path: ../data/extended-add12-v1-prevalences.hdf5
+      md5: b2cc08fdab5d60b8f626ae42e30fd1a8
+      size: 896872
+    - path: ../data/extended-add21-v1-prevalences.hdf5
+      md5: 2897f2a2e9abcd3bd1ee64b77f08e01a
+      size: 896872
+    - path: ../data/extended-base-v1-prevalences.hdf5
+      md5: 9a49e7ef412ab6c6542262506b9eb99b
+      size: 2765440
+    - path: extended-connection12-low.py
+      md5: 7b1857872f5b6279466f385b3e433a9f
+      size: 8018
+    outs:
+    - path: extended-connection12-low-prevalences.svg
+      md5: 5db93d113607b013e2b56f07c755e653
+      size: 141306

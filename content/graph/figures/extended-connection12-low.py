@@ -31,8 +31,19 @@ BASE_MODEL = Path("../data/extended-base-v1-prevalences.hdf5")
 MODELS = {}
 for tag in ["add12", "add21"]:
     MODELS[tag] = Path(f"../data/extended-{tag}-v1-prevalences.hdf5")
-
-
+COLORS = {
+    "blue": '#005ea8',
+    "green": '#00afa5',
+    # "orange": '#f17900',
+    # "red": '#ae0060',
+    # "gray": '#c5d5db',
+}
+COLOR_CYCLE = cycle(COLORS.values())
+BINS = np.linspace(0., 16., 60)
+SCENARIOS = {
+    "I": "LNL I overall",
+    "InotII": "LNL I without II",
+}
 HIST_KWARGS = {
     "density": True,
     "histtype": "stepfilled",
@@ -43,26 +54,12 @@ HIST_KWARGS = {
 if __name__ == "__main__":
     plt.style.use(Path("../../../.mplstyle"))
 
-    # LOW RISK SCENARIOS
-    COLORS = {
-        "blue": '#005ea8',
-        "green": '#00afa5',
-        # "orange": '#f17900',
-        # "red": '#ae0060',
-        # "gray": '#c5d5db',
-    }
-    COLOR_CYCLE = cycle(COLORS.values())
-    BINS = np.linspace(0., 16., 60)
-    SCENARIOS = {
-        "I": "LNL I overall",
-        "InotII": "LNL I without II",
-    }
     fig, ax = plt.subplots(
         nrows=2, ncols=2,
         sharex="col", sharey="row",
         figsize=lyhist.get_size(width="full", ratio=2.),
     )
-    
+
     for i, (modelname, filepath) in enumerate(MODELS.items()):
         for scenario, label in SCENARIOS.items():
             color = next(COLOR_CYCLE)
@@ -78,7 +75,7 @@ if __name__ == "__main__":
                         num_success=dataset.attrs["num_match"],
                         num_total=dataset.attrs["num_total"]
                     )
-                    
+
                     if scenario == "I":
                         hatches = "////"
                     else:
@@ -102,7 +99,7 @@ if __name__ == "__main__":
                         histtype="step",
                         linewidth=1.5,
                         zorder=1,
-                    )                    
+                    )
                     ax[i,j].plot(
                         np.linspace(BINS[0], BINS[-1], 200), posterior,
                         label=f"{int(dataset.attrs['num_match'])} / {int(dataset.attrs['num_total'])}",
@@ -112,7 +109,7 @@ if __name__ == "__main__":
                     # ax[i,j].set_xlim(BINS[0], BINS[-1])
                     ax[i,j].set_ylim(0., 1.5)
                     ax[i,j].set_yticks([0., 0.5, 1., 1.5])
-                    
+
                     if stage == "early":
                         if i == 0:
                             ax[i,j].set_ylabel("I➜II")
@@ -129,7 +126,7 @@ if __name__ == "__main__":
                         else:
                             ax[i,j].set_xlabel("prevalence [%]")
                         ax[i,j].set_xlim(0., 16.)
-    
+
     plt.savefig("extended-connection12-low-prevalences.svg")
 
     # HIGH RISK SCENARIOS
@@ -151,7 +148,7 @@ if __name__ == "__main__":
         sharex="col", sharey="row",
         figsize=lyhist.get_size(width="full", ratio=2.),
     )
-    
+
     for i, (modelname, filepath) in enumerate(MODELS.items()):
         for scenario, label in SCENARIOS.items():
             color = next(COLOR_CYCLE)
@@ -167,7 +164,7 @@ if __name__ == "__main__":
                         num_success=dataset.attrs["num_match"],
                         num_total=dataset.attrs["num_total"]
                     )
-                    
+
                     if scenario == "IInotI":
                         hatches = "////"
                     else:
@@ -191,7 +188,7 @@ if __name__ == "__main__":
                         histtype="step",
                         linewidth=1.5,
                         zorder=1,
-                    )                    
+                    )
                     ax[i,j].plot(
                         np.linspace(BINS[0], BINS[-1], 200), posterior,
                         label=f"{int(dataset.attrs['num_match'])} / {int(dataset.attrs['num_total'])}",
@@ -201,7 +198,7 @@ if __name__ == "__main__":
                     ax[i,j].set_xlim(BINS[0], BINS[-1])
                     # ax[i,j].set_ylim(0., 1.5)
                     # ax[i,j].set_yticks([0., 0.5, 1., 1.5])
-                    
+
                     if stage == "early":
                         if i == 0:
                             ax[i,j].set_ylabel("I➜II")
@@ -218,5 +215,5 @@ if __name__ == "__main__":
                         else:
                             ax[i,j].set_xlabel("prevalence [%]")
                         # ax[i,j].set_xlim(65., 85.)
-    
+
     plt.savefig("extended-connection12-high-prevalences.svg")
