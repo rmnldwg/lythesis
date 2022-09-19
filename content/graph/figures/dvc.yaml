@@ -7,6 +7,8 @@ stages:
     - extended-base-corner
     - extended-connection12-low-prevalences
     - extended-connection12-high-prevalences
+    - extended-add35-prevalences
+    - extended-add45-prevalences
     do:
       cmd: >
         inkscape
@@ -56,3 +58,21 @@ stages:
       - ../data/extended-add21-v1-prevalences.hdf5
       outs:
       - extended-connection12-${item}-prevalences.svg
+
+  extended-add35-prevalences:
+    cmd: python extended-add35-prevalences.py
+    deps:
+    - extended-add35-prevalences.py
+    - ../data/extended-base-v1-prevalences.hdf5
+    - ../data/extended-add35-v1-prevalences.hdf5
+    outs:
+    - extended-add35-prevalences.svg
+
+  extended-add45-prevalences:
+    cmd: python extended-add45-prevalences.py
+    deps:
+    - extended-add45-prevalences.py
+    - ../data/extended-base-v1-prevalences.hdf5
+    - ../data/extended-add45-v1-prevalences.hdf5
+    outs:
+    - extended-add45-prevalences.svg

@@ -137,11 +137,11 @@ stages:
       \ --export-pdf=extended-connection12-high-prevalences.pdf --export-latex\n"
     deps:
     - path: extended-connection12-high-prevalences.svg
-      md5: f5dee05e811e8938b54fb88badaa4048
+      md5: 401d06fe78456d2670f797bdd5128985
       size: 178307
     outs:
     - path: extended-connection12-high-prevalences.pdf
-      md5: ac246af7ca016e40feb70b3346fc854e
+      md5: f66c4574bc126ffd1d039fc5ceb94bef
       size: 117187
     - path: extended-connection12-high-prevalences.pdf_tex
       md5: 1322720196b860ebf915254cc37ec58e
@@ -198,3 +198,63 @@ stages:
     - path: extended-connection12-low-prevalences.svg
       md5: 5db93d113607b013e2b56f07c755e653
       size: 141306
+  extended-add35-prevalences:
+    cmd: python extended-add35-prevalences.py
+    deps:
+    - path: ../data/extended-add35-v1-prevalences.hdf5
+      md5: 3860ba954e6dc86882edee73f0b827b5
+      size: 896872
+    - path: ../data/extended-base-v1-prevalences.hdf5
+      md5: 9a49e7ef412ab6c6542262506b9eb99b
+      size: 2765440
+    - path: extended-add35-prevalences.py
+      md5: aa5eead5df900340250894c1908bd441
+      size: 3377
+    outs:
+    - path: extended-add35-prevalences.svg
+      md5: 0651f45358bb002961a2178ba890e817
+      size: 91442
+  convert-to-pdf@extended-add35-prevalences:
+    cmd: "inkscape --without-gui --file=extended-add35-prevalences.svg --export-pdf=extended-add35-prevalences.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: extended-add35-prevalences.svg
+      md5: 0651f45358bb002961a2178ba890e817
+      size: 91442
+    outs:
+    - path: extended-add35-prevalences.pdf
+      md5: 5d8349991563634bc33050b10759b605
+      size: 72622
+    - path: extended-add35-prevalences.pdf_tex
+      md5: ff3047c85831a2f97b938f7d288ec7fe
+      size: 2089
+  extended-add45-prevalences:
+    cmd: python extended-add45-prevalences.py
+    deps:
+    - path: ../data/extended-add45-v1-prevalences.hdf5
+      md5: 26723022fdacb75fe46c6e66014770bc
+      size: 896872
+    - path: ../data/extended-base-v1-prevalences.hdf5
+      md5: 9a49e7ef412ab6c6542262506b9eb99b
+      size: 2765440
+    - path: extended-add45-prevalences.py
+      md5: 4f9226fba9ad760b168408b32a86b1b7
+      size: 3415
+    outs:
+    - path: extended-add45-prevalences.svg
+      md5: 2a350319290000286900e52e36784177
+      size: 93641
+  convert-to-pdf@extended-add45-prevalences:
+    cmd: "inkscape --without-gui --file=extended-add45-prevalences.svg --export-pdf=extended-add45-prevalences.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: extended-add45-prevalences.svg
+      md5: 2a350319290000286900e52e36784177
+      size: 93641
+    outs:
+    - path: extended-add45-prevalences.pdf
+      md5: 895dd21666c95a51dc78b8d1129da32a
+      size: 76070
+    - path: extended-add45-prevalences.pdf_tex
+      md5: 4e5d542f4d9fc4566578b93f26eee891
+      size: 2089
