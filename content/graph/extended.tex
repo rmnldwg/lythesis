@@ -10,8 +10,6 @@
 \section{Extending the network to LNLs V and VII}
 \label{sec:graph:extended}
 
-\input{_contributions.tex}
-
 \begin{figure}
     \centering
     \def\svgwidth{0.4\textwidth}
@@ -38,7 +36,7 @@ In \cref{fig:graph:all_lnls:base_graph}, we have also drawn green edges between 
 \label{subsec:graph:extended:base}
 
 \begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
-    The base graph that will be used as a baseline for additional connections can be reproduced from the \repolink{lynference} repository, using the tagged release \href{https://github.com/rmnldwg/lynference/releases/tag/extended-base-v1}{\faIcon{tags} \texttt{extended-base-v1}}.
+    The base graph that will be used as a baseline for additional connections can be reproduced from the \repolink{lynference} repository, using the tagged release \lytag{extended-base-v1}.
 \end{tcolorbox}
 
 \begin{figure}
@@ -79,8 +77,8 @@ As mentioned, we started with establishing a baseline, using a unilateral model 
     The results of the two models that are being compared to the base graph in this subsection can be reproduced with the help of the following tagged and released commits in the \repolink{lynference} repository:
 
     \begin{itemize}
-        \item \textbf{I \faIcon{long-arrow-alt-right} II}: \href{https://github.com/rmnldwg/lynference/releases/tag/extended-add12-v1}{\faIcon{tags} \texttt{extended-add12-v1}}
-        \item \textbf{II \faIcon{long-arrow-alt-right} I}: \href{https://github.com/rmnldwg/lynference/releases/tag/extended-add21-v1}{\faIcon{tags} \texttt{extended-add21-v1}}
+        \item \textbf{I \faIcon{long-arrow-alt-right} II}: \lytag{extended-add12-v1}
+        \item \textbf{II \faIcon{long-arrow-alt-right} I}: \lytag{extended-add21-v1}
     \end{itemize}
 \end{tcolorbox}
 
@@ -160,8 +158,8 @@ To conclude this comparison, we can compare the actual values for the inferred s
     All values and results from the models based on the graphs with an additional arc from \gls{lnl} III to V and from level IV to V respectively are reproducible using the \repolink{lynference} repository:
 
     \begin{itemize}
-        \item \textbf{III \faIcon{long-arrow-alt-right} V}: \href{https://github.com/rmnldwg/lynference/releases/tag/extended-add35-v1}{\faIcon{tags} \texttt{extended-add35-v1}}
-        \item \textbf{IV \faIcon{long-arrow-alt-right} V}: \href{https://github.com/rmnldwg/lynference/releases/tag/extended-add45-v1}{\faIcon{tags} \texttt{extended-add45-v1}}
+        \item \textbf{III \faIcon{long-arrow-alt-right} V}: \lytag{extended-add35-v1}
+        \item \textbf{IV \faIcon{long-arrow-alt-right} V}: \lytag{extended-add45-v1}
     \end{itemize}
 \end{tcolorbox}
 
@@ -236,7 +234,7 @@ We have repeated the analysis for the graph that adds an edge from \gls{lnl} IV 
 \label{subsec:graph:extended:IItoVII}
 
 \begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
-    The results displayed in this subsection are reproducible using the tagged commit \href{https://github.com/rmnldwg/lynference/releases/tag/extended-add27-v1}{\faIcon{tags} \texttt{extended-add27-v1}} that can be found in the repository \repolink{lynference}. Instructions on how to obtain the underlying data or reproduce the results altogether are given in that repository's \faIcon{info-circle} \texttt{README.md}.
+    The results displayed in this subsection are reproducible using the tagged commit \lytag{extended-add27-v1} that can be found in the repository \repolink{lynference}. Instructions on how to obtain the underlying data or reproduce the results altogether are given in that repository's \faIcon{info-circle} \texttt{README.md}.
 \end{tcolorbox}
 
 \begin{table}
@@ -285,16 +283,49 @@ To conclude this subsection, both the computed metrics and a visual inspection o
 \subsection{Multiple new edges}
 \label{subsec:graph:extended:multiple}
 
+\input{_contributions.tex}
+
 \begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
     This subsection's results regarding graphs that add two new edges to the base graph can be downloaded or reproduced by using the following tags of the \repolink{lynference} repository:
 
     \begin{itemize}
-        \item \textbf{II \faIcon{long-arrow-alt-right} I} and \textbf{III \faIcon{long-arrow-alt-right} V}: \href{https://github.com/rmnldwg/lynference/releases/tag/extended-add21-add35-v1}{\faIcon{tags} \texttt{extended-add21-add35-v1}}
-        \item \textbf{II \faIcon{long-arrow-alt-right} I} and \textbf{IV \faIcon{long-arrow-alt-right} V}:
-        \item \textbf{II \faIcon{long-arrow-alt-right} I} and \textbf{II \faIcon{long-arrow-alt-right} VII}:
+        \item \textbf{II \faIcon{long-arrow-alt-right} I} and \textbf{III \faIcon{long-arrow-alt-right} V}: \lytag{extended-add21-add35-v1}
+        \item \textbf{II \faIcon{long-arrow-alt-right} I} and \textbf{IV \faIcon{long-arrow-alt-right} V}: \lytag{extended-add21-add45-v1}
+        \item \textbf{II \faIcon{long-arrow-alt-right} I} and \textbf{II \faIcon{long-arrow-alt-right} VII}: \lytag{extended-add21-add27-v1}
     \end{itemize}
+
+    The results produced by \faIcon{user} \textbf{Luca Franceschetti} \cite{franceschetti_comparison_2022} cannot be reproduced using the linked repository.
 \end{tcolorbox}
 
-We have now, one by one, gone through possible extensions of what we considered a minimal graph for the six \glspl{lnl} I, II, III, IV, V and VII. For each possible additional arc we have assessed this new connection's performance, both visually and quantitatively using mainly the \acrlong{bic}. In this last subsection, we will investigate what effect adding two spread parameters at the same time to the base graph has on the model's performance. It will be interesting to see if the impacts of different new arcs on the metrics are independent of each other and hence cumulative, or if we might see synergies between two added spread parameters.
+We have now, one by one, gone through possible extensions of what we considered a minimal graph for the six \glspl{lnl} I, II, III, IV, V and VII. For each possible additional arc we have assessed this new connection's performance, both visually and quantitatively using mainly the \acrlong{bic}. In this last subsection, we will investigate what effect adding two spread parameters at the same time to the base graph has on the model's performance. It will be interesting to see if the impacts of different new arcs on the metrics are independent of each other and hence cumulative, or if the effects interact in more complicated manners.
+
+Also, we will be able to compare results for graphs with two additional arcs to the results of Franceschetti \cite{franceschetti_comparison_2022}, who used a different metric to compare the different models, namely the cumulative out-of-sample log-likelihood marginalized over the spread parameters:
+%
+\begin{equation}
+    \begin{aligned}
+        \text{oosllh} &\coloneqq \sum_{k=1}^K{\ln{ \Probofgiven{\boldsymbol{\mathcal{D}}_k}{\mathcal{M}_{\setminus k}} }} \\
+        &\approx \sum_{k=1}^K{\ln{ \left[ \frac{1}{S} \sum_{\theta \in \boldsymbol{\hat{\theta}}_{\setminus k}}{ \prod_{d \in \boldsymbol{\mathcal{D}}_k}{ \Probofgiven{d}{\theta} } } \right] }}
+    \end{aligned}
+\end{equation}
+%
+where $K$ is the number of folds the data is split into. Correspondingly, $\boldsymbol{\mathcal{D}}_k$ is the $k$-th of these partitions and $\mathcal{M}_{\setminus k}$ is the model trained on all data except the $k$-th fold. The \gls{mcmc} approximation in the second line introduces the samples $\boldsymbol{\hat{\theta}}_{\setminus k}$ that were drawn during a sampling using all data except $\boldsymbol{\mathcal{D}}_k$.
+
+Computing the likelihood of data, given a model trained on different data is another strategy against overfitting, as is using \acrlong{ti} to compute or the \acrlong{bic} to approximate the model evidence as a model comparison metric. If the model was to reach a complexity that allowed it to achieve a perfect fit to one particular dataset, it would not necessarily generalize to other data. This mismatch between ``training'' and ``testing'' datasets stops us from arbitrarily adding parameters and complexity to the model until our accuracy was perfect.
+
+Interestingly, one can even find that (exhaustive leave-$p$-out) cross-validation (averaged over all $p$) and \gls{ti} are fundamentally computing the same quantity, as shown by Fong et al. \cite{fong_marginal_2019}. We will briefly follow their reasoning for illustrative purposes: Let us write the marginal log-likelihood as a sum of log-conditionals
+%
+\begin{equation} \label{eq:evidence_as_sequence}
+    \ln{\Probofgiven{\boldsymbol{\mathcal{D}}}{\mathcal{M}}} = \sum_{i=1}^N{ \ln{ \Probofgiven{d_i}{\boldsymbol{\mathcal{D}}_{1:i-1}} } }
+\end{equation}
+%
+with $\boldsymbol{\mathcal{D}}_{1:i-1}$ being all data points from the first to the one before the $i$-th. Notably, this is generally true regardless of how we order the data. The terms the sum runs over here are essentially expected likelihoods under different posteriors over the parameters:
+%
+\begin{equation}
+    \begin{aligned}
+        \ln{ \Probofgiven{d_i}{\boldsymbol{\mathcal{D}}_{1:i-1}} } &= \int{ \ln{ \Probofgiven{d_i}{\theta} } \probofgiven{\theta}{\boldsymbol{\mathcal{D}}_{1:i-1}} d\theta} \\
+        &= \mathbb{E}_{\probofgiven{\theta}{\boldsymbol{\mathcal{D}}_{1:i-1}}} \big[ \ln{ \Probofgiven{d_i}{\theta} } \big]
+    \end{aligned}
+\end{equation}
+%
 
 \end{document}
