@@ -165,8 +165,6 @@ To conclude this comparison, we can compare the actual values for the inferred s
     \end{itemize}
 \end{tcolorbox}
 
-Due to the anatomical proximity of \glspl{lnl} III and IV to \gls{lnl} V it is possible that those levels, like \gls{lnl} II, may spread lymphatically into the \emph{posterior accessory pathway}. Therefore, in this section we will investigate how additional arcs from level III or from level IV to level V affect the model's performance.
-
 \begin{table}
     \centering
     \begin{tabular}{|l|l|l|l|}
@@ -189,6 +187,78 @@ Due to the anatomical proximity of \glspl{lnl} III and IV to \gls{lnl} V it is p
         both compared to the base graph in the top row. As before, one half of the \gls{bic} is shown and the negative likelihoods. Lower values correspond to better performance.
     }
     \label{table:graph:extended:toV}
+\end{table}
+
+Due to the anatomical proximity of \glspl{lnl} III and IV to \gls{lnl} V it is possible that those levels, like \gls{lnl} II, may spread lymphatically into the \emph{posterior accessory pathway}. Therefore, in this section we will investigate how additional arcs from level III or from level IV to level V affect the model's performance.
+
+The quantitative results are given in \cref{table:graph:extended:toV} and compared to the base graph again. We can see that the \gls{bic} very weakly supports the base graph over the addition of a connection from \gls{lnl} III to V. This means that the improved fit, and hence the smaller expected negative log-likelihood, is just not worth the additional cost of $\ln{N} / 2 = \ln{550} / 2 = 3.15$. For the arc from \gls{lnl} IV to V there is even \emph{substantial} evidence against it with a difference in one half of the \gls{bic} of 1.6. 
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/extended-add35-prevalences.pdf_tex}
+    \caption[
+        Comparison of predicted prevalences for the model with an additional arc from LNL III to V
+    ]{
+        Histograms displaying the computed prevalences of the model with an added edge $\tilde{t}_{35}$ (shaded histograms) compared to both the base graph model's respective prevalence (hatched histograms) and the Beta posterior over the prevalence of the two scenarios as observed in the data (solid lines). The shown scenarios are
+        \begin{enumerate*}[label={(\alph*)}]
+            \item the co-involvemend of \gls{lnl} III and V (blue), as well as
+            \item the pattern where \gls{lnl} V is metastatic while level III is healthy (green)
+        \end{enumerate*}.
+    }
+    \label{fig:graph:extended:add35:prevalences}
+\end{figure}
+
+Despite this unfavorable outcome for these two graph edge candidates, we may still look at the predicted prevalences to see if there are noteworthy improvements to the fit w.r.t. the levels III and V. In \cref{fig:graph:extended:add35:prevalences}, we have plotted histograms of the predictions again and compared them to the Beta posterior over the true prevalence, based on the observations in the data. It shows that in the case of early T-stages, the predicted prevalence for both the patterns where \gls{lnl} V is involved with and without \gls{lnl} III shows no difference between the base graph and the graph with the added arc from level III to V. For late T-stages however, the latter model is much better at splitting the predicted prevalences for the two investigated scenarios.
+
+Although we did not plot it here, a similar figure for the scenarios with \gls{lnl} III's and \gls{lnl} V's overall involvement respectively shows no noteworthy difference between the models. 
+
+We have repeated the analysis for the graph that adds an edge from \gls{lnl} IV to V and display the respective histograms in \cref{fig:graph:extended:add45:prevalences}. Again, the predicted prevalence for the overall involvement of \glspl{lnl} IV and V does not change meaningfully and was hence not plotted here. The displayed scenarios are -- in analogy to \cref{fig:graph:extended:add35:prevalences} -- the patterns $X_\text{IV} \land X_\text{V}$, as well as $\lnot X_\text{IV} \land X_\text{V}$. We observe an improvement of how the former of these two scenarios is modelled, both for early and for late T-stages. The latter scenario's prediction reduces its overestimation slightly for the early T-stage case, compared to the base graph, but for late T-stages a similar reduction now leads to a very small underestimation of the observed prevalence.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/extended-add45-prevalences.pdf_tex}
+    \caption[
+        Comparison of predicted prevalences for the model with an additional arc from LNL IV to V
+    ]{
+        Plot of the prevalence for two different patterns of involvement:
+        \begin{enumerate*}[label={(\alph*)}]
+            \item Metastases in the \glspl{lnl} IV and V (orange), and
+            \item only \gls{lnl} V involved, while level IV is healthy (red)
+        \end{enumerate*}.
+        Both scenarios have been plotted for early T-stage (left) and late T-stage (right). The colored histograms depict the predicted values from the model with an added connection from \gls{lnl} IV to V, the gray, hatched histograms are the predictions by the base graph model for comparison and the solid curves depict the Beta posterior over the true prevalence, given the data.
+    }
+    \label{fig:graph:extended:add45:prevalences}
+\end{figure}
+
+\subsection{An arc from LNL II to VII}
+\label{subsec:graph:extended:IItoVII}
+
+\begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
+    The results displayed in this subsection are reproducible using the tagged commit \href{https://github.com/rmnldwg/lynference/releases/tag/extended-add27-v1}{\faIcon{tags} \texttt{extended-add27-v1}} that can be found in the repository \repolink{lynference}. Instructions on how to obtain the underlying data or reproduce the results altogether are given in that repository's \faIcon{info-circle} \texttt{README.md}.
+\end{tcolorbox}
+
+The last one of the connection candidates in \cref{fig:graph:extended_graph} (green arcs) that we have not explored yet is the introduction of an edge from the most commonly involved \gls{lnl} down to one of the most rarely metastatic levels: \gls{lnl} VII.
+
+As usual, we start by comparing the performance metrics of the model where the connection is added to the baseline model: One half of the \gls{bic}, the negative maximum and the expected negative likelihood are plotted in \cref{table:graph:extended:IItoVII}. We can immediately see that there is no improvement in the expected or the maximum log-likelihood and hence the \gls{bic} indicates \emph{strong} support against adding this connection, due to the additional parameter. When looking at the newly added parameter, we also see that its effect on the model's predictions is not hugely beneficial with a value of only $\tilde{t}_{27} = 1.5 \pm 0.9 \%$.
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Graph} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
+        \hline
+        base graph & 1212.0 & 1180.4 & 1184.7 \\
+        + II $\rightarrow$ VII & 1214.9 & 1180.2 & 1184.4 \\
+        \hline
+    \end{tabular}
+    \label{table:graph:extended:IItoVII}
+    \caption[
+        Performance comparison of the base graph model and the graph with an added arc from LNL II to VII
+    ]{
+        The base graph model's performance metrics -- as before the \gls{bic}, negative maximum and negative expected log-likelihood -- tabulated against the model's respective values where we introduced a connection from \gls{lnl} II to VII.
+    }
 \end{table}
 
 \end{document}
