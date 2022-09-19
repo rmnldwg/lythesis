@@ -208,22 +208,22 @@ stages:
       md5: 9a49e7ef412ab6c6542262506b9eb99b
       size: 2765440
     - path: extended-add35-prevalences.py
-      md5: 020b224019cea4a9021bd7b327a2f73d
-      size: 1237
+      md5: 0055b9b53bc29dd278d4d74a7d27caed
+      size: 1595
     outs:
     - path: extended-add35-prevalences.svg
-      md5: 6f325fa46c14c954dc30148fa1d4b03a
+      md5: 358cc7498e85504bf77a8d5c6294c7b4
       size: 91442
   convert-to-pdf@extended-add35-prevalences:
     cmd: "inkscape --without-gui --file=extended-add35-prevalences.svg --export-pdf=extended-add35-prevalences.pdf\
       \ --export-latex\n"
     deps:
     - path: extended-add35-prevalences.svg
-      md5: 6f325fa46c14c954dc30148fa1d4b03a
+      md5: 358cc7498e85504bf77a8d5c6294c7b4
       size: 91442
     outs:
     - path: extended-add35-prevalences.pdf
-      md5: c7b5d9c795e96193694f86b36c678c83
+      md5: 5f5f822e77496754d7d65600dc4cc142
       size: 72622
     - path: extended-add35-prevalences.pdf_tex
       md5: ff3047c85831a2f97b938f7d288ec7fe
@@ -238,22 +238,22 @@ stages:
       md5: 9a49e7ef412ab6c6542262506b9eb99b
       size: 2765440
     - path: extended-add45-prevalences.py
-      md5: 7f70335820ff57122156a971c8dc3170
-      size: 1275
+      md5: c691e08741ae77f153aa5f31a9427a7a
+      size: 1633
     outs:
     - path: extended-add45-prevalences.svg
-      md5: 54666fe3d880a16461876c1273867e04
+      md5: 0828d281c256838e3cf7148a7f17b7bf
       size: 93641
   convert-to-pdf@extended-add45-prevalences:
     cmd: "inkscape --without-gui --file=extended-add45-prevalences.svg --export-pdf=extended-add45-prevalences.pdf\
       \ --export-latex\n"
     deps:
     - path: extended-add45-prevalences.svg
-      md5: 54666fe3d880a16461876c1273867e04
+      md5: 0828d281c256838e3cf7148a7f17b7bf
       size: 93641
     outs:
     - path: extended-add45-prevalences.pdf
-      md5: 436c032eb86ac2a3fc2b80c85576a95a
+      md5: 373c03e1458d7aeaefac2cbcb455b33a
       size: 76070
     - path: extended-add45-prevalences.pdf_tex
       md5: 4e5d542f4d9fc4566578b93f26eee891
@@ -324,3 +324,65 @@ stages:
     - path: extended-conn12-high-prevalences.pdf_tex
       md5: 29f4d2f54807b1950c6e29b04df0f36e
       size: 2098
+  extended-prevalences@add27:
+    cmd: python extended-add27-prevalences.py
+    deps:
+    - path: ../data/extended-add27-v1-prevalences.hdf5
+      md5: 24942d1991ee074a6fc6c8ed33477190
+      size: 718720
+    - path: ../data/extended-base-v1-prevalences.hdf5
+      md5: 9a49e7ef412ab6c6542262506b9eb99b
+      size: 2765440
+    - path: extended-add27-prevalences.py
+      md5: 8f28238ff304e42a900b5b14faed84ae
+      size: 1684
+    outs:
+    - path: extended-add27-prevalences.svg
+      md5: 4c0cf689c60127b8047352741633aa07
+      size: 107861
+  convert-to-pdf@extended-add27-prevalences:
+    cmd: "inkscape --without-gui --file=extended-add27-prevalences.svg --export-pdf=extended-add27-prevalences.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: extended-add27-prevalences.svg
+      md5: 4c0cf689c60127b8047352741633aa07
+      size: 107861
+    outs:
+    - path: extended-add27-prevalences.pdf
+      md5: 1576ae8ccb03dc523e43a14d0d69b2c3
+      size: 77624
+    - path: extended-add27-prevalences.pdf_tex
+      md5: 4becde1f1bbb40791d7742fe6b1a0b79
+      size: 2089
+  extended-prevalences@add45:
+    cmd: python extended-add45-prevalences.py
+    deps:
+    - path: ../data/extended-add45-v1-prevalences.hdf5
+      md5: 26723022fdacb75fe46c6e66014770bc
+      size: 896872
+    - path: ../data/extended-base-v1-prevalences.hdf5
+      md5: 9a49e7ef412ab6c6542262506b9eb99b
+      size: 2765440
+    - path: extended-add45-prevalences.py
+      md5: c691e08741ae77f153aa5f31a9427a7a
+      size: 1633
+    outs:
+    - path: extended-add45-prevalences.svg
+      md5: 0828d281c256838e3cf7148a7f17b7bf
+      size: 93641
+  extended-prevalences@add35:
+    cmd: python extended-add35-prevalences.py
+    deps:
+    - path: ../data/extended-add35-v1-prevalences.hdf5
+      md5: 3860ba954e6dc86882edee73f0b827b5
+      size: 896872
+    - path: ../data/extended-base-v1-prevalences.hdf5
+      md5: 9a49e7ef412ab6c6542262506b9eb99b
+      size: 2765440
+    - path: extended-add35-prevalences.py
+      md5: 0055b9b53bc29dd278d4d74a7d27caed
+      size: 1595
+    outs:
+    - path: extended-add35-prevalences.svg
+      md5: 358cc7498e85504bf77a8d5c6294c7b4
+      size: 91442

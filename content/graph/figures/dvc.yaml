@@ -9,6 +9,7 @@ stages:
     - extended-conn12-high-prevalences
     - extended-add35-prevalences
     - extended-add45-prevalences
+    - extended-add27-prevalences
     do:
       cmd: >
         inkscape
@@ -59,20 +60,16 @@ stages:
       outs:
       - extended-conn12-${item}-prevalences.svg
 
-  extended-add35-prevalences:
-    cmd: python extended-add35-prevalences.py
-    deps:
-    - extended-add35-prevalences.py
-    - ../data/extended-base-v1-prevalences.hdf5
-    - ../data/extended-add35-v1-prevalences.hdf5
-    outs:
-    - extended-add35-prevalences.svg
-
-  extended-add45-prevalences:
-    cmd: python extended-add45-prevalences.py
-    deps:
-    - extended-add45-prevalences.py
-    - ../data/extended-base-v1-prevalences.hdf5
-    - ../data/extended-add45-v1-prevalences.hdf5
-    outs:
-    - extended-add45-prevalences.svg
+  extended-prevalences:
+    foreach:
+    - add35
+    - add45
+    - add27
+    do:
+      cmd: python extended-${item}-prevalences.py
+      deps:
+      - extended-${item}-prevalences.py
+      - ../data/extended-base-v1-prevalences.hdf5
+      - ../data/extended-${item}-v1-prevalences.hdf5
+      outs:
+      - extended-${item}-prevalences.svg

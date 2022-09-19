@@ -6,6 +6,9 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 from itertools import cycle
 
+import numpy as np
+import lyscripts.plot.histograms as lyhist
+
 from _prevalences import plot_prevalences
 
 
@@ -32,12 +35,22 @@ SCENARIOS = {
 
 
 if __name__ == "__main__":
+    plt.style.use(Path("../../../.mplstyle"))
+    
+    fig, ax = plt.subplots(
+        nrows=len(MODELS), ncols=2,
+        sharex="col", sharey="row",
+        figsize=lyhist.get_size(width="full", ratio=2 * 1.6),
+    )
+    ax = np.reshape(ax, newshape=(len(MODELS), 2))
+
     fig, ax = plot_prevalences(
         models=MODELS,
         scenarios=SCENARIOS,
         num_bins=NBINS,
         color_cycle=COLOR_CYCLE,
         hatch_cycle=HATCH_CYCLE,
+        fig=fig, ax=ax,
     )
 
     for k, stage in enumerate(["early", "late"]):

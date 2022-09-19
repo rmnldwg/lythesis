@@ -239,11 +239,7 @@ We have repeated the analysis for the graph that adds an edge from \gls{lnl} IV 
     The results displayed in this subsection are reproducible using the tagged commit \href{https://github.com/rmnldwg/lynference/releases/tag/extended-add27-v1}{\faIcon{tags} \texttt{extended-add27-v1}} that can be found in the repository \repolink{lynference}. Instructions on how to obtain the underlying data or reproduce the results altogether are given in that repository's \faIcon{info-circle} \texttt{README.md}.
 \end{tcolorbox}
 
-The last one of the connection candidates in \cref{fig:graph:extended_graph} (green arcs) that we have not explored yet is the introduction of an edge from the most commonly involved \gls{lnl} down to one of the most rarely metastatic levels: \gls{lnl} VII.
-
-As usual, we start by comparing the performance metrics of the model where the connection is added to the baseline model: One half of the \gls{bic}, the negative maximum and the expected negative likelihood are plotted in \cref{table:graph:extended:IItoVII}. We can immediately see that there is no improvement in the expected or the maximum log-likelihood and hence the \gls{bic} indicates \emph{strong} support against adding this connection, due to the additional parameter. When looking at the newly added parameter, we also see that its effect on the model's predictions is not hugely beneficial with a value of only $\tilde{t}_{27} = 1.5 \pm 0.9 \%$.
-
-\begin{table}[!ht]
+\begin{table}
     \centering
     \begin{tabular}{|l|l|l|l|}
         \hline
@@ -253,12 +249,52 @@ As usual, we start by comparing the performance metrics of the model where the c
         + II $\rightarrow$ VII & 1214.9 & 1180.2 & 1184.4 \\
         \hline
     \end{tabular}
-    \label{table:graph:extended:IItoVII}
     \caption[
         Performance comparison of the base graph model and the graph with an added arc from LNL II to VII
     ]{
         The base graph model's performance metrics -- as before the \gls{bic}, negative maximum and negative expected log-likelihood -- tabulated against the model's respective values where we introduced a connection from \gls{lnl} II to VII.
     }
+    \label{table:graph:extended:IItoVII}
 \end{table}
+
+The last one of the connection candidates in \cref{fig:graph:extended_graph} (green arcs) that we have not explored yet is the introduction of an edge from the most commonly involved \gls{lnl} down to one of the most rarely metastatic levels: \gls{lnl} VII.
+
+As usual, we start by comparing the performance metrics of the model where the connection is added to the baseline model: One half of the \gls{bic}, the negative maximum and the expected negative likelihood are plotted in \cref{table:graph:extended:IItoVII}. We can immediately see that there is no improvement in the expected or the maximum log-likelihood and hence the \gls{bic} indicates \emph{strong} support against adding this connection, due to the penalty of an additional parameter. When looking at this new parameter, we also see that its effect on the model's predictions is not hugely impactful with a value of only $\tilde{t}_{27} = 1.5 \pm 0.9 \%$.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/extended-add27-prevalences.pdf_tex}
+    \caption[
+        Prevalences as predicted by the model with an additional arc from LNL II to VII
+    ]{
+        Histograms displaying the predicted prevalences for the base graph (gray, hatched) and the model with a new arc from \gls{lnl} II to VII (colored). The shown scenarios are
+        \begin{enumerate*}[label={(\alph*)}]
+            \item co-involvement of \glspl{lnl} II and VII (blue), and
+            \item metastases in \gls{lnl} VII, while \gls{lnl} II is healthy
+        \end{enumerate*}.
+        The Beta posterior over the true prevalence, given data is plotted as solid line.
+    }
+    \label{fig:graph:extended:add27:prevalences}
+\end{figure}
+
+For completeness, we also show some predictions as for previous model comparisons in \cref{fig:graph:extended:add27:prevalences}. What is interesting to note in this figure, where we have plotted the prevalence comparisons for the scenarios $X_\text{VII} \land X_\text{II}$, and $X_\text{VII} \land \lnot X_\text{II}$, is that by adding a new arc, the inference process sacrificed accuracy in one aspect -- here predicting late T-stage co-involvement of both levels II and VII -- to improve another fit -- namely early T-stage involvement of \gls{lnl} II and VII. In this case, we would very likely prefer the predictions of the base graph. Both because it is a simpler model and because the slight overestimation of this kind of involvement is more conservative and hence considered ``safer'' than better accuracy in one respect and underestimation in another.
+
+To conclude this subsection, both the computed metrics and a visual inspection of the relevant predictions strongly suggest not to add a new edge from \gls{lnl} II to VII.
+
+\subsection{Multiple new edges}
+\label{subsec:graph:extended:multiple}
+
+\begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
+    This subsection's results regarding graphs that add two new edges to the base graph can be downloaded or reproduced by using the following tags of the \repolink{lynference} repository:
+
+    \begin{itemize}
+        \item \textbf{II \faIcon{long-arrow-alt-right} I} and \textbf{III \faIcon{long-arrow-alt-right} V}: \href{https://github.com/rmnldwg/lynference/releases/tag/extended-add21-add35-v1}{\faIcon{tags} \texttt{extended-add21-add35-v1}}
+        \item \textbf{II \faIcon{long-arrow-alt-right} I} and \textbf{IV \faIcon{long-arrow-alt-right} V}:
+        \item \textbf{II \faIcon{long-arrow-alt-right} I} and \textbf{II \faIcon{long-arrow-alt-right} VII}:
+    \end{itemize}
+\end{tcolorbox}
+
+We have now, one by one, gone through possible extensions of what we considered a minimal graph for the six \glspl{lnl} I, II, III, IV, V and VII. For each possible additional arc we have assessed this new connection's performance, both visually and quantitatively using mainly the \acrlong{bic}. In this last subsection, we will investigate what effect adding two spread parameters at the same time to the base graph has on the model's performance. It will be interesting to see if the impacts of different new arcs on the metrics are independent of each other and hence cumulative, or if we might see synergies between two added spread parameters.
 
 \end{document}

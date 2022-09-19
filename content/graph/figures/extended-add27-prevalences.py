@@ -13,24 +13,24 @@ from _prevalences import plot_prevalences
 
 
 MODELS = {
-    "add35": "III➜V",
+    "add27": "II➜VII",
 }
 COLORS = {
     "blue": '#005ea8',
     "green": '#00afa5',
-    "orange": '#f17900',
-    "red": '#ae0060',
+    # "orange": '#f17900',
+    # "red": '#ae0060',
     # "gray": '#c5d5db',
 }
-HATCHES = [r"////", r"\\\\", r"||||", r"----"]
+HATCHES = [r"////", r"\\\\", r"...."]
 COLOR_CYCLE = cycle(COLORS.values())
 HATCH_CYCLE = cycle(HATCHES)
-NBINS = 60
+NBINS = 80
 SCENARIOS = {
-    # "III": "LNL III overall",
-    # "V": "LNL V overall",
-    "VandIII": "LNL V with III",
-    "VnotIII": "LNL V without III",
+    # "II": "LNL II overall",
+    # "VII": "LNL VII overall",
+    "VIIandII": "LNL VII with II",
+    "VIInotII": "LNL VII without II",
 }
 
 
@@ -56,9 +56,12 @@ if __name__ == "__main__":
     for k, stage in enumerate(["early", "late"]):
         ax[0,k].set_title(f"{stage} T-stage")
         ax[-1,k].set_xlabel("prevalence [%]")
-        ax[0,k].legend(fontsize=7.)
+        ax[0,k].legend(fontsize=6.)
+
+    ax[0,0].set_xlim(left=0., right=8.)
 
     for i, (model, model_label) in enumerate(MODELS.items()):
         ax[i,0].set_ylabel(model_label)
+        ax[i,-1].set_ylim(bottom=0., top=1.5)
 
     plt.savefig(Path(__file__).with_suffix(".svg").name)
