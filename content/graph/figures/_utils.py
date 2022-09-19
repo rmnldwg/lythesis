@@ -2,7 +2,7 @@
 Utility functions for plotting hostograms over prevalences.
 """
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Union
+from typing import Any, Callable, Dict, List
 import h5py
 
 import numpy as np
