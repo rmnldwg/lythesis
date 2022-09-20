@@ -1,7 +1,7 @@
 stages:
   convert-to-pdf:
     foreach:
-    - simple_graphs
+    - simple-graphs
     - simple-prevalences
     - extended-graph
     - extended-base-corner
