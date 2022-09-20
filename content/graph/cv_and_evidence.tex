@@ -1,0 +1,26 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{
+    {\subfix{./figures/}}
+}
+
+
+\begin{document}
+
+Interestingly, one can even find that (exhaustive leave-$p$-out) cross-validation (averaged over all $p$) and \gls{ti} are fundamentally computing the same quantity, as shown by Fong et al. \cite{fong_marginal_2019}. We will briefly follow their reasoning for illustrative purposes: Let us write the marginal log-likelihood as a sum of log-conditionals
+%
+\begin{equation} \label{eq:evidence_as_sequence}
+    \ln{\Probofgiven{\boldsymbol{\mathcal{D}}}{\mathcal{M}}} = \sum_{i=1}^N{ \ln{ \Probofgiven{d_i}{\boldsymbol{\mathcal{D}}_{1:i-1}} } }
+\end{equation}
+%
+with $\boldsymbol{\mathcal{D}}_{1:i-1}$ being all data points from the first to the one before the $i$-th. Notably, this is generally true regardless of how we order the data. The terms the sum runs over here are essentially expected likelihoods under different posteriors over the parameters:
+%
+\begin{equation}
+    \begin{aligned}
+        \ln{ \Probofgiven{d_i}{\boldsymbol{\mathcal{D}}_{1:i-1}} } &= \int{ \ln{ \Probofgiven{d_i}{\theta} } \probofgiven{\theta}{\boldsymbol{\mathcal{D}}_{1:i-1}} d\theta} \\
+        &= \mathbb{E}_{\probofgiven{\theta}{\boldsymbol{\mathcal{D}}_{1:i-1}}} \big[ \ln{ \Probofgiven{d_i}{\theta} } \big]
+    \end{aligned}
+\end{equation}
+%
+
+\end{document}

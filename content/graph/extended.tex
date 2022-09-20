@@ -312,20 +312,4 @@ where $K$ is the number of folds the data is split into. Correspondingly, $\bold
 
 Computing the likelihood of data, given a model trained on different data is another strategy against overfitting, as is using \acrlong{ti} to compute or the \acrlong{bic} to approximate the model evidence as a model comparison metric. If the model was to reach a complexity that allowed it to achieve a perfect fit to one particular dataset, it would not necessarily generalize to other data. This mismatch between ``training'' and ``testing'' datasets stops us from arbitrarily adding parameters and complexity to the model until our accuracy was perfect.
 
-Interestingly, one can even find that (exhaustive leave-$p$-out) cross-validation (averaged over all $p$) and \gls{ti} are fundamentally computing the same quantity, as shown by Fong et al. \cite{fong_marginal_2019}. We will briefly follow their reasoning for illustrative purposes: Let us write the marginal log-likelihood as a sum of log-conditionals
-%
-\begin{equation} \label{eq:evidence_as_sequence}
-    \ln{\Probofgiven{\boldsymbol{\mathcal{D}}}{\mathcal{M}}} = \sum_{i=1}^N{ \ln{ \Probofgiven{d_i}{\boldsymbol{\mathcal{D}}_{1:i-1}} } }
-\end{equation}
-%
-with $\boldsymbol{\mathcal{D}}_{1:i-1}$ being all data points from the first to the one before the $i$-th. Notably, this is generally true regardless of how we order the data. The terms the sum runs over here are essentially expected likelihoods under different posteriors over the parameters:
-%
-\begin{equation}
-    \begin{aligned}
-        \ln{ \Probofgiven{d_i}{\boldsymbol{\mathcal{D}}_{1:i-1}} } &= \int{ \ln{ \Probofgiven{d_i}{\theta} } \probofgiven{\theta}{\boldsymbol{\mathcal{D}}_{1:i-1}} d\theta} \\
-        &= \mathbb{E}_{\probofgiven{\theta}{\boldsymbol{\mathcal{D}}_{1:i-1}}} \big[ \ln{ \Probofgiven{d_i}{\theta} } \big]
-    \end{aligned}
-\end{equation}
-%
-
 \end{document}
