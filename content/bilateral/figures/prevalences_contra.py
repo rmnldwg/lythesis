@@ -15,9 +15,9 @@ from lyscripts.plot.histograms import COLORS
 
 
 MODELS = [
-    Path("../data/bilateral-v2-prevalences.hdf5",),
-    Path("../data/midline-with-mixing-v2-prevalences.hdf5",),
-    Path("../data/midline-without-mixing-v2-prevalences.hdf5"),
+    Path("../data/bilateral-v3-prevalences.hdf5",),
+    Path("../data/midline-with-mixing-v3-prevalences.hdf5",),
+    Path("../data/midline-without-mixing-v3-prevalences.hdf5"),
 ]
 
 CYCLE = (
