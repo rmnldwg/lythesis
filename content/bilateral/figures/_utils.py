@@ -1,61 +1,15 @@
 """
-Utility functions for plotting hostograms over prevalences.
+Utility functions for plotting histograms over prevalences.
 """
+from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable, Dict, List
-import h5py
+from typing import Any, Callable, Dict, List, Optional, Union
 
+import h5py
+from matplotlib.axes._axes import Axes as MPLAxes
 import numpy as np
 import scipy as sp
 import scipy.stats
-
-
-def read_prevalences(
-    models: List[str],
-    format_filename: Callable,
-    scenarios: List[str],
-    t_stages: List[str],
-) -> Dict[str, Any]:
-    """
-    Read in HDF5 files, whose filenames are computed by calling `format_filename` with
-    the respective entry in `models`. Inside the HDF5 files the function expects a
-    group for each of the `scenarios` and under that a dataset for each of the
-    `t_stages`. The data found in these datasets will be put into a nested dictionary
-    of the structure model > scenario > T-stage.
-    """
-    output = {}
-    min_value = 100.
-    max_value = 0.
-    for model in models:
-        output[model] = {}
-        filename = Path(format_filename(model))
-        with h5py.File(name=filename, mode="r") as h5_file:
-            for scenario in scenarios:
-                output[model][scenario] = {}
-                for stage in t_stages:
-                    tmp = {}
-                    dataset = h5_file[f"{scenario}/{stage}"]
-                    values = 100. * dataset[:]
-                    min_value = np.minimum(min_value, np.min(values))
-                    max_value = np.maximum(max_value, np.max(values))
-                    tmp["values"] = values
-                    tmp["num_success"] = int(dataset.attrs["num_match"])
-                    tmp["num_fail"] = int(dataset.attrs["num_total"] - tmp["num_success"])
-                    output[model][scenario][stage] = tmp
-
-    return output, min_value, max_value
-
-
-def comp_scaled_beta_posterior(
-    x: np.ndarray,
-    num_success: int,
-    num_fail: int,
-) -> np.ndarray:
-    """
-    Compute the Beta posterior over the success probability (in percent) for
-    `num_success` observed successes and `num_total` tries.
-    """
-    return sp.stats.beta.pdf(x / 100., num_success+1, num_fail+1) / 100.
 
 
 def floor_at_decimal(value: float, decimal: int) -> float:
@@ -86,8 +40,120 @@ def ceil_to_step(value: float, step: float) -> float:
     return floor_to_step(value, step) + step
 
 
-HIST_KWARGS = {
-    "density": True,
-    "histtype": "stepfilled",
-    "alpha": 0.7,
-}
+@dataclass
+class Histogram:
+    """Class containing data for plotting a histogram."""
+    filename: Path
+    dataname: str
+    scale: float = field(default=100.)
+    kwargs: Dict[str, Any] = field(default_factory=lambda: {})
+
+    def __post_init__(self) -> None:
+        with h5py.File(self.filename, mode="r") as h5file:
+            dataset = h5file[self.dataname]
+            self.values = self.scale * dataset[:]
+
+    @property
+    def min_val(self):
+        return np.min(self.values)
+
+    @property
+    def max_val(self):
+        return np.max(self.values)
+
+@dataclass
+class Posterior:
+    """Class for storing plot configs for a Beta posterior."""
+    filename: Path
+    dataname: str
+    scale: float = field(default=100.)
+    quantile: float = field(default=0.3)
+    kwargs: Dict[str, Any] = field(default_factory=lambda: {})
+
+    def __post_init__(self) -> None:
+        with h5py.File(self.filename, mode="r") as h5file:
+            dataset = h5file[self.dataname]
+            self.num_success = int(dataset.attrs["num_match"])
+            self.num_total = int(dataset.attrs["num_total"])
+            self.num_fail = self.num_total - self.num_success
+
+    def pdf(self, x):
+        """Compute the probability density function."""
+        return sp.stats.beta.pdf(
+            x,
+            a=self.num_success+1,
+            b=self.num_fail+1,
+            scale=self.scale
+        )
+
+    @property
+    def min_val(self):
+        return sp.stats.beta.ppf(
+            self.quantile,
+            a=self.num_success+1,
+            b=self.num_fail+1,
+            scale=self.scale,
+        )
+
+    @property
+    def max_val(self):
+        return sp.stats.beta.ppf(
+            1. - self.quantile,
+            a=self.num_success+1,
+            b=self.num_fail+1,
+            scale=self.scale,
+        )
+
+def draw(
+    axes: MPLAxes,
+    contents: List[Union[Histogram, Posterior]],
+    xlim: Optional[list] = None,
+    hist_kwargs: Optional[Dict[str, Any]] = None,
+    plot_kwargs: Optional[Dict[str, Any]] = None,
+) -> MPLAxes:
+    """
+    Draw histograms and Beta posterior from `contents` into `axes`.
+    
+    The `hist_kwargs` define general settings that will be applied to all histograms.
+    Similarly, `plot_kwargs` adjusts the default settings for the Beta posteriors.
+
+    Both these keyword arguments can be overwritten by what the individual `contents`
+    have defined.
+    """
+    if not all(isinstance(c, Histogram) or isinstance(c, Posterior) for c in contents):
+        raise TypeError("Contents must be `Histogram` or `Posterior` instances")
+
+    if xlim is None:
+        left_lim = floor_to_step(np.min([c.min_val for c in contents]), 2.)
+        right_lim = ceil_to_step(np.max([c.max_val for c in contents]), 2.)
+    else:
+        left_lim = xlim[0]
+        right_lim = xlim[-1]
+    x = np.linspace(left_lim, right_lim, 300)
+
+    default_hist_kwargs = {
+        "density": True,
+        "bins": np.linspace(left_lim, right_lim, 60),
+        "histtype": "stepfilled",
+        "alpha": 0.7,
+    }
+    if hist_kwargs is not None:
+        default_hist_kwargs.update(hist_kwargs)
+
+    default_plot_kwargs = {}
+    if plot_kwargs is not None:
+        default_plot_kwargs.update(plot_kwargs)
+
+    for content in contents:
+        if isinstance(content, Histogram):
+            tmp_hist_kwargs = default_hist_kwargs.copy()
+            tmp_hist_kwargs.update(content.kwargs)
+            axes.hist(content.values, **tmp_hist_kwargs)
+        elif isinstance(content, Posterior):
+            tmp_plot_kwargs = default_plot_kwargs.copy()
+            tmp_plot_kwargs["label"] = f"{content.num_success} / {content.num_total}"
+            tmp_plot_kwargs.update(content.kwargs)
+            axes.plot(x, content.pdf(x), **tmp_plot_kwargs,)
+
+    axes.set_xlim(left=left_lim, right=right_lim)
+    return axes

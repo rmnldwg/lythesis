@@ -89,4 +89,4 @@ if __name__ == "__main__":
                 if i == 2:
                     ax[i].legend()
 
-    plt.savefig("contra-comp.svg")
+    plt.savefig("contra-overall.svg")

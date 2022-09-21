@@ -36,7 +36,7 @@ We restricted ourselves to the bilateral modelling of the \glspl{lnl} II, III an
 
 \begin{figure}
     \def\svgwidth{1.0\textwidth}
-    \input{figures/ipsi-comp.pdf_tex}
+    \input{figures/ipsi-overall.pdf_tex}
     \caption[Comparison of ipsilateral prevalences]{
         Predicted prevalences (shaded histograms) and posterior beta distributions of observed prevalences (solid lines) for the ipsilateral levels II (blue), III (orange) and IV (green). These prevalences have each been plotted for early T-stage patients (top row) and late T-stage (bottom row) and for the three models $\mathcal{M}_\text{ag}$ (left column), $\mathcal{M}_\alpha$ (middle column) and for $\mathcal{M}_\text{full}$ (right column). The differences between the models are negligible.
     }
@@ -59,7 +59,7 @@ The overall prevalence of contralateral involvement is plotted in \cref{fig:bila
 
 \begin{figure}
     \def\svgwidth{1.0\textwidth}
-    \input{figures/contra-comp.pdf_tex}
+    \input{figures/contra-overall.pdf_tex}
     \caption[
         Comparison of contralateral prevalences
     ]{
@@ -74,9 +74,29 @@ Interestingly, both the model using the mixing parameter $\alpha$ and the full m
 
 Despite this, the two models perform equally well regarding the overall contralateral spread. In combination with the unaffected capabilities to predict the ipsilateral prevalences, as shown in \cref{fig:bilateral:model_comp:ipsi}, this indicates that the assumptions underlying the introduction of the mixing parameter $\alpha$ are feasible.
 
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/contra-correlations-ext.pdf_tex}
+    \caption[
+        Correlations between involvement of the contralateral LNLs II and III
+    ]{
+        Histograms over predicted prevalences compared to Beta posteriors over observed prevalences respectively for three scenarios where the tumor extends over the mid-sagittal plane:
+        \begin{enumerate*}[label={(\arabic*)}]
+            \item The case $\lnot X_\text{II} \land X_\text{III}$ in blue,
+            \item co-involved levels $X_\text{II} \land X_\text{III}$ in green and lastly,
+            \item $X_\text{II} \land \lnot X_\text{III}$ in orange
+        \end{enumerate*}.
+        All scenarios are plotted for each of the three models in the respective row, and for early and late T-stage in the corresponding column. 
+    }
+    \label{fig:bilateral:model_comp:contra-correlations-ext}
+\end{figure}
+
 %% TODO:
 %% Back up this paragraph with a figure showing the correlations between LNL of the contralateral side.
-One would expect that modelling the correlations between involvements of the contralateral \glspl{lnl} might suffer from the simplifying introduction of the mixing parameter $\alpha$, but this is hard to test, as cases where e.g. \gls{lnl} III is involved without \gls{lnl} II are very rare -- in this case it is only five patients. Also, the clinical debate centers around whether to treat or to spare the contralateral side as a whole when performing elective \gls{rt} or elective bilateral \gls{nd} \cite{biau_selection_2019,al-mamgani_contralateral_2017}. Sparing individual \glspl{lnl} is not yet debated. Therefore, a more complete model like $\mathcal{M}_\text{full}$, that might be able to capture correlations we cannot yet see due to insufficient data, are not worth the additional model complexity at this point.
+One risk of modelling the correlations between involvements of the contralateral \glspl{lnl} is that some predictions might suffer from the simplifying introduction of the mixing parameter $\alpha$. To convince ourselves that this simplification is not too restrictive, we have compared the three models in their predictions for scenarios where we correlated the involvement of \gls{lnl} II and III in \cref{fig:bilateral:model_comp:contra-correlations-ext}. What we find in these plots is that the full model $\mathcal{M}_\text{full}$ is indeed slightly better at predicting e.g. how often \gls{lnl} II is involved contralaterally without \gls{lnl} III in the case of late T-stage patients whose tumors extend over the mid-sagittal plane. However, the improvement is minor, compared to how much better most predictions become when switching from the agnostic model $\mathcal{M}_\text{ag}$ in the top row to the mixing model in the second row of \cref{fig:bilateral:model_comp:contra-correlations-ext}.
+
+Also, from a clinical perspective this is currently of less importance than estimating the overall contralateral involvement. The recent debate centers around whether to treat or to spare the contralateral side as a whole when performing elective \gls{rt} or elective bilateral \gls{nd} \cite{biau_selection_2019,al-mamgani_contralateral_2017}. Sparing individual \glspl{lnl} is not yet discussed. Therefore, a more complete model like $\mathcal{M}_\text{full}$, that can capture the mentioned correlations within the contralateral neck slightly better, are not worth the additional model complexity at this point.
 
 A comparison of the log-evidence of the three models -- which we provide in \cref{table:bilateral:model_comp:evidences} -- supports our initial hypothesis that the mixing model $\mathcal{M}_\alpha$ well, even compared to the full model $\mathcal{M}_\text{full}$, while being significantly less complex. Besides \emph{decisive} evidence against the agnostic model (according to \cref{table:bayes_factor}), we also see that the accuracy $\mathcal{A}_\text{MC}(\beta=1)$ is almost the same for the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$. But the higher complexity from introducing two additional parameters is punished heavily both by the thermodynamically integrated log-evidence, and its approximation, the \gls{bic}. Therefore, from a Bayesian standpoint, we find \emph{decisive} evidence in favor of the mixing model $\mathcal{M}_\alpha$ with $\ln{K}_{\alpha\,\text{v}\,\text{full}} = 6.4$. Interestingly, the \gls{bic} seems to be a very close approximation, being always withing the standard deviation of the actual log-evidence for all shown models.
 

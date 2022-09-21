@@ -123,4 +123,4 @@ if __name__ == "__main__":
             elif modelname == "$\\mathcal{M}_{ag}$":
                 ax[name].set_ylabel(stage)
     
-    plt.savefig("ipsi-comp.svg")
+    plt.savefig("ipsi-overall.svg")
