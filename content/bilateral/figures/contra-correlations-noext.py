@@ -84,8 +84,8 @@ if __name__ == "__main__":
             right_row_min = np.minimum(right_row_min, c.min_val)
             right_row_max = np.maximum(right_row_max, c.max_val)
 
-    left_row_max = 30.
-    right_row_max = 35.
+    left_row_max = 15.
+    right_row_max = 15.
 
     draw(
         ax[0,0],

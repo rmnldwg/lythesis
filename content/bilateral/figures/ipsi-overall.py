@@ -35,16 +35,9 @@ if __name__ == "__main__":
     plt.style.use(Path("../../../.mplstyle"))
 
     fig, ax = plt.subplot_mosaic([
-        [
-            "$\\mathcal{M}_{ag}$/early",
-            "$\\mathcal{M}_\\alpha$/early",
-            "$\\mathcal{M}_{full}$/early"
-        ],
-        [
-            "$\\mathcal{M}_{ag}$/late",
-            "$\\mathcal{M}_\\alpha$/late",
-            "$\\mathcal{M}_{full}$/late"
-        ]
+        ["$\\mathcal{M}_{ag}$/early", "$\\mathcal{M}_{ag}$/late"],
+        ["$\\mathcal{M}_\\alpha$/early", "$\\mathcal{M}_\\alpha$/late"],
+        ["$\\mathcal{M}_{full}$/early", "$\\mathcal{M}_{full}$/late"],
     ],
         sharey=True, sharex=True,
         figsize=lyhist.get_size(width="full", ratio=2.)
@@ -100,10 +93,14 @@ if __name__ == "__main__":
 
             if "early" in name:
                 stage = "early"
-                ax[name].set_title(modelname, fontsize="x-large")
+                ax[name].set_ylabel(modelname)
             else:
                 stage = "late"
-                ax[name].set_xlabel("Prevalence [%]")
+
+            if "ag" in modelname:
+                ax[name].set_title(stage)
+            elif "full" in modelname:
+                ax[name].set_xlabel("prevalence [%]")
 
             ax[name].hist(vals, color=color, **hist_kwargs)
             ax[name].plot(
@@ -118,9 +115,7 @@ if __name__ == "__main__":
                 fontweight="bold",
             )
 
-            if modelname == "$\\mathcal{M}_{full}$":
+            if "ag" in modelname:
                 ax[name].legend()
-            elif modelname == "$\\mathcal{M}_{ag}$":
-                ax[name].set_ylabel(stage)
     
     plt.savefig("ipsi-overall.svg")

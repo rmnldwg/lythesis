@@ -131,12 +131,15 @@ stages:
     - path: ../data/midline-without-mixing-v3-prevalences.hdf5
       md5: 058d4761d9c61b50c63aa3bb0ebc5849
       size: 2736304
+    - path: _utils.py
+      md5: ed29ad4c6eafcff14b0627d4811a0194
+      size: 5071
     - path: contra-correlations-noext.py
       md5: f32eaada35a94d341a321998051b5f55
       size: 4149
     outs:
     - path: contra-correlations-noext.svg
-      md5: 4f29d184bd4e3c24ab15188293956417
+      md5: aaf6fa1700e4d8722835d3e68df2def9
       size: 194971
   plot@contra-overall:
     cmd: python contra-overall.py
@@ -150,23 +153,26 @@ stages:
     - path: ../data/midline-without-mixing-v3-prevalences.hdf5
       md5: 058d4761d9c61b50c63aa3bb0ebc5849
       size: 2736304
+    - path: _utils.py
+      md5: ed29ad4c6eafcff14b0627d4811a0194
+      size: 5071
     - path: contra-overall.py
       md5: 526d4bcea67d37995c742f69c2e84d46
       size: 2791
     outs:
     - path: contra-overall.svg
-      md5: dbdf4c078d6a216f0c7bc920d883daa7
+      md5: 853cc1be47df085ef86db2bc52d078c8
       size: 157924
   convert-to-pdf@contra-overall:
     cmd: "inkscape --file=contra-overall.svg --export-pdf=contra-overall.pdf --without-gui\
       \ --export-latex\n"
     deps:
     - path: contra-overall.svg
-      md5: dbdf4c078d6a216f0c7bc920d883daa7
+      md5: 853cc1be47df085ef86db2bc52d078c8
       size: 157924
     outs:
     - path: contra-overall.pdf
-      md5: 6a4fd09e43ae9d09bcc84600861a7e0b
+      md5: a6aa3d2d37aeacf37bb5caf414a50fb7
       size: 72888
     - path: contra-overall.pdf_tex
       md5: edd37a97ed9ca82f0bb6fe2edb1db5c4
@@ -197,23 +203,26 @@ stages:
     - path: ../data/midline-without-mixing-v3-prevalences.hdf5
       md5: 058d4761d9c61b50c63aa3bb0ebc5849
       size: 2736304
+    - path: _utils.py
+      md5: ed29ad4c6eafcff14b0627d4811a0194
+      size: 5071
     - path: contra-correlations-ext.py
       md5: 9423eaafc3024477ba32ce106bc54233
       size: 4224
     outs:
     - path: contra-correlations-ext.svg
-      md5: 4573de1f3061a1db1a7c355bb087ee2a
+      md5: 405f1f0c5cf66a98c5981dfe78eee64c
       size: 194856
   convert-to-pdf@contra-correlations-ext:
     cmd: "inkscape --file=contra-correlations-ext.svg --export-pdf=contra-correlations-ext.pdf\
       \ --without-gui --export-latex\n"
     deps:
     - path: contra-correlations-ext.svg
-      md5: 4573de1f3061a1db1a7c355bb087ee2a
+      md5: 405f1f0c5cf66a98c5981dfe78eee64c
       size: 194856
     outs:
     - path: contra-correlations-ext.pdf
-      md5: dbb56b92702c9ddae7077e747d8d181d
+      md5: b99c5c14ae636c9295766af318cb9b3b
       size: 102390
     - path: contra-correlations-ext.pdf_tex
       md5: 8cf2ca9c3e1ef917f2403e84b6598ced
@@ -230,24 +239,27 @@ stages:
     - path: ../data/midline-without-mixing-v3-prevalences.hdf5
       md5: 058d4761d9c61b50c63aa3bb0ebc5849
       size: 2736304
+    - path: _utils.py
+      md5: ed29ad4c6eafcff14b0627d4811a0194
+      size: 5071
     - path: ipsi-overall.py
-      md5: 48b282a86d291970564c210c3aca3b07
-      size: 4343
+      md5: dea9339e6d424d3fcc8344d88d95df14
+      size: 4243
     outs:
     - path: ipsi-overall.svg
-      md5: 21db79ee1c77d0d3f5ae737ebe81696d
-      size: 438874
+      md5: a890599a2e5fb9d71d4196313e66c6a3
+      size: 438802
   convert-to-pdf@ipsi-overall:
     cmd: "inkscape --file=ipsi-overall.svg --export-pdf=ipsi-overall.pdf --without-gui\
       \ --export-latex\n"
     deps:
     - path: ipsi-overall.svg
-      md5: 21db79ee1c77d0d3f5ae737ebe81696d
-      size: 438874
+      md5: a890599a2e5fb9d71d4196313e66c6a3
+      size: 438802
     outs:
     - path: ipsi-overall.pdf
-      md5: e7ea7731bb2d899a5697def583fbfed9
-      size: 93029
+      md5: 41ef9d2385080c720cd1b61f2bb931bb
+      size: 97429
     - path: ipsi-overall.pdf_tex
       md5: 9439cf11af87227b42add24cdf5e0aaf
       size: 2058
@@ -256,11 +268,11 @@ stages:
       \ --without-gui --export-latex\n"
     deps:
     - path: contra-correlations-noext.svg
-      md5: 4f29d184bd4e3c24ab15188293956417
+      md5: aaf6fa1700e4d8722835d3e68df2def9
       size: 194971
     outs:
     - path: contra-correlations-noext.pdf
-      md5: bc65980b2d504eead4669e0a8e284a4c
+      md5: 95a16ebf264a0a7d8bad81e4764390da
       size: 101438
     - path: contra-correlations-noext.pdf_tex
       md5: f1fe473d8c7a9f165501f2236f5ecc87

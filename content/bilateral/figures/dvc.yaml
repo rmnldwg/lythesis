@@ -25,6 +25,7 @@ stages:
     do:
       cmd: python ${item}.py
       deps:
+      - _utils.py
       - ${item}.py
       - ../data/bilateral-v3-prevalences.hdf5
       - ../data/midline-with-mixing-v3-prevalences.hdf5

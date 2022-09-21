@@ -37,8 +37,10 @@ We restricted ourselves to the bilateral modelling of the \glspl{lnl} II, III an
 \begin{figure}
     \def\svgwidth{1.0\textwidth}
     \input{figures/ipsi-overall.pdf_tex}
-    \caption[Comparison of ipsilateral prevalences]{
-        Predicted prevalences (shaded histograms) and posterior beta distributions of observed prevalences (solid lines) for the ipsilateral levels II (blue), III (orange) and IV (green). These prevalences have each been plotted for early T-stage patients (top row) and late T-stage (bottom row) and for the three models $\mathcal{M}_\text{ag}$ (left column), $\mathcal{M}_\alpha$ (middle column) and for $\mathcal{M}_\text{full}$ (right column). The differences between the models are negligible.
+    \caption[
+        Comparison of ipsilateral prevalences
+    ]{
+        Predicted prevalences (shaded histograms) and posterior beta distributions of observed prevalences (solid lines) for the ipsilateral levels II (blue), III (orange) and IV (green). These prevalences have each been plotted for early T-stage patients (left column) and late T-stage (right column) and for the three models $\mathcal{M}_\text{ag}$ (top row), $\mathcal{M}_\alpha$ (middle row) and for $\mathcal{M}_\text{full}$ (bottom row).
     }
     \label{fig:bilateral:model_comp:ipsi}
 \end{figure}
@@ -92,8 +94,6 @@ Despite this, the two models perform equally well regarding the overall contrala
     \label{fig:bilateral:model_comp:contra-correlations-ext}
 \end{figure}
 
-%% TODO:
-%% Back up this paragraph with a figure showing the correlations between LNL of the contralateral side.
 One risk of modelling the correlations between involvements of the contralateral \glspl{lnl} is that some predictions might suffer from the simplifying introduction of the mixing parameter $\alpha$. To convince ourselves that this simplification is not too restrictive, we have compared the three models in their predictions for scenarios where we correlated the involvement of \gls{lnl} II and III in \cref{fig:bilateral:model_comp:contra-correlations-ext}. What we find in these plots is that the full model $\mathcal{M}_\text{full}$ is indeed slightly better at predicting e.g. how often \gls{lnl} II is involved contralaterally without \gls{lnl} III in the case of late T-stage patients whose tumors extend over the mid-sagittal plane. However, the improvement is minor, compared to how much better most predictions become when switching from the agnostic model $\mathcal{M}_\text{ag}$ in the top row to the mixing model in the second row of \cref{fig:bilateral:model_comp:contra-correlations-ext}.
 
 Also, from a clinical perspective this is currently of less importance than estimating the overall contralateral involvement. The recent debate centers around whether to treat or to spare the contralateral side as a whole when performing elective \gls{rt} or elective bilateral \gls{nd} \cite{biau_selection_2019,al-mamgani_contralateral_2017}. Sparing individual \glspl{lnl} is not yet discussed. Therefore, a more complete model like $\mathcal{M}_\text{full}$, that can capture the mentioned correlations within the contralateral neck slightly better, are not worth the additional model complexity at this point.

@@ -3,7 +3,7 @@ Utility functions for plotting histograms over prevalences.
 """
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import h5py
 from matplotlib.axes._axes import Axes as MPLAxes
@@ -135,7 +135,7 @@ def draw(
         "density": True,
         "bins": np.linspace(left_lim, right_lim, 60),
         "histtype": "stepfilled",
-        "alpha": 0.7,
+        "alpha": 0.5,
     }
     if hist_kwargs is not None:
         default_hist_kwargs.update(hist_kwargs)
