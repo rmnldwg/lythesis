@@ -22,6 +22,7 @@ stages:
     - contra-overall
     - contra-correlations-ext
     - contra-correlations-noext
+    - contra-risks
     do:
       cmd: python ${item}.py
       deps:
@@ -40,6 +41,7 @@ stages:
     - contra-correlations-ext
     - contra-correlations-noext
     - thermo_int
+    - contra-risks
     do:
       cmd: >
         inkscape

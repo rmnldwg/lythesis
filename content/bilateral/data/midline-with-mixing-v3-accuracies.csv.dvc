@@ -1,11 +1,11 @@
-md5: 4d512293079b52cb5d3a4c20c50d5b4d
+md5: cc2bb4c91637e7f6fbe707a6046f59bf
 frozen: true
 deps:
 - path: plots/ti/accuracies.csv
   repo:
     url: https://github.com/rmnldwg/lynference
     rev: midline-with-mixing-v3
-    rev_lock: 290d3b069e686eeceb942d69c8ba6f735b50eba2
+    rev_lock: 56e661aeff41fd36e068e81094a590b8e9563715
 outs:
 - path: midline-with-mixing-v3-accuracies.csv
   md5: aa407f1d510485aa91a675e365dd9702

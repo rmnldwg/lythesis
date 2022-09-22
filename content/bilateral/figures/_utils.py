@@ -40,15 +40,29 @@ def ceil_to_step(value: float, step: float) -> float:
     return floor_to_step(value, step) + step
 
 
+def _clean_and_check(filename: Union[str, Path]) -> Path:
+    """
+    Check if file with `filename` exists. If not, raise error, otherwise return
+    cleaned `PosixPath`.
+    """
+    filepath = Path(filename)
+    if not filepath.exists():
+        raise FileNotFoundError(
+            f"File with the name {filename} does not exist at {filepath.resolve()}"
+        )
+    return filepath
+
+
 @dataclass
 class Histogram:
     """Class containing data for plotting a histogram."""
-    filename: Path
+    filename: Union[str, Path]
     dataname: str
     scale: float = field(default=100.)
     kwargs: Dict[str, Any] = field(default_factory=lambda: {})
 
     def __post_init__(self) -> None:
+        self.filename = _clean_and_check(self.filename)
         with h5py.File(self.filename, mode="r") as h5file:
             dataset = h5file[self.dataname]
             self.values = self.scale * dataset[:]
@@ -64,13 +78,14 @@ class Histogram:
 @dataclass
 class Posterior:
     """Class for storing plot configs for a Beta posterior."""
-    filename: Path
+    filename: Union[str, Path]
     dataname: str
     scale: float = field(default=100.)
     quantile: float = field(default=0.3)
     kwargs: Dict[str, Any] = field(default_factory=lambda: {})
 
     def __post_init__(self) -> None:
+        self.filename = _clean_and_check(self.filename)
         with h5py.File(self.filename, mode="r") as h5file:
             dataset = h5file[self.dataname]
             self.num_success = int(dataset.attrs["num_match"])

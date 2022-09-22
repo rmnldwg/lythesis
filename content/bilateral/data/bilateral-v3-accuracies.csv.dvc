@@ -1,11 +1,11 @@
-md5: b012da78ef22aa71fd4b5340ac2212e8
+md5: 0340fb9b647f222fdb2cf75d5905c8e7
 frozen: true
 deps:
 - path: plots/ti/accuracies.csv
   repo:
     url: https://github.com/rmnldwg/lynference
     rev: bilateral-v3
-    rev_lock: 7154729d3a540d04b29add0ec1e64a22e41daffd
+    rev_lock: 7e8471ae48f4df1aed6e7aac3ef7119a320784b8
 outs:
 - md5: c9db81871f556cae3ca5ba10276d6929
   size: 3733
