@@ -21,13 +21,13 @@ Essentially, we now want to know which of these three models does the best job o
 \subsection{Implementation}
 \label{subsec:bilateral:model_comp:implementation}
 
-\input{\subfix{../_databox.tex}}
-
 \input{_reproducibility.tex}
+
+\input{\subfix{../_databox.tex}}
 
 To compare the introduced models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$, we performed \gls{ti} with a ladder of 64 $\beta$ values with step sizes selected according to a fifth order power rule. For each of the steps in the ladder, we performed an ensemble sampling round using the \texttt{emcee} \cite{foreman-mackey_emcee_2013} Python package. The size of the ensemble -- consisting of so-called walkers that allow sampling in parallel and mutually influence each other's proposals -- was chosen to be 20 times the number of dimensions of the parameter space. We set the sampling algorithm to propose new samples according to a mixture of two procedures: with 80\% probability it selected a differential evolution move \cite{nelson_run_2013} and with 20\% probability a snooker move, also based on differential evolution \cite{ter_braak_differential_2008}. The reason for this choice was that in previous experiments, this combination of proposals yielded the fastest convergence of the chain. Every one of the 64 sampling rounds consisted of a burn-in phase lasting 1000 steps, followed by 250 steps of which every fifth step was kept for later analysis. This might seem like a relatively short chain, but since the change of the posterior we sampled from only changed very slightly from $\beta_j$ to $\beta_{j+1}$, fewer steps are required to reach convergence.
 
-In the end, we kept $S = 50 \cdot 20 \cdot k$, where $k$ is the dimensionality of the model, samples for each of the 64 $\beta_j$. The dimensionality $k$ of the parameter spaces ranged from nine for the agnostic model $\mathcal{M}_\text{ag}$ over ten (mixing model $\mathcal{M}_\alpha$) to twelve in the case of the full model $\mathcal{M}_\text{full}$. Out of these $S$ samples we randomly drew $M = 1000$ per $\beta_j$ and integrated them over their range, yielding 1000 estimates for the log-evidence $\ln{Z}_l$ with $l \in [1, \ldots, M]$. Using this ensemble of estimates, we could compute both the mean and the standard deviation, giving us a simple measure of uncertainty for that value. We also computed the \gls{bic} from the samples drawn at $\beta_{64} = 1$, as introduced in \cref{sec:graph:model_comp:bic}.
+In the end, we kept $S = 50 \cdot 20 \cdot k$, where $k$ is the dimensionality of the model, samples for each of the 64 $\beta_j$. The dimensionality $k$ of the parameter spaces ranged from nine for the agnostic model $\mathcal{M}_\text{ag}$ over ten (mixing model $\mathcal{M}_\alpha$) to twelve in the case of the full model $\mathcal{M}_\text{full}$. Out of these $S$ samples we randomly drew $M = 1000$ per $\beta_j$ and integrated them over their range, yielding 1000 estimates for the log-evidence $\ln{Z}_l$ with $l \in [1, \ldots, M]$. Using this ensemble of estimates, we were able to compute both the mean and the standard deviation, giving us a simple measure of uncertainty for that value. We also computed the \gls{bic} from the samples drawn at $\beta_{64} = 1$, as introduced in \cref{sec:graph:model_comp:bic}.
 
 We restricted ourselves to the bilateral modelling of the \glspl{lnl} II, III and IV, because contralaterally we rarely observe involvement outside those levels, and it drastically speeds up the inference process, when fewer \glspl{lnl} are considered.
 
@@ -36,18 +36,31 @@ We restricted ourselves to the bilateral modelling of the \glspl{lnl} II, III an
 
 \begin{figure}
     \def\svgwidth{1.0\textwidth}
-    \input{figures/ipsi-comp.pdf_tex}
-    \caption[Comparison of ipsilateral prevalences]{
-        Predicted prevalences (shaded histograms) and posterior beta distributions of observed prevalences (solid lines) for the ipsilateral levels II (blue), III (orange) and IV (green). These prevalences have each been plotted for early T-stage patients (top row) and late T-stage (bottom row) and for the three models $\mathcal{M}_\text{ag}$ (left column), $\mathcal{M}_\alpha$ (middle column) and for $\mathcal{M}_\text{full}$ (right column). The differences between the models are negligible.
+    \input{figures/ipsi-overall.pdf_tex}
+    \caption[
+        Comparison of ipsilateral prevalences
+    ]{
+        Predicted prevalences (shaded histograms) and posterior beta distributions of observed prevalences (solid lines) for the ipsilateral levels II (blue), III (orange) and IV (green). These prevalences have each been plotted for early T-stage patients (left column) and late T-stage (right column) and for the three models $\mathcal{M}_\text{ag}$ (top row), $\mathcal{M}_\alpha$ (middle row) and for $\mathcal{M}_\text{full}$ (bottom row).
     }
     \label{fig:bilateral:model_comp:ipsi}
 \end{figure}
 
-First, we wanted to make sure that all three models are still able to describe the ipsilateral spread sufficiently well. We have plotted the prevalence our trained models predict in the forms of histograms against the Beta-posterior of the observed prevalence in the data (\cref{fig:bilateral:model_comp:ipsi}). These plots were created by computing the respective prevalence for samples drawn during the final 250 steps at the end of the \gls{ti} process of which every fifth step was discarded.
+First, we wanted to make sure all three models are still able to describe the ipsilateral spread sufficiently well. We have plotted the prevalence our trained models predict in the forms of histograms against the Beta-posterior of the observed prevalence in the data (\cref{fig:bilateral:model_comp:ipsi}). These plots were created by computing the respective prevalence for samples drawn during the final 250 steps at the end of the \gls{ti} process of which every fifth step was discarded.
 
-The shown differences between the model's predictions are miniscule. For late T-stages (bottom row of \cref{fig:bilateral:model_comp:ipsi}) it seems as if the model that is agnostic to the tumor's extension over the mid-sagittal plane slightly overestimates the prevalence, while the other two models seem to match them better or underestimate them by a small amount. Overall the fit of all models ipsilaterally is very good and shows no indication that one model performs better than the other.
+The shown differences between the model's predictions are negligible. For late T-stages (bottom row of \cref{fig:bilateral:model_comp:ipsi}) it seems as if the model that is agnostic to the tumor's extension over the mid-sagittal plane slightly overestimates the prevalence, while the other two models seem to match them better or underestimate them by a small amount. Overall the fit of all models ipsilaterally is very good and shows no indication that one model performs better than the other.
 
-On the contralateral side, however, this does not hold anymore. Here, we do not only stratify the prevalence by T-stage, but also by midline extension. Naturally, this cannot be captured by the agnostic model $\mathcal{M}_\text{ag}$ since it has no method of modelling this. What is of interest to us here is how the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ fare against each other and whether their improvements in predicting contralateral spread are worth the additional complexity.
+\begin{figure}
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/contra-overall.pdf_tex}
+    \caption[
+        Comparison of contralateral prevalences
+    ]{
+        Predicted prevalences (shaded histograms) and posterior beta distributions of observed prevalences (solid lines) for the contralateral overall involvement (anything \emph{not} clinically N0, on that side of the neck). Predicted and observed prevalence for early T-stage is colored blue and orange, while for late T-stage it is green and red. The prevalence for patients whose tumor does not extend over the mid-sagittal line is labelled \texttt{noext} and colored blue or green, while the same quantity for those with said extension is labelled \texttt{ext} and colored orange and red. The three models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$ are depicted in the left, middle and right panel respectively.
+    }
+    \label{fig:bilateral:model_comp:contra}
+\end{figure}
+
+On the contralateral side, however, this does not hold anymore. Here, we do not only stratify the prevalence by T-stage, but also by midline extension. Naturally, this cannot be captured by the agnostic model $\mathcal{M}_\text{ag}$ since it lacks the ability of modelling this. What is of interest to us here is how the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ fare against each other and whether their improvements in predicting contralateral spread are worth the additional complexity.
 
 The overall prevalence of contralateral involvement is plotted in \cref{fig:bilateral:model_comp:contra}. Again, the three different models are depicted in their own column, and we have distinguished between four cases for each model: The prevalence of any contralateral involvement for patients with
 \begin{enumerate*}[label={(\arabic*)}]
@@ -57,26 +70,27 @@ The overall prevalence of contralateral involvement is plotted in \cref{fig:bila
     \item where the tumor is both in late T-stage and does extend over the mid-plane (red).
 \end{enumerate*}
 
+As discussed, the agnostic model $\mathcal{M}_\text{ag}$ (left panel in \cref{fig:bilateral:model_comp:contra}) cannot model midline extension, and hence it must predict the same prevalence for the same scenario, regardless of the patient's mid-sagittal extension. Its spread probability rates from the tumor to the contralateral \glspl{lnl} can only attempt to find an average of the respective observed prevalence.
+
 \begin{figure}
+    \centering
     \def\svgwidth{1.0\textwidth}
-    \input{figures/contra-comp.pdf_tex}
-    \caption[Comparison of contralateral prevalences]{
-        Predicted prevalences (shaded histograms) and posterior beta distributions of observed prevalences (solid lines) for the contralateral overall involvement (anything \emph{not} clinically N0, on that side of the neck). Predicted and observed prevalence for early T-stage is colored blue and orange, while for late T-stage it is green and red. The prevalence for patients whose tumor does not extend over the mid-sagittal line is labelled \texttt{noext} and colored blue or green, while the same quantity for those with said extension is labelled \texttt{ext} and colored orange and red. The three models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$ are depicted in the left, middle and right panel respectively.
+    \input{figures/contra-correlations-ext.pdf_tex}
+    \caption[
+        Correlations between involvement of the contralateral LNLs II and III
+    ]{
+        Histograms over predicted prevalences compared to Beta posteriors over observed prevalences respectively for three scenarios where the tumor extends over the mid-sagittal plane:
+        \begin{enumerate*}[label={(\arabic*)}]
+            \item The case $\lnot X_\text{II} \land X_\text{III}$ in blue,
+            \item co-involved levels $X_\text{II} \land X_\text{III}$ in green and lastly,
+            \item $X_\text{II} \land \lnot X_\text{III}$ in orange
+        \end{enumerate*}.
+        All scenarios are plotted for each of the three models in the respective row, and for early and late T-stage in the corresponding column. 
     }
-    \label{fig:bilateral:model_comp:contra}
+    \label{fig:bilateral:model_comp:contra-correlations-ext}
 \end{figure}
 
-As discussed, the agnostic model $\mathcal{M}_\text{ag}$ (left panel in \cref{fig:bilateral:model_comp:contra}) cannot model midline extension, which is why the two separate histograms overlap. Its spread probability rates from the tumor to the contralateral \glspl{lnl} attempt to find an average of the respective observed prevalence.
-
-Interestingly, both the model using the mixing parameter $\alpha$ and the full model, which has in total six parameters to model the spread from the tumor to the contralateral \glspl{lnl}, overestimate the prevalence of contralateral, early T-stage involvement when the tumor extends over the mid-sagittal line. This might be because, of the displayed cases, this is the rarest one, so it makes sense for the model to put less attention to it. On the other hand, we believe the reason also has to do with how the model treats the mid-plane extension in general: If this binary \gls{rv} is observed to be true, the model assumes increased spread probabilities from the primary tumor to the contralateral \glspl{lnl} from the onset. Realistically, however, this is probably not how the course of a typical patient plays out. As tumors grow over time, in many cases they will not cross the mid-sagittal plane right after they started to form, but only when they have become sufficiently large. Consequently, the spread from them to the contralateral side increases as they grow over the midline. The current model cannot capture this and therefore assumes early T-stage patient's contralateral spread to be larger than observed.
-
-Despite this, the two models perform equally well regarding the overall contralateral spread. In combination with the unaffected capabilities to predict the ipsilateral prevalences, as shown in \cref{fig:bilateral:model_comp:ipsi}, this indicates that the assumptions underlying the introduction of the mixing parameter $\alpha$ are feasible.
-
-One would expect that modelling the correlations between involvements of the contralateral \glspl{lnl} might suffer from the simplifying introduction of the mixing parameter $\alpha$, but this is hard to test, as cases where e.g. \gls{lnl} III is involved without \gls{lnl} II are very rare -- in this case it is only five patients. Also, the clinical debate centers around whether to treat or to spare the contralateral side as a whole when performing elective \gls{rt} or elective bilateral \gls{nd} \cite{biau_selection_2019,al-mamgani_contralateral_2017}. Sparing individual \glspl{lnl} is not yet debated. Therefore, a more complete model like $\mathcal{M}_\text{full}$, that might be able to capture correlations we cannot yet see due to insufficient data, are not worth the additional model complexity at this point.
-
-This is supported also by the log-evidence of the three models compared, which we provide in \cref{table:bilateral:model_comp:evidences}. Besides \emph{decisive} (according to \cref{table:bayes_factor}) evidence against the agnostic model, we also see that the accuracy $\mathcal{A}_\text{MC}(\beta=1)$ is almost the same for the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$. But the additional complexity from introducing two additional parameters is punished heavily both by the thermodynamically integrated log-evidence, and its approximation, the \gls{bic}. Therefore, from a Bayesian standpoint, we find \emph{decisive} evidence in favor of the mixing model $\mathcal{M}_\alpha$ with $\ln{K}_{\alpha\,\text{v}\,\text{full}} = 6.4$. Interestingly, the \gls{bic} seems to be a surprisingly good approximation, being always withing the standard deviation of the actual log-evidence for all shown models.
-
-\Cref{fig:bilateral:model_comp:thermo_int} displays how -- using \gls{ti} -- the expected log-likelihood under the power posterior evolves over the course of a \gls{ti} round for each of the three compared models. It shows that the final accuracy $\mathcal{A}_\text{MC}(\beta=1)$ of the agnostic model $\mathcal{M}_\text{ag}$ is lower than of the other two models, which owe that to their ability to incorporate the tumor's extension over the mid plane into the prediction. However, while the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ achieve the same fit to the data, the full model's accuracy rises for later $\beta$ values, which results in a lower log-evidence and a higher complexity penalty (see \cref{eq:ti:acc_vs_kl}) compared to the simpler mixing model.
+Interestingly, both the model using the mixing parameter $\alpha$ and the full model, which has in total six parameters to model the spread from the tumor to the contralateral \glspl{lnl}, overestimate the prevalence of contralateral, early T-stage involvement when the tumor extends over the mid-sagittal line. This might be because, of the displayed cases, this is the rarest one, so it makes sense for the model to put less attention to it. On the other hand, we believe the reason also relates to how the model treats the mid-plane extension in general: If this binary \gls{rv} is observed to be true, the model assumes increased spread probabilities from the primary tumor to the contralateral \glspl{lnl} from the onset of the disease (i.e., from time-step 0). Realistically, however, this is probably not how a typical patient's disease evolves. As tumors grow over time, in many cases they will not cross the mid-sagittal plane right after they started to form, but only when they are sufficiently large, as indicated by our data as well: Of the early T-stage tumors in the dataset, only 7\% (11 of 150) cross the mid-sagittal plane, while of the late T-stage tumors 58\% (79 of 137) have grown over into the contralateral half of the patient. Consequently, the spread from them to the contralateral side increases during the tumor's growth. The current model cannot capture this and therefore assumes early T-stage patient's contralateral spread to be larger than observed.
 
 \begin{table}
     \centering
@@ -97,6 +111,8 @@ This is supported also by the log-evidence of the three models compared, which w
     \label{table:bilateral:model_comp:evidences}
 \end{table}
 
+Despite this, the two models perform equally well regarding the overall contralateral spread. In combination with the unaffected capabilities to predict the ipsilateral prevalences, as shown in \cref{fig:bilateral:model_comp:ipsi}, this indicates that the assumptions underlying the introduction of the mixing parameter $\alpha$ are feasible.
+
 \begin{figure}
     \centering
     % \def\svgwidth{1.0\textwidth}
@@ -106,5 +122,39 @@ This is supported also by the log-evidence of the three models compared, which w
     }
     \label{fig:bilateral:model_comp:thermo_int}
 \end{figure}
+
+One risk of modelling the correlations between involvements of the contralateral \glspl{lnl} is that some predictions might suffer from the simplifying introduction of the mixing parameter $\alpha$. To convince ourselves that this simplification is not too restrictive, we have compared the three models in their predictions for scenarios where we correlated the involvement of \gls{lnl} II and III in \cref{fig:bilateral:model_comp:contra-correlations-ext}. What we find in these plots is that the full model $\mathcal{M}_\text{full}$ is indeed slightly better at predicting e.g. how often \gls{lnl} II is involved contralaterally without \gls{lnl} III in the case of late T-stage patients whose tumors extend over the mid-sagittal plane. However, the improvement is minor, compared to how much better most predictions become when switching from the agnostic model $\mathcal{M}_\text{ag}$ in the top row to the mixing model in the second row of \cref{fig:bilateral:model_comp:contra-correlations-ext}.
+
+Also, from a clinical perspective this is currently of less importance than estimating the overall contralateral involvement. The recent debate centers around whether to treat or to spare the contralateral side as a whole when performing elective \gls{rt} or elective bilateral \gls{nd} \cite{biau_selection_2019,al-mamgani_contralateral_2017}. Sparing individual \glspl{lnl} is not yet discussed. Therefore, a more complete model like $\mathcal{M}_\text{full}$, that can capture the mentioned correlations within the contralateral neck slightly better, are not worth the additional model complexity at this point.
+
+A comparison of the log-evidence of the three models -- which we provide in \cref{table:bilateral:model_comp:evidences} -- supports our initial hypothesis that the mixing model $\mathcal{M}_\alpha$ performs well, even compared to the full model $\mathcal{M}_\text{full}$, while being significantly less complex. Besides \emph{decisive} evidence against the agnostic model (according to \cref{table:bayes_factor}), we also see that the accuracy $\mathcal{A}_\text{MC}(\beta=1)$ is almost the same for the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$. But the higher complexity from introducing two additional parameters is punished heavily both by the thermodynamically integrated log-evidence, and its approximation, the \gls{bic}. Therefore, from a Bayesian standpoint, we find \emph{decisive} evidence in favor of the mixing model $\mathcal{M}_\alpha$ with $\ln{K}_{\alpha\,\text{v}\,\text{full}} = 6.4$. Note that the \gls{bic} is a very good approximation of the log-evidence for all three models compared here.
+
+\begin{figure}
+    \centering
+    \input{figures/contra-risks.pdf_tex}
+    \caption[
+        Risk for involvement in LNL II for different diagnoses
+    ]{
+        Histograms showing how the risk to find microscopic metastases in \gls{lnl} II contralaterally increases as the given diagnosis worsens: From left to right, the provided diagnosis to compute said risk was
+        \begin{enumerate*}[label={(\arabic*)}]
+            \item an unsuspicious \gls{ct} scan (clinically $N_0$) of all levels in both sides of the neck for an early T-stage patient whose tumor is clearly lateralized (green shaded),
+            \item the same as before, but for a late T-stage patients (blue hatched),
+            \item clinically $N_0$, late T-stage but now with a tumor extending over the mid-sagittal plane (blue shaded),
+            \item all \glspl{lnl} appear negative on \gls{ct}, except for a positive finding in the ipsilateral \gls{lnl} II, with a late T-stage patient having a mid-sagittal extension (orange shaded), and lastly
+            \item the same diagnosis, except that the ipsilateral \gls{lnl} is diagnosed with being metastatic as well (red hatched)
+        \end{enumerate*}.
+        The sensitivity and specificity were set to 81\% and 76\% respectively, following de Bondt et al. \cite{de_bondt_detection_2007}.
+    }
+    \label{fig:bilateral:model_comp:risks}
+\end{figure}
+
+\Cref{fig:bilateral:model_comp:thermo_int} displays how -- using \gls{ti} -- the expected log-likelihood under the power posterior evolves over the course of a \gls{ti} round for each of the three compared models. It shows that the final accuracy $\mathcal{A}_\text{MC}(\beta=1)$ of the agnostic model $\mathcal{M}_\text{ag}$ is lower than of the other two models, which owe that to their ability to incorporate the tumor's extension over the mid plane into the prediction. However, while the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ achieve the same fit to the data, the full model's accuracy rises for later $\beta$ values, which results in a lower log-evidence and a higher complexity penalty (see \cref{eq:ti:acc_vs_kl}) compared to the simpler mixing model.
+
+\subsection{Contralateral risk depending on ipsilateral diagnosis}
+\label{subsec:bilateral:model_comp:risk}
+
+To conclude this section, we show that the extended bilateral model that uses the mixing parameter $\alpha$ to model the contralateral spread in case of a tumor that extends over the mid-sagittal plane, can factor in ipsilateral diagnoses into its risk prediction for contralateral involvement. To that end, we have plotted in \cref{fig:bilateral:model_comp:risks} how the risk for microscopic involvement in the contralateral \gls{lnl} II increases for a worsening diagnosis. We have started with an early T-stage patient with a clearly lateralized tumor whose \gls{ct} scan showed no detectable metastases in either side of the neck. For that case, the risk for micrometastases is very low with below 2\%. This risk increases just slightly if we were to observe the same diagnosis but for a late T-stage patient. As expected, the risk jumps to over 7\% as soon as the tumor touches or grows over the mid-sagittal plane, where the patient is still of late T-stage and clinically $N_0$. The contralateral risk for microscopic involvement in \gls{lnl} II increases further to around 9\% when a metastasis is detected via \gls{ct} in the ipsilateral \gls{lnl} II and once more to 10\% when level III on the same side shows involvement as well.
+
+Note that all these computed risks are conditioned on the fact that the \gls{ct} scan observed a node-negative contralateral neck. Hence, these risks cannot easily be compared to the prevalences of involvement as reported by data. But they illustrate how our probabilistic \acrshort{hmm}-based model is capable of naturally factoring a number of clinically relevant variables into its risk prediction and how these may be used by clinicians as supporting estimates flowing into a more objective and quantitative decision on a treatment plan.
 
 \end{document}

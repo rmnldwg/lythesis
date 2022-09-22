@@ -15,9 +15,9 @@ from lyscripts.plot.histograms import COLORS
 
 
 MODELS = [
-    Path("../data/bilateral-v2-prevalences.hdf5",),
-    Path("../data/midline-with-mixing-v2-prevalences.hdf5",),
-    Path("../data/midline-without-mixing-v2-prevalences.hdf5"),
+    Path("../data/bilateral-v3-prevalences.hdf5",),
+    Path("../data/midline-with-mixing-v3-prevalences.hdf5",),
+    Path("../data/midline-without-mixing-v3-prevalences.hdf5"),
 ]
 
 CYCLE = (
@@ -89,4 +89,4 @@ if __name__ == "__main__":
                 if i == 2:
                     ax[i].legend()
 
-    plt.savefig("contra-comp.svg")
+    plt.savefig("contra-overall.svg")

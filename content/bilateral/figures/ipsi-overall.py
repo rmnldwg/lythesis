@@ -14,9 +14,9 @@ import lyscripts.plot.histograms as lyhist
 
 # Define model names and location of computed values
 MODELS = {
-    "$\\mathcal{M}_{ag}$": Path("../data/bilateral-v2-prevalences.hdf5"),
-    "$\\mathcal{M}_\\alpha$": Path("../data/midline-with-mixing-v2-prevalences.hdf5"),
-    "$\\mathcal{M}_{full}$": Path("../data/midline-without-mixing-v2-prevalences.hdf5"),
+    "$\\mathcal{M}_{ag}$": Path("../data/bilateral-v3-prevalences.hdf5"),
+    "$\\mathcal{M}_\\alpha$": Path("../data/midline-with-mixing-v3-prevalences.hdf5"),
+    "$\\mathcal{M}_{full}$": Path("../data/midline-without-mixing-v3-prevalences.hdf5"),
 }
 
 # define USZ colors
@@ -35,20 +35,12 @@ if __name__ == "__main__":
     plt.style.use(Path("../../../.mplstyle"))
 
     fig, ax = plt.subplot_mosaic([
-        [
-            "$\\mathcal{M}_{ag}$/early",
-            "$\\mathcal{M}_\\alpha$/early",
-            "$\\mathcal{M}_{full}$/early"
-        ],
-        [
-            "$\\mathcal{M}_{ag}$/late",
-            "$\\mathcal{M}_\\alpha$/late",
-            "$\\mathcal{M}_{full}$/late"
-        ]
+        ["$\\mathcal{M}_{ag}$/early", "$\\mathcal{M}_{ag}$/late"],
+        ["$\\mathcal{M}_\\alpha$/early", "$\\mathcal{M}_\\alpha$/late"],
+        ["$\\mathcal{M}_{full}$/early", "$\\mathcal{M}_{full}$/late"],
     ],
-        sharey=True,
-        constrained_layout=True,
-        figsize=lyhist.get_size(width="full")
+        sharey=True, sharex=True,
+        figsize=lyhist.get_size(width="full", ratio=2.)
     )
 
     for modelname, filepath in MODELS.items():
@@ -59,13 +51,20 @@ if __name__ == "__main__":
 
             for stage in ["early", "late"]:
                 for lvl in ["II", "III", "IV"]:
-                    dataset = h5_file[f"ipsi{lvl}/{stage}"]
+                    tmp_values = np.array([])
+                    tmp_num_matches = 0
+                    tmp_num_totals = 0
+                    for midext in ["ext", "noext"]:
+                        dataset = h5_file[f"ipsi{lvl}/{stage}/{midext}"]
+                        tmp_values = np.concatenate([tmp_values, dataset[:]])
+                        tmp_num_matches += dataset.attrs["num_match"]
+                        tmp_num_totals += dataset.attrs["num_total"]
 
                     names.append(f"{modelname}/{stage}")
-                    values.append(100. * dataset[:])
+                    values.append(100. * tmp_values)
                     lnls.append(lvl)
-                    num_matches.append(dataset.attrs.get("num_match", np.nan))
-                    num_totals.append(dataset.attrs.get("num_total", np.nan))
+                    num_matches.append(tmp_num_matches)
+                    num_totals.append(tmp_num_totals)
                     lines.append(100. * num_matches[-1] / num_totals[-1])
                     min_value = np.minimum(min_value, np.min(values))
                     max_value = np.maximum(max_value, np.max(values))
@@ -94,10 +93,14 @@ if __name__ == "__main__":
 
             if "early" in name:
                 stage = "early"
-                ax[name].set_title(modelname, fontsize="x-large")
+                ax[name].set_ylabel(modelname)
             else:
                 stage = "late"
-                ax[name].set_xlabel("Prevalence [%]")
+
+            if "ag" in modelname:
+                ax[name].set_title(stage)
+            elif "full" in modelname:
+                ax[name].set_xlabel("prevalence [%]")
 
             ax[name].hist(vals, color=color, **hist_kwargs)
             ax[name].plot(
@@ -112,9 +115,7 @@ if __name__ == "__main__":
                 fontweight="bold",
             )
 
-            if modelname == "$\\mathcal{M}_{full}$":
+            if "ag" in modelname:
                 ax[name].legend()
-            elif modelname == "$\\mathcal{M}_{ag}$":
-                ax[name].set_ylabel(stage)
     
-    plt.savefig("ipsi-comp.svg")
+    plt.savefig("ipsi-overall.svg")

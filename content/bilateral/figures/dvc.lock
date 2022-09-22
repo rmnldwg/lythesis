@@ -3,64 +3,64 @@ stages:
   plot-ipsi-prevalences:
     cmd: python prevalences_ipsi.py
     deps:
-    - path: ../data/bilateral-v2-prevalences.hdf5
-      md5: 90242ec91d57fcea269fab2a62d89eea
-      size: 739848
-    - path: ../data/midline-with-mixing-v2-prevalences.hdf5
-      md5: 35b95d695f9fb5193434304f9b250ed4
-      size: 819848
-    - path: ../data/midline-without-mixing-v2-prevalences.hdf5
-      md5: f5df7dddae40020e8945795caa1fb6a7
-      size: 979848
+    - path: ../data/bilateral-v3-prevalences.hdf5
+      md5: 8e0fb6e21cd83649b9ee258e0a305946
+      size: 2064304
+    - path: ../data/midline-with-mixing-v3-prevalences.hdf5
+      md5: 99b4a020bc66b0d1ec3d0cfb5a46375e
+      size: 2288304
+    - path: ../data/midline-without-mixing-v3-prevalences.hdf5
+      md5: 058d4761d9c61b50c63aa3bb0ebc5849
+      size: 2736304
     - path: prevalences_ipsi.py
-      md5: 38d9d39a366b3d809ff5b06aaf1c4b41
-      size: 3990
+      md5: ccfa3bea4d34733d754a95b0df0fb1b2
+      size: 4340
     outs:
     - path: ipsi-comp.svg
-      md5: bebb64aebd4c911dfebf1ab9859e8498
-      size: 442329
+      md5: 88d8fff13857f3e75c3462e966fa27fd
+      size: 438874
   ipsi-prevalences-to-pdf:
     cmd: inkscape --without-gui --file=ipsi-comp.svg --export-pdf=ipsi-comp.pdf --export-latex
     deps:
     - path: ipsi-comp.svg
-      md5: bebb64aebd4c911dfebf1ab9859e8498
-      size: 442329
+      md5: 88d8fff13857f3e75c3462e966fa27fd
+      size: 438874
     outs:
     - path: ipsi-comp.pdf
-      md5: f17dc1cae4d58935a8076c61130ef121
-      size: 100238
+      md5: d6ec3d4bcb10093dc5092cf7012655ea
+      size: 93029
     - path: ipsi-comp.pdf_tex
-      md5: 80f1050278812fb4760dff949aaa8ff7
-      size: 2059
+      md5: b66e45495737935bd8a53c0e129fc414
+      size: 2052
   plot-contra-prevalences:
     cmd: python prevalences_contra.py
     deps:
-    - path: ../data/bilateral-v2-prevalences.hdf5
-      md5: 90242ec91d57fcea269fab2a62d89eea
-      size: 739848
-    - path: ../data/midline-with-mixing-v2-prevalences.hdf5
-      md5: 35b95d695f9fb5193434304f9b250ed4
-      size: 819848
-    - path: ../data/midline-without-mixing-v2-prevalences.hdf5
-      md5: f5df7dddae40020e8945795caa1fb6a7
-      size: 979848
+    - path: ../data/bilateral-v3-prevalences.hdf5
+      md5: 8e0fb6e21cd83649b9ee258e0a305946
+      size: 2064304
+    - path: ../data/midline-with-mixing-v3-prevalences.hdf5
+      md5: 99b4a020bc66b0d1ec3d0cfb5a46375e
+      size: 2288304
+    - path: ../data/midline-without-mixing-v3-prevalences.hdf5
+      md5: 058d4761d9c61b50c63aa3bb0ebc5849
+      size: 2736304
     - path: prevalences_contra.py
-      md5: eae0533e107e9c4551200f11c8278f0f
+      md5: 6d8414cd00d11b54059ef8348991cf66
       size: 2788
     outs:
     - path: contra-comp.svg
-      md5: 0c8150688a6c2b32bffcda20e0514aa3
+      md5: 137e48573463fcc162363288def01c1e
       size: 157924
   contra-prevalences-to-pdf:
     cmd: inkscape --without-gui --file=contra-comp.svg --export-pdf=contra-comp.pdf
       --export-latex
     deps:
     - path: contra-comp.svg
-      md5: 0c8150688a6c2b32bffcda20e0514aa3
+      md5: 137e48573463fcc162363288def01c1e
       size: 157924
     outs:
     - path: contra-comp.pdf
-      md5: 07d12a9daed541b82c63c0735a4e6319
+      md5: 56936b5e651356c0ca1849376baa55de
       size: 72888
     - path: contra-comp.pdf_tex
       md5: cf8db26b0703dd6f32de17af7a373f90
@@ -87,35 +87,229 @@ stages:
       md5: 4681d0a5c928fa7559edbbba34d068b6
       size: 43468
   plot-thermo-int:
-    cmd: "python -m lyscripts plot thermo_int ../data/bilateral-v2-accuracies.csv\
-      \ ../data/midline-with-mixing-v2-accuracies.csv ../data/midline-without-mixing-v2-accuracies.csv\
+    cmd: "python -m lyscripts plot thermo_int ../data/bilateral-v3-accuracies.csv\
+      \ ../data/midline-with-mixing-v3-accuracies.csv ../data/midline-without-mixing-v3-accuracies.csv\
       \ -o thermo_int --labels agnostic mixing full --mplstyle ../../../.mplstyle\
       \ && rm thermo_int.png\n"
     deps:
-    - path: ../data/bilateral-v2-accuracies.csv
+    - path: ../data/bilateral-v3-accuracies.csv
       md5: c9db81871f556cae3ca5ba10276d6929
       size: 3733
-    - path: ../data/midline-with-mixing-v2-accuracies.csv
+    - path: ../data/midline-with-mixing-v3-accuracies.csv
       md5: aa407f1d510485aa91a675e365dd9702
       size: 3725
-    - path: ../data/midline-without-mixing-v2-accuracies.csv
+    - path: ../data/midline-without-mixing-v3-accuracies.csv
       md5: 51d65e3eff5c352a14f5b4471d559f90
       size: 3731
     outs:
     - path: thermo_int.svg
-      md5: eecb22801a9be23c581a9aa1d6276e80
+      md5: e3413407cf23e1fa874ad679ab313b08
       size: 43468
   thermo-int-to-pdf:
     cmd: inkscape --without-gui --file=thermo_int.svg --export-pdf=thermo_int.pdf
       --export-latex
     deps:
     - path: thermo_int.svg
-      md5: eecb22801a9be23c581a9aa1d6276e80
+      md5: 4f1e35a42523a5739d92705b6fd235e4
       size: 43468
     outs:
     - path: thermo_int.pdf
-      md5: 04db8c95a6671653696d6710c93f9b28
+      md5: 4f47c934576d245db735fbff2066701f
       size: 40435
     - path: thermo_int.pdf_tex
       md5: 030a8e07f116b87acf33897176462adb
       size: 2061
+  plot@contra-correlations-noext:
+    cmd: python contra-correlations-noext.py
+    deps:
+    - path: ../data/bilateral-v3-prevalences.hdf5
+      md5: 8e0fb6e21cd83649b9ee258e0a305946
+      size: 2064304
+    - path: ../data/midline-with-mixing-v3-prevalences.hdf5
+      md5: 99b4a020bc66b0d1ec3d0cfb5a46375e
+      size: 2288304
+    - path: ../data/midline-without-mixing-v3-prevalences.hdf5
+      md5: 058d4761d9c61b50c63aa3bb0ebc5849
+      size: 2736304
+    - path: _utils.py
+      md5: 3cc8d86ea394b3c8bb78653e4e230c31
+      size: 5595
+    - path: contra-correlations-noext.py
+      md5: dae617d22af915dcfa5d46d6bd357c4f
+      size: 4149
+    outs:
+    - path: contra-correlations-noext.svg
+      md5: b45c401604f83b1bea3ae642a7fb270a
+      size: 197296
+  plot@contra-overall:
+    cmd: python contra-overall.py
+    deps:
+    - path: ../data/bilateral-v3-prevalences.hdf5
+      md5: 8e0fb6e21cd83649b9ee258e0a305946
+      size: 2064304
+    - path: ../data/midline-with-mixing-v3-prevalences.hdf5
+      md5: 99b4a020bc66b0d1ec3d0cfb5a46375e
+      size: 2288304
+    - path: ../data/midline-without-mixing-v3-prevalences.hdf5
+      md5: 058d4761d9c61b50c63aa3bb0ebc5849
+      size: 2736304
+    - path: _utils.py
+      md5: 3cc8d86ea394b3c8bb78653e4e230c31
+      size: 5595
+    - path: contra-overall.py
+      md5: 526d4bcea67d37995c742f69c2e84d46
+      size: 2791
+    outs:
+    - path: contra-overall.svg
+      md5: cce26a2d65728b821b2cb9d84656906a
+      size: 157924
+  convert-to-pdf@contra-overall:
+    cmd: "inkscape --file=contra-overall.svg --export-pdf=contra-overall.pdf --without-gui\
+      \ --export-latex\n"
+    deps:
+    - path: contra-overall.svg
+      md5: cce26a2d65728b821b2cb9d84656906a
+      size: 157924
+    outs:
+    - path: contra-overall.pdf
+      md5: 28abeee7c55a0c0fe65630ac2dc6d95b
+      size: 72888
+    - path: contra-overall.pdf_tex
+      md5: edd37a97ed9ca82f0bb6fe2edb1db5c4
+      size: 2069
+  convert-to-pdf@thermo_int:
+    cmd: "inkscape --file=thermo_int.svg --export-pdf=thermo_int.pdf --without-gui\
+      \ --export-latex\n"
+    deps:
+    - path: thermo_int.svg
+      md5: e3413407cf23e1fa874ad679ab313b08
+      size: 43468
+    outs:
+    - path: thermo_int.pdf
+      md5: 6a608f846aaee0f5df22589f211b6efb
+      size: 40435
+    - path: thermo_int.pdf_tex
+      md5: 030a8e07f116b87acf33897176462adb
+      size: 2061
+  plot@contra-correlations-ext:
+    cmd: python contra-correlations-ext.py
+    deps:
+    - path: ../data/bilateral-v3-prevalences.hdf5
+      md5: 8e0fb6e21cd83649b9ee258e0a305946
+      size: 2064304
+    - path: ../data/midline-with-mixing-v3-prevalences.hdf5
+      md5: 99b4a020bc66b0d1ec3d0cfb5a46375e
+      size: 2288304
+    - path: ../data/midline-without-mixing-v3-prevalences.hdf5
+      md5: 058d4761d9c61b50c63aa3bb0ebc5849
+      size: 2736304
+    - path: _utils.py
+      md5: 3cc8d86ea394b3c8bb78653e4e230c31
+      size: 5595
+    - path: contra-correlations-ext.py
+      md5: 9423eaafc3024477ba32ce106bc54233
+      size: 4224
+    outs:
+    - path: contra-correlations-ext.svg
+      md5: 379f2915c1ffc3268c5f78933e6c2787
+      size: 194856
+  convert-to-pdf@contra-correlations-ext:
+    cmd: "inkscape --file=contra-correlations-ext.svg --export-pdf=contra-correlations-ext.pdf\
+      \ --without-gui --export-latex\n"
+    deps:
+    - path: contra-correlations-ext.svg
+      md5: 379f2915c1ffc3268c5f78933e6c2787
+      size: 194856
+    outs:
+    - path: contra-correlations-ext.pdf
+      md5: a196fe4afd2e3039132f8f9808d386be
+      size: 102390
+    - path: contra-correlations-ext.pdf_tex
+      md5: 8cf2ca9c3e1ef917f2403e84b6598ced
+      size: 2080
+  plot@ipsi-overall:
+    cmd: python ipsi-overall.py
+    deps:
+    - path: ../data/bilateral-v3-prevalences.hdf5
+      md5: 8e0fb6e21cd83649b9ee258e0a305946
+      size: 2064304
+    - path: ../data/midline-with-mixing-v3-prevalences.hdf5
+      md5: 99b4a020bc66b0d1ec3d0cfb5a46375e
+      size: 2288304
+    - path: ../data/midline-without-mixing-v3-prevalences.hdf5
+      md5: 058d4761d9c61b50c63aa3bb0ebc5849
+      size: 2736304
+    - path: _utils.py
+      md5: 3cc8d86ea394b3c8bb78653e4e230c31
+      size: 5595
+    - path: ipsi-overall.py
+      md5: dea9339e6d424d3fcc8344d88d95df14
+      size: 4243
+    outs:
+    - path: ipsi-overall.svg
+      md5: 24a47100119f39dd964383e0008ef617
+      size: 438802
+  convert-to-pdf@ipsi-overall:
+    cmd: "inkscape --file=ipsi-overall.svg --export-pdf=ipsi-overall.pdf --without-gui\
+      \ --export-latex\n"
+    deps:
+    - path: ipsi-overall.svg
+      md5: 24a47100119f39dd964383e0008ef617
+      size: 438802
+    outs:
+    - path: ipsi-overall.pdf
+      md5: a2c76b8a5ac858b15f834718e270fb7b
+      size: 97429
+    - path: ipsi-overall.pdf_tex
+      md5: 9439cf11af87227b42add24cdf5e0aaf
+      size: 2058
+  convert-to-pdf@contra-correlations-noext:
+    cmd: "inkscape --file=contra-correlations-noext.svg --export-pdf=contra-correlations-noext.pdf\
+      \ --without-gui --export-latex\n"
+    deps:
+    - path: contra-correlations-noext.svg
+      md5: b45c401604f83b1bea3ae642a7fb270a
+      size: 197296
+    outs:
+    - path: contra-correlations-noext.pdf
+      md5: 81988f9893c049c2f673de4ad4445146
+      size: 100998
+    - path: contra-correlations-noext.pdf_tex
+      md5: f1fe473d8c7a9f165501f2236f5ecc87
+      size: 2084
+  plot@contra-risks:
+    cmd: python contra-risks.py
+    deps:
+    - path: ../data/bilateral-v3-prevalences.hdf5
+      md5: 8e0fb6e21cd83649b9ee258e0a305946
+      size: 2064304
+    - path: ../data/midline-with-mixing-v3-prevalences.hdf5
+      md5: 99b4a020bc66b0d1ec3d0cfb5a46375e
+      size: 2288304
+    - path: ../data/midline-without-mixing-v3-prevalences.hdf5
+      md5: 058d4761d9c61b50c63aa3bb0ebc5849
+      size: 2736304
+    - path: _utils.py
+      md5: 3cc8d86ea394b3c8bb78653e4e230c31
+      size: 5595
+    - path: contra-risks.py
+      md5: 1220a88773b02cbf0df679f58efea049
+      size: 2622
+    outs:
+    - path: contra-risks.svg
+      md5: e24c230c074f44dfd9aef66f15ce70fa
+      size: 88301
+  convert-to-pdf@contra-risks:
+    cmd: "inkscape --file=contra-risks.svg --export-pdf=contra-risks.pdf --without-gui\
+      \ --export-latex\n"
+    deps:
+    - path: contra-risks.svg
+      md5: e24c230c074f44dfd9aef66f15ce70fa
+      size: 88301
+    outs:
+    - path: contra-risks.pdf
+      md5: 421448e723512ecb534eff992837bca2
+      size: 59164
+    - path: contra-risks.pdf_tex
+      md5: 607cae98b21bbba7324d4c6b81be9ee4
+      size: 2065
