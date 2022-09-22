@@ -115,7 +115,7 @@ This shows how the evidence naturally incorporates Occam's razor. The second ter
 
 Because \acrlong{ti} -- as well as many other ways of computing the model evidence -- is computationally prohibitive for most use cases, there exist a number of approximations. One of them is the \gls{bic}, which is in essence a first-order approximation of the log-evidence (actually, the negative one-half of the \gls{bic} is an approximation to the log-evidence) that fits a normal distribution to the maximum likelihood estimate of the target distribution \cite{schwarz_estimating_1978}. It is defined as
 %
-\begin{equation}
+\begin{equation} \label{eq:bic}
     \text{BIC} \coloneqq k \ln{N} - 2 \max_\theta{ \left( \ln{ \probofgiven{\boldsymbol{\mathcal{D}}}{\theta, \mathcal{M}} } \right)}
 \end{equation}
 %
