@@ -10,6 +10,7 @@ stages:
     - extended-add35-prevalences
     - extended-add45-prevalences
     - extended-add27-prevalences
+    - graph-comparison
     do:
       cmd: >
         inkscape

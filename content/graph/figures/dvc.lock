@@ -34,18 +34,18 @@ stages:
       size: 3182
     outs:
     - path: simple-prevalences.svg
-      md5: 2d5f5ab6447744abd450917b05d0b544
+      md5: aecb4e14f51bae2de825819bf6a7ceda
       size: 739927
   convert-to-pdf@simple-prevalences:
     cmd: "inkscape --without-gui --file=simple-prevalences.svg --export-pdf=simple-prevalences.pdf\
       \ --export-latex\n"
     deps:
     - path: simple-prevalences.svg
-      md5: 2d5f5ab6447744abd450917b05d0b544
+      md5: aecb4e14f51bae2de825819bf6a7ceda
       size: 739927
     outs:
     - path: simple-prevalences.pdf
-      md5: d4c9e0393019d6c760a106b30b65d05d
+      md5: 77fbaa23ef75a4f5c6db4a45ba18c5a9
       size: 151455
     - path: simple-prevalences.pdf_tex
       md5: b5d4595d0cfbfbe8083d20d915a645ff
@@ -64,10 +64,10 @@ stages:
       size: 3081
     outs:
     - path: simple-both-corner.svg
-      md5: 5625454ceb98a3d2d1de12778627dc15
+      md5: 90f01a837af4452b7fbe060cec6a7402
       size: 994092
     - path: simple-nocon-corner.svg
-      md5: 36e88a66c1753cce71ca7220b5c3c857
+      md5: 050c968f16984bac30d7500b31092a34
       size: 319934
   convert-to-pdf@all_lnls:
     cmd: "inkscape --without-gui --file=all_lnls.svg --export-pdf=all_lnls.pdf --export-latex\n"
@@ -87,12 +87,12 @@ stages:
       \ --export-latex\n"
     deps:
     - path: extended-graph.svg
-      md5: a695b14f14af72462cb304263cf6aac1
-      size: 48045
+      md5: 0815ba44cce60b1e572dfe26489b2e72
+      size: 47550
     outs:
     - path: extended-graph.pdf
-      md5: 3b478186b8a6e4f648908c273a50c844
-      size: 13526
+      md5: 78829607f8f90251e21c3b7d09c41a02
+      size: 13523
     - path: extended-graph.pdf_tex
       md5: 5de424bb2ee608debaf10bc53126ec54
       size: 2063
@@ -219,11 +219,11 @@ stages:
       \ --export-latex\n"
     deps:
     - path: extended-add35-prevalences.svg
-      md5: 2632193fa493a82cc8a7f4e1d26d06a2
+      md5: 8f7fc6a4944c295138c50a857cfc104c
       size: 91442
     outs:
     - path: extended-add35-prevalences.pdf
-      md5: f416590ac7acfa10feb3aaef2451094a
+      md5: a6cb179cb238a72dbe939a1595beb79d
       size: 72622
     - path: extended-add35-prevalences.pdf_tex
       md5: ff3047c85831a2f97b938f7d288ec7fe
@@ -249,11 +249,11 @@ stages:
       \ --export-latex\n"
     deps:
     - path: extended-add45-prevalences.svg
-      md5: 8186f3907e5c34baf3a66acb9e914218
+      md5: 2ccc97470c86d9400d23dbafa57f9c16
       size: 93641
     outs:
     - path: extended-add45-prevalences.pdf
-      md5: ee4cd6c240625378b1a8a9a3fc11abe7
+      md5: 47bae8fb4df5080d073158d1aaca1d3b
       size: 76070
     - path: extended-add45-prevalences.pdf_tex
       md5: 4e5d542f4d9fc4566578b93f26eee891
@@ -275,18 +275,18 @@ stages:
       size: 1649
     outs:
     - path: extended-conn12-low-prevalences.svg
-      md5: 58006298b83f2f6ae73950506ef2d671
+      md5: b3fc169c5932d4f7468372f528a7ae45
       size: 174885
   convert-to-pdf@extended-conn12-low-prevalences:
     cmd: "inkscape --without-gui --file=extended-conn12-low-prevalences.svg --export-pdf=extended-conn12-low-prevalences.pdf\
       \ --export-latex\n"
     deps:
     - path: extended-conn12-low-prevalences.svg
-      md5: 58006298b83f2f6ae73950506ef2d671
+      md5: b3fc169c5932d4f7468372f528a7ae45
       size: 174885
     outs:
     - path: extended-conn12-low-prevalences.pdf
-      md5: a149afba7f2088b5a61f56e3b680eeb6
+      md5: 01b0e08e2960535ec22ddbee82154d2e
       size: 114404
     - path: extended-conn12-low-prevalences.pdf_tex
       md5: a68dc08d75743d62bd786fb98d2e8f56
@@ -308,18 +308,18 @@ stages:
       size: 1564
     outs:
     - path: extended-conn12-high-prevalences.svg
-      md5: 9010e80d9618b8e7f66cddce15ca8c4f
+      md5: 23898603a43e3c8fd9fb4d41143673d6
       size: 176147
   convert-to-pdf@extended-conn12-high-prevalences:
     cmd: "inkscape --without-gui --file=extended-conn12-high-prevalences.svg --export-pdf=extended-conn12-high-prevalences.pdf\
       \ --export-latex\n"
     deps:
     - path: extended-conn12-high-prevalences.svg
-      md5: 9010e80d9618b8e7f66cddce15ca8c4f
+      md5: 23898603a43e3c8fd9fb4d41143673d6
       size: 176147
     outs:
     - path: extended-conn12-high-prevalences.pdf
-      md5: be16ee709c27153172625ec32c0f0fa1
+      md5: 81185fa7422455d9559bdbcbbcb36f15
       size: 114468
     - path: extended-conn12-high-prevalences.pdf_tex
       md5: 29f4d2f54807b1950c6e29b04df0f36e
@@ -338,18 +338,18 @@ stages:
       size: 1684
     outs:
     - path: extended-add27-prevalences.svg
-      md5: df3d7c1ed977bead9c23d8823aa8092f
+      md5: bb560a01eac7d1444a4f50c9e220c44e
       size: 107861
   convert-to-pdf@extended-add27-prevalences:
     cmd: "inkscape --without-gui --file=extended-add27-prevalences.svg --export-pdf=extended-add27-prevalences.pdf\
       \ --export-latex\n"
     deps:
     - path: extended-add27-prevalences.svg
-      md5: df3d7c1ed977bead9c23d8823aa8092f
+      md5: bb560a01eac7d1444a4f50c9e220c44e
       size: 107861
     outs:
     - path: extended-add27-prevalences.pdf
-      md5: 764f4b68ae84058c1ee418c4e0510cc8
+      md5: d77f89eeca74897d946493b61b271337
       size: 77624
     - path: extended-add27-prevalences.pdf_tex
       md5: 4becde1f1bbb40791d7742fe6b1a0b79
@@ -368,7 +368,7 @@ stages:
       size: 1633
     outs:
     - path: extended-add45-prevalences.svg
-      md5: 8186f3907e5c34baf3a66acb9e914218
+      md5: 2ccc97470c86d9400d23dbafa57f9c16
       size: 93641
   extended-prevalences@add35:
     cmd: python extended-add35-prevalences.py
@@ -384,7 +384,7 @@ stages:
       size: 1595
     outs:
     - path: extended-add35-prevalences.svg
-      md5: 2632193fa493a82cc8a7f4e1d26d06a2
+      md5: 8f7fc6a4944c295138c50a857cfc104c
       size: 91442
   convert-to-pdf@simple-graphs:
     cmd: "inkscape --without-gui --file=simple-graphs.svg --export-pdf=simple-graphs.pdf\
@@ -400,3 +400,17 @@ stages:
     - path: simple-graphs.pdf_tex
       md5: 4e66aadbc35b679f8b7d7cfbb4abdc32
       size: 2061
+  convert-to-pdf@graph-comparison:
+    cmd: "inkscape --without-gui --file=graph-comparison.svg --export-pdf=graph-comparison.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: graph-comparison.svg
+      md5: 0ab64a780975a061a34367eaa2d4dfed
+      size: 407471
+    outs:
+    - path: graph-comparison.pdf
+      md5: 233d9ecdb40dc4adda24b098a755ef12
+      size: 171144
+    - path: graph-comparison.pdf_tex
+      md5: 540ab201b5da59b2ef81d2e331b6f9ec
+      size: 2065

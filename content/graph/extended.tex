@@ -299,9 +299,31 @@ To conclude this subsection, both the computed metrics and a visual inspection o
 
 We have now, one by one, gone through possible extensions of what we considered a minimal graph for the six \glspl{lnl} I, II, III, IV, V and VII. For each possible additional arc we have assessed this new connection's performance, both visually and quantitatively using mainly the \acrlong{bic}. In this last subsection, we will investigate what effect adding two spread parameters at the same time to the base graph has on the model's performance. It will be interesting to see if the impacts of different new arcs on the metrics are independent of each other and hence cumulative, or if the effects interact in more complicated manners.
 
-Also, we will be able to compare results for graphs with two additional arcs to the results of Franceschetti \cite{franceschetti_comparison_2022}, who used a different metric to compare the different models, namely the cumulative out-of-sample log-likelihood marginalized over the spread parameters:
+The performance of the models based on graphs with two additional arcs are listed in \cref{table:graph:extended:multi-arc}.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Graphs} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
+        \hline
+        base graph & 1212.0 & 1180.4 & 1184.7 \\
+        + II $\rightarrow$ I + IV $\rightarrow$ V & 1209.7 & 1171.8 & 1176 \\
+        + II $\rightarrow$ I + II $\rightarrow$ VII & 1210.7 & 1172.8 & 1177.5 \\
+        + II $\rightarrow$ I + III $\rightarrow$ V & 1208.4 & 1170.5 & 1174.7 \\
+        \hline
+    \end{tabular}
+    \caption[
+        Comparison of graphs that add two new arcs to the base graph
+    ]{
+        Metrics for comparing lymphatic progression models that are based on representations of the lymphatic network that add two pathways of spread to the base graph as defined in \cref{subsec:graph:extended:base}.
+    }
+    \label{table:graph:extended:multi-arc}
+\end{table}
+
+We can now also compare results for graphs with two additional arcs to the results of Franceschetti \cite{franceschetti_comparison_2022}, who used a different strategy to compare graph structures underlying the model: First, he compared ten different graphs that all had two more connections than what we defined as the base graph, instead of adding arcs one after the other, as we have done up to this point. Furthermore, he used a different metric to compare the different models, namely the cumulative out-of-sample log-likelihood marginalized over the spread parameters:
 %
-\begin{equation}
+\begin{equation} \label{eq:cross_validation}
     \begin{aligned}
         \text{oosllh} &\coloneqq \sum_{k=1}^K{\ln{ \Probofgiven{\boldsymbol{\mathcal{D}}_k}{\mathcal{M}_{\setminus k}} }} \\
         &\approx \sum_{k=1}^K{\ln{ \left[ \frac{1}{S} \sum_{\theta \in \boldsymbol{\hat{\theta}}_{\setminus k}}{ \prod_{d \in \boldsymbol{\mathcal{D}}_k}{ \Probofgiven{d}{\theta} } } \right] }}
@@ -310,6 +332,20 @@ Also, we will be able to compare results for graphs with two additional arcs to 
 %
 where $K$ is the number of folds the data is split into. Correspondingly, $\boldsymbol{\mathcal{D}}_k$ is the $k$-th of these partitions and $\mathcal{M}_{\setminus k}$ is the model trained on all data except the $k$-th fold. The \gls{mcmc} approximation in the second line introduces the samples $\boldsymbol{\hat{\theta}}_{\setminus k}$ that were drawn during a sampling using all data except $\boldsymbol{\mathcal{D}}_k$.
 
-Computing the likelihood of data, given a model trained on different data is another strategy against overfitting, as is using \acrlong{ti} to compute or the \acrlong{bic} to approximate the model evidence as a model comparison metric. If the model was to reach a complexity that allowed it to achieve a perfect fit to one particular dataset, it would not necessarily generalize to other data. This mismatch between ``training'' and ``testing'' datasets stops us from arbitrarily adding parameters and complexity to the model until our accuracy was perfect.
+This strategy of assessing a model's performance is called \gls{cv} and it is another method aimed to avoid overfitting. When the model achieves a near perfect fit on the \emph{training data} $\boldsymbol{\mathcal{D}}_{\setminus k}$, it is unlikely to generalize well to the held-out \emph{testing data} $\boldsymbol{\mathcal{D}}_k$, effectively acting as a complexity penalty. Beyond that, Fong et al. \cite{fong_marginal_2019} even showed a profound connection between exhaustive leave-$m$-out \gls{cv}, where $m \leq N$ and the model evidence, as they are formally equivalent. This does not have significant practical implications since this exhaustive way of performing \gls{cv} is even more expensive that using \acrlong{ti} and will hence probably never be used. It does however illustrate how many metrics in model comparison are profoundly related.
+
+In \cref{fig:graph:extended:all_graphs} we have ordered all graphs that were assessed regarding their performance either by us or by Franceschetti \cite{franceschetti_comparison_2022} and indicated where they stand w.r.t. the \gls{bic} and/or the $\text{oosllh}$. Reassuringly, we find that the two methods of model comparison agree perfectly. The models based on graphs that were compared both by us and by him receive the same ordering based on the \gls{bic} and their \gls{cv} score as defined in \cref{eq:cross_validation}. Qualitatively, how all other assessed graphs ranked compared to each other is consistent as well. E.g., models where the edge from \gls{lnl} II to I was added performed consistently better that the ones where this arc was flipped, both in our experiments and in Franceschetti's work. Not adding any connection between these two \glspl{lnl} scored even worse across experiments. Also consistent with our findings is that adding a spread connection from \gls{lnl} II to level VII gets rejected: It can be found both in our worst performing graph as well as Franceschetti's.
+
+\begin{sidewaysfigure}
+    \centering
+    \def\svgwidth{0.8\textwidth}
+    \input{figures/graph-comparison.pdf_tex}
+    \caption[
+        All investigated graphs ordered by their performances
+    ]{
+        Schematics of all investigated graphs modelling the \glspl{lnl} I, II, III, IV, V and VII. The axis at the top indicates the graph's performance w.r.t. the \gls{bic}, while the axis on the bottom shows the $\text{oosllh}$, which was investigated by Franceschetti \cite{franceschetti_comparison_2022}. For both metrics larger values (further to the right) indicate a better performance.
+    }
+    \label{fig:graph:extended:all_graphs}
+\end{sidewaysfigure}
 
 \end{document}
