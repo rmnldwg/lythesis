@@ -151,7 +151,7 @@ Our main goal with investigating an additional arc from or to \gls{lnl} I is to 
 
 To conclude this comparison, we can compare the actual values for the inferred spread parameters. We would expect e.g. the base probability rate for level I $\tilde{b}_1$ to be higher, when that \gls{lnl} is connected via $\tilde{t}_{12}$ to level II, compared to when connected the other way around with $\tilde{t}_{21}$. This is exactly, what we observe: $\tilde{b}_1 = 3 \pm 0.5 \%$ for the former case and $\tilde{b}_1 = 1 \pm 0.5 \%$ for the latter. Also, as expected from our thought experiment in \cref{sec:graph:simple}, the transition probability rate modelling spread from \gls{lnl} I to II is pushed to very high values to capture the fact that level I is rarely involved without II. It takes on values of $\tilde{t}_{12} = 77 \pm 19.5 \%$, while the reversed connection achieves the same or an even better fit with $\tilde{t}_{21} = 5 \pm 1 \%$. The above analysis suggests improving the model by adding an arc from \gls{lnl} II towards \gls{lnl} I.
 
-\subsection{Direct spread to LNL V}
+\subsection{Connections into LNL V}
 \label{subsec:graph:extended:toV}
 
 \begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
@@ -189,7 +189,7 @@ To conclude this comparison, we can compare the actual values for the inferred s
 
 Due to the anatomical proximity of \glspl{lnl} III and IV to \gls{lnl} V it is possible that those levels, like \gls{lnl} II, may spread lymphatically into the \emph{posterior accessory pathway}. Therefore, in this section we will investigate how additional arcs from level III or from level IV to level V affect the model's performance.
 
-The quantitative results are given in \cref{table:graph:extended:toV} and compared to the base graph again. We can see that the \gls{bic} very weakly supports the base graph over the addition of a connection from \gls{lnl} III to V. This means that the improved fit, and hence the smaller expected negative log-likelihood, is just not worth the additional cost of $\ln{N} / 2 = \ln{550} / 2 = 3.15$. For the arc from \gls{lnl} IV to V there is even \emph{substantial} evidence against it with a difference in one half of the \gls{bic} of 1.6. 
+The quantitative results are given in \cref{table:graph:extended:toV} and compared to the base graph again. We can see that the \gls{bic} very weakly supports the base graph over the addition of a connection from \gls{lnl} III to V. This means that the improved fit, and hence the smaller expected negative log-likelihood, is very narrowly not worth the additional cost of $\ln{N} / 2 = \ln{550} / 2 = 3.15$. For the arc from \gls{lnl} IV to V there is even \emph{substantial} evidence against it with a difference in one half of the \gls{bic} of 1.6. 
 
 \begin{figure}
     \centering
@@ -230,7 +230,7 @@ We have repeated the analysis for the graph that adds an edge from \gls{lnl} IV 
     \label{fig:graph:extended:add45:prevalences}
 \end{figure}
 
-\subsection{An arc from LNL II to VII}
+\subsection{An edge from LNL II to VII}
 \label{subsec:graph:extended:IItoVII}
 
 \begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
@@ -280,7 +280,7 @@ For completeness, we also show some predictions as for previous model comparison
 
 To conclude this subsection, both the computed metrics and a visual inspection of the relevant predictions strongly suggest not to add a new edge from \gls{lnl} II to VII.
 
-\subsection{Multiple new edges}
+\subsection{Multiple additional arcs}
 \label{subsec:graph:extended:multiple}
 
 \input{_contributions.tex}
@@ -359,9 +359,20 @@ In \cref{fig:graph:extended:all_graphs} we have ordered all graphs that were ass
     \caption[
         All investigated graphs ordered by their performances
     ]{
-        Schematics of all investigated graphs modelling the \glspl{lnl} I, II, III, IV, V and VII. The axis at the top indicates the graph's performance w.r.t. the \gls{bic}, while the axis on the bottom shows the $\text{oosllh}$, which was investigated by Franceschetti \cite{franceschetti_comparison_2022}. For both metrics larger values (further to the right) indicate a better performance.
+        Schematics of all investigated graphs modelling the \glspl{lnl} I, II, III, IV, V and VII. The axis at the top indicates the graph's performance w.r.t. the \gls{bic}, while the axis on the bottom shows the $\text{oosllh}$, which was investigated by Franceschetti \cite{franceschetti_comparison_2022}, who only considered graphs adding two connections to the base graph. For both metrics larger values (further to the right) indicate a better performance.
     }
     \label{fig:graph:extended:all_graphs}
 \end{sidewaysfigure}
+
+\subsection{Conclusion}
+\label{subsec:graph:extended:conclusion}
+
+In this section we have extensively discussed how an anatomically motivated \gls{dag} that represents the lymphatic network of the head and neck region and underlies our probabilistic model for \gls{lnl} involvement prediction can be extended to improve that model's performance, while avoiding the pitfalls of overfitting.
+
+We have found the most significant improvements to originate from the addition of an edge from \gls{lnl} II to I, while all other considered arcs did not show improvements in the model fit clearly justifying the introduction of a new parameter. The only connection, except II $\rightarrow$ I, for which the \gls{bic} did not show a strong objection, was the edge from \gls{lnl} III to V. Incidentally, both the strongly supported arc II $\rightarrow$ I, as well as this less convincing edge III $\rightarrow$ V were present in the best performing graph investigated by Franceschetti \cite{franceschetti_comparison_2022}. The latter of these connections led to a significantly better prediction of late T-stage involvement in \gls{lnl} V, as can be seen in \cref{fig:graph:extended:add35:prevalences}, which may clinically justify keeping it in the finalized model.
+
+The benefits of new parametrized spread pathways between the \glspl{lnl} IV and V, as well as II and VII were very small or even negligible and will hence not be used by future models. Their effects even introduced dangerous underestimations of involvements, as could be seen in the right panel of \cref{fig:graph:extended:add27:prevalences}.
+
+Going forward, and based on the experiments and comparisons of this section, we decided to represent the lymphatic progression in \acrlong{opscc} using the graph highlighted in \cref{fig:graph:extended:all_graphs}. It contains the unequivocally supported arc II $\rightarrow$ I and the edge III $\rightarrow$, since it does improve the underestimation of involvement in some cases and is not objected by our quantitative analysis.
 
 \end{document}

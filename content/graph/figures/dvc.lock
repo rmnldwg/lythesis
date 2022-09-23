@@ -405,12 +405,12 @@ stages:
       \ --export-latex\n"
     deps:
     - path: graph-comparison.svg
-      md5: 0ab64a780975a061a34367eaa2d4dfed
-      size: 407471
+      md5: cdf937d88b68771994777f7300f5816a
+      size: 1140897
     outs:
     - path: graph-comparison.pdf
-      md5: 233d9ecdb40dc4adda24b098a755ef12
-      size: 171144
+      md5: 489443972cbf848fa7fde0d023011b1a
+      size: 400971
     - path: graph-comparison.pdf_tex
       md5: 540ab201b5da59b2ef81d2e331b6f9ec
       size: 2065
