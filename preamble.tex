@@ -3,7 +3,8 @@
 \graphicspath{
     {\relativeRoot/figures/}
     {\relativeRoot/content/previous_work/figures/}
-    {\relativeRoot/content/dataset/figures/}
+    {\relativeRoot/content/dataset_usz/figures/}
+    {\relativeRoot/content/dataset_clb/figures/}
     {\relativeRoot/content/unilateral/figures/}
     {\relativeRoot/content/graph/figures/}
     {\relativeRoot/content/bilateral/figures/}
@@ -46,6 +47,9 @@
     minnames=3,
     maxnames=4
 ]{biblatex}
+% define custom command to cite the author of somethign and add a link
+\newcommand{\citeauthorandlink}[1]{\citeauthor*{#1} \cite{#1}}
+\newcommand{\Citeauthorandlink}[1]{\Citeauthor*{#1} \cite{#1}}
 \addbibresource{\relativeRoot/references.bib}
 \usepackage{csquotes}
 
