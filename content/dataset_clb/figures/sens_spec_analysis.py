@@ -55,8 +55,27 @@ def comp_scaled_beta_posterior(
 
 
 INPUT = Path("../data/2021-clb-oropharynx.csv")
-OUTPUT = Path(__file__).with_suffix(".png")
+OUTPUT = Path(__file__).with_suffix(".svg")
 LNLS = ["Ib", "II", "III", "IV", "V"]
+COLORS = {
+    "blue": '#005ea8',
+    "green": '#00afa5',
+    "orange": '#f17900',
+    "red": '#ae0060',
+    "gray": '#c5d5db',
+}
+CT = {
+    "specificity": 76,
+    "sensitivity": 81,
+}
+MRI = {
+    "specificity": 63,
+    "sensitivity": 81,
+}
+PET = {
+    "specificity": 86,
+    "sensitivity": 79,
+}
 
 
 if __name__ == "__main__":
@@ -78,33 +97,93 @@ if __name__ == "__main__":
     fig, ax = plt.subplots(
         nrows=len(LNLS), ncols=2,
         sharex=True, sharey="row",
-        figsize=get_size(width="full", ratio=8. / len(LNLS)),
+        figsize=get_size(width="full", ratio=1.3),
     )
 
-    x = np.linspace(0., 100., 500)
-    for i,lnl in enumerate(LNLS):
-        confusion_matrix = confusion_matrices["ipsi"][lnl]
-        try:
-            posterior_over_specificity = comp_scaled_beta_posterior(
-                x=x,
-                num_success=confusion_matrix[False][False],
-                num_fail=confusion_matrix[True][False],
-            )
-            ax[i,0].plot(x, posterior_over_specificity)
-            ax[i,0].set_xlim(left=0., right=100.)
-        except KeyError:
-            ax[i,0].remove()
+    ax[-1,0].set_xlabel("specificity $s_P$ [%]")
+    ax[-1,1].set_xlabel("sensitivity $s_N$ [%]")
 
-        try:
-            posterior_over_sensitivity = comp_scaled_beta_posterior(
-                x=x,
-                num_success=confusion_matrix[True][True],
-                num_fail=confusion_matrix[False][True],
-            )
-            ax[i,1].plot(x, posterior_over_sensitivity)
-            ax[i,1].set_xlim(left=0., right=100.)
-            ax[i,1].set_ylim(bottom=0.)
-        except KeyError:
-            ax[i,1].remove()
+    x = np.linspace(0., 100., 500)
+    for side in ["ipsi", "contra"]:
+        color = COLORS["green"] if side == "ipsi" else COLORS["blue"]
+        for i,lnl in enumerate(LNLS):
+            try:
+                confusion_matrix = confusion_matrices[side][lnl]
+                true_negative = confusion_matrix[False][False]
+                false_positive = confusion_matrix[True][False]
+                specificity = true_negative / (true_negative + false_positive)
+                posterior_over_specificity = comp_scaled_beta_posterior(
+                    x=x,
+                    num_success=true_negative,
+                    num_fail=false_positive,
+                )
+                ax[i,0].plot(
+                    x, posterior_over_specificity,
+                    color=color,
+                    linewidth=1.5,
+                    label=f"{side}: {specificity:.1%}"
+                )
+                ax[i,0].axvline(
+                    CT["specificity"],
+                    color=COLORS["orange"],
+                    linestyle="--",
+                    label="CT" if i == 0 else None,
+                )
+                ax[i,0].axvline(
+                    MRI["specificity"],
+                    color=COLORS["red"],
+                    linestyle="-.",
+                    label="MRI" if i == 0 else None,
+                )
+                ax[i,0].axvline(
+                    PET["specificity"],
+                    color="black",
+                    linestyle=":",
+                    label="PET" if i == 0 else None,
+                )
+                ax[i,0].set_xlim(left=0., right=100.)
+                ax[i,0].set_ylabel(lnl)
+                ax[i,0].legend()
+            except KeyError:
+                pass
+
+            try:
+                true_positive = confusion_matrix[True][True]
+                false_negative = confusion_matrix[False][True]
+                sensitivity = true_positive / (true_positive + false_negative)
+                posterior_over_sensitivity = comp_scaled_beta_posterior(
+                    x=x,
+                    num_success=true_positive,
+                    num_fail=false_negative,
+                )
+                ax[i,1].plot(
+                    x, posterior_over_sensitivity,
+                    color=color,
+                    linewidth=1.5,
+                    label=f"{side}: {sensitivity:.1%}"
+                )
+                ax[i,1].axvline(
+                    CT["specificity"],
+                    color=COLORS["orange"],
+                    linestyle="--",
+                    label="CT" if i == 0 else None,
+                )
+                ax[i,1].axvline(
+                    MRI["specificity"],
+                    color=COLORS["red"],
+                    linestyle="-.",
+                    label="MRI" if i == 0 else None,
+                )
+                ax[i,1].axvline(
+                    PET["specificity"],
+                    color="black",
+                    linestyle=":",
+                    label="PET" if i == 0 else None,
+                )
+                ax[i,1].set_xlim(left=0., right=100.)
+                ax[i,1].set_ylim(bottom=0.)
+                ax[i,1].legend()
+            except KeyError:
+                pass
 
     plt.savefig(OUTPUT)

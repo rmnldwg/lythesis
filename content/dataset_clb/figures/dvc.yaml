@@ -1,0 +1,26 @@
+stages:
+  plots-sens-spec-analysis:
+    cmd: python sens_spec_analysis.py
+    deps:
+    - sens_spec_analysis.py
+    - ../data/2021-clb-oropharynx.csv
+    outs:
+    - sens_spec_analysis.svg
+
+  convert:
+    foreach: 
+    - sens_spec_analysis
+    do:
+      cmd: >
+        inkscape
+        --without-gui
+        --file=${item}.svg
+        --export-pdf=${item}.pdf
+        --export-latex
+      deps:
+      - ${item}.svg
+      outs:
+      - ${item}.pdf:
+          cache: false
+      - ${item}.pdf_tex:
+          cache: false
