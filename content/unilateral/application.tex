@@ -14,7 +14,7 @@
     \centering
     \def\svgwidth{1.0\textwidth}
     \input{figures/corner_HMM.pdf_tex}
-    \caption{Corner plot of the sampled parameters for the \gls{hmm} model parameters. The histograms on the diagonal show the 1D marginals, while the lower triangle shows all possible combinations of 2D marginals. The black lines are the iso-lines enclosing 20\%, 50\% and 80\% of the sampled points respectively. Correlations between the parameters can at most be seen between $\tilde{t}_{23}$ and $\tilde{b}_3$.}
+    \caption[Corner plot of the sampled parameters for the unilateral model]{Corner plot of the sampled parameters for the \gls{hmm} model parameters. The histograms on the diagonal show the 1D marginals, while the lower triangle shows all possible combinations of 2D marginals. The black lines are the iso-lines enclosing 20\%, 50\% and 80\% of the sampled points respectively. Correlations between the parameters can at most be seen between $\tilde{t}_{23}$ and $\tilde{b}_3$.}
     \label{fig:unilateral:corner_hmm}
 \end{figure}
 
@@ -35,7 +35,7 @@ Having inferred the parameters $\tilde{t}_{\pa{(v)}v}$ and $\tilde{b}_v$, we can
     \centering
     \def\svgwidth{1.0\textwidth}
     \input{figures/HMM_evo_matrix.pdf_tex}
-    \caption{Probability of being in each hidden state as a function of time (left). The color indicates low (green) and high (red) probabilities, which are also written on the respective pixel in percent if larger than 1\%. We used the mean of the inferred parameter samples to compute the probabilities. On the right, the used time-prior is plotted with which each column on the left will be weighted.}
+    \caption[Matrix of probabilities for the system to be in any given state at any given time-step]{Probability of being in each hidden state as a function of time (left). The color indicates low (green) and high (red) probabilities, which are also written on the respective pixel in percent if larger than 1\%. We used the mean of the inferred parameter samples to compute the probabilities. On the right, the used time-prior is plotted with which each column on the left will be weighted.}
     \label{fig:unilateral:hmm_evo_matrix}
 \end{figure}
 
@@ -52,7 +52,7 @@ Finally, in the right panel of \cref{fig:unilateral:hmm_evolution} shows the pro
     \centering
     \def\svgwidth{1.01\textwidth}
     \input{figures/HMM_evolution.pdf_tex}
-    \caption{(left) Probability of certain hidden state vs time; (middle) Probability of \gls{lnl}'s involvement marginalized over the other \gls{lnl}'s involvement vs time; (right) The same probabilities as in the middle, but also marginalized over the time-prior and depicted as violin plots. The dashed lines represent the prevalence in the dataset8 that was used for training.}
+    \caption[Evolution of probabilities to find the unilateral system in some selected states]{(left) Probability of certain hidden state vs time; (middle) Probability of \gls{lnl}'s involvement marginalized over the other \gls{lnl}'s involvement vs time; (right) The same probabilities as in the middle, but also marginalized over the time-prior and depicted as violin plots. The dashed lines represent the prevalence in the dataset8 that was used for training.}
     \label{fig:unilateral:hmm_evolution}
 \end{figure}
 
@@ -68,7 +68,7 @@ It can be seen that the risk for involvement in level I is low, regardless of di
     \centering
     \def\svgwidth{1.0\textwidth}
     \input{figures/HMM_BN_risk_comparison_crop.pdf_tex}
-    \caption{Risk assessment for the involvement of different \glspl{lnl} (rows), given positive observational findings in specified \glspl{lnl} (columns or labels next to histograms). E.g., row 3 depicts the risk of involvement in \gls{lnl} III, given different observed involvements (from left to right: no involvement, \gls{lnl} II only, \gls{lnl} III only, and \gls{lnl} II and III but no others). The orange line depicts the maximum likelihood result from Pouymayou et al. \cite{pouymayou_bayesian_2019}, the blue outline histogram represents the \gls{bn} sampling solutions and the solid colored histograms are the results from the \gls{hmm}. The color goes from green (low risk) to red (high risk). Of 200,000 parameter samples, 2\% were used to create this plot.}
+    \caption[Risks for a number of scenarios, predicted both by the BN and the HMM model]{Risk assessment for the involvement of different \glspl{lnl} (rows), given positive observational findings in specified \glspl{lnl} (columns or labels next to histograms). E.g., row 3 depicts the risk of involvement in \gls{lnl} III, given different observed involvements (from left to right: no involvement, \gls{lnl} II only, \gls{lnl} III only, and \gls{lnl} II and III but no others). The orange line depicts the maximum likelihood result from Pouymayou et al. \cite{pouymayou_bayesian_2019}, the blue outline histogram represents the \gls{bn} sampling solutions and the solid colored histograms are the results from the \gls{hmm}. The color goes from green (low risk) to red (high risk). Of 200,000 parameter samples, 2\% were used to create this plot.}
     \label{fig:unilateral:hmm_bn_comp}
 \end{figure}
 
@@ -83,7 +83,7 @@ In \cref{fig:unilateral:hmm_risk_increase} we consider the risk of microscopic i
     \centering
     \def\svgwidth{0.7\textwidth}
     \input{figures/HMM_risk_increaseP.pdf_tex}
-    \caption{Risk prediction for \gls{lnl} III, given observed positive involvement in \gls{lnl} II and negative observations in all other \glspl{lnl} (assuming $s_N = 81\%$ and $s_P = 76\%$) \cite{de_bondt_detection_2007}. The Binomial parameter $p$ was fixed to 0.4 for parameter learning (green), representing early T-category patients. Increasing this parameter results in higher risk. The blue outline shows the risk in level III obtained for the Bayesian network model. The histograms correspond to 1\% of the 200,000 samples.}
+    \caption[Change of predicted risk for ipsilateral LNL III involvement as binomial parameter increases]{Risk prediction for \gls{lnl} III, given observed positive involvement in \gls{lnl} II and negative observations in all other \glspl{lnl} (assuming $s_N = 81\%$ and $s_P = 76\%$) \cite{de_bondt_detection_2007}. The Binomial parameter $p$ was fixed to 0.4 for parameter learning (green), representing early T-category patients. Increasing this parameter results in higher risk. The blue outline shows the risk in level III obtained for the Bayesian network model. The histograms correspond to 1\% of the 200,000 samples.}
     \label{fig:unilateral:hmm_risk_increase}
 \end{figure}
 
@@ -98,7 +98,7 @@ To the best of our knowledge, the dataset of surgically treated early T-category
     \centering
     \def\svgwidth{1.0\textwidth}
     \input{figures/simultaneous_learnedP.pdf_tex}
-    \caption{Sampled late T-category $p$ parameter given an early T-category cohort and a fixed fraction of $N_0$ patients (20\%) for late T-category (left). Plots of the \glspl{pmf} of the fixed early T-category Binomial distribution and the distribution for the expected value of the late T-category parameter (right).}
+    \caption[Learned distribution over the late T-stage's binomial parameter]{Sampled late T-category $p$ parameter given an early T-category cohort and a fixed fraction of $N_0$ patients (20\%) for late T-category (left). Plots of the \glspl{pmf} of the fixed early T-category Binomial distribution and the distribution for the expected value of the late T-category parameter (right).}
     \label{fig:unilateral:simultaneous_learned}
 \end{figure}
 
@@ -133,7 +133,7 @@ A comparison of the involvement risk for \glspl{lnl} III and IV for different co
     \centering
     \def\svgwidth{1.0\textwidth}
     \input{figures/simultaneous_risk.pdf_tex}
-    \caption{Distributions over risk of involvement for \gls{lnl} III (left) and \gls{lnl} IV (right), each for early and late T-category as well as depending on the given observed involvement. The sampled parameters displayed here are a randomly selected subset (1\% of 200,000) from simultaneous learning. Comparison with \cref{fig:unilateral:simultaneous_learned} shows that these predictions still agree with the results from the early stage only learning.}
+    \caption[Prediction of late T-stage risks based on a simultaneous learning round]{Distributions over risk of involvement for \gls{lnl} III (left) and \gls{lnl} IV (right), each for early and late T-category as well as depending on the given observed involvement. The sampled parameters displayed here are a randomly selected subset (1\% of 200,000) from simultaneous learning. Comparison with \cref{fig:unilateral:simultaneous_learned} shows that these predictions still agree with the results from the early stage only learning.}
     \label{fig:unilateral:simultaneous_risk}
 \end{figure}
 

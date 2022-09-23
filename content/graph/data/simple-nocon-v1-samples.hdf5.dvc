@@ -1,0 +1,12 @@
+md5: c7dd9917ad733bb9366d1f3facd1dcd4
+frozen: true
+deps:
+- path: models/samples.hdf5
+  repo:
+    url: https://github.com/rmnldwg/lynference
+    rev: simple-nocon-v1
+    rev_lock: a5e25a3e4b7c38db108aa13ff62a486db28a4449
+outs:
+- md5: c71d7652ec12224eefa2f4fa9bc49da2
+  size: 40189568
+  path: simple-nocon-v1-samples.hdf5

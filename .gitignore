@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/latex,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=latex,python
 
+# VS Code
+.vscode/
+
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:
 *.aux

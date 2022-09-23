@@ -1,0 +1,12 @@
+md5: 79b30a6197cdb9f53d83857e209a44d1
+frozen: true
+deps:
+- path: models/prevalences.hdf5
+  repo:
+    url: https://github.com/rmnldwg/lynference
+    rev: extended-add21-v1
+    rev_lock: ca054b33e9601f59a2c9ac6cdb9f378b3666766a
+outs:
+- md5: 2897f2a2e9abcd3bd1ee64b77f08e01a
+  size: 896872
+  path: extended-add21-v1-prevalences.hdf5

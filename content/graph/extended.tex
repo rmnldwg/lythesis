@@ -1,0 +1,378 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{
+    {\subfix{./figures/}}
+}
+
+
+\begin{document}
+
+\section{Extending the network to LNLs V and VII}
+\label{sec:graph:extended}
+
+\begin{figure}
+    \centering
+    \def\svgwidth{0.4\textwidth}
+    \input{figures/extended-graph.pdf_tex}
+    \caption[
+        Base graph of the extended ipsilateral model with possible additional edges
+    ]{
+        Minimal base graph connecting the extended ipsilateral network of \glspl{lnl}. Red arcs connect the tumor $T$ to the \glspl{lnl} $X_v$ for $v \in \{ \text{I}, \text{II}, \text{III}, \text{IV}, \text{V}, \text{VII} \}$, while the levels themselves are connected to each other with the blue arcs. Green arcs depict possible additional connections and deciding whether they should be added to better describe the data is the aim of this section.
+    }
+    \label{fig:graph:extended_graph}
+\end{figure}
+
+Up to this point, we have introduced a model to infer ipsilateral lymphatic spread from data and shown how it works on reconstructed data -- which was the only data available at the time of writing \cref{chap:unilateral} -- that reported pathological findings on the \glspl{lnl} I, II, III and IV. Now, we have access to two more detailed datasets that both include lymphatic patterns of progression for the levels I through V and also \gls{lnl} VII. Hence, we will now extend the graph shown in \cref{fig:bn:graph} to include the additional \glspl{lnl} V and VII, making use of model comparisons similar to what we have illustrated in \cref{sec:graph:simple}.
+
+Following \cite{pouymayou_bayesian_2019}, we have so far connected the \glspl{lnl} I through IV in a chain. The data presented in \cref{chap:dataset} seems to support at least the connections from \gls{lnl} II to III and further from there into \gls{lnl} IV (see e.g. \cref{fig:dataset:flowchart}). However, the data does not strongly support a flow from \gls{lnl} I to II, or the other way around, although the anatomy suggests indeed the lymphatics flow from \gls{lnl} I to \gls{lnl} II \cite{lengele_anatomical_2007}. Lengelé et al. \cite{lengele_anatomical_2007} also describe the \emph{posterior accessory pathway} that originates in \gls{lnl} II and runs down through \gls{lnl} V, indicating that level V should receive an incoming connection from level II.
+
+The way we are going to perform inference on the combined data from the \gls{usz} and the \gls{clb}, further requires us to draw connections from the primary tumor in the oropharynx to all \glspl{lnl} we are considering now. This is because after computing the maximum likelihood estimate for the true involvement of each patient in the dataset based on their diagnoses and pathology reports, we set the sensitivity and specificity of this combined assessment to 1. By doing so we assume -- perhaps wrongly -- that all observations represent the ground truth. We can then look at patients that e.g. show \emph{only} involvement in \gls{lnl} VII, which leaves us with e.g. 5 patients. If there were no direct arc from the tumor to \gls{lnl} VII, this would be impossible and render the likelihood zero regardless of the choice of parameter values. Hence, our inference algorithm, which essentially selects those parameter values based on the respective likelihood, would break down.
+
+Based on the data, as well as anatomical and practical considerations mentioned above, we can now draw a \emph{base graph} that allows us to do inference and compare it to models that are based on graphs with additional connections between the \glspl{lnl}. We have sketched this graph in \cref{fig:graph:extended_graph} (considering only the red and blue edges). Note that this base graph is not set up such that it allows modelling cause and effect of the lymphatic spread, which is anyway not how our models work, as we have shown in \cref{sec:graph:simple}. Rather, it is the other way around: We fix those arcs to make our model more interpretable, as it allows e.g. a clinician or patient, getting informed by the model, to assign meaning to the parameters an abstract model has inferred from correlations in data.
+
+In \cref{fig:graph:all_lnls:base_graph}, we have also drawn green edges between the \glspl{lnl}. These additional connections are the subject of this section's experiments, as we are assessing whether adding them individually improves the model's accuracy enough to justify the greater model complexity.
+
+\subsection{Starting point: Base graph}
+\label{subsec:graph:extended:base}
+
+\begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
+    The base graph that will be used as a baseline for additional connections can be reproduced from the \repolink{lynference} repository, using the tagged release \lytag{extended-base-v1}.
+\end{tcolorbox}
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.04\textwidth}
+    \input{figures/extended-base-corner.pdf_tex}
+    \caption[
+        Corner plot displaying the posterior over parameters for the extended base graph
+    ]{
+        Corner plot showing all 1D and 2D marginals of the sampled posterior distribution over the parameters of the model based on the extended base graph, as shown in \cref{fig:graph:extended_graph} (leaving out the green arcs). The distribution is unimodal, shows few correlations among the parameters and falls off similarly as a normal distribution. The \gls{bic} is therefore a good approximation for the log-evidence.
+    }
+    \label{fig:graph:extended:base:corner}
+\end{figure}
+
+As mentioned, we started with establishing a baseline, using a unilateral model that is based on the graph in \cref{fig:graph:extended_graph} and trained with the data detailed in \cref{box:graph:data}. We performed a \gls{ti} using 16 inverse temperature steps that were spaced according to a fifth order power urle again. The inferred posterior distribution over the nine parameters is plotted in \cref{fig:graph:extended:base:corner}. Notably, the distribution seems well suited to approximate its log-evidence using the \gls{bic}, since it is unimodal, not skewed and falls off quickly to all sides. This is supported by \cref{table:graph:extended:base}, where we give the performance metrics we will compare the other graphs to. Since the \gls{bic} is so close to the log-evidence and \gls{ti} is computationally very expensive -- especially now that we modelled six \glspl{lnl} and the model scales exponentially with the number of levels -- we will only use the \gls{bic} to assess the additional arcs.
+
+\begin{table}
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+        \hline
+        \textbf{-- log-evidence} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
+        \hline
+        1212.3 $\pm$ 3.7 & 1212.0 & 1180.4 & 1184.7 \\ 
+        \hline
+    \end{tabular}
+    \caption[
+        Performance of the extended base graph
+    ]{
+        Performance metrics for the base graph of the extended network's model. Note that due to the coarser steps during the \acrlong{ti} the standard deviation of the log-evidence is quite large. Also, the \gls{bic} appears to be a very close approximation to the log-evidence.
+    }
+    \label{table:graph:extended:base}
+\end{table}
+
+\subsection{Direction of the arc between LNL I and II}
+\label{subsec:graph:extended:IandII}
+
+\begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
+    The results of the two models that are being compared to the base graph in this subsection can be reproduced with the help of the following tagged and released commits in the \repolink{lynference} repository:
+
+    \begin{itemize}
+        \item \textbf{I \faIcon{long-arrow-alt-right} II}: \lytag{extended-add12-v1}
+        \item \textbf{II \faIcon{long-arrow-alt-right} I}: \lytag{extended-add21-v1}
+    \end{itemize}
+\end{tcolorbox}
+
+The first question we want to answer is whether we should add the connection from \gls{lnl} I to II or the other way around. We sampled two identical models -- except for the direction between \glspl{lnl} I and II -- until convergence and compared metrics and predicted prevalences for both. ``Sampling until convergence'' in this case means that we stopped the inference process when the following two requirements were met:
+
+\begin{itemize}
+    \item A stable estimate of the integrated auto-correlation time $\hat{\tau}$, meaning
+    \begin{equation}
+        \left| 1 - \left( \frac{\hat{\tau}_{i-1}}{\hat{\tau}_i} \right) \right| \leq 0.075
+    \end{equation}
+    \item The estimate, which was computed every 100 sampling steps, fulfilled
+    \begin{equation}
+        30 \cdot \hat{\tau}_i \geq N
+    \end{equation}
+    where $N$ is the number of drawn samples. This means we only trust the estimate once we have a sufficiently large number of samples.
+\end{itemize}
+
+Looking at the \gls{bic} in \cref{table:graph:extend:12or21}, the results suggest that adding the connection as we originally intended from level I to II is barely worth the additional complexity compared to the base graph. The other way around, however, the differences in one half of the \glspl{bic} show a \emph{very strong} (see \cref{table:bayes_factor}) support for the added connection from \gls{lnl} II into \gls{lnl} I over the base graph, despite having one parameter more.
+
+\begin{table}
+    \centering
+        \begin{tabular}{|l|l|l|l|}
+            \hline
+            \textbf{Graph} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
+            \hline
+            base graph & 1212.0 & 1180.4 & 1184.7 \\
+            + I $\rightarrow$ II & 1211.7 & 1177.0 & 1180.6 \\
+            + II $\rightarrow$ I & 1208.2 & 1173.5 & 1177.9 \\
+            \hline
+        \end{tabular}
+        \caption[
+            Comparison of performance metrics for connection between LNL I and II
+        ]{
+            Metrics -- namely \gls{bic}, maximum and mean likelihood -- computed for the base-graph, as well as for the graph with an added connection from \gls{lnl} I to II, and for the model based on the graph with the same connection, but from \gls{lnl} II to I. A lower value corresponds to a better performance.
+        }
+        \label{table:graph:extend:12or21}
+\end{table}
+
+This can also intuitively be seen in the two figures, where we have plotted the predicted and observed prevalences for a selection of progression patterns, namely the case of \gls{lnl} I involvement overall and in conjunction with \gls{lnl} II being healthy (\cref{fig:graph:extended:low12or21}), as well as the case of \gls{lnl} II involvement overall together with the pattern of an involved \gls{lnl} II, but healthy \gls{lnl} I (\cref{fig:graph:extended:high12or21}).
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/extended-conn12-low-prevalences.pdf_tex}
+    \caption[
+        Comparison of prevalences of low-risk scenarios for the two directions of the arc between LNL I and II
+    ]{
+        Predicted (histograms) vs observed prevalences (line plots) for two low-risk scenarios: The involvement of \gls{lnl} I overall and the involvement of \gls{lnl} I without \gls{lnl} II. The left column shows these scenarios for early T-stage, the right column for late T-stage. In the top row we have plotted these predictions for the graph where the connections go from \gls{lnl} I to II and in the bottom row we show the predictions of the model with the reversed arc. The gray, hatched histogram shows the respective scenarios as predicted by the base graph.
+    }
+    \label{fig:graph:extended:low12or21}
+\end{figure}
+
+What can be seen in those plots is that the main improvement of adding either a connection from level I to II or from II to I is a better modelling of how rarely \gls{lnl} I is metastatic without \gls{lnl} II (green histograms in \cref{fig:graph:extended:low12or21,fig:graph:extended:high12or21}). Without any connection between the two \glspl{lnl}, the model has no way of capturing this negative correlation.
+
+The second model, with the arc from \gls{lnl} II to I, does an even better job at modelling this particular scenario. It also slightly improves the fit for the overall involvement in \gls{lnl} I (blue histograms in \cref{fig:graph:extended:low12or21}) as they move towards the posterior over the observed prevalences both for early and for late T-stages.
+
+Our main goal with investigating an additional arc from or to \gls{lnl} I is to improve how well the model can predict that level's frequency of harboring metastases. But to make sure the introduction of the additional spread parameter does not negatively affect the model's ability of capturing \gls{lnl} II's involvement, we have drawn histograms for that as well. The red historgams in \cref{fig:graph:extended:high12or21} show the overall prevalence of seeing a metastatic level II and regardless of model choice, it is captured well. For the involvement of \gls{lnl} II with level I being healthy (orange histograms), the change is miniscule in the first case, where the arcs span from level I to II. When connected the other way around, this scenario is not captured as well anymore for early T-stage, as it worsens underestimating the prevalence, but for late T-stage this scenario's overestimation reduces significantly.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/extended-conn12-high-prevalences.pdf_tex}
+    \caption[
+        Comparison of prevalences of high-risk scenarios for the two directions of the arc between LNL I and II
+    ]{
+        Predicted (histograms) vs observed prevalences (line plots) for two high-risk scenarios: The involvement of \gls{lnl} II overall and the involvement of \gls{lnl} II without \gls{lnl} I. The left column shows these scenarios for early T-stage, the right column for late T-stage. In the top row we have plotted these predictions for the graph where the connections go from \gls{lnl} I to II and in the bottom row we show the predictions of the model with the reversed arc. The gray, hatched histogram shows the respective scenarios as predicted by the base graph.
+    }
+    \label{fig:graph:extended:high12or21}
+\end{figure}
+
+To conclude this comparison, we can compare the actual values for the inferred spread parameters. We would expect e.g. the base probability rate for level I $\tilde{b}_1$ to be higher, when that \gls{lnl} is connected via $\tilde{t}_{12}$ to level II, compared to when connected the other way around with $\tilde{t}_{21}$. This is exactly, what we observe: $\tilde{b}_1 = 3 \pm 0.5 \%$ for the former case and $\tilde{b}_1 = 1 \pm 0.5 \%$ for the latter. Also, as expected from our thought experiment in \cref{sec:graph:simple}, the transition probability rate modelling spread from \gls{lnl} I to II is pushed to very high values to capture the fact that level I is rarely involved without II. It takes on values of $\tilde{t}_{12} = 77 \pm 19.5 \%$, while the reversed connection achieves the same or an even better fit with $\tilde{t}_{21} = 5 \pm 1 \%$. The above analysis suggests improving the model by adding an arc from \gls{lnl} II towards \gls{lnl} I.
+
+\subsection{Connections into LNL V}
+\label{subsec:graph:extended:toV}
+
+\begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
+    All values and results from the models based on the graphs with an additional arc from \gls{lnl} III to V and from level IV to V respectively are reproducible using the \repolink{lynference} repository:
+
+    \begin{itemize}
+        \item \textbf{III \faIcon{long-arrow-alt-right} V}: \lytag{extended-add35-v1}
+        \item \textbf{IV \faIcon{long-arrow-alt-right} V}: \lytag{extended-add45-v1}
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{table}
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Graph} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
+        \hline
+        base graph & 1212.0 & 1180.4 & 1184.7 \\
+        + III $\rightarrow$ V & 1212.4 & 1177.7 & 1182.1 \\
+        + IV $\rightarrow$ V & 1213.6 & 1178.9 & 1183.1 \\
+        \hline
+    \end{tabular}
+    \caption[
+        Metrics assessing the performance of graphs with added connections to LNL V.
+    ]{
+        Performance metrics for the model with
+        \begin{enumerate*}[label={(\alph*)}]
+            \item an additional arc from \gls{lnl} III to level V and
+            \item the same connection, but from \gls{lnl} IV to V
+        \end{enumerate*},
+        both compared to the base graph in the top row. As before, one half of the \gls{bic} is shown and the negative likelihoods. Lower values correspond to better performance.
+    }
+    \label{table:graph:extended:toV}
+\end{table}
+
+Due to the anatomical proximity of \glspl{lnl} III and IV to \gls{lnl} V it is possible that those levels, like \gls{lnl} II, may spread lymphatically into the \emph{posterior accessory pathway}. Therefore, in this section we will investigate how additional arcs from level III or from level IV to level V affect the model's performance.
+
+The quantitative results are given in \cref{table:graph:extended:toV} and compared to the base graph again. We can see that the \gls{bic} very weakly supports the base graph over the addition of a connection from \gls{lnl} III to V. This means that the improved fit, and hence the smaller expected negative log-likelihood, is very narrowly not worth the additional cost of $\ln{N} / 2 = \ln{550} / 2 = 3.15$. For the arc from \gls{lnl} IV to V there is even \emph{substantial} evidence against it with a difference in one half of the \gls{bic} of 1.6. 
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/extended-add35-prevalences.pdf_tex}
+    \caption[
+        Comparison of predicted prevalences for the model with an additional arc from LNL III to V
+    ]{
+        Histograms displaying the computed prevalences of the model with an added edge $\tilde{t}_{35}$ (shaded histograms) compared to both the base graph model's respective prevalence (hatched histograms) and the Beta posterior over the prevalence of the two scenarios as observed in the data (solid lines). The shown scenarios are
+        \begin{enumerate*}[label={(\alph*)}]
+            \item the co-involvemend of \gls{lnl} III and V (blue), as well as
+            \item the pattern where \gls{lnl} V is metastatic while level III is healthy (green)
+        \end{enumerate*}.
+    }
+    \label{fig:graph:extended:add35:prevalences}
+\end{figure}
+
+Despite this unfavorable outcome for these two graph edge candidates, we may still look at the predicted prevalences to see if there are noteworthy improvements to the fit w.r.t. the levels III and V. In \cref{fig:graph:extended:add35:prevalences}, we have plotted histograms of the predictions again and compared them to the Beta posterior over the true prevalence, based on the observations in the data. It shows that in the case of early T-stages, the predicted prevalence for both the patterns where \gls{lnl} V is involved with and without \gls{lnl} III shows no difference between the base graph and the graph with the added arc from level III to V. For late T-stages however, the latter model is much better at splitting the predicted prevalences for the two investigated scenarios.
+
+Although we did not plot it here, a similar figure for the scenarios with \gls{lnl} III's and \gls{lnl} V's overall involvement respectively shows no noteworthy difference between the models. 
+
+We have repeated the analysis for the graph that adds an edge from \gls{lnl} IV to V and display the respective histograms in \cref{fig:graph:extended:add45:prevalences}. Again, the predicted prevalence for the overall involvement of \glspl{lnl} IV and V does not change meaningfully and was hence not plotted here. The displayed scenarios are -- in analogy to \cref{fig:graph:extended:add35:prevalences} -- the patterns $X_\text{IV} \land X_\text{V}$, as well as $\lnot X_\text{IV} \land X_\text{V}$. We observe an improvement of how the former of these two scenarios is modelled, both for early and for late T-stages. The latter scenario's prediction reduces its overestimation slightly for the early T-stage case, compared to the base graph, but for late T-stages a similar reduction now leads to a very small underestimation of the observed prevalence.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/extended-add45-prevalences.pdf_tex}
+    \caption[
+        Comparison of predicted prevalences for the model with an additional arc from LNL IV to V
+    ]{
+        Plot of the prevalence for two different patterns of involvement:
+        \begin{enumerate*}[label={(\alph*)}]
+            \item Metastases in the \glspl{lnl} IV and V (orange), and
+            \item only \gls{lnl} V involved, while level IV is healthy (red)
+        \end{enumerate*}.
+        Both scenarios have been plotted for early T-stage (left) and late T-stage (right). The colored histograms depict the predicted values from the model with an added connection from \gls{lnl} IV to V, the gray, hatched histograms are the predictions by the base graph model for comparison and the solid curves depict the Beta posterior over the true prevalence, given the data.
+    }
+    \label{fig:graph:extended:add45:prevalences}
+\end{figure}
+
+\subsection{An edge from LNL II to VII}
+\label{subsec:graph:extended:IItoVII}
+
+\begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
+    The results displayed in this subsection are reproducible using the tagged commit \lytag{extended-add27-v1} that can be found in the repository \repolink{lynference}. Instructions on how to obtain the underlying data or reproduce the results altogether are given in that repository's \faIcon{info-circle} \texttt{README.md}.
+\end{tcolorbox}
+
+\begin{table}
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Graph} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
+        \hline
+        base graph & 1212.0 & 1180.4 & 1184.7 \\
+        + II $\rightarrow$ VII & 1214.9 & 1180.2 & 1184.4 \\
+        \hline
+    \end{tabular}
+    \caption[
+        Performance comparison of the base graph model and the graph with an added arc from LNL II to VII
+    ]{
+        The base graph model's performance metrics -- as before the \gls{bic}, negative maximum and negative expected log-likelihood -- tabulated against the model's respective values where we introduced a connection from \gls{lnl} II to VII.
+    }
+    \label{table:graph:extended:IItoVII}
+\end{table}
+
+The last one of the connection candidates in \cref{fig:graph:extended_graph} (green arcs) that we have not explored yet is the introduction of an edge from the most commonly involved \gls{lnl} down to one of the most rarely metastatic levels: \gls{lnl} VII.
+
+As usual, we start by comparing the performance metrics of the model where the connection is added to the baseline model: One half of the \gls{bic}, the negative maximum and the expected negative likelihood are plotted in \cref{table:graph:extended:IItoVII}. We can immediately see that there is no improvement in the expected or the maximum log-likelihood and hence the \gls{bic} indicates \emph{strong} support against adding this connection, due to the penalty of an additional parameter. When looking at this new parameter, we also see that its effect on the model's predictions is not hugely impactful with a value of only $\tilde{t}_{27} = 1.5 \pm 0.9 \%$.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/extended-add27-prevalences.pdf_tex}
+    \caption[
+        Prevalences as predicted by the model with an additional arc from LNL II to VII
+    ]{
+        Histograms displaying the predicted prevalences for the base graph (gray, hatched) and the model with a new arc from \gls{lnl} II to VII (colored). The shown scenarios are
+        \begin{enumerate*}[label={(\alph*)}]
+            \item co-involvement of \glspl{lnl} II and VII (blue), and
+            \item metastases in \gls{lnl} VII, while \gls{lnl} II is healthy
+        \end{enumerate*}.
+        The Beta posterior over the true prevalence, given data is plotted as solid line.
+    }
+    \label{fig:graph:extended:add27:prevalences}
+\end{figure}
+
+For completeness, we also show some predictions as for previous model comparisons in \cref{fig:graph:extended:add27:prevalences}. What is interesting to note in this figure, where we have plotted the prevalence comparisons for the scenarios $X_\text{VII} \land X_\text{II}$, and $X_\text{VII} \land \lnot X_\text{II}$, is that by adding a new arc, the inference process sacrificed accuracy in one aspect -- here predicting late T-stage co-involvement of both levels II and VII -- to improve another fit -- namely early T-stage involvement of \gls{lnl} II and VII. In this case, we would very likely prefer the predictions of the base graph. Both because it is a simpler model and because the slight overestimation of this kind of involvement is more conservative and hence considered ``safer'' than better accuracy in one respect and underestimation in another.
+
+To conclude this subsection, both the computed metrics and a visual inspection of the relevant predictions strongly suggest not to add a new edge from \gls{lnl} II to VII.
+
+\subsection{Multiple additional arcs}
+\label{subsec:graph:extended:multiple}
+
+\input{_contributions.tex}
+
+\begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
+    This subsection's results regarding graphs that add two new edges to the base graph can be downloaded or reproduced by using the following tags of the \repolink{lynference} repository:
+
+    \begin{itemize}
+        \item \textbf{II \faIcon{long-arrow-alt-right} I} and \textbf{III \faIcon{long-arrow-alt-right} V}: \lytag{extended-add21-add35-v1}
+        \item \textbf{II \faIcon{long-arrow-alt-right} I} and \textbf{IV \faIcon{long-arrow-alt-right} V}: \lytag{extended-add21-add45-v1}
+        \item \textbf{II \faIcon{long-arrow-alt-right} I} and \textbf{II \faIcon{long-arrow-alt-right} VII}: \lytag{extended-add21-add27-v1}
+    \end{itemize}
+
+    The results produced by \faIcon{user} \textbf{Luca Franceschetti} \cite{franceschetti_comparison_2022} cannot be reproduced using the linked repository.
+\end{tcolorbox}
+
+We have now, one by one, gone through possible extensions of what we considered a minimal graph for the six \glspl{lnl} I, II, III, IV, V and VII. For each possible additional arc we have assessed this new connection's performance, both visually and quantitatively using mainly the \acrlong{bic}. In this last subsection, we will investigate what effect adding two spread parameters at the same time to the base graph has on the model's performance.
+
+The results are listed in \cref{table:graph:extended:multi-arc}. They all represent an improvement over the base graph model, but the bulk of these improvements originates in the added connection from \gls{lnl} II to I, which, as we have seen in \cref{subsec:graph:extended:IandII}, yields $\text{BIC}/2 = 1208.2$ when added directly to the base graph. We have also seen in \cref{subsec:graph:extended:toV} that an arc from \gls{lnl} III to V results in almost the same value as the base graph, with $\text{BIC}_{\text{III}\rightarrow\text{V}}/2 = 1212.4$ and $\text{BIC}_\text{base}/2 = 1212.0$ respectively. Put together, the result in the second row of \cref{table:graph:extended:multi-arc} suggests that in our case we might be able to add the differences in the \gls{bic} when considering additional connections. E.g., 
+%
+\begin{equation}
+    \Delta\text{BIC}_{\begin{subarray}{l}\text{II}\rightarrow\text{I} \\ \text{III}\rightarrow\text{V}\end{subarray}} \approx \Delta\text{BIC}_{\text{II}\rightarrow\text{I}} + \Delta\text{BIC}_{\text{III}\rightarrow\text{V}}
+\end{equation}
+%
+where $\Delta\text{BIC}_x = \text{BIC}_\text{base} - \text{BIC}_x$. If we substitute the definition of the \gls{bic} (see \cref{eq:bic}) into the equation above, remember that the base graph model had $k = 9$ parameters and every arc adds another one, then we get
+%
+\begin{equation}
+    \begin{aligned}
+        \ln{\hat{\mathcal{L}}_{\begin{subarray}{l}\text{II}\rightarrow\text{I} \\ \text{III}\rightarrow\text{V}\end{subarray}}} - \ln{\hat{\mathcal{L}}_\text{base}} - \ln{N} &\approx \ln{\hat{\mathcal{L}}_{\text{II}\rightarrow\text{I}}} + \ln{\hat{\mathcal{L}}_{\text{III}\rightarrow\text{V}}} - 2 \cdot \ln{\hat{\mathcal{L}}_\text{base}} - \ln{N} \\
+        \Rightarrow \ln{\hat{\mathcal{L}}_{\begin{subarray}{l}\text{II}\rightarrow\text{I} \\ \text{III}\rightarrow\text{V}\end{subarray}}} &\approx \ln{\hat{\mathcal{L}}_{\text{II}\rightarrow\text{I}}} + \ln{\hat{\mathcal{L}}_{\text{III}\rightarrow\text{V}}} - \ln{\hat{\mathcal{L}}_\text{base}} \\
+        &\approx \ln{\hat{\mathcal{L}}_\text{base}} + \Delta\ln{\hat{\mathcal{L}}_{\text{II}\rightarrow\text{I}}} + \Delta\ln{\hat{\mathcal{L}}_{\text{III}\rightarrow\text{V}}}
+    \end{aligned}
+\end{equation}
+%
+This implies that adding e.g. the pathway from \gls{lnl} II to I has almost no impact on the spread probability rates to and from the \glspl{lnl} III or V, otherwise, introducing a new connection between those levels would not have the same effect as it had on the base model. In other words, it hints at a posterior distribution over the parameters with very few correlated variables. We have already seen this in the distribution of samples in \cref{fig:graph:extended:base:corner}, showing almost no interdependence among the parameters.
+
+\begin{table}
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Graphs} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
+        \hline
+        base graph & 1212.0 & 1180.4 & 1184.7 \\
+        + II $\rightarrow$ I + III $\rightarrow$ V & 1208.4 & 1170.5 & 1174.7 \\
+        + II $\rightarrow$ I + IV $\rightarrow$ V & 1209.7 & 1171.8 & 1176 \\
+        + II $\rightarrow$ I + II $\rightarrow$ VII & 1210.7 & 1172.8 & 1177.5 \\
+        \hline
+    \end{tabular}
+    \caption[
+        Comparison of graphs that add two new arcs to the base graph
+    ]{
+        Metrics for comparing lymphatic progression models that are based on representations of the lymphatic network that add two pathways of spread to the base graph as defined in \cref{subsec:graph:extended:base}.
+    }
+    \label{table:graph:extended:multi-arc}
+\end{table}
+
+We can now also compare results for graphs with two additional arcs to the results of Franceschetti \cite{franceschetti_comparison_2022}, who used a different strategy to compare graph structures underlying the model: First, he compared ten different graphs that all had two more connections than what we defined as the base graph, instead of adding arcs one after the other, as we have done up to this point. Furthermore, he used a different metric to compare the individual models, namely the cumulative out-of-sample log-likelihood marginalized over the spread parameters:
+%
+\begin{equation} \label{eq:cross_validation}
+    \begin{aligned}
+        \text{oosllh} &\coloneqq \sum_{k=1}^K{\ln{ \Probofgiven{\boldsymbol{\mathcal{D}}_k}{\mathcal{M}_{\setminus k}} }} \\
+        &\approx \sum_{k=1}^K{\ln{ \left[ \frac{1}{S} \sum_{\theta \in \boldsymbol{\hat{\theta}}_{\setminus k}}{ \prod_{d \in \boldsymbol{\mathcal{D}}_k}{ \Probofgiven{d}{\theta} } } \right] }}
+    \end{aligned}
+\end{equation}
+%
+where $K$ is the number of folds the data is split into. Correspondingly, $\boldsymbol{\mathcal{D}}_k$ is the $k$-th of these partitions and $\mathcal{M}_{\setminus k}$ is the model trained on all data except the $k$-th fold. The \gls{mcmc} approximation in the second line introduces the samples $\boldsymbol{\hat{\theta}}_{\setminus k}$ that were drawn during a sampling using all data except $\boldsymbol{\mathcal{D}}_k$.
+
+This strategy of assessing a model's performance is called \gls{cv} and it is another method aimed at avoiding overfitting. When the model achieves a near perfect fit on the \emph{training data} $\boldsymbol{\mathcal{D}}_{\setminus k}$, it is unlikely to generalize well to the held-out \emph{testing data} $\boldsymbol{\mathcal{D}}_k$, effectively acting as a complexity penalty. Beyond that, Fong et al. \cite{fong_marginal_2019} even showed a profound connection between exhaustive leave-$m$-out \gls{cv}, when averaged over all $m \leq N$, and the model evidence, as they are formally equivalent. This does not have significant practical implications since this exhaustive way of performing \gls{cv} is even more expensive than using \acrlong{ti} and will hence probably never be used. It does however illustrate how many metrics in the context of Bayesian model comparison are profoundly related.
+
+In \cref{fig:graph:extended:all_graphs} we have ordered all graphs that were assessed regarding their performance either by us or by Franceschetti \cite{franceschetti_comparison_2022} and indicated where they stand w.r.t. the \gls{bic} and/or the $\text{oosllh}$. Reassuringly, we find that the two methods of model comparison agree perfectly. The models based on graphs that were compared both by us and by him receive the same ordering based on the \gls{bic} and their \gls{cv} score as defined in \cref{eq:cross_validation}. Qualitatively, how all other assessed graphs ranked compared to each other is consistent as well. E.g., models where the edge from \gls{lnl} II to I was added performed consistently better that the ones where this arc was flipped, both in our experiments and in Franceschetti's work. Not adding any connection between these two \glspl{lnl} scored even worse across experiments. Also consistent with our findings is that adding a spread connection from \gls{lnl} II to level VII is discouraged: It can be found both in our worst performing graph as well as Franceschetti's.
+
+\begin{sidewaysfigure}
+    \centering
+    \def\svgwidth{0.8\textwidth}
+    \input{figures/graph-comparison.pdf_tex}
+    \caption[
+        All investigated graphs ordered by their performances
+    ]{
+        Schematics of all investigated graphs modelling the \glspl{lnl} I, II, III, IV, V and VII. The axis at the top indicates the graph's performance w.r.t. the \gls{bic}, while the axis on the bottom shows the $\text{oosllh}$, which was investigated by Franceschetti \cite{franceschetti_comparison_2022}, who only considered graphs adding two connections to the base graph. For both metrics larger values (further to the right) indicate a better performance.
+    }
+    \label{fig:graph:extended:all_graphs}
+\end{sidewaysfigure}
+
+\subsection{Conclusion}
+\label{subsec:graph:extended:conclusion}
+
+In this section we have extensively discussed how an anatomically motivated \gls{dag} that represents the lymphatic network of the head and neck region and underlies our probabilistic model for \gls{lnl} involvement prediction can be extended to improve that model's performance, while avoiding the pitfalls of overfitting.
+
+We have found the most significant improvements to originate from the addition of an edge from \gls{lnl} II to I, while all other considered arcs did not show improvements in the model fit clearly justifying the introduction of a new parameter. The only connection, except II $\rightarrow$ I, for which the \gls{bic} did not show a strong objection, was the edge from \gls{lnl} III to V. Incidentally, both the strongly supported arc II $\rightarrow$ I, as well as this less convincing edge III $\rightarrow$ V were present in the best performing graph investigated by Franceschetti \cite{franceschetti_comparison_2022}. The latter of these connections led to a significantly better prediction of late T-stage involvement in \gls{lnl} V, as can be seen in \cref{fig:graph:extended:add35:prevalences}, which may clinically justify keeping it in the finalized model.
+
+The benefits of new parametrized spread pathways between the \glspl{lnl} IV and V, as well as II and VII were very small or even negligible and will hence not be used by future models. Their effects even introduced dangerous underestimations of involvements, as could be seen in the right panel of \cref{fig:graph:extended:add27:prevalences}.
+
+Going forward, and based on the experiments and comparisons of this section, we decided to represent the lymphatic progression in \acrlong{opscc} using the graph highlighted in \cref{fig:graph:extended:all_graphs}. It contains the unequivocally supported arc II $\rightarrow$ I and the edge III $\rightarrow$, since it does improve the underestimation of involvement in some cases and is not objected by our quantitative analysis.
+
+\end{document}

@@ -1,0 +1,154 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{
+    {\subfix{./figures/}}
+}
+
+
+\begin{document}
+
+\section{The simplest graphs}
+\label{sec:graph:simple}
+
+Before turning to the full problem where we want to find the best graph(s) connecting all clinically interesting \glspl{lnl} we have data on, let us consider a much simpler ``toy problem'': In this section we will only look at \glspl{lnl} II and III, which are the two most frequently involved levels.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/simple-graphs.pdf_tex}
+    \caption[
+        Possible graphs for modelling unilateral spread in \glspl{lnl} II and II
+    ]{
+        All possible graphs that could represent the lymphatic flow from a primary tumor in the oropharynx to the \glspl{lnl} II and III, as well as among them.
+        \begin{enumerate*}[label={(\arabic*)}]
+            \item On the left, no correlations between the involvements of the two levels can be modelled.
+            \item The next graph assumes the anatomically most sensible spread direction from \gls{lnl} II to III, while
+            \item flips this connection.
+            \item The rightmost graph allows for spread among \gls{lnl} II and III in both directions.
+        \end{enumerate*}}
+    \label{fig:graph:simple}
+\end{figure}
+
+Anatomically, \gls{lnl} II sits directly above \gls{lnl} III, so we would expect the direction of lymphatic spread to follow the pull of gravity and build the graph as displayed by the second graph from the left in \cref{fig:graph:simple}. However, we need to keep in mind that our model -- although anatomically motivated and designed to represent the mechanics of lymphatic spread -- is ultimately only capable of modelling correlations and does not necessarily allow us to draw conclusions about the causal relations. In other words, we need to be careful not to trust our abstract representation of the lymphatic network too much, as that might be misleading.
+
+We can look back at \acrlongpl{bn}, as introduced in \cref{sec:previous_work:bayesian_network}. They represent factorizations of joint probability distributions of a number of \glspl{rv}. In our simplified case we want to find the factorizations of the joint which are all visualized in the three \glspl{dag} on the left of \cref{fig:graph:simple}:
+%
+\begin{equation}
+    \Probofgiven{X_\text{II}, X_\text{III}}{T=1} = \begin{cases}
+        \Probofgiven{X_\text{II}}{T=1} \Probofgiven{X_\text{III}}{T=1} \\
+        \Probofgiven{X_\text{III}}{X_\text{II}, T=1} \Probofgiven{X_\text{II}}{T=1} \\
+        \Probofgiven{X_\text{II}}{X_\text{III}, T=1} \Probofgiven{X_\text{III}}{T=1}
+    \end{cases}
+\end{equation}
+%
+The rightmost graph in \cref{fig:graph:simple} cannot represent a \gls{bn} and hence also no valid factorization, since it is not acyclic. In the \gls{hmm} model however, this is perfectly fine, since in that case different \glspl{rv} are connected across time-steps, which resolves the cycle.
+
+\begin{table}
+    \centering
+    \begin{tabular}{|c|cc|}
+        \hline
+        Number & $X_\text{II}$ & $X_\text{III}$ \\
+        \hline
+        20 & 0 & 0 \\
+        40 & 1 & 0 \\
+         0 & 0 & 1 \\
+        40 & 1 & 1 \\
+        \hline
+    \end{tabular}
+    \caption{Mockup dataset $\boldsymbol{\mathcal{D}}$ for illustrating the ambiguity between the two possible spread directions from and two the \glspl{lnl} II and III.}
+    \label{table:graph:simple:mockup}
+\end{table}
+
+Let $\boldsymbol{\mathcal{D}}$ now be a made-up dataset of 100 patients. Let us say 80 of those have metastases in \gls{lnl} II and of those 80 patients, 40 also harbor metastases in \gls{lnl} III. See also \cref{table:graph:simple:mockup} for how this data is supposed to look like. This constructed case is so simple that we can easily go through it in our heads: For the leftmost graph, this would lead to the maximum likelihood estimate of the spread probabilities from the tumor to the levels taking on the values $b_\text{II} = 80\%$ and $b_\text{III} = 40\%$. This would describe the prevalences of involvement for each level separately quite well, but it would also predict a probability of
+%
+\begin{equation}
+    \begin{aligned}
+        \Probofgiven{X_\text{II}=0, X_\text{III}=1}{T=1} &= \Probofgiven{X_\text{II}=0}{T=1} \Probofgiven{X_\text{III}=1}{T=1} \\
+        &= \left( 1 - b_\text{II} \right) b_\text{III} = 8\%
+    \end{aligned}
+\end{equation}
+%
+but the corresponding pattern of involvement is never observed in the data.
+
+Looking at the second graph from the left in \cref{fig:graph:simple}, the best estimate for the spread parameters would be $b_\text{II} = 80\%$, $b_\text{III} = 0\%$ and $t_{\text{II} \rightarrow \text{III}} = 50\%$. This describes the data perfectly: The probabilities of all four possible patterns of involvement exactly match the prevalence in the data.
+
+Lastly, for the third graph, where we have the connection $\text{III} \rightarrow \text{II}$ instead of the other way around, the max. likelihood estimate for the respective spread parameters is $b_\text{III} = 40\%$, $b_\text{II} = 40\% / (1 - b_\text{III}) = 2/3$ and $t_{\text{III} \rightarrow \text{II}} = 100\%$. This third graph describes the data $\boldsymbol{\mathcal{D}}$ just as good as the second one, and we have no way of telling which is more or less likely to be the correct model.
+
+Although this clearly is a constructed example, the illustrated ambiguity exists in real-world data and for the \gls{hmm} model as well. To show this, in the next section, we give the results of an experiment using real data on the involvement of \gls{opscc} patients from two different institutions.
+
+\subsection{Comparisons}
+\label{subsec:graph:simple:comp}
+
+\input{\subfix{../_databox.tex}}
+\label{box:graph:data}
+
+\input{_simple_reproducibility.tex}
+
+In this experiment, we performed one \gls{ti} round for each of the  four graphs in \cref{fig:graph:simple}, consisting of 64 inverse temperature $\beta$ steps spaced according to a fifth order power rule. This means that
+%
+\begin{equation}
+    \beta_i = \left( \frac{i - 1}{64 - 1} \right)^5
+\end{equation}
+%
+At each point of this \gls{ti} schedule, we ran the sampling for 1000 steps, simultaneously drawing $20 \cdot k$ burn-in samples, where $k$ is the number of dimensions of the model. This dimensionality $k = 3$ for the model without any connections between \gls{lnl} II and III (graph 1 in \cref{fig:graph:simple}), $k = 4$ for the models with one connection between these \glspl{lnl} (graphs 2 and 3 in \cref{fig:graph:simple}) and $k = 5$ for the model connecting the two levels in both directions.
+
+After the burn-in phase, we drew another $250 \cdot 20 \cdot k$ samples and discarded every fifth. With the remaining $1000 \cdot k$ samples, we computed the log-likelihood 1000 times for each $\beta_i$ and were therefore able to calculate 1000 \gls{ti} estimates of the evidence, which could then be used to compute the expected evidence and its standard deviation. The log-evidence, along with \gls{bic} has been printed in \cref{table:graph:simple:comp}.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/simple-prevalences.pdf_tex}
+    \caption[
+        Predicted prevalences of the models based on the simple graphs
+    ]{
+        Prevalences of involvement as histograms, predicted by the models based on the four different graphs (four rows respectively), computed for all possible involvement scenarios 
+        (\begin{enumerate*}
+            \item[(green)] all \glspl{lnl} are healthy,
+            \item[(orange)] only \gls{lnl} II harbors metastases,
+            \item[(blue)] vice versa, only \gls{lnl} II is metastatic and lastly,
+            \item[(red)] both \glspl{lnl} are involved 
+        \end{enumerate*})
+        and early (left column), as well as late T-stage (right column). The corresponding data prevalence is plotted as a Beta posterior in the same color as the prediction. The legend in the top row shows how many patients of the respective T-stage showed the involvement of interest.
+    }
+    \label{fig:graph:simple:prevalenes}
+\end{figure}
+
+\begin{table}
+    \centering
+    \begin{tabular}{|l|l|l|l|l|l|}
+        \hline
+        \textbf{Model} & \textbf{-- log-evidence} & \textbf{BIC/2} & \textbf{-- max. llh} & \textbf{-- mean llh} \\
+        \hline
+        Graph 1 & 661.2 $\pm$ 1.0 & 662.1 & 652.64 & 654.1 \\ 
+        Graph 2 & 658.9 $\pm$ 1.1 & 660.7 & 648.12 & 650.1 \\
+        Graph 3 & 657.4 $\pm$ 1.0 & 661.0 & 648.42 & 650.1 \\ 
+        Graph 4 & 658.8 $\pm$ 1.1 & 663.9 & 648.1 & 649.9 \\ 
+        \hline
+    \end{tabular}
+    \caption[
+        Comparison of performance metrics for four different simple graphs
+    ]{
+        Comparison of performance metrics for the models based on the four different graphs in \cref{fig:graph:simple}. Displayed are the computed values for the log-evidence (computed by performing \acrlong{ti}), the \gls{bic}, the maximum and expected likelihood for the last step in the \gls{ti} schedule $\beta_{64} = 1$. Note that we give one half of the \gls{bic} and the negative of the other metrics to bring all values into a similar range and get rid of all the negative signs. Therefore, smaller values correspond to a better model performance.
+    }
+    \label{table:graph:simple:comp}
+\end{table}
+
+Both \cref{table:graph:simple:comp} and \cref{fig:graph:simple:prevalenes} show that graph 1 (\cref{fig:graph:simple}, left) is not able to capture the observed data very well. This is simply because it lacks any mechanism to model the correlation between \gls{lnl} II's and \gls{lnl} III's involvement. Therefore, not only are the predicted prevalences off compared to the data prevalences, but also the log-evidence is -- with a difference of 2.32 to the next worst model -- between ``substantial'' and ``strong'', according to \cref{table:bayes_factor}. This is despite the fact that it has the fewest parameters, which gives the model an advantage, since the evidence automatically penalizes complex models (Occam's razor, see \cref{eq:ti:acc_vs_kl}).
+
+As indicated during the thought experiment using the \acrlong{bn}, the graphs no. 2 and 3 present an ambiguity: They both seem to model the data almost equally well, which can be seen in the mean and maximum likelihood in \cref{table:graph:simple:comp}, as well as in the good fits of the predicted prevalences in the second and thirds row in \cref{fig:graph:simple:prevalenes}. The log-evidence in this table shows a barely ``substantial'' preference, surprisingly for the graph that is less intuitive from an anatomical point of view. Finally, when connecting \glspl{lnl} II and III in both directions, the predictions do get slightly -- though not noticeably in \cref{fig:graph:simple:prevalenes} -- better, but the penalty for the increased model complexity negates this advantage.
+
+Lastly, we want to point to the \gls{bic} as a metric for comparing models: From \cref{table:graph:simple:comp} it seems as if the \gls{bic} -- or rather the negative one half of the \gls{bic} -- is not always a reliable approximation of the log-evidence. We believe this is due to the shape of the posterior distribution over the parameters, which we have plotted for the first graph (\cref{fig:graph:simple:corner_nocon}) and the last (\cref{fig:graph:simple:corner_both}).
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/simple-corner.pdf_tex}
+    \caption[
+        Corner plots of the graphs no. 1 and no. 4
+    ]{
+        Corner plot of the distribution of the sampled parameters for the model based on graph 4 (blue) and for the model based on graph 1 (green). A corner plot represents shows all 1D and all 2D marginals of any $n$-dimensional distribution aligned.
+    }
+    \label{fig:graph:simple:corner}
+\end{figure}
+
+\end{document}

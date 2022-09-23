@@ -1,0 +1,76 @@
+stages:
+  convert-to-pdf:
+    foreach:
+    - simple-graphs
+    - simple-prevalences
+    - extended-graph
+    - extended-base-corner
+    - extended-conn12-low-prevalences
+    - extended-conn12-high-prevalences
+    - extended-add35-prevalences
+    - extended-add45-prevalences
+    - extended-add27-prevalences
+    - graph-comparison
+    do:
+      cmd: >
+        inkscape
+        --without-gui
+        --file=${item}.svg
+        --export-pdf=${item}.pdf
+        --export-latex
+      deps:
+      - ${item}.svg
+      outs:
+      - ${item}.pdf:
+          cache: false
+      - ${item}.pdf_tex:
+          cache: false
+
+  simple-prevalences:
+    cmd: python simple-prevalences.py
+    deps:
+    - ../data/simple-IIItoII-v1-prevalences.hdf5
+    - ../data/simple-IItoIII-v1-prevalences.hdf5
+    - ../data/simple-both-v1-prevalences.hdf5
+    - ../data/simple-nocon-v1-prevalences.hdf5
+    - simple-prevalences.py
+    outs:
+    - simple-prevalences.svg
+
+  simple-corners:
+    cmd: python simple-corner.py
+    deps:
+    - simple-corner.py
+    - ../data/simple-both-v1-samples.hdf5
+    - ../data/simple-nocon-v1-samples.hdf5
+    outs:
+    - simple-nocon-corner.svg
+    - simple-both-corner.svg
+
+  extended-conn12-prevalences:
+    foreach:
+    - low
+    - high
+    do:
+      cmd: python extended-conn12-${item}-prevalences.py
+      deps:
+      - extended-conn12-${item}-prevalences.py
+      - ../data/extended-base-v1-prevalences.hdf5
+      - ../data/extended-add12-v1-prevalences.hdf5
+      - ../data/extended-add21-v1-prevalences.hdf5
+      outs:
+      - extended-conn12-${item}-prevalences.svg
+
+  extended-prevalences:
+    foreach:
+    - add35
+    - add45
+    - add27
+    do:
+      cmd: python extended-${item}-prevalences.py
+      deps:
+      - extended-${item}-prevalences.py
+      - ../data/extended-base-v1-prevalences.hdf5
+      - ../data/extended-${item}-v1-prevalences.hdf5
+      outs:
+      - extended-${item}-prevalences.svg
