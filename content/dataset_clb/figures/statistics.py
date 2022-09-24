@@ -11,7 +11,7 @@ from lyscripts.plot.histograms import get_size
 
 
 DATAFILE = Path("../data/2021-clb-oropharynx-enhanced.csv")
-OUTPUT = Path(__file__).with_suffix(".svg")
+OUTPUT = Path(__file__).with_suffix(".png")
 
 # barplot settings
 WIDTH, SPACE = 0.8, 0.4
@@ -174,8 +174,8 @@ if __name__ == "__main__":
     ax["contra midext"].set_ylabel("contralateral involvement [%]")
     ax["contra midext"].legend()
 
-    num_ipsiIII = len(max_llh_data["ipsi", "III"] == True)
-    num_noipsiIII = len(max_llh_data["ipsi", "III"] != True)
+    num_ipsiIII = (max_llh_data["ipsi", "III"] == True).sum()
+    num_noipsiIII = (max_llh_data["ipsi", "III"] != True).sum()
     
     contra_ipsiIII = (100 / num_ipsiIII) * (
         max_llh_data["contra"] == True
