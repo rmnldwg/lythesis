@@ -1,15 +1,15 @@
 stages:
   plots-sens-spec-analysis:
-    cmd: python sens_spec_analysis.py
+    cmd: python sens_spec_plot.py
     deps:
-    - sens_spec_analysis.py
+    - sens_spec_plot.py
     - ../data/2021-clb-oropharynx.csv
     outs:
-    - sens_spec_analysis.svg
+    - sens_spec_plot.svg
 
   convert:
     foreach: 
-    - sens_spec_analysis
+    - sens_spec_plot
     do:
       cmd: >
         inkscape

@@ -1,0 +1,35 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{
+    {\subfix{./figures/}}
+}
+
+\begin{document}
+
+\section{Materials and methods}
+\label{sec:dataset_clb:methods}
+
+\subsection{Patient cohort}
+\label{subsec:dataset_clb:methods:cohort}
+
+\Citeauthorandlink{bauwens_prevalence_2021} reviewed the medical records of 395 patients with \gls{opscc} treated between 2014 and 2018 at the \faIcon{hospital}~\textbf{
+Centre Hospitalier} (Valence, France), the \faIcon{hospital}~\textbf{Centre Marie Curie} (Valence, France) or the \faIcon{hospital}~\textbf{Centre Léon Bérard} (Lyon, France). Patients were selected from the medical database by searching for the keywords ``oropharynx'', ``SCC'' and ``lymph node dissection''. Consequently, only patients who received neck dissection were included whereas patients treated with definitive (chemo)radiotherapy were not. They further excluded patients with non-retrieveable \gls{hpv}-status, prior head and neck cancer, distant metastases at diagnosis, prior neck surgery or radiotherapy, use of induction chemotherapy as a treatment modality, and patients with a carcinoma of unknown primary. These inclusion and exclusion criteria resulted in a dataset of 263 patients.
+
+\subsection{Neck dissection and pathological \acrshort{lnl} involvement}
+\label{subsec:dataset_clb:methods:dissection}
+
+All patients underwent a neck node dissection, unilaterally or bilaterally. On patients with clinically negative \glspl{lnl} (cN0) a unilateral selective neck dissection removing the levels II, III and IV was performed in most cases. When ipsilateral neck nodes were involved clinically, a unilateral radical neck dissection was performed, removing \glspl{lnl} I to V. If additionally, the tumor was either close to the midline or a large T3 or T4 tumor, an additional selective neck node dissection was performed on the contralateral side. In patients with clinically positive bilateral neck nodes or in patients with clinically positive contralateral nodes, a bilateral neck node dissection was typically performed; in the latter case, a selective neck node dissection or a modified radical neck node dissection was performed on the contralateral side. In all 3 centers, for selective and radical modified neck dissection procedures, the surgeons were used to send the dissected levels separately to the pathologist. For radical neck dissection, the dissected levels were sent to the pathologist in one specimen and identification of the levels were done using suture of various colors. For curation of this dataset, the number of examined lymph nodes and the number of metastatic lymph nodes per level was extracted from the pathology reports.
+
+\subsection{Clinical \acrshort{lnl} involvement and tumor characteristics}
+\label{subsec:dataset_clb:methods:involvement}
+
+Prior to treatment all patients received a fiber-optic head and neck examination, an endoscopy under general anesthesia with biopsy of all suspected sites, a head and neck \gls{ct} or \gls{mri}, and a chest \gls{ct} or a \gls{fdg-pet} scan to detect second primaries or metastases in the lung. All patients were discussed in the multidisciplinary tumor board, staged, and then their treatment strategy was decided. The primary tumor location was defined according to IARC ICD-O-3 \cite{fritz_international_2000}. Clinical and pathological TNM staging was reported using TNM-7 (2009) and TNM-8 (2017) \cite{brierley_tnm_2017}.
+
+A clinically positive lymph node was defined by either
+
+\begin{enumerate}[label={\alph*)}]
+    \item palpable node(s) more than 1 cm in their largest dimensions
+    \item lymph node(s) visible on \gls{ct}- or \gls{mri}-scan with the smallest diameter of 10 mm or more, a spherical shape, a necrotic area, matted nodes, or nodes with signs of extra-capsular infiltration
+\end{enumerate}
+
+\end{document}

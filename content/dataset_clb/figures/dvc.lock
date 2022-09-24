@@ -1,17 +1,17 @@
 schema: '2.0'
 stages:
   plots-sens-spec-analysis:
-    cmd: python sens_spec_analysis.py
+    cmd: python sens_spec_plot.py
     deps:
     - path: ../data/2021-clb-oropharynx.csv
       md5: d40c0a1ae967a6983d60a0a809cf3972
       size: 92742
-    - path: sens_spec_analysis.py
+    - path: sens_spec_plot.py
       md5: 87790fa3367f033509cb29fc9c7cd23e
       size: 6059
     outs:
-    - path: sens_spec_analysis.svg
-      md5: 53a72947e3eea72501bd3f26f28c7a36
+    - path: sens_spec_plot.svg
+      md5: f6f372cd009c735127e7cba76b987e26
       size: 130026
   convert@sens_spec_analysis:
     cmd: "inkscape --without-gui --file=sens_spec_analysis.svg --export-pdf=sens_spec_analysis.pdf\
@@ -27,3 +27,17 @@ stages:
     - path: sens_spec_analysis.pdf_tex
       md5: 9825205240e546308e860746d9ffaf65
       size: 2077
+  convert@sens_spec_plot:
+    cmd: "inkscape --without-gui --file=sens_spec_plot.svg --export-pdf=sens_spec_plot.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: sens_spec_plot.svg
+      md5: f6f372cd009c735127e7cba76b987e26
+      size: 130026
+    outs:
+    - path: sens_spec_plot.pdf
+      md5: 7c5e87cfa71bee7b6e3cad53f9e7f5e8
+      size: 155434
+    - path: sens_spec_plot.pdf_tex
+      md5: b540883e8c81d73659f89f44b17bb9ab
+      size: 2069
