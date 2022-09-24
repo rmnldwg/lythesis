@@ -11,7 +11,7 @@ stages:
       size: 6059
     outs:
     - path: sens_spec_plot.svg
-      md5: f6f372cd009c735127e7cba76b987e26
+      md5: ba0b6427b8ff6351583328b0c00fc4c7
       size: 130026
   convert@sens_spec_analysis:
     cmd: "inkscape --without-gui --file=sens_spec_analysis.svg --export-pdf=sens_spec_analysis.pdf\
@@ -32,12 +32,63 @@ stages:
       \ --export-latex\n"
     deps:
     - path: sens_spec_plot.svg
-      md5: f6f372cd009c735127e7cba76b987e26
+      md5: 3f55cb96ebe5a1f05f5836bf158f4903
       size: 130026
     outs:
     - path: sens_spec_plot.pdf
-      md5: 7c5e87cfa71bee7b6e3cad53f9e7f5e8
+      md5: 505446ccb47e90394d4663075e27912c
       size: 155434
     - path: sens_spec_plot.pdf_tex
       md5: b540883e8c81d73659f89f44b17bb9ab
       size: 2069
+  plots@statistics:
+    cmd: python statistics.py
+    deps:
+    - path: ../data/2021-clb-oropharynx-enhanced.csv
+      md5: ca0cca1e5bb38647d399486cfba77e62
+      size: 113393
+    - path: statistics.py
+      md5: 01a1d604f54251001a0d1e7a8b6b6fb2
+      size: 9835
+    outs:
+    - path: statistics.svg
+      md5: 8f2ca6b5d7d508c30cd676b1e4b02463
+      size: 119028
+  plots@sens_spec_plot:
+    cmd: python sens_spec_plot.py
+    deps:
+    - path: ../data/2021-clb-oropharynx-enhanced.csv
+      md5: ca0cca1e5bb38647d399486cfba77e62
+      size: 113393
+    - path: sens_spec_plot.py
+      md5: 87790fa3367f033509cb29fc9c7cd23e
+      size: 6059
+    outs:
+    - path: sens_spec_plot.svg
+      md5: 3f55cb96ebe5a1f05f5836bf158f4903
+      size: 130026
+  convert@statistics:
+    cmd: "inkscape --without-gui --file=statistics.svg --export-pdf=statistics.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: statistics.svg
+      md5: 8f2ca6b5d7d508c30cd676b1e4b02463
+      size: 119028
+    outs:
+    - path: statistics.pdf
+      md5: b2558b1ba69792c8062a568581388027
+      size: 148973
+    - path: statistics.pdf_tex
+      md5: 9d274af715254a3e8d6ef19ceb06e9f0
+      size: 2061
+  crop-figure:
+    cmd: "sed statistics.pdf_tex -e '56s/.*/    \\\\put(0,0){\\\\includegraphics[width=\\\
+      \\unitlength,page=1,trim=13mm 20mm 15mm 30mm]{statistics.pdf}}%/' > statistics_crop.pdf_tex\n"
+    deps:
+    - path: statistics.pdf_tex
+      md5: 9d274af715254a3e8d6ef19ceb06e9f0
+      size: 2061
+    outs:
+    - path: statistics_crop.pdf_tex
+      md5: 1729c6a3fed2888f48a051094d1e59a7
+      size: 2086

@@ -1,0 +1,70 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{
+    {\subfix{./figures/}}
+}
+
+\begin{document}
+
+\section{Analysis}
+\label{sec:dataset_clb:analysis}
+
+\subsection{\acrshort{lnl} involvement patterns}
+\label{subsec:dataset_clb:analysis:patterns}
+
+To be able to compare some aspects of this dataset to what we extracted at our institution, in \cref{fig:dataset_clb:statistics} we recreated the same figure as in \cref{sec:dataset_usz:results}, just using the data we received from the \acrlong{clb}.
+
+At first glance, this cohort does not seem to differ fundamentally from ours, although the general prevalence of involvement appears slightly lower, e.g. in the ipsilateral \gls{lnl} II where our data reported 78\% overall and this cohort shows only 68\%. Contralateral involvement in this level is also lower with 16\% in our data and 10\% in theirs. Noticeably, the prevalences of involvement for \glspl{lnl} V and VII seem switched: In our case it was 5\% and 10\% for these levels respectively, but the \gls{clb} data shows 7\% and 3\%.
+
+In the second row, we find that both for our and for their data a tumor extending over the mid-sagittal plane or involvement of ipsilateral \gls{lnl} III are similarly correlated to an increased frequency of contralateral involvement.
+
+In the third row of \cref{fig:dataset_clb:statistics} the data by \citeauthorandlink{bauwens_prevalence_2021} shows significantly less involvement in the case of \gls{hpv}-negative patients. The patient cohort extracted at the \gls{usz} even showed no difference in the prevalence of ipsilateral involvement when comparing late T-stage patients that are \gls{hpv}$+$ or \gls{hpv}$-$.
+
+The observed differences between these two datasets reporting per-level involvement of more than 250 \gls{opscc} patients each might stem from a combination of factors:
+
+\begin{enumerate}
+    \item Different demographics in Switzerland and France
+    \item An implicitly different sampling of the patients. The data from our colleagues in France contains relatively more early T-stage patients (67\% or 176 out of 263), while in our data we observe a roughly equal amount of early (52\% or 150 out of 287) and late T-stage patients.
+\end{enumerate}
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/statistics_crop.pdf_tex}
+    \caption[
+        Statistics that characterize the cohort of OPSCC patients extracted at the CLB
+    ]{
+        Plot of the same statistics as in \cref{fig:dataset_usz:statistics}, but for the \gls{clb} dataset, instead of the dataset we extracted at the \gls{usz}:
+        \begin{enumerate*}[label={(\alph*)}]
+            \item Contralateral and
+            \item ipsilateral prevalence of \gls{lnl} involvement for the whole patient cohort and stratified according to early (T1/T2) versus late (T3/T4) T-category
+        \end{enumerate*}.
+        Contralateral \gls{lnl} involvement stratified according to
+        \begin{enumerate*}[label={(\alph*)},start=3]
+            \item midsagittal plan extension and
+            \item involvement of ipsilateral level III
+        \end{enumerate*}.
+        Ipsilateral \gls{lnl} involvement stratified according to HPV status for
+        \begin{enumerate*}[label={(\alph*)},start=5]
+            \item T1/T2 tumors and
+            \item T3/T4 tumors
+        \end{enumerate*}.
+    }
+    \label{fig:dataset_clb:statistics}
+\end{figure}
+
+\subsection{Sensitivity and specificity}
+\label{subsec:dataset_clb:analysis:sens_spec}
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/sens_spec_plot.pdf_tex}
+    \caption[
+        Sensitivity and specificity per LNL in the CLB dataset
+    ]{
+        Posterior Beta distributions over the specificities (left column) and sensitivities (right column) per reported \gls{lnl} (respective rows) in the \gls{clb} dataset. To compute the sensitivities and specificities, we compared the clinical diagnosis with what was pathologically reported after a \gls{nd} was performed.
+    }
+\end{figure}
+
+\end{document}

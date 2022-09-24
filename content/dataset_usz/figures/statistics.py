@@ -11,16 +11,16 @@ from matplotlib import gridspec
 from lyscripts.plot.histograms import get_size
 
 
-DATAFILE = Path("../data/2021-clb-oropharynx-enhanced.csv")
+DATAFILE = Path("../data/2021-usz-oropharynx-enhanced.csv")
 OUTPUT = Path(__file__).with_suffix(".svg")
 
 # barplot settings
 WIDTH, SPACE = 0.8, 0.4
-LABELS  =          ["Ia"   , "Ib"   , "II" , "III", "IV" , "V"  , "VII"]
-WIDTHS  = np.array([WIDTH/2, WIDTH/2, WIDTH, WIDTH, WIDTH, WIDTH, WIDTH])
+LABELS  =          ["I"  , "IIa"  , "IIb"  , "III", "IV" , "V"  , "VII"]
+WIDTHS  = np.array([WIDTH, WIDTH/2, WIDTH/2, WIDTH, WIDTH, WIDTH, WIDTH])
 POSITIONS = np.array([np.sum(WIDTHS[0:i])+i*SPACE for i in range(len(WIDTHS))])
-POSITIONS[0] -= SPACE/2
 POSITIONS[1] -= SPACE/2
+POSITIONS[2] -= SPACE/2
 
 COLORS = {
     "green": '#00afa5',
@@ -29,7 +29,7 @@ COLORS = {
     "orange": '#f17900',
     "gray": '#c5d5db',
 }
-COLOR_CYCLE = cycler(color=[COLORS["red"], COLORS["green"]])
+COLOR_CYCLE = cycler(color=[COLORS["orange"], COLORS["blue"]])
 
 
 if __name__ == "__main__":
@@ -211,14 +211,14 @@ if __name__ == "__main__":
     plt.setp(ax["contra ipsiIII"].get_yticklabels(), visible=False)
 
     # third row, HPV positive vs negative
-    num_HPVpos_early = len(max_llh_data.loc[hpv_status & (t_stages <= 2)])
-    num_HPVneg_early = len(max_llh_data.loc[~hpv_status & (t_stages <= 2)])
+    num_HPVpos_early = len(max_llh_data.loc[(hpv_status == True) & (t_stages <= 2)])
+    num_HPVneg_early = len(max_llh_data.loc[(hpv_status == False) & (t_stages <= 2)])
     ipsi_HPVpos_early = (100 / num_HPVpos_early) * (
         max_llh_data["ipsi"] == True
-    ).loc[hpv_status & (t_stages <= 2)].sum()
+    ).loc[(hpv_status == True) & (t_stages <= 2)].sum()
     ipsi_HPVneg_early = (100 / num_HPVneg_early) * (
         max_llh_data["ipsi"] == True
-    ).loc[~hpv_status & (t_stages <= 2)].sum()
+    ).loc[(hpv_status == False) & (t_stages <= 2)].sum()
 
     ax["HPV early"].bar(
         POSITIONS,
@@ -242,14 +242,14 @@ if __name__ == "__main__":
     )
     ax["HPV early"].legend()
 
-    num_HPVpos_late = len(max_llh_data.loc[hpv_status & (t_stages > 2)])
-    num_HPVneg_late = len(max_llh_data.loc[~hpv_status & (t_stages > 2)])
+    num_HPVpos_late = len(max_llh_data.loc[(hpv_status == True) & (t_stages > 2)])
+    num_HPVneg_late = len(max_llh_data.loc[(hpv_status == False) & (t_stages > 2)])
     ipsi_HPVpos_late = (100 / num_HPVpos_late) * (
         max_llh_data["ipsi"] == True
-    ).loc[hpv_status & (t_stages > 2)].sum()
+    ).loc[(hpv_status == True) & (t_stages > 2)].sum()
     ipsi_HPVneg_late = (100 / num_HPVneg_late) * (
         max_llh_data["ipsi"] == True
-    ).loc[~hpv_status & (t_stages > 2)].sum()
+    ).loc[(hpv_status == False) & (t_stages > 2)].sum()
 
     ax["HPV late"].bar(
         POSITIONS,

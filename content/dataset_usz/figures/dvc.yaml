@@ -1,18 +1,32 @@
 stages:
+  plot-statistics:
+    foreach:
+    - statistics
+    do:
+      cmd: python ${item}.py
+      deps:
+      - ${item}.py
+      - ../data
+      outs:
+      - ${item}.svg
+
   export-to-pdf:
-    cmd: >
-      inkscape
-      --without-gui
-      --file=../data/combined_plots.svg
-      --export-pdf=statistics.pdf
-      --export-latex
-      --export-area=0:0:0.5:0.5
-    deps:
-    - ../data/combined_plots.svg
-    outs:
-    - statistics.pdf:
-        cache: false
-    - statistics.pdf_tex
+    foreach:
+    - statistics
+    do:
+      cmd: >
+        inkscape
+        --without-gui
+        --file=${item}.svg
+        --export-pdf=${item}.pdf
+        --export-latex
+        --export-area=0:0:0.5:0.5
+      deps:
+      - ${item}.svg
+      outs:
+      - ${item}.pdf:
+          cache: false
+      - ${item}.pdf_tex
   
   crop-figure:
     desc:
