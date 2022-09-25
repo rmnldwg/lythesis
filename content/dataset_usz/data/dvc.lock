@@ -2,7 +2,8 @@ schema: '2.0'
 stages:
   enhance:
     cmd: "lyscripts enhance 2021-usz-oropharynx.csv 2021-usz-oropharynx-enhanced.csv\
-      \ --modalities CT MRI PET FNA pathology --lnls-with-sub \"\"\n"
+      \ --consensus logic_or --modalities CT MRI PET FNA pathology --lnls-with-sub\
+      \ \"\"\n"
     deps:
     - path: 2021-usz-oropharynx.csv
       md5: 4c62057de32538d2274eaf7f2af0c759
@@ -12,5 +13,5 @@ stages:
       size: 137
     outs:
     - path: 2021-usz-oropharynx-enhanced.csv
-      md5: 08f83bee10d02c94629657b5786d127a
-      size: 195462
+      md5: e80f2a2d46cf1a26296409dd39888116
+      size: 195637

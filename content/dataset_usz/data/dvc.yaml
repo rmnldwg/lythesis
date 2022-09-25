@@ -5,6 +5,7 @@ stages:
     - output: 2021-usz-oropharynx-enhanced.csv
     cmd: >
       lyscripts enhance ${input} ${output}
+      --consensus logic_or
       --modalities CT MRI PET FNA pathology
       --lnls-with-sub ""
     deps:

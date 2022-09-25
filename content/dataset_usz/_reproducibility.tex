@@ -1,39 +1,5 @@
 \begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
     The following results and figures are completely reproducible. The data displayed by the tables \cref{table:dataset_usz:prevalence}, \cref{table:dataset_usz:upstream} and \cref{table:dataset_usz:contralateral} as well as the screenshot in \cref{fig:dataset_usz:gui_screenshot} and the flowchart in \cref{fig:dataset_usz:flowchart} can be recreated using our online interface \href{https://lyprox.org}{\faIcon{external-link-alt} LyProX} (specifically, the frozen \href{https://2021-oropharynx.lyprox.org}{\faIcon{external-link-alt} version 0.2.9}).
     
-    The statistics plotted in \cref{fig:dataset_usz:statistics} -- and some additional plots -- are reproducible by following the steps below:
-
-    \begin{enumerate}
-        \item Clone the \repolink{lyDATA} repository and checkout the tagged commit \\
-        \href{https://github.com/rmnldwg/lydata/tree/2021-usz-oropharynx-v2}{\faIcon{tags} \texttt{2021-usz-oropharynx-v2}}:
-        \begin{itemize}[leftmargin=10mm]
-            \setlength\itemsep{-0.5em}
-            \item[\texttt{\$}] \verb|git clone https://github.com/rmnldwg/lydata|
-            \item[\texttt{\$}] \verb|cd lydata|
-            \item[\texttt{\$}] \verb|git checkout 2021-usz-oropharynx-v2|
-        \end{itemize}
-
-        \item Set up a virtual environment that supports installing packages using \href{https://pypi.org/project/pip/}{\texttt{pip}}. I recommend \href{https://docs.python.org/3/library/venv.html}{\texttt{venv}}:
-        \begin{itemize}[leftmargin=10mm]
-            \setlength\itemsep{-0.5em}
-            \item[\texttt{\$}] \verb|python3.8 -m venv .venv|
-            \item[\texttt{\$}] \verb|source .venv/bin/activate|
-            \item[\texttt{\$}] \verb|pip install -U pip setuptools wheel|
-        \end{itemize}
-
-        \item Install the necessary packages:
-        \begin{itemize}[leftmargin=10mm]
-            \setlength\itemsep{-0.5em}
-            \item[\texttt{\$}] \verb|pip install -r requirements.txt|
-        \end{itemize}
-
-        \item Run the Jupyter notebook:
-        \begin{itemize}[leftmargin=10mm]
-            \setlength\itemsep{-0.5em}
-            \item[\texttt{\$}] \verb|cd 2021-usz-oropharynx|
-            \item[\texttt{\$}] \verb|jupyter notebook figures.ipynb|
-        \end{itemize}
-    \end{enumerate}
-
-    Now either the notebook opens automatically in a browser or it can be opened by clicking the displayed link in the command line. Subsequently, all the code cells in the notebook should be executable in order and reproduce all figures.
+    The statistics plotted in \cref{fig:dataset_usz:statistics} are reproducible in the same way as all other figures in this thesis (see \cref{sec:intro:reproduce} for detailed instructions).
 \end{tcolorbox}

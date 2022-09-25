@@ -9,10 +9,10 @@
 \section{Analysis}
 \label{sec:dataset_clb:analysis}
 
-\subsection{\acrshort{lnl} involvement patterns}
+\subsection{Involvement patterns and differences}
 \label{subsec:dataset_clb:analysis:patterns}
 
-To be able to compare some aspects of this dataset to what we extracted at our institution, in \cref{fig:dataset_clb:statistics} we recreated the same figure as in \cref{sec:dataset_usz:results}, just using the data we received from the \acrlong{clb}.
+To be able to compare some aspects of this dataset to what we extracted at our institution, in \cref{fig:dataset_clb:statistics} we recreated the same figure as in \cref{sec:dataset_usz:results}, just using the data we received from the \acrlong{clb}. Also, the way of combining the diagnostic consensus and the pathology findings was different from what we used to combine the modalities in our dataset: A negative pathological report must be able to override a clinically positive finding. Hence, the logical OR is not suited for this and we employed the strategy we will introduce in \cref{subsec:dataset_clb:analysis:implications}.
 
 At first glance, this cohort does not seem to differ fundamentally from ours, although the general prevalence of involvement appears slightly lower, e.g. in the ipsilateral \gls{lnl} II where our data reported 78\% overall and this cohort shows only 68\%. Contralateral involvement in this level is also lower with 16\% in our data and 10\% in theirs. Noticeably, the prevalences of involvement for \glspl{lnl} V and VII seem switched: In our case it was 5\% and 10\% for these levels respectively, but the \gls{clb} data shows 7\% and 3\%.
 
@@ -23,9 +23,13 @@ In the third row of \cref{fig:dataset_clb:statistics} the data by \citeauthorand
 The observed differences between these two datasets reporting per-level involvement of more than 250 \gls{opscc} patients each might stem from a combination of factors:
 
 \begin{enumerate}
-    \item Different demographics in Switzerland and France
-    \item An implicitly different sampling of the patients. The data from our colleagues in France contains relatively more early T-stage patients (67\% or 176 out of 263), while in our data we observe a roughly equal amount of early (52\% or 150 out of 287) and late T-stage patients.
+    \item Demographic differences between the two locations/countries.
+    \item Differences in patient sampling. Our data contains all \gls{opscc} patients treated in a certain time frame, while the cohort from our colleagues in France contained only those treated with \acrlong{nd}. This may introduce a bias against advanced disease when those are referred to definitive chemo-radiotherapy. For example, it contains relatively more early T-stage patients (67\% or 176 out of 263), while in our data we observe a roughly equal amount of early (52\% or 150 out of 287) and late T-stage patients.
+    \item Different ways of combining multiple diagnoses into one estimate of the likely ``true'' involvement. For the \gls{usz} data we combined them using the logical OR, meaning we considered an \gls{lnl} to be metastatic as soon as one diagnostic modality found a suspicious node in that level. For the \gls{clb} cohort however, we used the method introduced in \cref{subsec:dataset_clb:analysis:implications}.
+    \item Not strictly comparable observations. The \gls{usz} data reports involvement from a number of diagnostic modalities separately, where for each one we defined criteria that decided when an \gls{lnl} was considered to be metastatic. The French dataset on the other hand reports the clinical diagnosis as a consensus decision by clinicians, and the pathology reports basically represent the ground truth, if available.
 \end{enumerate}
+
+Nonetheless, we still believe the two datasets to be comparable and that we may combine them to form a larger cohort as a basis for our efforts of modelling lymphatic progression. 
 
 \begin{figure}
     \centering
@@ -63,8 +67,47 @@ The observed differences between these two datasets reporting per-level involvem
     \caption[
         Sensitivity and specificity per LNL in the CLB dataset
     ]{
-        Posterior Beta distributions over the specificities (left column) and sensitivities (right column) per reported \gls{lnl} (respective rows) in the \gls{clb} dataset. To compute the sensitivities and specificities, we compared the clinical diagnosis with what was pathologically reported after a \gls{nd} was performed.
+        Posterior Beta distributions over the specificities (left column) and sensitivities (right column) per reported \gls{lnl} (respective rows) in the \gls{clb} dataset. To compute the sensitivities and specificities, we compared the clinical diagnosis with what was pathologically reported after a \gls{nd} was performed. The vertical lines represent estimates for these values from the literature \cite{de_bondt_detection_2007}.
     }
+    \label{fig:dataset_clb:sens_spec}
 \end{figure}
+
+Since for this patient cohort both the clinical diagnosis of most, as well as the pathological examination results for many patient's \glspl{lnl} is available, we can estimate the sensitivity and specificity of the diagnosis at the \gls{clb}. We have plotted Beta posteriors over the specificity (left column) and sensitivity (right column) in \cref{fig:dataset_clb:sens_spec} for each \gls{lnl} where enough data was available to compute all four necessary values (true positives, false positives, true negatives and false negatives).
+
+It is immediately striking that -- except for level II -- the observed sensitivity is far below what \citeauthorandlink{de_bondt_detection_2007} reported for the three diagnostic modalities \gls{ct}, \gls{mri} and \gls{pet}, while the sensitivity is always above. For \gls{lnl} II the literature values seem to be fairly representative, both for the ipsilateral side (green curve), and the contralateral neck (blue curve). However, as the prevalence for involvement in a given level decreases, so does the chance of diagnosing present disease.
+
+We believe there is a profound reason for this discrepancy between the achieved sensitivities and specificities for the different \glspl{lnl}: The fundamental difference in what is actually observed by the imaging modalities commonly used to diagnose lymph nodes versus what a pathologist detects when investigating a resected tissue sample. In the former case, what imaging is in principle capable to detect are macroscopic changes in the tissue as exerted by the presence of a large enough tumor mass (e.g. swelling of an \gls{lnl}, necrosis, etc). The latter, however, is able to see individual cancer cells directly under a microscope.
+
+In other words, e.g. a \gls{ct} scanner cannot -- with resolutions as they are currently achievable -- detect microscopic disease in an \gls{lnl}, as long as it has not yet altered the local anatomy or tissue characteristics to a large enough extent. If it had, however, the disease would by definition not be ``microscopic'' anymore, since we could then detect it with said imaging modality, albeit still not with certainty, since we might mistake a lymph node that is swollen from an infection to be a malignancy.
+
+\subsection{Implications for inference based on real data}
+\label{subsec:dataset_clb:analysis:implications}
+
+The observations and considerations of the previous section raise the question whether clinical imaging and pathological examinations can both be modelled as observations of the same hidden random variable. The current resolution of the former is magnitudes away from being able to directly detect cancer cells and yet we consider the chance of detecting a microscopic involvement to be given by the sensitivity of \gls{mri}, \gls{ct}, etc., the same one even as the chance for detecting macroscopic metastases. In other words: The sensitivity for detecting lesions far smaller that the voxel resolution of imaging is zero.
+
+Later, when we introduce our probabilistic model for lymphatic progression in \cref{chap:unilateral}, we will also show how it is in principle possible to incorporate different values of sensitivity and specificity for a number of diagnoses into the model (\cref{subsec:unilateral:formalism:multimodality}). This does, however, not solve the problem at hand, where these values cannot be determined even if we may have imaging diagnosis and pathology report available.
+
+Therefore, when we use this dataset (also in conjunction with the \gls{usz} data from \cref{chap:dataset_usz}), instead of probabilistically modelling sensitivity and specificity, we will resort to a slightly more naive approach: Using the observations for the \glspl{lnl} of a given patient along with literature values from \citeauthorandlink{de_bondt_detection_2007}, we compute the likelihoods for the possible true involvements and create a maximum likelhood consensus ``diagnosis'', which we will then use for inference with fixed values for sensitivity and specificity of 1.
+
+For example, if we have an \gls{mri} and a \gls{ct} scan available for a patient's \gls{lnl} III that reports $Z_\text{III}^\text{MRI} = 1$ and $Z_\text{III}^\text{CT} = 0$, we can compute the likelihoods
+%
+\begin{equation}
+    \begin{aligned}
+        \Probofgiven{X_\text{III} = 0}{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{CT} = 0}
+        &= (1 - s^\text{MRI}_P) \cdot s^\text{CT}_P \\
+        &= (1 - 0.63) \cdot 0.76 = 0.2812 \\
+        \Probofgiven{X_\text{III} = 1}{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{CT} = 0}
+        &= s^\text{MRI}_N \cdot (1 - s^\text{CT}_N) \\
+        &= 0.81 \cdot (1 - 0.81) = 0.1539
+    \end{aligned}
+\end{equation}
+%
+using the respective sensitivities $s_N^\mathcal{O}$ and specificities $s_P^\mathcal{O}$, where we have here the diagnostic modalities $\mathcal{O} \in \{ \text{MRI}, \text{CT} \}$. From this result, we now create a synthetic diagnostic modality $Z_\text{III}^\text{max llh} = 0$, since the likelihood for the healthy state of involvement was higher. Furthermore, we define
+%
+\begin{equation}
+    s_P^\text{max llh} \coloneqq 1 \qquad \text{and} \qquad s_N^\text{max llh} \coloneqq 1
+\end{equation}
+%
+While employing this naive method of combining information will not necessarily result in a probabilistically rigorous model for the data, it helps us by synthesizing a cohort of patients whose patterns of involvement are -- while not strictly accurate -- closely based on real progression patterns, while avoiding the issue of varying sensitivities and specificities across \glspl{lnl}. Moreover, any comparisons of a model's prediction and this synthetically cleaned data's prevalences become very straightforward and interpretable, due to $s_P^\text{max llh} = s_N^\text{max llh} = 1$. We will use this extensively in \cref{chap:graph}, and \cref{chap:bilateral}.
 
 \end{document}

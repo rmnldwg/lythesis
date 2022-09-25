@@ -163,19 +163,19 @@ if __name__ == "__main__":
                     label=f"{side}: {sensitivity:.1%}"
                 )
                 ax[i,1].axvline(
-                    CT["specificity"],
+                    CT["sensitivity"],
                     color=COLORS["orange"],
                     linestyle="--",
                     label="CT" if i == 0 else None,
                 )
                 ax[i,1].axvline(
-                    MRI["specificity"],
+                    MRI["sensitivity"],
                     color=COLORS["red"],
                     linestyle="-.",
                     label="MRI" if i == 0 else None,
                 )
                 ax[i,1].axvline(
-                    PET["specificity"],
+                    PET["sensitivity"],
                     color="black",
                     linestyle=":",
                     label="PET" if i == 0 else None,

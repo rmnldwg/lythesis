@@ -40,9 +40,9 @@ if __name__ == "__main__":
     t_stages = dataset["tumor", "1", "t_stage"]
     hpv_status = dataset["patient", "#", "hpv_status"]
     mid_ext = dataset["tumor", "1", "extension"]
-    max_llh_data = dataset["max_llh"]
+    consensus = dataset["logic_or"]
 
-    num_total = len(max_llh_data)
+    num_total = len(consensus)
     num_early = (t_stages <= 2).sum()
     num_late = (t_stages > 2).sum()
 
@@ -68,9 +68,9 @@ if __name__ == "__main__":
     ax["HPV late"]  = fig.add_subplot(gs[2,1], sharey=ax["HPV early"])
 
     # first row, prevalence of involvement ipsi- & contralaterally
-    prev_ipsi = 100 * (max_llh_data["ipsi"] == True).sum() / num_total
-    prev_ipsi_early = 100 * (max_llh_data["ipsi"] == True).loc[t_stages <= 2].sum() / num_early
-    prev_ipsi_late = 100 * (max_llh_data["ipsi"] == True).loc[t_stages > 2].sum() / num_late
+    prev_ipsi = 100 * (consensus["ipsi"] == True).sum() / num_total
+    prev_ipsi_early = 100 * (consensus["ipsi"] == True).loc[t_stages <= 2].sum() / num_early
+    prev_ipsi_late = 100 * (consensus["ipsi"] == True).loc[t_stages > 2].sum() / num_late
     ax["prevalence ipsi"].barh(
         POSITIONS,
         prev_ipsi_late[LABELS],
@@ -105,13 +105,13 @@ if __name__ == "__main__":
     x_lim = ax["prevalence ipsi"].get_xlim()
 
     prev_contra = (100 / num_total) * (
-        max_llh_data["contra"] == True
+        consensus["contra"] == True
     ).sum()
     prev_contra_early = (100 / num_early) * (
-        max_llh_data["contra"] == True
+        consensus["contra"] == True
     ).loc[t_stages <= 2].sum()
     prev_contra_late = (100 / num_late) * (
-        max_llh_data["contra"] == True
+        consensus["contra"] == True
     ).loc[t_stages > 2].sum()
     ax["prevalence contra"].barh(
         POSITIONS,
@@ -150,13 +150,13 @@ if __name__ == "__main__":
     ax["row0"].set_yticks([])
 
     # second row, contralateral involvement depending on midline extension and ipsilateral level III
-    num_midext = len(max_llh_data[mid_ext])
-    num_nomidext = len(max_llh_data[~mid_ext])
+    num_midext = len(consensus[mid_ext])
+    num_nomidext = len(consensus[~mid_ext])
     contra_midext = (100 / num_midext) * (
-        max_llh_data["contra"] == True
+        consensus["contra"] == True
     ).loc[mid_ext].sum()
     contra_nomidext = (100 / num_nomidext) * (
-        max_llh_data["contra"] == True
+        consensus["contra"] == True
     ).loc[~mid_ext].sum()
 
     ax["contra midext"].bar(
@@ -177,19 +177,19 @@ if __name__ == "__main__":
     ax["contra midext"].set_ylabel("contralateral involvement [%]")
     ax["contra midext"].legend()
 
-    num_ipsiIII = (max_llh_data["ipsi", "III"] == True).sum()
-    num_noipsiIII = (max_llh_data["ipsi", "III"] != True).sum()
+    num_ipsiIII = (consensus["ipsi", "III"] == True).sum()
+    num_noipsiIII = (consensus["ipsi", "III"] != True).sum()
     
     contra_ipsiIII = (100 / num_ipsiIII) * (
-        max_llh_data["contra"] == True
+        consensus["contra"] == True
     ).loc[
-        max_llh_data["ipsi", "III"] == True
+        consensus["ipsi", "III"] == True
     ].sum()
     
     contra_noipsiIII = (100 / num_noipsiIII) * (
-        max_llh_data["contra"] == True
+        consensus["contra"] == True
     ).loc[
-        max_llh_data["ipsi", "III"] != True
+        consensus["ipsi", "III"] != True
     ].sum()
 
     ax["contra ipsiIII"].bar(
@@ -211,13 +211,13 @@ if __name__ == "__main__":
     plt.setp(ax["contra ipsiIII"].get_yticklabels(), visible=False)
 
     # third row, HPV positive vs negative
-    num_HPVpos_early = len(max_llh_data.loc[(hpv_status == True) & (t_stages <= 2)])
-    num_HPVneg_early = len(max_llh_data.loc[(hpv_status == False) & (t_stages <= 2)])
+    num_HPVpos_early = len(consensus.loc[(hpv_status == True) & (t_stages <= 2)])
+    num_HPVneg_early = len(consensus.loc[(hpv_status == False) & (t_stages <= 2)])
     ipsi_HPVpos_early = (100 / num_HPVpos_early) * (
-        max_llh_data["ipsi"] == True
+        consensus["ipsi"] == True
     ).loc[(hpv_status == True) & (t_stages <= 2)].sum()
     ipsi_HPVneg_early = (100 / num_HPVneg_early) * (
-        max_llh_data["ipsi"] == True
+        consensus["ipsi"] == True
     ).loc[(hpv_status == False) & (t_stages <= 2)].sum()
 
     ax["HPV early"].bar(
@@ -242,13 +242,13 @@ if __name__ == "__main__":
     )
     ax["HPV early"].legend()
 
-    num_HPVpos_late = len(max_llh_data.loc[(hpv_status == True) & (t_stages > 2)])
-    num_HPVneg_late = len(max_llh_data.loc[(hpv_status == False) & (t_stages > 2)])
+    num_HPVpos_late = len(consensus.loc[(hpv_status == True) & (t_stages > 2)])
+    num_HPVneg_late = len(consensus.loc[(hpv_status == False) & (t_stages > 2)])
     ipsi_HPVpos_late = (100 / num_HPVpos_late) * (
-        max_llh_data["ipsi"] == True
+        consensus["ipsi"] == True
     ).loc[(hpv_status == True) & (t_stages > 2)].sum()
     ipsi_HPVneg_late = (100 / num_HPVneg_late) * (
-        max_llh_data["ipsi"] == True
+        consensus["ipsi"] == True
     ).loc[(hpv_status == False) & (t_stages > 2)].sum()
 
     ax["HPV late"].bar(

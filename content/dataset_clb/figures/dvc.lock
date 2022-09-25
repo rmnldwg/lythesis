@@ -32,12 +32,12 @@ stages:
       \ --export-latex\n"
     deps:
     - path: sens_spec_plot.svg
-      md5: 3f55cb96ebe5a1f05f5836bf158f4903
+      md5: 3f5ed52a969fdafafc8b69e7d2f75995
       size: 130026
     outs:
     - path: sens_spec_plot.pdf
-      md5: 505446ccb47e90394d4663075e27912c
-      size: 155434
+      md5: de1264e7f090b08fdb1be5caae369d29
+      size: 155430
     - path: sens_spec_plot.pdf_tex
       md5: b540883e8c81d73659f89f44b17bb9ab
       size: 2069
@@ -61,11 +61,11 @@ stages:
       md5: ca0cca1e5bb38647d399486cfba77e62
       size: 113393
     - path: sens_spec_plot.py
-      md5: 87790fa3367f033509cb29fc9c7cd23e
+      md5: 037d51a370c6e989070d8e8a3bbbe21a
       size: 6059
     outs:
     - path: sens_spec_plot.svg
-      md5: 3f55cb96ebe5a1f05f5836bf158f4903
+      md5: 3f5ed52a969fdafafc8b69e7d2f75995
       size: 130026
   convert@statistics:
     cmd: "inkscape --without-gui --file=statistics.svg --export-pdf=statistics.pdf\
