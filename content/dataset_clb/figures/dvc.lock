@@ -83,12 +83,12 @@ stages:
       size: 2061
   crop-figure:
     cmd: "sed statistics.pdf_tex -e '56s/.*/    \\\\put(0,0){\\\\includegraphics[width=\\\
-      \\unitlength,page=1,trim=13mm 20mm 15mm 30mm]{statistics.pdf}}%/' > statistics_crop.pdf_tex\n"
+      \\unitlength,page=1,trim=13mm 20mm 15mm 160mm]{statistics.pdf}}%/' > statistics_crop.pdf_tex\n"
     deps:
     - path: statistics.pdf_tex
       md5: 9d274af715254a3e8d6ef19ceb06e9f0
       size: 2061
     outs:
     - path: statistics_crop.pdf_tex
-      md5: 1729c6a3fed2888f48a051094d1e59a7
-      size: 2086
+      md5: d7011fb80eeb8db35b507f8d1eb443d4
+      size: 2087

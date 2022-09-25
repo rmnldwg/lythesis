@@ -9,7 +9,7 @@
 
 As mentioned in the beginning, the reason for developing a probabilistic model of lymphatic tumor progression in the first place is that modern imaging modalities cannot detect tumor cells directly, but only the (macroscopic) changes they exert on their region of growth, e.g. when they cause lymph nodes to swell. In contrast, a histopathological examination of a resected malignancy or biopsy sample uses various staining techniques in combination with microscopes to detect carcinoma cells directly.
 
-We have extensively discussed this issue in \cref{subsec:dataset_clb:analysis:sens_spec}, where we have shown -- using the valuable dataset as provided to us by Vincent Grégoire -- that for less often involved \glspl{lnl} (which additionally often harbor micrometastases) the chance of detecting lesions becomes very low (see \cref{fig:dataset_clb:sens_spec}).
+We have extensively discussed this issue in \cref{subsec:dataset_clb:results:sens_spec}, where we have shown -- using the valuable dataset as provided to us by Vincent Grégoire -- that for less often involved \glspl{lnl} (which additionally often harbor micrometastases) the chance of detecting lesions becomes very low (see \cref{fig:dataset_clb:sens_spec}).
 
 To account for this issue, one could categorize lymphatic involvement a little more finely: Instead of treating the true state of a \gls{lnl} as a binary random variable representing a health node and a metastatic node respectively, we could consider micro- and macroscopic involvement separately. The hidden states were then modelled as \emph{trinary} hidden variables (see \cref{eq:bn:variables} for comparison):
 %

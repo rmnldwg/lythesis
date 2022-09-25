@@ -32,4 +32,43 @@ A clinically positive lymph node was defined by either
     \item lymph node(s) visible on \gls{ct}- or \gls{mri}-scan with the smallest diameter of 10 mm or more, a spherical shape, a necrotic area, matted nodes, or nodes with signs of extra-capsular infiltration
 \end{enumerate}
 
+\subsection{Maximum likelihood consensus diagnosis}
+\label{subsec:dataset_clb:methods:max_llh}
+
+In \cref{chap:dataset_usz}, we plotted the prevalence of involvement for a variety of interesting scenarios (\cref{fig:dataset_usz:statistics}). Since our data often contained multiple diagnostic modalities per patient, we combined them into a consensus diagnosis using the logical OR. This means, that we considered an \gls{lnl} to be metastatic as soon as one of the available modalities for that patient and \gls{lnl} reported involvement. This worked well, since the data contained mostly imaging results and seeing a suspicious lymph node in either of them usually means a clinician would consider the corresponding \gls{lnl} to be metastatic.
+
+For the data from \citeauthorandlink{bauwens_prevalence_2021}, this strategy does not work anymore: If a node level was clinically found to harbor a metastasis, but the pathological examination showed no sign of malign cells, the \gls{lnl} is almost certainly healthy. So, to create a similar plot of statistics as in \cref{fig:dataset_usz:statistics}, we need a method of smartly combining the two different columns of involvement reports that this dataset provides, particularly allowing the pathology information to override the clinical diagnosis.
+
+Our approach to do this will be generally applicable to combining an arbitrary number of binary diagnoses into a consensus: We will naively determine the most likely involvement, given the available modalities and their respective literature values for sensitivity and specificity, in our case from \citeauthorandlink{de_bondt_detection_2007}.
+
+For example, if we have an \gls{mri} and a \gls{ct} scan available for a patient's \gls{lnl} III that reports $Z_\text{III}^\text{MRI} = 1$ and $Z_\text{III}^\text{CT} = 0$, we can compute the likelihoods
+%
+\begin{equation}
+    \begin{aligned}
+        \Probofgiven{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{CT} = 0}{X_\text{III} = 0}
+        &= (1 - s^\text{MRI}_P) \cdot s^\text{CT}_P \\
+        &= (1 - 0.63) \cdot 0.76 = 0.2812 \\
+        \Probofgiven{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{CT} = 0}{X_\text{III} = 1}
+        &= s^\text{MRI}_N \cdot (1 - s^\text{CT}_N) \\
+        &= 0.81 \cdot (1 - 0.81) = 0.1539
+    \end{aligned}
+\end{equation}
+%
+using the respective sensitivities $s_N^\mathcal{O}$ and specificities $s_P^\mathcal{O}$, where we have here the diagnostic modalities $\mathcal{O} \in \{ \text{MRI}, \text{CT} \}$. From this result, we now consider this patient's \gls{lnl} III to be \emph{most likely} healthy -- meaning $X_\text{III} = 0$ -- since the likelihood for the healthy state of involvement was higher.
+
+If we have pathology results in addition to diagnostic modalities, which we consider to have sensitivity and specificity of $s^\text{path}_N = s^\text{path}_P = 1$, then the above example would look like below:
+%
+\begin{equation}
+    \begin{aligned}
+        \Probofgiven{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{path} = 0}{X_\text{III} = 0}
+        &= (1 - s^\text{MRI}_P) \cdot s^\text{path}_P \\
+        &= (1 - 0.63) \cdot 1 = 0.37 \\
+        \Probofgiven{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{path} = 0}{X_\text{III} = 1}
+        &= s^\text{MRI}_N \cdot (1 - s^\text{path}_N) \\
+        &= 0.81 \cdot (1 - 1) = 0
+    \end{aligned}
+\end{equation}
+%
+Evidently, the information from pathology overrides the \gls{mri} diagnosis. From a Bayesian standpoint, what we explained here is computing the unnormalized probability of the true (but hidden) involvement, given some diagnoses $\Probofgiven{X}{Z=z}$, for a uniform prior over the involvement $X$. The probabilistic model we will introduce in \cref{chap:unilateral} will essentially replace the uniform with a more sophisticated and parametrized prior. But the likelihood of a set of diagnoses, given some hidden involvement, is computed in a very similar fashion, as is outlined in \cref{subsec:unilateral:formalism:combine}. 
+
 \end{document}

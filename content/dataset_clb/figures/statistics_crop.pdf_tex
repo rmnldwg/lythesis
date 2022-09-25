@@ -53,6 +53,6 @@
   \begin{picture}(1,1.41421359)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
-    \put(0,0){\includegraphics[width=\unitlength,page=1,trim=13mm 20mm 15mm 30mm]{statistics.pdf}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1,trim=13mm 20mm 15mm 160mm]{statistics.pdf}}%
   \end{picture}%
 \endgroup%
