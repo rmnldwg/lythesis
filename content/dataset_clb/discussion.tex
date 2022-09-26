@@ -1,0 +1,25 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{
+    {\subfix{./figures/}}
+}
+
+\begin{document}
+
+\section{Discussion}
+\label{sec:dataset_clb:discussion}
+
+The observations and considerations of the previous section raise the question whether clinical imaging and pathological examinations can both be modelled as observations of the same hidden random variable. The current resolution of the former is magnitudes away from being able to directly detect cancer cells and yet we consider the chance of detecting a microscopic involvement to be given by the sensitivity of \gls{mri}, \gls{ct}, etc., the same one even as the chance for detecting macroscopic metastases. In other words: The sensitivity for detecting lesions far smaller that the voxel resolution of imaging is zero.
+
+Later, when we introduce our probabilistic model for lymphatic progression in \cref{chap:unilateral}, we will also show how it is in principle possible to incorporate different values of sensitivity and specificity for a number of diagnoses into the model (\cref{subsec:unilateral:formalism:multimodality}). This does, however, not solve the problem at hand, where these values cannot be determined even if we may have imaging diagnosis and pathology report available.
+
+Therefore, when we use this dataset (also in conjunction with the \gls{usz} data from \cref{chap:dataset_usz}), instead of probabilistically modelling sensitivity and specificity, we will resort to a slightly more naive approach: Using the maximum likelihood consensus as introduced in \cref{subsec:dataset_clb:methods:max_llh} to compute a synthetic consensus modality, for which we define
+%
+\begin{equation}
+    s_P^\text{max llh} \coloneqq 1 \qquad \text{and} \qquad s_N^\text{max llh} \coloneqq 1
+\end{equation}
+%
+Employing this method of combining information will not necessarily result in a probabilistically rigorous model for the data, it helps us by synthesizing a cohort of patients whose patterns of involvement are -- although not strictly accurate -- closely based on real progression patterns, while avoiding the issue of varying sensitivities and specificities across \glspl{lnl}. Moreover, any comparisons of a model's prediction and this synthetically cleaned data's prevalences become very straightforward and interpretable, due to $s_P^\text{max llh} = s_N^\text{max llh} = 1$. We will use this extensively in \cref{chap:graph}, and \cref{chap:bilateral}.
+
+
+\end{document}

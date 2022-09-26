@@ -9,7 +9,7 @@
 \section{Results}
 \label{sec:dataset_clb:results}
 
-\subsection{Involvement patterns and differences}
+\subsection*{Involvement patterns and differences}
 \label{subsec:dataset_clb:results:patterns}
 
 To be able to compare some aspects of this dataset to what we extracted at our institution, in \cref{fig:dataset_clb:statistics} we recreated the same figure as in \cref{sec:dataset_usz:results}, just using the data we received from the \acrlong{clb}. As mentioned in the last section, we also used another way of combining the diagnostic consensus and the pathology findings, compared to what we used to combine the modalities in our dataset: The maximum likelihood consensus from \cref{subsec:dataset_clb:methods:max_llh}.
@@ -58,7 +58,7 @@ Nonetheless, we still believe the two datasets to be comparable and that we may 
     \label{fig:dataset_clb:statistics}
 \end{figure}
 
-\subsection{Sensitivity and specificity}
+\subsection*{Sensitivity and specificity}
 \label{subsec:dataset_clb:results:sens_spec}
 
 \begin{figure}
@@ -80,20 +80,5 @@ It is immediately striking that -- except for level II -- the observed sensitivi
 We believe there is a profound reason for this discrepancy between the achieved sensitivities and specificities for the different \glspl{lnl}: The fundamental difference in what is actually observed by the imaging modalities commonly used to diagnose lymph nodes versus what a pathologist detects when investigating a resected tissue sample. In the former case, what imaging is in principle capable to detect are macroscopic changes in the tissue as exerted by the presence of a large enough tumor mass (e.g. swelling of an \gls{lnl}, necrosis, etc). The latter, however, is able to see individual cancer cells directly under a microscope.
 
 In other words, e.g. a \gls{ct} scanner cannot -- with resolutions as they are currently achievable -- detect microscopic disease in an \gls{lnl}, as long as it has not yet altered the local anatomy or tissue characteristics to a large enough extent. If it had, however, the disease would by definition not be ``microscopic'' anymore, since we could then detect it with said imaging modality, albeit still not with certainty, since we might mistake a lymph node that is swollen from an infection to be a malignancy.
-
-\subsection{Implications for inference based on CLB data}
-\label{subsec:dataset_clb:results:implications}
-
-The observations and considerations of the previous section raise the question whether clinical imaging and pathological examinations can both be modelled as observations of the same hidden random variable. The current resolution of the former is magnitudes away from being able to directly detect cancer cells and yet we consider the chance of detecting a microscopic involvement to be given by the sensitivity of \gls{mri}, \gls{ct}, etc., the same one even as the chance for detecting macroscopic metastases. In other words: The sensitivity for detecting lesions far smaller that the voxel resolution of imaging is zero.
-
-Later, when we introduce our probabilistic model for lymphatic progression in \cref{chap:unilateral}, we will also show how it is in principle possible to incorporate different values of sensitivity and specificity for a number of diagnoses into the model (\cref{subsec:unilateral:formalism:multimodality}). This does, however, not solve the problem at hand, where these values cannot be determined even if we may have imaging diagnosis and pathology report available.
-
-Therefore, when we use this dataset (also in conjunction with the \gls{usz} data from \cref{chap:dataset_usz}), instead of probabilistically modelling sensitivity and specificity, we will resort to a slightly more naive approach: Using the maximum likelihood consensus as introduced in \cref{subsec:dataset_clb:methods:max_llh} to compute a synthetic consensus modality, for which we define
-%
-\begin{equation}
-    s_P^\text{max llh} \coloneqq 1 \qquad \text{and} \qquad s_N^\text{max llh} \coloneqq 1
-\end{equation}
-%
-Employing this method of combining information will not necessarily result in a probabilistically rigorous model for the data, it helps us by synthesizing a cohort of patients whose patterns of involvement are -- although not strictly accurate -- closely based on real progression patterns, while avoiding the issue of varying sensitivities and specificities across \glspl{lnl}. Moreover, any comparisons of a model's prediction and this synthetically cleaned data's prevalences become very straightforward and interpretable, due to $s_P^\text{max llh} = s_N^\text{max llh} = 1$. We will use this extensively in \cref{chap:graph}, and \cref{chap:bilateral}.
 
 \end{document}
