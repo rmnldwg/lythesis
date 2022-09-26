@@ -1,0 +1,15 @@
+stages:
+  enhance:
+    vars:
+    - input: 2021-usz-oropharynx.csv
+    - output: 2021-usz-oropharynx-enhanced.csv
+    cmd: >
+      lyscripts enhance ${input} ${output}
+      --consensus logic_or
+      --modalities CT MRI PET FNA pathology
+      --lnls-with-sub ""
+    deps:
+    - ${input}
+    - params.yaml
+    outs:
+    - ${output}

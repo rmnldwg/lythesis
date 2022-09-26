@@ -1,0 +1,49 @@
+stages:
+  plot-statistics:
+    foreach:
+    - statistics
+    do:
+      cmd: python ${item}.py
+      deps:
+      - ${item}.py
+      - ../data
+      outs:
+      - ${item}.svg
+
+  export-to-pdf:
+    foreach:
+    - statistics
+    do:
+      cmd: >
+        inkscape
+        --without-gui
+        --file=${item}.svg
+        --export-pdf=${item}.pdf
+        --export-latex
+        --export-area=0:0:0.5:0.5
+      deps:
+      - ${item}.svg
+      outs:
+      - ${item}.pdf:
+          cache: false
+      - ${item}.pdf_tex
+  
+  crop-figure:
+    desc:
+      This command replaces the line in the auto-generated `statistics.pdf_tex` with an
+      almost identical line, plus some margin trimming/cropping that is necessary to
+      make the figure look good on paper.
+    vars:
+    - left: 13mm
+    - bottom: 20mm
+    - right: 15mm
+    - top: 30mm
+    cmd: >
+      sed statistics.pdf_tex
+      -e '56s/.*/    \\put(0,0){\\includegraphics[width=\\unitlength,page=1,trim=${left} ${bottom} ${right} ${top}]{statistics.pdf}}%/'
+      > statistics_crop.pdf_tex
+    deps:
+    - statistics.pdf_tex
+    outs:
+    - statistics_crop.pdf_tex:
+        cache: false

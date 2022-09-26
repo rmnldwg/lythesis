@@ -1,0 +1,94 @@
+schema: '2.0'
+stages:
+  plots-sens-spec-analysis:
+    cmd: python sens_spec_plot.py
+    deps:
+    - path: ../data/2021-clb-oropharynx.csv
+      md5: d40c0a1ae967a6983d60a0a809cf3972
+      size: 92742
+    - path: sens_spec_plot.py
+      md5: 87790fa3367f033509cb29fc9c7cd23e
+      size: 6059
+    outs:
+    - path: sens_spec_plot.svg
+      md5: ba0b6427b8ff6351583328b0c00fc4c7
+      size: 130026
+  convert@sens_spec_analysis:
+    cmd: "inkscape --without-gui --file=sens_spec_analysis.svg --export-pdf=sens_spec_analysis.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: sens_spec_analysis.svg
+      md5: 53a72947e3eea72501bd3f26f28c7a36
+      size: 130026
+    outs:
+    - path: sens_spec_analysis.pdf
+      md5: 07793c5ce65c6d92875ad863c97d0730
+      size: 155434
+    - path: sens_spec_analysis.pdf_tex
+      md5: 9825205240e546308e860746d9ffaf65
+      size: 2077
+  convert@sens_spec_plot:
+    cmd: "inkscape --without-gui --file=sens_spec_plot.svg --export-pdf=sens_spec_plot.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: sens_spec_plot.svg
+      md5: 3f5ed52a969fdafafc8b69e7d2f75995
+      size: 130026
+    outs:
+    - path: sens_spec_plot.pdf
+      md5: de1264e7f090b08fdb1be5caae369d29
+      size: 155430
+    - path: sens_spec_plot.pdf_tex
+      md5: b540883e8c81d73659f89f44b17bb9ab
+      size: 2069
+  plots@statistics:
+    cmd: python statistics.py
+    deps:
+    - path: ../data/2021-clb-oropharynx-enhanced.csv
+      md5: ca0cca1e5bb38647d399486cfba77e62
+      size: 113393
+    - path: statistics.py
+      md5: 01a1d604f54251001a0d1e7a8b6b6fb2
+      size: 9835
+    outs:
+    - path: statistics.svg
+      md5: 8f2ca6b5d7d508c30cd676b1e4b02463
+      size: 119028
+  plots@sens_spec_plot:
+    cmd: python sens_spec_plot.py
+    deps:
+    - path: ../data/2021-clb-oropharynx-enhanced.csv
+      md5: ca0cca1e5bb38647d399486cfba77e62
+      size: 113393
+    - path: sens_spec_plot.py
+      md5: 037d51a370c6e989070d8e8a3bbbe21a
+      size: 6059
+    outs:
+    - path: sens_spec_plot.svg
+      md5: 3f5ed52a969fdafafc8b69e7d2f75995
+      size: 130026
+  convert@statistics:
+    cmd: "inkscape --without-gui --file=statistics.svg --export-pdf=statistics.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: statistics.svg
+      md5: 8f2ca6b5d7d508c30cd676b1e4b02463
+      size: 119028
+    outs:
+    - path: statistics.pdf
+      md5: b2558b1ba69792c8062a568581388027
+      size: 148973
+    - path: statistics.pdf_tex
+      md5: 9d274af715254a3e8d6ef19ceb06e9f0
+      size: 2061
+  crop-figure:
+    cmd: "sed statistics.pdf_tex -e '56s/.*/    \\\\put(0,0){\\\\includegraphics[width=\\\
+      \\unitlength,page=1,trim=13mm 20mm 15mm 160mm]{statistics.pdf}}%/' > statistics_crop.pdf_tex\n"
+    deps:
+    - path: statistics.pdf_tex
+      md5: 9d274af715254a3e8d6ef19ceb06e9f0
+      size: 2061
+    outs:
+    - path: statistics_crop.pdf_tex
+      md5: d7011fb80eeb8db35b507f8d1eb443d4
+      size: 2087

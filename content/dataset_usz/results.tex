@@ -5,26 +5,26 @@
 \begin{document}
 
 \section{Results}
-\label{sec:dataset:results}
-
-In this section, we summarize selected findings. To that end, \gls{lnl} involvement based on \gls{ct}, \gls{mri}, \gls{pet} and \gls{fna} was converted into a consensus decision via a logical OR, i.e. a \gls{lnl} is considered involved if it was positive for one of these 4 modalities. However, only a small fraction of the information contained in the full dataset can be summarized here in tables. Thus, the interested reader is encouraged to explore the full dataset directly.
+\label{sec:dataset_usz:results}
 
 \input{_reproducibility.tex}
 
+In this section, we summarize selected findings. To that end, \gls{lnl} involvement based on \gls{ct}, \gls{mri}, \gls{pet} and \gls{fna} was converted into a consensus decision via a logical OR, i.e. a \gls{lnl} is considered involved if it was positive for one of these 4 modalities. However, only a small fraction of the information contained in the full dataset can be summarized here in tables. Thus, the interested reader is encouraged to explore the full dataset directly.
+
 \subsection*{Graphical user interface}
 
-\Cref{fig:dataset:gui_screenshot} shows the \gls{gui} for analyzing the dataset. The main patient characteristics (smoking status, \gls{hpv} status, and primary treatment) are shown on the top left. In the bottom-left panel, the user can specify characteristics of the primary tumor. In the example, the user considers all subsites combined, but restricts the patient selection to late T-category tumors (T3/T4) that extend over the midsagittal plane. On the top-right, the user selected the diagnostic modalities \gls{ct}, \gls{mri}, \gls{pet} and \gls{fna}, which are connected via a logical OR, i.e. a lymph node level is considered as involved for a patient if it was considered positive for at least one of the modalities available for that patient. The main panel shows the involvement of \glspl{lnl}. In the example, the user restricts the selection to patients with positive ipsilateral level III while all other levels are unspecified. In total, 38 out of 287 patients meet these selection criteria. The main panel now displays the number of patients with involvement of the other levels. E.g. 21 patients have contralateral level II involved, and 12 patients ipsilateral level IV.
+\Cref{fig:dataset_usz:gui_screenshot} shows the \gls{gui} for analyzing the dataset. The main patient characteristics (smoking status, \gls{hpv} status, and primary treatment) are shown on the top left. In the bottom-left panel, the user can specify characteristics of the primary tumor. In the example, the user considers all subsites combined, but restricts the patient selection to late T-category tumors (T3/T4) that extend over the midsagittal plane. On the top-right, the user selected the diagnostic modalities \gls{ct}, \gls{mri}, \gls{pet} and \gls{fna}, which are connected via a logical OR, i.e. a lymph node level is considered as involved for a patient if it was considered positive for at least one of the modalities available for that patient. The main panel shows the involvement of \glspl{lnl}. In the example, the user restricts the selection to patients with positive ipsilateral level III while all other levels are unspecified. In total, 38 out of 287 patients meet these selection criteria. The main panel now displays the number of patients with involvement of the other levels. E.g. 21 patients have contralateral level II involved, and 12 patients ipsilateral level IV.
 
 \begin{figure}
     \centering
     \includegraphics[width=1.0\textwidth]{gui_screenshot.png}
     \caption[Screenshot of the graphical user interface LyProX]{Graphical user interface to analyze lymphatic metastatic progression patterns. This screenshot can be reproduced by following this \href{https://2021-oropharynx.lyprox.org/dashboard/?nicotine_abuse=0&hpv_status=0&neck_dissection=-1&n_status=0&central=0&extension=1&subsite__in=base&subsite__in=tonsil&subsite__in=rest&t_stage__in=3&t_stage__in=4&institution__in=1&modalities=0&modalities=1&modalities=2&modalities=3&modality_combine=OR&contra_I=0&contra_Ia=0&contra_Ib=0&contra_II=0&contra_IIa=0&contra_IIb=0&contra_III=0&contra_IV=0&contra_V=0&contra_VII=0&ipsi_I=0&ipsi_Ia=0&ipsi_Ib=0&ipsi_II=1&ipsi_IIa=0&ipsi_IIb=0&ipsi_III=0&ipsi_IV=0&ipsi_V=0&ipsi_VII=0&show_percent=False&render=dashboard}{\faIcon{external-link-alt} link} to the frozen version 0.2.9 of \href{https://lyprox.org}{\faIcon{external-link-alt} LyProX}.}
-    \label{fig:dataset:gui_screenshot}
+    \label{fig:dataset_usz:gui_screenshot}
 \end{figure}
 
 \subsection*{Prevalence}
 
-Overall prevalence of lymph node level involvement is reported in \cref{table:dataset:prevalence} and visualized in \cref{fig:dataset:statistics} panel a and b.
+Overall prevalence of lymph node level involvement is reported in \cref{table:dataset_usz:prevalence} and visualized in \cref{fig:dataset_usz:statistics} panel a and b.
 
 \begin{table}[!ht]
     \centering
@@ -54,19 +54,36 @@ Overall prevalence of lymph node level involvement is reported in \cref{table:da
         \hline
         \end{tabular}
     }
-    \label{table:dataset:prevalence}
+    \label{table:dataset_usz:prevalence}
 \end{table}
 
 \subsection*{Dependence on T-category}
 
-\Cref{table:dataset:prevalence} and \cref{fig:dataset:statistics} panels a and b compare the prevalence of \gls{lnl} involvement for early (T1/T2) versus late (T3/T4) T-category-patients. Consistent with common intuition, higher involvement was observed for late T-categories. Involvement of ipsilateral level II was high also for T1/T2 \& (79\%) and therefore increased only moderately for T3/T4 \& (83\%). However, involvement of the downstream levels III, IV, V increased from 32\%, 7\%, 3\% for early T-category patients to 47\%, 15\%, 9\% for late T-category. On the contralateral side, involvement of levels II, III, IV, V increased from 9\%, 3\%, 1\%, 1\% for T1/T2 patients to 28\%, 12\%, 4\%, 1\% for T3/T4.
+\Cref{table:dataset_usz:prevalence} and \cref{fig:dataset_usz:statistics} panels a and b compare the prevalence of \gls{lnl} involvement for early (T1/T2) versus late (T3/T4) T-category-patients. Consistent with common intuition, higher involvement was observed for late T-categories. Involvement of ipsilateral level II was high also for T1/T2 \& (79\%) and therefore increased only moderately for T3/T4 \& (83\%). However, involvement of the downstream levels III, IV, V increased from 32\%, 7\%, 3\% for early T-category patients to 47\%, 15\%, 9\% for late T-category. On the contralateral side, involvement of levels II, III, IV, V increased from 9\%, 3\%, 1\%, 1\% for T1/T2 patients to 28\%, 12\%, 4\%, 1\% for T3/T4.
 
 \begin{figure}
     \centering
     \def\svgwidth{1.0\textwidth}
     \input{figures/statistics_crop.pdf_tex}
-    \caption[Statistics that characterize the presented cohort of OPSCC patients]{(a) Contralateral and (b) ipsilateral prevalence of \gls{lnl} involvement for the whole patient cohort and stratified according to early (T1/T2) versus late (T3/T4) T-category. Contralateral \gls{lnl} involvement stratified according to (c) midsagittal plan extension and (d) involvement of ipsilateral level III. Ipsilateral \gls{lnl} involvement stratified according to HPV status for T1/T2 tumors (e) and T3/T4 tumors (f).}
-    \label{fig:dataset:statistics}
+    \caption[
+        Statistics that characterize the cohort of OPSCC patients extracted at the USZ
+    ]{
+        \begin{enumerate*}[label={(\alph*)}]
+            \item Contralateral and
+            \item ipsilateral prevalence of \gls{lnl} involvement for the whole patient cohort and stratified according to early (T1/T2) versus late (T3/T4) T-category
+        \end{enumerate*}.
+        Contralateral \gls{lnl} involvement stratified according to
+        \begin{enumerate*}[label={(\alph*)},start=3]
+            \item midsagittal plan extension and
+            \item involvement of ipsilateral level III
+        \end{enumerate*}.
+        Ipsilateral \gls{lnl} involvement stratified according to HPV status for
+        \begin{enumerate*}[label={(\alph*)},start=5]
+            \item T1/T2 tumors and
+            \item T3/T4 tumors
+        \end{enumerate*}.
+    }
+    \label{fig:dataset_usz:statistics}
 \end{figure}
 
 \subsection*{Dependence on upstream levels}
@@ -95,10 +112,10 @@ Overall prevalence of lymph node level involvement is reported in \cref{table:da
             \hline
         \end{tabular}
     }
-    \label{table:dataset:upstream}
+    \label{table:dataset_usz:upstream}
 \end{table}
 
-\Cref{table:dataset:upstream} considers the frequency of involvement in downstream levels depending on the involvement in upstream levels. On the ipsilateral side, level III harbored metastases in 47\% of patients (108 out of 232) when level II was positive, but in only 9\% of patients (5 out of 55) when II was negative. Analogously, level IV harbored metastases in 25\% of patients (28 out of 118) when level III was positive, but in only 2\% of patients (3 out of 174) when III was negative (\cref{fig:dataset:flowchart}). On the contralateral side, level III harbored metastases in 35\% of patients (18 out of 51) when level II was positive, but in only 1\% of patients (3 out of 236) when II was negative.
+\Cref{table:dataset_usz:upstream} considers the frequency of involvement in downstream levels depending on the involvement in upstream levels. On the ipsilateral side, level III harbored metastases in 47\% of patients (108 out of 232) when level II was positive, but in only 9\% of patients (5 out of 55) when II was negative. Analogously, level IV harbored metastases in 25\% of patients (28 out of 118) when level III was positive, but in only 2\% of patients (3 out of 174) when III was negative (\cref{fig:dataset_usz:flowchart}). On the contralateral side, level III harbored metastases in 35\% of patients (18 out of 51) when level II was positive, but in only 1\% of patients (3 out of 236) when II was negative.
 
 \begin{figure}
     \def\svgwidth{1.0\textwidth}
@@ -106,12 +123,12 @@ Overall prevalence of lymph node level involvement is reported in \cref{table:da
     \caption[Flowchart showing the correlations of ipsilateral involvement in the LNLs II, III and IV]{
         Ipsilateral involvement in levels III and IV depending on the involvement of upstream levels as flow plot.
     }
-    \label{fig:dataset:flowchart}
+    \label{fig:dataset_usz:flowchart}
 \end{figure}
 
 \subsection*{Contralateral involvement}
 
-Apart from late T-category (\cref{table:dataset:upstream}), extension of the primary tumor across the midsagittal plane and higher ipsilateral involvement was associated with higher contralateral involvement. \cref{table:dataset:contralateral} reports the prevalence of contralateral lymph node involvement depending on three factors: T-category, midsagittal extension, and whether ipsilateral level III was involved. For all 197 patients without midline extension, contralateral involvement in levels II, III, IV, V was 10\%, 3\%, 2\%, 1\% compared to 36\%, 18\%, 4\%, 0\% with midline extension (90 patients). In addition, out of 38 patients with late T-category, midsagittal extension, and positive ipsilateral level III, 21 \& (55\%) showed contralateral involvement in level II and 12 \& (32\%) in level III. Out of 39 late T-category patients with midsagittal extension but negative ipsilateral level III, contralateral involvement was lower (24\% in level II, 7\% in level III). In \cref{table:dataset:contralateral}, we consider ipsilateral level III rather than II, because level II is involved in 81\% of all patients. However, when ipsilateral level II is not involved, contralateral involvement is unlikely (1 out of 55 patients showed metastases in contralateral level II). We further note that the three factors considered in \cref{table:dataset:contralateral} are correlated. Out of 150 early T-category patients, 11 \& (7\%) showed midline extension, whereas 79 \& (58\%) out of 137 late T-category patients showed midline extension. As expected, contralateral involvement depended on primary tumor subsite. When considering only primary tumors strictly restricted to the tonsils (118 patients), contralateral involvement in levels II and III was 8\% and 3\%, respectively.
+Apart from late T-category (\cref{table:dataset_usz:upstream}), extension of the primary tumor across the midsagittal plane and higher ipsilateral involvement was associated with higher contralateral involvement. \cref{table:dataset_usz:contralateral} reports the prevalence of contralateral lymph node involvement depending on three factors: T-category, midsagittal extension, and whether ipsilateral level III was involved. For all 197 patients without midline extension, contralateral involvement in levels II, III, IV, V was 10\%, 3\%, 2\%, 1\% compared to 36\%, 18\%, 4\%, 0\% with midline extension (90 patients). In addition, out of 38 patients with late T-category, midsagittal extension, and positive ipsilateral level III, 21 \& (55\%) showed contralateral involvement in level II and 12 \& (32\%) in level III. Out of 39 late T-category patients with midsagittal extension but negative ipsilateral level III, contralateral involvement was lower (24\% in level II, 7\% in level III). In \cref{table:dataset_usz:contralateral}, we consider ipsilateral level III rather than II, because level II is involved in 81\% of all patients. However, when ipsilateral level II is not involved, contralateral involvement is unlikely (1 out of 55 patients showed metastases in contralateral level II). We further note that the three factors considered in \cref{table:dataset_usz:contralateral} are correlated. Out of 150 early T-category patients, 11 \& (7\%) showed midline extension, whereas 79 \& (58\%) out of 137 late T-category patients showed midline extension. As expected, contralateral involvement depended on primary tumor subsite. When considering only primary tumors strictly restricted to the tonsils (118 patients), contralateral involvement in levels II and III was 8\% and 3\%, respectively.
 
 \begin{table}[!hb]
     \centering
@@ -135,12 +152,12 @@ Apart from late T-category (\cref{table:dataset:upstream}), extension of the pri
             \hline
         \end{tabular}
     }
-    \label{table:dataset:contralateral}
+    \label{table:dataset_usz:contralateral}
 \end{table}
 
 \subsection*{Dependence on HPV status}
 
-The \gls{hpv} status was positive for 181 \& (63\%), negative for 96 \& (33\%), and unknown for 10 patients \& (4\%). When considering \gls{lnl} involvement for all T-categories and primary tumor subsites combined, the dataset provides no strong indication that \gls{lnl} involvement is different for \gls{hpv} positive versus \gls{hpv} negative patients, neither regarding the patterns of spread to the \glspl{lnl} nor in terms of prevalence of involvement. However, the data suggests that the association of higher lymph node involvement with more advanced T-category is more pronounced for \gls{hpv} negative tumors than for \gls{hpv} positive tumors, i.e. \gls{hpv}-tumors tend to disseminate earlier to regional nodes (\cref{table:dataset:prevalence}). For example, for \gls{hpv} positive tumors, involvement of ipsilateral level III increased from 35\% for early T-category to 47\% for late T-category. Instead, for \gls{hpv} negative tumors, involvement was 26\% versus 49\%.
+The \gls{hpv} status was positive for 181 \& (63\%), negative for 96 \& (33\%), and unknown for 10 patients \& (4\%). When considering \gls{lnl} involvement for all T-categories and primary tumor subsites combined, the dataset provides no strong indication that \gls{lnl} involvement is different for \gls{hpv} positive versus \gls{hpv} negative patients, neither regarding the patterns of spread to the \glspl{lnl} nor in terms of prevalence of involvement. However, the data suggests that the association of higher lymph node involvement with more advanced T-category is more pronounced for \gls{hpv} negative tumors than for \gls{hpv} positive tumors, i.e. \gls{hpv}-tumors tend to disseminate earlier to regional nodes (\cref{table:dataset_usz:prevalence}). For example, for \gls{hpv} positive tumors, involvement of ipsilateral level III increased from 35\% for early T-category to 47\% for late T-category. Instead, for \gls{hpv} negative tumors, involvement was 26\% versus 49\%.
 
 \subsection*{Involvement of levels I, V and VII}
 

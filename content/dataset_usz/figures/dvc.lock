@@ -25,3 +25,31 @@ stages:
     - path: statistics_crop.pdf_tex
       md5: 1729c6a3fed2888f48a051094d1e59a7
       size: 2086
+  plot-statistics@statistics:
+    cmd: python statistics.py
+    deps:
+    - path: ../data
+      md5: 85925bef4fada17fa12f678ac5ce95ad.dir
+      size: 356490
+      nfiles: 7
+    - path: statistics.py
+      md5: 955fda69722e50798ba51f80e4c2bef3
+      size: 9840
+    outs:
+    - path: statistics.svg
+      md5: 5f91b526a8ca3be9a17f51b5ac2457ba
+      size: 121373
+  export-to-pdf@statistics:
+    cmd: "inkscape --without-gui --file=statistics.svg --export-pdf=statistics.pdf\
+      \ --export-latex --export-area=0:0:0.5:0.5\n"
+    deps:
+    - path: statistics.svg
+      md5: 5f91b526a8ca3be9a17f51b5ac2457ba
+      size: 121373
+    outs:
+    - path: statistics.pdf
+      md5: a103c0f36e894d45dbf66cc085bef598
+      size: 156582
+    - path: statistics.pdf_tex
+      md5: 9d274af715254a3e8d6ef19ceb06e9f0
+      size: 2061

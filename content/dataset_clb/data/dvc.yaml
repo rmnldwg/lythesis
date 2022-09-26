@@ -1,0 +1,11 @@
+stages:
+  enhance:
+    vars:
+    - input: 2021-clb-oropharynx.csv
+    - output: 2021-clb-oropharynx-enhanced.csv
+    cmd: lyscripts enhance ${input} ${output} --lnls-with-sub ""
+    deps:
+    - ${input}
+    - params.yaml
+    outs:
+    - ${output}

@@ -1,19 +1,35 @@
 stages:
-  export-to-pdf:
-    cmd: >
-      inkscape
-      --without-gui
-      --file=../data/combined_plots.svg
-      --export-pdf=statistics.pdf
-      --export-latex
-      --export-area=0:0:0.5:0.5
-    deps:
-    - ../data/combined_plots.svg
-    outs:
-    - statistics.pdf:
-        cache: false
-    - statistics.pdf_tex
-  
+  plots:
+    foreach:
+    - sens_spec_plot
+    - statistics
+    do:
+      cmd: python ${item}.py
+      deps:
+      - ${item}.py
+      - ../data/2021-clb-oropharynx-enhanced.csv
+      outs:
+      - ${item}.svg
+
+  convert:
+    foreach: 
+    - sens_spec_plot
+    - statistics
+    do:
+      cmd: >
+        inkscape
+        --without-gui
+        --file=${item}.svg
+        --export-pdf=${item}.pdf
+        --export-latex
+      deps:
+      - ${item}.svg
+      outs:
+      - ${item}.pdf:
+          cache: false
+      - ${item}.pdf_tex:
+          cache: false
+
   crop-figure:
     desc:
       This command replaces the line in the auto-generated `statistics.pdf_tex` with an

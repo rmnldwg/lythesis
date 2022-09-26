@@ -1,0 +1,16 @@
+schema: '2.0'
+stages:
+  enhance:
+    cmd: lyscripts enhance 2021-clb-oropharynx.csv 2021-clb-oropharynx-enhanced.csv
+      --lnls-with-sub ""
+    deps:
+    - path: 2021-clb-oropharynx.csv
+      md5: d40c0a1ae967a6983d60a0a809cf3972
+      size: 92742
+    - path: params.yaml
+      md5: 0d4140304264b4e2f757693c6f2ce9f9
+      size: 194
+    outs:
+    - path: 2021-clb-oropharynx-enhanced.csv
+      md5: ca0cca1e5bb38647d399486cfba77e62
+      size: 113393
