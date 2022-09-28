@@ -19,7 +19,7 @@ Figures and tables, like \cref{fig:dataset_usz:statistics} and \cref{table:datas
 \subsection*{Prototype}
 \label{subsec:lyprox:motivation:prototype}
 
-This is precisely why we thought of creating a dashboard, allowing a user to create the visualizations and numbers themselves according to their interest w.r.t. the underlying data. The first implementation that provided such a dashboard was a Python-based \gls{gui} developed by Bertrand Pouymayou for the use on local hardware (e.g. a laptop). It could display the prevalence of involvement for all \glspl{lnl} while the patients could be stratified by a number of reported variables that were recorded (e.g. smoking status). Moreover, one could explore how frequently certain levels were involved together or on their own, e.g. without metastases in upstream \glspl{lnl}. A screenshot of this first prototype is shown in \cref{fig:lyprox:pouymayou_gui}.
+This is why we thought of providing a dashboard, allowing a user to create the visualizations and numbers themselves according to their interest w.r.t. the underlying data. The first implementation that provided such a dashboard was a Python-based \gls{gui} developed by Bertrand Pouymayou for the use on local hardware (e.g. a laptop). It could display the prevalence of involvement for all \glspl{lnl} while the patients could be stratified by a number of reported variables that were recorded (e.g. smoking status). Moreover, one could explore how frequently certain levels were involved together or on their own, e.g. without metastases in upstream \glspl{lnl}. A screenshot of this first prototype is shown in \cref{fig:lyprox:pouymayou_gui}.
 
 \begin{figure}
     \centering
@@ -31,5 +31,12 @@ This is precisely why we thought of creating a dashboard, allowing a user to cre
     }
     \label{fig:lyprox:pouymayou_gui}
 \end{figure}
+
+The prototype already allowed us to quickly check correlation and patterns without having to manually go through large tables. Distributing this version of the \gls{gui} such that anyone could obtain a copy of it, install and subsequently run it, however, would have faced difficulties. Making \acrlongpl{gui} platform-independent is usually very error-prone and requires care w.r.t. to the installation and set up process. Moreover, not all potential users are necessarily familiar with the tools required. Hence, we decided to provide the interface such that we set up and control the environment it runs in.
+
+\subsection*{Online interface}
+\label{subsec:lyprox:motivation:online}
+
+Arguably the most broadly accessible and most easily usable type of user interface comes in the form of \faIcon{html5}~\acrshort{html} documents. In conjunction with \faIcon{css3-alt}~\glspl{css}, they allow the creation of arbitrary content that can be displayed and interacted with using any modern web browser, regardless of the platform used. Additionally, both \acrshort{html} and \acrshort{css} files can be distributed efficiently over the internet. The logic driving the interface one wants to share can then be defined in a \faIcon{js-square}~JavaScript file that is sent alongside the \acrshort{html} and \acrshort{css} documents and executed on the client/user side. Alternatively, one may also run a central remote server that runs the logic in an arbitrary backend and sends out corresponding \acrshort{html} and \acrshort{css} responses.
 
 \end{document}
