@@ -1,0 +1,22 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
+
+
+\begin{document}
+
+\section{Implementation}
+\label{sec:lyprox:implementation}
+
+\subsection*{Database models}
+\label{subsec:lyprox:implementation:models}
+
+The first step in creating a Django web application -- aside from the initializing the project by choosing important settings -- usually consists of defining the database models. This is done by writing a Python \texttt{class} for each type of object one wants to store. One such class essentially corresponds to a table in the underlying database (e.g., an \acrshort{sql} database like \href{https://www.sqlite.org/index.html}{SQLite3}). It can be given attributes for each column in that table and may also store relationships between tables/classes. Based on this Python representation of data, Django can automatically create extensive functionality. As their documentation states: 
+
+\begin{displayquote}[Django documentation \cite{noauthor_creating_nodate}]
+    The goal is to define your data model in one place and automatically derive things from it.
+\end{displayquote}
+
+For example, when we defined the \texttt{Patient} class, we used Django to generate large parts of the utilities that render \acrshort{html} forms for creating, editing and deleting \texttt{Patient} entries in the respective SQLite3 database.
+
+\end{document}

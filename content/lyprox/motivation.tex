@@ -42,7 +42,7 @@ Arguably the most broadly accessible and most easily usable type of user interfa
 Because of how ubiquitous and important web content has become, the demand for efficient and versatile tools to develop that content is very high. Consequently, there exists a plethora of frameworks and technologies we needed to choose from before starting to build our \gls{gui}. The first choice however, is which type of web page we wanted to serve, as they can broadly be grouped into two types:
 
 \begin{itemize}
-    \item \textbf{Static:} For these kinds of web pages, the server sends the content to the client or user as it is stored. This means that no logic is executed by the server and different users always receive the same content. However, the resulting web page, as it is rendered on the client's side, may still be interactive, since entire programs can be embedded into it and run e.g. inside the user's browser.
+    \item \textbf{Static:} For these kinds of web pages, the server sends the content to the client or user as it is stored. This means that no logic is executed by the server and different users always receive the same content. However, the resulting web page, as it is rendered on the client's side, may still be interactive, since entire programs can be embedded into it and run inside the user's browser.
     \item \textbf{Dynamic:} In this case, the server reacts \emph{dynamically} to the request sent to it by the user. The request is processed based on the programmed logic and a corresponding response is rendered and sent back.
 \end{itemize}
 
@@ -56,6 +56,6 @@ We decided to build a \emph{dynamic} site for two main reasons:
 
 At the time of beginning the development for the \gls{gui}, we had already implemented the probabilistic model that we will introduce in \cref{chap:unilateral} in the programming language \faIcon{python}~Python. Hence, we decided to use a web framework also implemented in that language, since it matched our skills and may allow us to add that model's library directly into the \gls{gui}'s logic.
 
-Even when one has settled on a dynamic website that serves content using a backend written in \faIcon{python}~Python, there are still numerous frameworks to choose from, e.g. \href{https://flask.palletsprojects.com/en/2.2.x/}{Flask}, \href{https://plotly.com/dash/}{Dash} or \href{http://bottlepy.org/docs/dev/}{Bottle}. However, we decided to go with \href{https://www.djangoproject.com/}{Django}.
+Even when one has settled on a dynamic website that serves content using a backend written in \faIcon{python}~Python, there are still numerous frameworks to choose from, e.g. \href{https://flask.palletsprojects.com/en/2.2.x/}{Flask}, \href{https://plotly.com/dash/}{Dash} or \href{http://bottlepy.org/docs/dev/}{Bottle}. However, we decided to go with \href{https://www.djangoproject.com/}{Django} \cite{noauthor_django_2022}, as it is one of the most popular and comes with numerous features -- especially related to security and authorization -- already built-in. It makes heavy use of the \gls{oop} paradigm also for its database models, which -- as we will see -- made it easy for us to represent e.g. a patient within Django.
 
 \end{document}
