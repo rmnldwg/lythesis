@@ -14,7 +14,7 @@ However, in such a case there are still some hurdles to discovering and taking a
 
 Taking these steps is not particularly difficult, and a determined scientist may be able to accomplish that in a matter of hours. However, if a researcher came up with a quick idea, not yet fully developed into a hypothesis, the outlined procedure could -- in their eyes -- very well not be worth the potential insight. Consequently, an interesting idea and a valuable cohort of patients might be left unexplored. Even more so with someone who did not even come up with a research question our data may be able to answer.
 
-Figures and tables, like \cref{fig:dataset_usz:statistics} and \cref{table:dataset_usz:prevalences} that allow a reader of our work to quickly and visually understand our data address these issues to some extent. They create an understanding of what is reported in the data and answer common questions about it. But it is not feasible to provide plots and tables on all aspects of a dataset within a publication.
+Figures and tables, like \cref{fig:dataset_usz:statistics} and \cref{table:dataset_usz:prevalence} that allow a reader of our work to quickly and visually understand our data address these issues to some extent. They create an understanding of what is reported in the data and answer common questions about it. But it is not feasible to provide plots and tables on all aspects of a dataset within a publication.
 
 \subsection*{Prototype}
 \label{subsec:lyprox:motivation:prototype}
@@ -37,6 +37,25 @@ The prototype already allowed us to quickly check correlation and patterns witho
 \subsection*{Online interface}
 \label{subsec:lyprox:motivation:online}
 
-Arguably the most broadly accessible and most easily usable type of user interface comes in the form of \faIcon{html5}~\acrshort{html} documents. In conjunction with \faIcon{css3-alt}~\glspl{css}, they allow the creation of arbitrary content that can be displayed and interacted with using any modern web browser, regardless of the platform used. Additionally, both \acrshort{html} and \acrshort{css} files can be distributed efficiently over the internet. The logic driving the interface one wants to share can then be defined in a \faIcon{js-square}~JavaScript file that is sent alongside the \acrshort{html} and \acrshort{css} documents and executed on the client/user side. Alternatively, one may also run a central remote server that runs the logic in an arbitrary backend and sends out corresponding \acrshort{html} and \acrshort{css} responses.
+Arguably the most broadly accessible and most easily usable type of user interface comes in the form of interactive web pages. Consisting of \faIcon{html5}~\acrshort{html} documents styled using \faIcon{css3-alt}~\acrshort{css}, web pages require nothing but a modern web browser, of which a large number is available on all kinds of platforms and hardware, and an internet connection. So, in order to make our visualization tool as easily accessible as possible, we decided to develop a web-based \gls{gui}.
+
+Because of how ubiquitous and important web content has become, the demand for efficient and versatile tools to develop that content is very high. Consequently, there exists a plethora of frameworks and technologies we needed to choose from before starting to build our \gls{gui}. The first choice however, is which type of web page we wanted to serve, as they can broadly be grouped into two types:
+
+\begin{itemize}
+    \item \textbf{Static:} For these kinds of web pages, the server sends the content to the client or user as it is stored. This means that no logic is executed by the server and different users always receive the same content. However, the resulting web page, as it is rendered on the client's side, may still be interactive, since entire programs can be embedded into it and run e.g. inside the user's browser.
+    \item \textbf{Dynamic:} In this case, the server reacts \emph{dynamically} to the request sent to it by the user. The request is processed based on the programmed logic and a corresponding response is rendered and sent back.
+\end{itemize}
+
+Of course, hybrid approaches are also possible and in fact very common, as client-side executed scripts can almost always be added to a served web page. 
+
+We decided to build a \emph{dynamic} site for two main reasons: 
+\begin{enumerate*}[label={(\arabic*)}]
+    \item If it were static, the underlying data would need to be sent alongside the layout, design and logic of the interface. And as the data may at some point include thousands of patients, the initial loading times could become very long. Processing the data on the server side and only sending the computed results (e.g. a prevalence of lymphatic involvement) remains feasible, even as the database grows.
+    \item Implementing logic on the client side usually requires it to be programmed in the \faIcon{js-square}~JavaScript language, which we are not very proficient with. In the backend on the server, however, the logic that compiles and renders the web page in the dynamic case can be implemented in a number of programming languages. This means we were able to choose the development framework based on our skill set.
+\end{enumerate*}
+
+At the time of beginning the development for the \gls{gui}, we had already implemented the probabilistic model that we will introduce in \cref{chap:unilateral} in the programming language \faIcon{python}~Python. Hence, we decided to use a web framework also implemented in that language, since it matched our skills and may allow us to add that model's library directly into the \gls{gui}'s logic.
+
+Even when one has settled on a dynamic website that serves content using a backend written in \faIcon{python}~Python, there are still numerous frameworks to choose from, e.g. \href{https://flask.palletsprojects.com/en/2.2.x/}{Flask}, \href{https://plotly.com/dash/}{Dash} or \href{http://bottlepy.org/docs/dev/}{Bottle}. However, we decided to go with \href{https://www.djangoproject.com/}{Django}.
 
 \end{document}
