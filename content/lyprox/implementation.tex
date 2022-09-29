@@ -19,4 +19,16 @@ The first step in creating a Django web application -- aside from the initializi
 
 For example, when we defined the \texttt{Patient} class, we used Django to generate large parts of the utilities that render \acrshort{html} forms for creating, editing and deleting \texttt{Patient} entries in the respective SQLite3 database.
 
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/er_diagram_paths.pdf_tex}
+    \caption[
+        ER diagram of LyProX' data model
+    ]{
+        \Gls{er} diagram of LyProX' underlying data representation. Every box corresponds to one Python \texttt{class} in Django and therefore also to one table in the SQLite3 database. Entries in those tables are linked to other table's entries via the indicated connections.
+    }
+    \label{fig:lyprox:er_diagram}
+\end{figure}
+
 \end{document}
