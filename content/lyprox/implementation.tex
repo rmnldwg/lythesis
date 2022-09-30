@@ -11,14 +11,6 @@
 \subsection*{Database models}
 \label{subsec:lyprox:implementation:models}
 
-The first step in creating a Django web application -- aside from the initializing the project by choosing important settings -- usually consists of defining the database models. This is done by writing a Python \texttt{class} for each type of object one wants to store. One such class essentially corresponds to a table in the underlying database (e.g., an \acrshort{sql} database like \href{https://www.sqlite.org/index.html}{SQLite3}). It can be given attributes for each column in that table and may also store relationships between tables/classes. Based on this Python representation of data, Django can automatically create extensive functionality. As their documentation states: 
-
-\begin{displayquote}[Django documentation \cite{noauthor_creating_nodate}]
-    The goal is to define your data model in one place and automatically derive things from it.
-\end{displayquote}
-
-For example, when we defined the \texttt{Patient} class, we used Django to generate large parts of the utilities that render \acrshort{html} forms for creating, editing and deleting \texttt{Patient} entries in the respective SQLite3 database.
-
 \begin{figure}
     \centering
     \def\svgwidth{1.0\textwidth}
@@ -26,9 +18,30 @@ For example, when we defined the \texttt{Patient} class, we used Django to gener
     \caption[
         ER diagram of LyProX' data model
     ]{
-        \Gls{er} diagram of LyProX' underlying data representation. Every box corresponds to one Python \texttt{class} in Django and therefore also to one table in the SQLite3 database. Entries in those tables are linked to other table's entries via the indicated connections.
+        \Gls{er} diagram of LyProX' underlying data representation. Every box corresponds to one Python \texttt{class} in Django and therefore also to one table in the SQLite3 database. Entries in those tables are linked to other table's entries via the indicated connections. The connections between nodes of this graph are all \emph{one-to-many} relations, meaning that e.g. one institution per user, but many users per institution.
     }
     \label{fig:lyprox:er_diagram}
 \end{figure}
+
+The first step in creating a Django web application -- aside from the initializing the project by choosing important settings -- usually consists of defining the database models. This is done by writing a Python \texttt{class} for each type of object one wants to store. One such class essentially corresponds to a table in the underlying database (e.g., an \acrshort{sql} database like \href{https://www.sqlite.org/index.html}{SQLite3}). It can be given attributes for each column in that table and may also store relationships between tables/classes. Based on this Python representation of data, Django can automatically create extensive functionality. As their documentation states: 
+
+\begin{displayquote}[Django documentation \cite{noauthor_creating_nodate}]
+    The goal is to define your data model in one place and automatically derive things from it.
+\end{displayquote}
+
+For example, when we defined the \texttt{Patient} class, we used Django to generate large parts of the utilities that render \acrshort{html} forms for creating, editing and deleting \texttt{Patient} entries in the respective SQLite3 database. In total, we created six entities to represent our patient cohorts in the database:
+
+\begin{itemize}
+    \item \texttt{Insitution:} Represents a hospital or medical research facility that has created datasets of patients, e.g. from their treatment records.
+    \item \texttt{User:} A member of one of the \texttt{Institutions} who uploaded data into the web page's database or whom we granted access to those \texttt{Datasets} we did not yet make public.
+    \item \texttt{Dataset:} Groups \texttt{Patients} into cohorts that were extracted or added to the interface at the same time. This entity stores additional information such as the repository it is made persistent in -- if available -- or whether it is public. We implemented this last property to be able to visualize progression patterns of patients that are not yet ready for publication.
+    \item \texttt{Patient:} The core entity in the database corresponding to a patient record. It encodes e.g. demographic information such as age and sex, as well as TNM stage. It belongs to a \texttt{Dataset} and can hold multiple \texttt{Tumors} and \texttt{Diagnoses}.
+    \item \texttt{Tumor:} We could have added information about the primary tumor directly to the \texttt{Patients} table, but at some point we might want to be able to deal with multiple synchronous tumors. Due to this potential extension in the future, we created a separate entity for tumors and allow a \texttt{Patient} to be associated with multiple tumors. It stores tumor-specific data, such as its location, lateralization and volume -- if available.
+    \item \texttt{Diagnose:} For the reporting of \acrlong{lnl} involvement, this is the Django \texttt{class} of interest. For each side of a \texttt{Patient's} neck (ipsi- and contralateral) and for each modality that reported lymphatic involvement (e.g. \gls{mri}, \gls{ct}, pathology, ...), one such entry exists. It stores whether each \gls{lnl}'s state was reported to be metastatic, healthy or unknown. For example, \glspl{fna} are usually only performed for one or two levels at a time. All other levels would then be empty in the respective \texttt{Diagnose} entry.
+\end{itemize}
+
+A detailed \gls{er} diagram is shown in \cref{fig:lyprox:er_diagram}. It also lists all attributes that are stores for each entity and what Django type is used to represent them. In addition to those attributes, Django allows implementing arbitrary logic to ensure that an entry is in a valid state. We did this, for instance, with the \texttt{Diagnose}, where we need to make sure that the combination of lymphatic super- and sublevels is consistent. E.g., if we add a \texttt{Diagnose} to a \texttt{Patient} and report \gls{lnl} IIa to be healthy, but the other sublevel IIb to harbor metastases, then we automatically set the super level II to ``involved''. The other way around, when \gls{lnl} II is entered as being healthy, we can deduce that all sublevels (IIa and IIb) must be set to healthy, as well.
+
+Similarly, \texttt{Datasets} can be locked to preserve them as uploaded/created by preventing accidental edits. A method in the \texttt{Dataset's} definition is called whenever an attempt to change a \texttt{Patient}, \texttt{Tumor} or \texttt{Diagnose} is made, and raises an exception before the change can be written to the SQLite3 database. For convenience, the \texttt{Dataset} further contains methods to import and export all its patients from and to \gls{csv} tables. We also use this format both in the implementation of the probabilistic model (see \cref{chap:unilateral}) to load the data for learning, and for publishing our raw data in \repolink{lyDATA}.
 
 \end{document}
