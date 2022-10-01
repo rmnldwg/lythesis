@@ -23,7 +23,7 @@
     \label{fig:lyprox:er_diagram}
 \end{figure}
 
-The first step in creating a Django web application -- aside from the initializing the project by choosing important settings -- usually consists of defining the database models. This is done by writing a Python \texttt{class} for each type of object one wants to store. One such class essentially corresponds to a table in the underlying database (e.g., an \acrshort{sql} database like \href{https://www.sqlite.org/index.html}{SQLite3}). It can be given attributes for each column in that table and may also store relationships between tables/classes. Based on this Python representation of data, Django can automatically create extensive functionality. As their documentation states: 
+The first step in creating a Django web application -- aside from initializing the project by choosing important settings -- usually consists of defining the database models. This is done by writing a Python class -- inheriting from Django's \texttt{Model} class -- for each type of object one wants to store. One such class essentially corresponds to a table in the underlying database (e.g., an \acrshort{sql} database like \href{https://www.sqlite.org/index.html}{SQLite3}). It can be given attributes for each column in that table and may also store relationships between tables/classes. Based on this Python representation of data, Django can automatically create extensive functionality. As their documentation states: 
 
 \begin{displayquote}[Django documentation \cite{noauthor_creating_nodate}]
     The goal is to define your data model in one place and automatically derive things from it.
@@ -40,8 +40,68 @@ For example, when we defined the \texttt{Patient} class, we used Django to gener
     \item \texttt{Diagnose:} For the reporting of \acrlong{lnl} involvement, this is the Django \texttt{class} of interest. For each side of a \texttt{Patient's} neck (ipsi- and contralateral) and for each modality that reported lymphatic involvement (e.g. \gls{mri}, \gls{ct}, pathology, ...), one such entry exists. It stores whether each \gls{lnl}'s state was reported to be metastatic, healthy or unknown. For example, \glspl{fna} are usually only performed for one or two levels at a time. All other levels would then be empty in the respective \texttt{Diagnose} entry.
 \end{itemize}
 
-A detailed \gls{er} diagram is shown in \cref{fig:lyprox:er_diagram}. It also lists all attributes that are stores for each entity and what Django type is used to represent them. In addition to those attributes, Django allows implementing arbitrary logic to ensure that an entry is in a valid state. We did this, for instance, with the \texttt{Diagnose}, where we need to make sure that the combination of lymphatic super- and sublevels is consistent. E.g., if we add a \texttt{Diagnose} to a \texttt{Patient} and report \gls{lnl} IIa to be healthy, but the other sublevel IIb to harbor metastases, then we automatically set the super level II to ``involved''. The other way around, when \gls{lnl} II is entered as being healthy, we can deduce that all sublevels (IIa and IIb) must be set to healthy, as well.
+A detailed \gls{er} diagram is shown in \cref{fig:lyprox:er_diagram}. It also lists all attributes that are stores for each entity and what Django type is used to represent them.
 
-Similarly, \texttt{Datasets} can be locked to preserve them as uploaded/created by preventing accidental edits. A method in the \texttt{Dataset's} definition is called whenever an attempt to change a \texttt{Patient}, \texttt{Tumor} or \texttt{Diagnose} is made, and raises an exception before the change can be written to the SQLite3 database. For convenience, the \texttt{Dataset} further contains methods to import and export all its patients from and to \gls{csv} tables. We also use this format both in the implementation of the probabilistic model (see \cref{chap:unilateral}) to load the data for learning, and for publishing our raw data in \repolink{lyDATA}.
+\subsection*{Adding patients}
+\label{subsec:lyprox:implementation:add}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1.0\textwidth, frame]{figures/new_patient.png}
+    \caption[
+        Screenshot of the form for adding new patients
+    ]{
+        Screenshot of the rendered \acrshort{html} form that is shown when an authenticated user wants to add a new \texttt{Patient} to an existing \texttt{Dataset}. Note that the form contains no field for specifying a T-stage.
+    }
+    \label{fig:lyprox:new_patient}
+\end{figure}
+
+As mentioned earlier, Django's design principles allow developers to reuse as much as possible of already written code. Hence, most of the functionality to add, edit or delete any of the just introduced database entities was already implemented. Django does this via \texttt{Form} classes that are built around the user-created \texttt{Model} classes. Those Django forms can then in turn render \acrshort{html} forms into which a user can enter data that -- when sent back to the server -- will be translated by the same \texttt{Form} class into a new or changed database entry.
+
+On top, one may implement custom logic to sanitize a user's input or derive \texttt{Model} attributes from inputs. An example in LyProX would be the T-stage: As shown in \cref{fig:lyprox:er_diagram}, for every \texttt{Patient}, we store the attribute \texttt{t\_stage}. But when creating a new patient (see screenshot in \cref{fig:lyprox:new_patient}), there is no field for T-stage. After the new \texttt{Patient} entry has been created, however, one may add a \texttt{Tumor} to it, for which a T-stage must be defined. Upon writing the tumor information into the database, Django calls a method in the \texttt{Patient} class updating this instance's T-stage to be the most advanced of all its tumors (see \cref{fig:lyprox:sanitize_t_stage}).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/sanitize_t_stage.png}
+    \caption[
+        Process of adding a new tumor to a patient
+    ]{
+        Screenshot of the page displaying the newly created patient where information about the primary tumor is just being filled in (top left panel in the back), as well as a screenshot of the same patient page after the tumor was added (bottom right panel in front). The orange arrows indicate how the information is added during the process.
+    }
+    \label{fig:lyprox:sanitize_t_stage}
+\end{figure}
+
+Similarly, we implemented sanitization of some \glspl{lnl} in the \texttt{Diagnose}, where we need to make sure that the combination of lymphatic super- and sublevels is consistent. E.g., if we add a \texttt{Diagnose} to a \texttt{Patient} and report \gls{lnl} IIa to be healthy, but the other sublevel IIb to harbor metastases, then we automatically set the super level II to ``involved''. The other way around, when \gls{lnl} II is entered as being healthy, we can deduce that all sublevels (IIa and IIb) must be set to healthy, as well.
+
+When one is done adding \texttt{Patient} entries to a \texttt{Datasets}, it can be locked to preserve it as created by preventing accidental edits. A method in the \texttt{Dataset's} definition is called whenever an attempt to change a \texttt{Patient}, \texttt{Tumor} or \texttt{Diagnose} is made, and raises an exception before the change can be written to the SQLite3 database.
+
+The described implementation would in principle allow clinicians to directly transfer patient information from the digital patient record system of their insitution into LyProX. But of course most researchers do not extract lymphatic patterns of progression for the sole purpose of adding them to our interface. Hence, the definition of a \texttt{Dataset} in Django contains convenience methods to import and export all its patients from and to \gls{csv} tables. This means we can take any spreadsheet-like file, rename its column headers according to what LyProX expects and batch-import entire patient cohorts in a relatively straightforward manner.
+
+The \gls{csv} format that is expected by LyProX is also used in the implementation of the probabilistic \repolink{lymph} model (see also  \cref{chap:unilateral}) to load the data for learning, and for publishing our raw data in \repolink{lyDATA}, where it is also described in great detail.
+
+\subsection*{Visualizing patterns of progression}
+\label{subsec:lyprox:implementation:viewer}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1.0\textwidth, frame]{figures/data_viewer.png}
+    \caption[
+        Screenshot of the data viewer dashboard
+    ]{
+        A screenshot of the data viewer. Users can filter patients in the datasets by different criteria: General information, e.g. smoking status (top left box), tumor characteristics like location and T-stage (bottom left box), dataset of origin (top right bar), which reported modalities to include and how to combine them (second bar from top, right side) and finally they may be filtered by per-level involvement (two tall boxes in the right column). Controls are placed in the bottom right bar.
+    }
+    \label{fig:lyprox:data_viewer}
+\end{figure}
+
+The part of the \gls{gui} we originally set out to build with Django can be found in the ``Data Viewer'' tab within LyProX. At its core, the page that opens after switching to this tab is another \acrshort{html} form rendered by an extensively modified Django \texttt{Form} class.
+
+On the front end, it contains numerous buttons and switches, most of which are versions of the \acrshort{html} elements \texttt{RadioButton} and \texttt{CheckBox}, styled with custom \acrshort{css} definitions. Of those buttons, some are what we termed \emph{three-way toggle buttons}, and they allow the user to make an optional binary choice. This means one may select ``true/positive/+'', ``false/negative/--'' or ``neutral'' where the latter corresponds to not making a choice w.r.t. this particular criterion. For example, the user may want to select all \gls{hpv}-positive patients by clicking on the \faIcon{plus} symbol of the respective three-way toggle button. To select only \gls{hpv}-negative patients, the user would need to click the \faIcon{minus} on the left. And if both should be included, i.e. no filtering should be applied, the \faIcon{ban} symbol needs to be selected.
+
+As can be seen in \cref{fig:lyprox:data_viewer}, the overall layout  of the interface is divided into five blocks allowing the user to filter patients w.r.t. five different aspects:
+
+\begin{itemize}
+    \item \textbf{Patient details}~(left column, top box): Four three-way toggle buttons allow patient selection by general information: Whether patients were reported to be smokers, their treatment included a \acrlong{nd}, they were \gls{hpv} positive/negative and whether they were $N_0$ or $N_+$ patients.
+    \item \textbf{Primary tumor}~(left column, bottom box): Offers selection criteria related to the tumor: 
+\end{itemize}
 
 \end{document}
