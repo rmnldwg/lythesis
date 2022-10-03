@@ -97,26 +97,20 @@ The part of the \gls{gui} we originally set out to build with Django can be foun
 
 On the front end, it contains numerous buttons and switches, most of which are versions of the \acrshort{html} elements \texttt{RadioButton} and \texttt{CheckBox}, styled with custom \acrshort{css} definitions. Of those buttons, some are what we termed \emph{three-way toggle buttons}, and they allow the user to make an optional binary choice. This means one may select ``true/positive/+'', ``false/negative/--'' or ``neutral'' where the latter corresponds to not making a choice w.r.t. this particular criterion.
 
-\begin{itemize}[leftmargin=0.18\textwidth]
-    \item[{\includegraphics[width=0.18\textwidth]{figures/hpv_neutral.png}}] One such button is shown here on the left. Its switch is in the neutral middle \faIcon{ban} position, as indicated by the highlight in blue, and hence no selection is performed w.r.t. its selection criteria (\gls{hpv} status here). Below the button it shows how many patients in the current selection are \gls{hpv} positive (left number, 314 here), \gls{hpv} negative (right number, 221 here) or do not have \gls{hpv} related information available (number in the middle, 10 here).
-    \item[{\includegraphics[width=0.18\textwidth]{figures/hpv_positive.png}}] To select all \gls{hpv}-positive patients, a user would have to click the \faIcon{plus} symbol. The highlight then switches to the left and after applying the selection (e.g. by clicking the orange ``Compute'' button that appears on the lower right side of the data viewer in \cref{fig:lyprox:data_viewer}) the numbers below the toggle button update as well: Their meaning remains the same, but since the patient selection now only contains \gls{hpv} positive patients, those that are \gls{hpv} negative or have an unknown \gls{hpv} state are filtered out.
-    \item[{\includegraphics[width=0.18\textwidth]{figures/hpv_negative.png}}] Lastly, to keep only \gls{hpv} negative patients in the selection, the switch has to be brought into the position shown here on the left by clicking the \faIcon{minus} symbol. Again, after updating/recomputing, the only patients that remain selected are the ones that are \gls{hpv} negative.
-\end{itemize}
+\begin{tabular}{m{0.2\textwidth}m{0.75\textwidth}}
+    \setlength{\tabcolsep}{0pt}
+    \includegraphics[width=0.2\textwidth]{figures/hpv_neutral.png} & One such button is shown here on the left. Its switch is in the neutral middle \faIcon{ban} position, as indicated by the highlight in blue, and hence no selection is performed w.r.t. its selection criteria (\gls{hpv} status here). Below the button it shows how many patients in the current selection are \gls{hpv} positive (left number, 314 here), \gls{hpv} negative (right number, 221 here) or do not have \gls{hpv} related information available (number in the middle, 10 here).
+\end{tabular}
 
-% \begin{wrapfigure}{l}{0.2\textwidth}
-%     \includegraphics[width=0.18\textwidth]{figures/hpv_neutral.png}
-% \end{wrapfigure}
-% One such button is shown here on the left. Its switch is in the neutral middle \faIcon{ban} position, as indicated by the highlight in blue, and hence no selection is performed w.r.t. its selection criteria (\gls{hpv} status here). Below the button it shows how many patients in the current selection are \gls{hpv} positive (left number, 314 here), \gls{hpv} negative (right number, 221 here) or do not have \gls{hpv} related information available (number in the middle, 10 here).
+\begin{tabular}{m{0.2\textwidth}m{0.75\textwidth}}
+    \setlength{\tabcolsep}{0pt}
+    \includegraphics[width=0.2\textwidth]{figures/hpv_positive.png} & To select all \gls{hpv}-positive patients, a user would have to click the \faIcon{plus} symbol. The highlight then switches to the left and after applying the selection (e.g. by clicking the orange ``Compute'' button that appears on the lower right side of the data viewer in \cref{fig:lyprox:data_viewer}) the numbers below the toggle button update as well: Their meaning remains the same, but since the patient selection now only contains \gls{hpv} positive patients, those that are \gls{hpv} negative or have an unknown \gls{hpv} state are filtered out.
+\end{tabular}
 
-% \begin{wrapfigure}{l}{0.2\textwidth}
-%     \includegraphics[width=0.18\textwidth]{figures/hpv_positive.png}
-% \end{wrapfigure}
-% To select all \gls{hpv}-positive patients, a user would have to click the \faIcon{plus} symbol. The highlight then switches to the left and after applying the selection (e.g. by clicking the orange ``Compute'' button that appears on the lower right side of the data viewer in \cref{fig:lyprox:data_viewer}) the numbers below the toggle button update as well: Their meaning remains the same, but since the patient selection now only contains \gls{hpv} positive patients, those that are \gls{hpv} negative or have an unknown \gls{hpv} state are filtered out.
-
-% \begin{wrapfigure}{l}{0.2\textwidth}
-%     \includegraphics[width=0.18\textwidth]{figures/hpv_negative.png}
-% \end{wrapfigure}
-% Lastly, to keep only \gls{hpv} negative patients in the selection, the switch has to be brought into the position shown here on the left by clicking the \faIcon{minus} symbol. Again, after updating/recomputing, the only patients that remain selected are the ones that are \gls{hpv} negative.
+\begin{tabular}{m{0.2\textwidth}m{0.75\textwidth}}
+    \setlength{\tabcolsep}{0pt}
+    \includegraphics[width=0.2\textwidth]{figures/hpv_negative.png} & Lastly, to keep only \gls{hpv} negative patients in the selection, the switch has to be brought into the position shown here on the left by clicking the \faIcon{minus} symbol. Again, after updating/recomputing, the only patients that remain selected are the ones that are \gls{hpv} negative.
+\end{tabular}
 
 As can be seen in \cref{fig:lyprox:data_viewer}, the overall layout  of the interface is divided into five blocks allowing the user to filter patients w.r.t. five different aspects:
 
