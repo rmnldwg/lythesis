@@ -158,4 +158,13 @@ As can be seen in \cref{fig:lyprox:data_viewer}, the overall layout  of the inte
     \label{fig:lyprox:data_viewer_lnl_example}
 \end{figure}
 
+\subsection*{Styling, Layout and Design}
+\label{subsec:lyprox:implementation:design}
+
+Conceptually, the described online interface still fulfills the same purpose as the prototype shown in \cref{subsec:lyprox:motivation:prototype}. The new Django-based implementation has -- over the initial development period -- added a few more options for filtering the cohorts and how to treat multiple diagnoses per patient. Most visually striking, however, might be the overhauled visuals. The original prototype used the Python library \href{https://kivy.org}{Kivy} to run and render the \gls{gui}, which means the appearance is adjusted in the interface's code. LyProX, on the other hand, only serves \acrshort{html} pages which are styled on the client side using the \gls{css} code delivered with it. This has the disadvantage that we could not easily transfer the appearance of the prototype to the online interface, but it makes setting up a modern, responsive and professionally looking web page very straightforward: There exists an abundance of \gls{css} frameworks that provide pre-defined and carefully designed building blocks that can quickly be combined and adapted to one's needs. All we had to do is basically ship the slightly customized \gls{css} code alongside the \acrshort{html} responses to create a visually appealing \gls{gui}.
+
+We used the popular free and open source \gls{css} framework \href{https://bulma.io}{\faIcon{external-link-alt}~Bulma}. Very little \gls{css} knowledge is required to employ it effectively, but it is still heavily customizable and extensible making it a safe choice for further development and potential design changes in the future.
+
+Because we find the appearance of all default Bulma elements and components very appealing, we did not customize more than the default colors. For those, we chose the corporate design colors of the \gls{usz}. Initially, we decided to use these colors because we expected the website to be hosted under an official \gls{usz} domain and on dedicated hardware from our institution. However, the slow and bureaucratic process of our IT department forced us to host LyProX externally and under our own domain. Nonetheless, we find the \gls{usz} color scheme pleasing and modern-looking, so we did not change it.
+
 \end{document}
