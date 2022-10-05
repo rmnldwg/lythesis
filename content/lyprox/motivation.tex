@@ -12,14 +12,14 @@ Publishing and sharing the data of \cref{chap:dataset_usz} with the scientific c
 
 However, in such a case there are still some hurdles to discovering and taking advantage of freely available data: The researcher -- who we assume to have already conceived their hypothesis -- needs to understand what is reported in the dataset, what format it is provided in and how to implement a test using the found information. Our data is provided as a \gls{csv} table, meaning it can be opened in a spreadsheet program like Microsoft Excel. This would allow the user to create e.g. pivot tables and derived variables from observed ones, after they have made themselves familiar with the description and meaning of all the provided columns.
 
-Taking these steps is not particularly difficult, and a determined scientist may be able to accomplish that in a matter of hours. However, if a researcher came up with a quick idea, not yet fully developed into a hypothesis, the outlined procedure could -- in their eyes -- very well not be worth the potential insight. Consequently, an interesting idea and a valuable cohort of patients might be left unexplored. Even more so with someone who did not even come up with a research question our data may be able to answer.
+Taking these steps is not particularly difficult, and a determined scientist may be able to accomplish that in a matter of hours. However, if a researcher came up with a quick idea, not yet fully developed into a hypothesis, the outlined procedure could -- in their eyes -- very well not be worth the potential insight. Consequently, an interesting idea and a valuable cohort of patients might be left unexplored. Even more so in case of someone who did not even come up with a research question yet our data may be able to answer.
 
 Figures and tables, like \cref{fig:dataset_usz:statistics} and \cref{table:dataset_usz:prevalence} that allow a reader of our work to quickly and visually understand our data address these issues to some extent. They create an understanding of what is reported in the data and answer common questions about it. But it is not feasible to provide plots and tables on all aspects of a dataset within a publication.
 
 \subsection*{Prototype}
 \label{subsec:lyprox:motivation:prototype}
 
-This is why we thought of providing a dashboard, allowing a user to create the visualizations and numbers themselves according to their interest w.r.t. the underlying data. The first implementation that provided such a dashboard was a Python-based \gls{gui} developed by Bertrand Pouymayou for the use on local hardware (e.g. a laptop). It could display the prevalence of involvement for all \glspl{lnl} while the patients could be stratified by a number of reported variables that were recorded (e.g. smoking status). Moreover, one could explore how frequently certain levels were involved together or on their own, e.g. without metastases in upstream \glspl{lnl}. A screenshot of this first prototype is shown in \cref{fig:lyprox:pouymayou_gui}.
+This is why we thought of providing a dashboard, allowing a user to create the visualizations and numbers themselves according to their interest w.r.t. the underlying data. The first implementation that provided such a dashboard was a Python-based \gls{gui} developed by Bertrand Pouymayou for the use on local hardware (e.g. a laptop). It could display the prevalence of involvement for all \glspl{lnl} while the patients could be stratified by a number of variables that were recorded (e.g. smoking status). Moreover, one could explore how frequently certain levels were involved together or on their own. With this \gls{gui} it is possible, for example, to investigate the frequency of involvement in a certain level without metastases in an upstream \glspl{lnl}. A screenshot of this first prototype is shown in \cref{fig:lyprox:pouymayou_gui}.
 
 \begin{figure}
     \centering
@@ -46,7 +46,7 @@ Because of how ubiquitous and important web content has become, the demand for e
     \item \textbf{Dynamic:} In this case, the server reacts \emph{dynamically} to the request sent to it by the user. The request is processed based on the programmed logic and a corresponding response is rendered and sent back.
 \end{itemize}
 
-Of course, hybrid approaches are also possible and in fact very common, as client-side executed scripts can almost always be added to a served web page. 
+Of course, hybrid approaches are also possible and in fact very common, as client-side executed scripts can almost always be added to a dynamically served web page. 
 
 We decided to build a \emph{dynamic} site for two main reasons: 
 \begin{enumerate*}[label={(\arabic*)}]
