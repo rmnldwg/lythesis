@@ -1,0 +1,16 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
+
+
+
+\begin{document}
+
+\section{Development and Deployment}
+\label{sec:lyprox:dev}
+
+LyProX' source code is developed under MIT license in a \faIcon{git-alt}~git \cite{torvalds_git_2022} repository called \repolink{lyprox} that is publicly hosted on GitHub. This ensures it can be developed and extended further at our institution, regardless of personnel changes in our research group. At the time of writing, LyProX is in version 0.3.0 and follows \emph{semantic versioning} \cite{preston-werner_semantic_nodate}. We have not yet released an official major version one, because we consider LyProX to still be under initial development. Beyond new features, we are still in the process of testing the existing implementation and process pipelines, which often also depend on our cooperation partners providing patient records to the database and feedback on the use of the \gls{gui}.
+
+With every new release or patch that is merged into the \texttt{main} branch on the remote GitHub repository, a \gls{cd} workflow is automatically triggered that pushes and deploys the recent changes to the server hosting LyProX. The server consists of a \href{https://azure.microsoft.com/}{\faIcon{external-link-alt}~Microsoft Azure} ``Standard B1s'' \gls{vm} with one virtual \acrshort{cpu} core and 1 GiB of \acrshort{ram} located in northern Switzerland. The remote \gls{vm} uses the Apache \acrshort{http} server (version 2.4.41) \cite{mccool_apache_nodate} in combination with the \acrshort{wsgi} calling convention \cite{eby_python_2010} communicating with LyProX' Django source code to respond to \acrshort{http} requests.
+
+\end{document}
