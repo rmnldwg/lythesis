@@ -1,21 +1,34 @@
 \usepackage[utf8]{inputenc}
+
+%% Figures
 \usepackage{graphicx}
 \graphicspath{
     {\relativeRoot/figures/}
     {\relativeRoot/content/previous_work/figures/}
     {\relativeRoot/content/dataset_usz/figures/}
     {\relativeRoot/content/dataset_clb/figures/}
+    {\relativeRoot/content/lyprox/figures/}
     {\relativeRoot/content/unilateral/figures/}
     {\relativeRoot/content/graph/figures/}
     {\relativeRoot/content/bilateral/figures/}
 }
+\usepackage{caption}
+\usepackage{subcaption}
 \usepackage{rotating}
+\usepackage[export]{adjustbox}
+\usepackage{wrapfig}
+\usepackage{sidecap}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{xcolor}
+\definecolor{uszorange}{HTML}{F17900}
 
 %% Layout
 \usepackage[a4paper,top=25mm,bottom=25mm]{geometry}
 \usepackage{parskip}
 \usepackage{afterpage}
 \usepackage{pdflscape}
+\usepackage{linegoal}
 
 %% Setting up the headers and footers
 \usepackage{fancyhdr}
@@ -58,6 +71,10 @@
 \usepackage[english]{babel}
 \selectlanguage{english}
 
+%% For quotes
+\usepackage{dirtytalk}
+\usepackage{csquotes}
+
 %% Maths
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -97,5 +114,5 @@
 \usepackage{fontawesome5}
 
 %% Custom commands
-\newcommand{\repolink}[2][rmnldwg]{\href{https://github.com/#1/#2}{\faIcon{github} \texttt{#2}}}
-\newcommand{\lytag}[1]{\href{https://github.com/rmnldwg/lynference/releases/tag/#1}{\faIcon{tags} \texttt{#1}}}
+\newcommand{\repolink}[2][rmnldwg]{\href{https://github.com/#1/#2}{\faIcon{github}~\texttt{#2}}}
+\newcommand{\lytag}[1]{\href{https://github.com/rmnldwg/lynference/releases/tag/#1}{\faIcon{tags}~\texttt{#1}}}

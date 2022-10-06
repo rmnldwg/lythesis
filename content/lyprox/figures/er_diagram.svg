@@ -1,0 +1,2989 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   aria-labelledby="chart-title-graph-div chart-desc-graph-div"
+   role="img"
+   viewBox="0 0 712.89471 871.61194"
+   width="712.89471"
+   id="graph-div"
+   height="871.61194"
+   version="1.1"
+   sodipodi:docname="er_diagram.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   inkscape:export-filename="er_diagram.pdf"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview504"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.1112601"
+     inkscape:cx="162.87817"
+     inkscape:cy="459.83836"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="graph-div" />
+  <style
+     id="style2">@import url(&quot;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css&quot;);'</style>
+  <title
+     id="chart-title-graph-div" />
+  <desc
+     id="chart-desc-graph-div" />
+  <style
+     id="style6">#graph-div {font-family:&quot;trebuchet ms&quot;,verdana,arial,sans-serif;font-size:16px;fill:#333;}#graph-div .error-icon{fill:#552222;}#graph-div .error-text{fill:#552222;stroke:#552222;}#graph-div .edge-thickness-normal{stroke-width:2px;}#graph-div .edge-thickness-thick{stroke-width:3.5px;}#graph-div .edge-pattern-solid{stroke-dasharray:0;}#graph-div .edge-pattern-dashed{stroke-dasharray:3;}#graph-div .edge-pattern-dotted{stroke-dasharray:2;}#graph-div .marker{fill:#333333;stroke:#333333;}#graph-div .marker.cross{stroke:#333333;}#graph-div svg{font-family:&quot;trebuchet ms&quot;,verdana,arial,sans-serif;font-size:16px;}#graph-div .entityBox{fill:#ECECFF;stroke:#9370DB;}#graph-div .attributeBoxOdd{fill:#ffffff;stroke:#9370DB;}#graph-div .attributeBoxEven{fill:#f2f2f2;stroke:#9370DB;}#graph-div .relationshipLabelBox{fill:hsl(80, 100%, 96.2745098039%);opacity:0.7;background-color:hsl(80, 100%, 96.2745098039%);}#graph-div .relationshipLabelBox rect{opacity:0.5;}#graph-div .relationshipLine{stroke:#333333;}#graph-div :root{--mermaid-font-family:&quot;trebuchet ms&quot;,verdana,arial,sans-serif;}</style>
+  <g
+     id="g8"
+     transform="translate(80.469472,-18.888979)" />
+  <defs
+     id="defs13">
+    <marker
+       orient="auto"
+       markerHeight="18"
+       markerWidth="18"
+       refY="9"
+       refX="0"
+       id="ONLY_ONE_START">
+      <path
+         d="M 9,0 V 18 M 15,0 v 18"
+         fill="none"
+         stroke="#808080"
+         id="path10" />
+    </marker>
+  </defs>
+  <defs
+     id="defs18">
+    <marker
+       orient="auto"
+       markerHeight="18"
+       markerWidth="18"
+       refY="9"
+       refX="18"
+       id="ONLY_ONE_END">
+      <path
+         d="M 3,0 V 18 M 9,0 v 18"
+         fill="none"
+         stroke="#808080"
+         id="path15" />
+    </marker>
+  </defs>
+  <defs
+     id="defs25">
+    <marker
+       orient="auto"
+       markerHeight="18"
+       markerWidth="30"
+       refY="9"
+       refX="0"
+       id="ZERO_OR_ONE_START">
+      <circle
+         r="6"
+         cy="9"
+         cx="21"
+         fill="#ffffff"
+         stroke="#808080"
+         id="circle20" />
+      <path
+         d="M 9,0 V 18"
+         fill="none"
+         stroke="#808080"
+         id="path22" />
+    </marker>
+  </defs>
+  <defs
+     id="defs32">
+    <marker
+       orient="auto"
+       markerHeight="18"
+       markerWidth="30"
+       refY="9"
+       refX="30"
+       id="ZERO_OR_ONE_END">
+      <circle
+         r="6"
+         cy="9"
+         cx="9"
+         fill="#ffffff"
+         stroke="#808080"
+         id="circle27" />
+      <path
+         d="M 21,0 V 18"
+         fill="none"
+         stroke="#808080"
+         id="path29" />
+    </marker>
+  </defs>
+  <defs
+     id="defs37">
+    <marker
+       orient="auto"
+       markerHeight="36"
+       markerWidth="45"
+       refY="18"
+       refX="18"
+       id="ONE_OR_MORE_START">
+      <path
+         d="M 0,18 Q 18,0 36,18 18,36 0,18 M 42,9 v 18"
+         fill="none"
+         stroke="#808080"
+         id="path34" />
+    </marker>
+  </defs>
+  <defs
+     id="defs42">
+    <marker
+       orient="auto"
+       markerHeight="36"
+       markerWidth="45"
+       refY="18"
+       refX="27"
+       id="ONE_OR_MORE_END">
+      <path
+         d="M 3,9 V 27 M 9,18 Q 27,0 45,18 27,36 9,18"
+         fill="none"
+         stroke="#808080"
+         id="path39" />
+    </marker>
+  </defs>
+  <defs
+     id="defs49">
+    <marker
+       orient="auto"
+       markerHeight="36"
+       markerWidth="57"
+       refY="18"
+       refX="18"
+       id="ZERO_OR_MORE_START">
+      <circle
+         r="6"
+         cy="18"
+         cx="48"
+         fill="#ffffff"
+         stroke="#808080"
+         id="circle44" />
+      <path
+         d="M 0,18 Q 18,0 36,18 18,36 0,18"
+         fill="none"
+         stroke="#808080"
+         id="path46" />
+    </marker>
+  </defs>
+  <defs
+     id="defs56">
+    <marker
+       orient="auto"
+       markerHeight="36"
+       markerWidth="57"
+       refY="18"
+       refX="39"
+       id="ZERO_OR_MORE_END">
+      <circle
+         r="6"
+         cy="18"
+         cx="9"
+         fill="#ffffff"
+         stroke="#808080"
+         id="circle51" />
+      <path
+         d="M 21,18 Q 39,0 57,18 39,36 21,18"
+         fill="none"
+         stroke="#808080"
+         id="path53" />
+    </marker>
+  </defs>
+  <path
+     marker-start="url(#ONLY_ONE_START)"
+     marker-end="url(#ZERO_OR_MORE_END)"
+     fill="none"
+     stroke="#808080"
+     d="m 255.3374,24.611021 -22.13885,0.330106 c -49.89089,0.743909 -84.9976,25.767019 -84.9976,65.813644 v 23.181339"
+     class="er relationshipLine"
+     id="path58"
+     sodipodi:nodetypes="cssc" />
+  <path
+     marker-start="url(#ONLY_ONE_START)"
+     marker-end="url(#ZERO_OR_MORE_END)"
+     fill="none"
+     stroke="#808080"
+     d="m 376.57722,24.611021 20.78903,-0.119834 c 88.7451,-0.511553 167.79616,11.522365 167.79613,71.380784 l -10e-6,18.265589"
+     class="er relationshipLine"
+     id="path60"
+     sodipodi:nodetypes="cssc" />
+  <path
+     marker-start="url(#ONLY_ONE_START)"
+     marker-end="url(#ZERO_OR_MORE_END)"
+     fill="none"
+     stroke="#808080"
+     d="m 486.6657,138.29218 -20.04379,0.30384 c -44.6031,0.67613 -84.97628,87.05973 -84.97628,236.41564 v 8.33334"
+     class="er relationshipLine"
+     id="path62"
+     sodipodi:nodetypes="cssc" />
+  <path
+     marker-start="url(#ONLY_ONE_START)"
+     marker-end="url(#ZERO_OR_MORE_END)"
+     fill="none"
+     stroke="#808080"
+     d="m 254.56071,407.37196 h -13.8513 c -55.18262,0 -106.53867,16.39544 -106.53867,64.62299 v 22.99996"
+     class="er relationshipLine"
+     id="path64"
+     sodipodi:nodetypes="cssc" />
+  <path
+     marker-start="url(#ONLY_ONE_START)"
+     marker-end="url(#ZERO_OR_MORE_END)"
+     fill="none"
+     stroke="#808080"
+     d="m 508.55312,407.37193 h 19.70345 c 33.71432,0 97.84983,-3.11946 97.84981,69.45791 v 17.33213"
+     class="er relationshipLine"
+     id="path66"
+     sodipodi:nodetypes="cssc" />
+  <rect
+     height="200.48578"
+     width="121.25911"
+     y="0.51529503"
+     x="255.13286"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er entityBox"
+     id="rect68"
+     style="fill:#005392;fill-opacity:1;stroke-width:1.03059" />
+  <text
+     style="font-size:16px;font-family:'trebuchet ms', verdana, arial, sans-serif"
+     text-anchor="middle"
+     dominant-baseline="middle"
+     y="14.499994"
+     x="314.77032"
+     id="entity-Institution"
+     class="er entityLabel"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;font-family:'CMU Sans Serif';-inkscape-font-specification:'CMU Sans Serif Bold';fill:#f3f3f3;fill-opacity:1"
+       id="tspan2332">Institution</tspan></text>
+  <rect
+     height="21.991508"
+     width="62.684898"
+     y="24.533976"
+     x="255.15152"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect71"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06795" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="35.5"
+     x="260.11755"
+     id="entity-Institution-attr-1-type"
+     class="er entityLabel">AutoField</text>
+  <rect
+     height="21.997988"
+     width="60.489285"
+     y="24.508036"
+     x="315.90994"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect74"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.01609" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="35.5"
+     x="320.90189"
+     id="entity-Institution-attr-1-name"
+     class="er entityLabel">id</text>
+  <rect
+     height="21.991508"
+     width="62.684898"
+     y="46.525482"
+     x="255.15152"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect77"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06795" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="57.5"
+     x="260.11755"
+     id="entity-Institution-attr-2-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.997988"
+     width="60.489285"
+     y="46.506042"
+     x="315.90994"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect80"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.01609" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="57.5"
+     x="320.90189"
+     id="entity-Institution-attr-2-name"
+     class="er entityLabel">name</text>
+  <rect
+     height="21.991508"
+     width="62.684898"
+     y="68.516998"
+     x="255.15152"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect83"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06795" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="79.5"
+     x="260.11755"
+     id="entity-Institution-attr-3-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.997988"
+     width="60.489285"
+     y="68.504028"
+     x="315.90994"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect86"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.01609" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="79.5"
+     x="320.90189"
+     id="entity-Institution-attr-3-name"
+     class="er entityLabel">shortname</text>
+  <rect
+     height="21.991508"
+     width="62.684898"
+     y="90.508484"
+     x="255.15152"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect89"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06795" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="101.5"
+     x="260.11755"
+     id="entity-Institution-attr-4-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.997988"
+     width="60.489285"
+     y="90.502014"
+     x="315.90994"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect92"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.01609" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="101.5"
+     x="320.90189"
+     id="entity-Institution-attr-4-name"
+     class="er entityLabel">street</text>
+  <rect
+     height="21.991508"
+     width="62.684898"
+     y="112.49997"
+     x="255.15152"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect95"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06795" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="123.49997"
+     x="260.11755"
+     id="entity-Institution-attr-5-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.997988"
+     width="60.489285"
+     y="112.49997"
+     x="315.90994"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect98"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.01609" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="123.49997"
+     x="320.90189"
+     id="entity-Institution-attr-5-name"
+     class="er entityLabel">city</text>
+  <rect
+     height="21.991508"
+     width="62.684898"
+     y="134.49149"
+     x="255.15152"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect101"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06795" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="145.49997"
+     x="260.11755"
+     id="entity-Institution-attr-6-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.997988"
+     width="60.489285"
+     y="134.49796"
+     x="315.90994"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect104"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.01609" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="145.49997"
+     x="320.90189"
+     id="entity-Institution-attr-6-name"
+     class="er entityLabel">country</text>
+  <rect
+     height="21.991508"
+     width="62.684898"
+     y="156.48297"
+     x="255.15152"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect107"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06795" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="167.49997"
+     x="260.11755"
+     id="entity-Institution-attr-7-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.997988"
+     width="60.489285"
+     y="156.49594"
+     x="315.90994"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect110"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.01609" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="167.49997"
+     x="320.90189"
+     id="entity-Institution-attr-7-name"
+     class="er entityLabel">phone</text>
+  <rect
+     height="21.991508"
+     width="62.684898"
+     y="178.47449"
+     x="255.15152"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect113"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06795" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="189.49997"
+     x="260.11755"
+     id="entity-Institution-attr-8-type"
+     class="er entityLabel">FileField</text>
+  <rect
+     height="21.997988"
+     width="60.489285"
+     y="178.49393"
+     x="315.90994"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect116"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.01609" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="189.49997"
+     x="320.90189"
+     id="entity-Institution-attr-8-name"
+     class="er entityLabel">logo</text>
+  <rect
+     height="265.93835"
+     width="162.40514"
+     y="113.24603"
+     x="68.104637"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er entityBox"
+     id="rect120"
+     style="fill:#005392;fill-opacity:1;stroke-width:1.06165" />
+  <text
+     style="font-size:16px;font-family:'trebuchet ms', verdana, arial, sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+     text-anchor="middle"
+     dominant-baseline="middle"
+     y="127.21519"
+     x="148.70564"
+     id="entity-User"
+     class="er entityLabel"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;font-family:'CMU Sans Serif';-inkscape-font-specification:'CMU Sans Serif Bold';fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+       id="tspan775">User</tspan></text>
+  <rect
+     height="21.993555"
+     width="87.750298"
+     y="137.25066"
+     x="68.109261"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect123"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.0709" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="148.21519"
+     x="73.073814"
+     id="entity-User-attr-1-type"
+     class="er entityLabel">AutoField</text>
+  <rect
+     height="21.993532"
+     width="77.54364"
+     y="137.25078"
+     x="152.96138"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect126"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07115" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="148.21519"
+     x="157.92581"
+     id="entity-User-attr-1-name"
+     class="er entityLabel">id</text>
+  <rect
+     height="21.993555"
+     width="87.750298"
+     y="159.24422"
+     x="68.109261"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect129"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.0709" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="170.21519"
+     x="73.073814"
+     id="entity-User-attr-2-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.993532"
+     width="77.54364"
+     y="159.24431"
+     x="152.96138"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect132"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07115" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="170.21519"
+     x="157.92581"
+     id="entity-User-attr-2-name"
+     class="er entityLabel">password</text>
+  <rect
+     height="21.993555"
+     width="87.750298"
+     y="181.23778"
+     x="68.109261"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect135"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.0709" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="192.21519"
+     x="73.073814"
+     id="entity-User-attr-3-type"
+     class="er entityLabel">DateTimeField</text>
+  <rect
+     height="21.993532"
+     width="77.54364"
+     y="181.23784"
+     x="152.96138"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect138"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07115" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="192.21519"
+     x="157.92581"
+     id="entity-User-attr-3-name"
+     class="er entityLabel">last_login</text>
+  <rect
+     height="21.993555"
+     width="87.750298"
+     y="203.23131"
+     x="68.109261"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect141"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.0709" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="214.21519"
+     x="73.073814"
+     id="entity-User-attr-4-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.993532"
+     width="77.54364"
+     y="203.23137"
+     x="152.96138"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect144"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07115" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="214.21519"
+     x="157.92581"
+     id="entity-User-attr-4-name"
+     class="er entityLabel">is_superuser</text>
+  <rect
+     height="21.993555"
+     width="87.750298"
+     y="225.22487"
+     x="68.109261"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect147"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.0709" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="236.21519"
+     x="73.073814"
+     id="entity-User-attr-5-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.993532"
+     width="77.54364"
+     y="225.2249"
+     x="152.96138"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect150"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07115" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="236.21519"
+     x="157.92581"
+     id="entity-User-attr-5-name"
+     class="er entityLabel">email</text>
+  <rect
+     height="21.993555"
+     width="87.750298"
+     y="247.21844"
+     x="68.109261"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect153"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.0709" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="258.21521"
+     x="73.073814"
+     id="entity-User-attr-6-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.993532"
+     width="77.54364"
+     y="247.21844"
+     x="152.96138"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect156"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07115" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="258.21521"
+     x="157.92581"
+     id="entity-User-attr-6-name"
+     class="er entityLabel">title</text>
+  <rect
+     height="21.993555"
+     width="87.750298"
+     y="269.21198"
+     x="68.109261"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect159"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.0709" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="280.21521"
+     x="73.073814"
+     id="entity-User-attr-7-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.993532"
+     width="77.54364"
+     y="269.21198"
+     x="152.96138"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect162"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07115" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="280.21521"
+     x="157.92581"
+     id="entity-User-attr-7-name"
+     class="er entityLabel">first_name</text>
+  <rect
+     height="21.993555"
+     width="87.750298"
+     y="291.20554"
+     x="68.109261"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect165"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.0709" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="302.21521"
+     x="73.073814"
+     id="entity-User-attr-8-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.993532"
+     width="77.54364"
+     y="291.20551"
+     x="152.96138"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect168"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07115" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="302.21521"
+     x="157.92581"
+     id="entity-User-attr-8-name"
+     class="er entityLabel">last_name</text>
+  <rect
+     height="21.993555"
+     width="87.750298"
+     y="313.1991"
+     x="68.109261"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect171"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.0709" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="324.21521"
+     x="73.073814"
+     id="entity-User-attr-9-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.993532"
+     width="77.54364"
+     y="313.19904"
+     x="152.96138"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect174"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07115" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="324.21521"
+     x="157.92581"
+     id="entity-User-attr-9-name"
+     class="er entityLabel">is_staff</text>
+  <rect
+     height="21.993555"
+     width="87.750298"
+     y="335.19266"
+     x="68.109261"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect177"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.0709" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="346.21521"
+     x="73.073814"
+     id="entity-User-attr-10-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.993532"
+     width="77.54364"
+     y="335.19257"
+     x="152.96138"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect180"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07115" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="346.21521"
+     x="157.92581"
+     id="entity-User-attr-10-name"
+     class="er entityLabel">is_active</text>
+  <rect
+     height="21.993555"
+     width="87.750298"
+     y="357.18622"
+     x="68.109261"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect183"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.0709" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="368.21521"
+     x="73.073814"
+     id="entity-User-attr-11-type"
+     class="er entityLabel">DateField</text>
+  <rect
+     height="21.993532"
+     width="77.54364"
+     y="357.1861"
+     x="152.96138"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect186"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07115" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="368.21521"
+     x="157.92581"
+     id="entity-User-attr-11-name"
+     class="er entityLabel">date_joined</text>
+  <rect
+     height="244.47231"
+     width="161.73067"
+     y="114.16528"
+     x="486.73456"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er entityBox"
+     id="rect190"
+     style="fill:#005392;fill-opacity:1;stroke-width:1.05545" />
+  <text
+     style="font-size:16px;font-family:'trebuchet ms', verdana, arial, sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+     text-anchor="middle"
+     dominant-baseline="middle"
+     y="128.13756"
+     x="566.68634"
+     id="entity-Dataset"
+     class="er entityLabel"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;font-family:'CMU Sans Serif';-inkscape-font-specification:'CMU Sans Serif Bold';fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+       id="tspan1329">Dataset</tspan></text>
+  <rect
+     height="21.992535"
+     width="79.780731"
+     y="138.1749"
+     x="486.74417"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect193"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07466" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="149.13756"
+     x="491.70685"
+     id="entity-Dataset-attr-1-type"
+     class="er entityLabel">AutoField</text>
+  <rect
+     height="21.995495"
+     width="82.25779"
+     y="138.16008"
+     x="565.68488"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect196"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.04505" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="149.13756"
+     x="570.66235"
+     id="entity-Dataset-attr-1-name"
+     class="er entityLabel">id</text>
+  <rect
+     height="21.992535"
+     width="79.780731"
+     y="160.16742"
+     x="486.74417"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect199"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07466" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="171.13756"
+     x="491.70685"
+     id="entity-Dataset-attr-2-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.995495"
+     width="82.25779"
+     y="160.15558"
+     x="565.68488"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect202"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.04505" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="171.13756"
+     x="570.66235"
+     id="entity-Dataset-attr-2-name"
+     class="er entityLabel">name</text>
+  <rect
+     height="21.992535"
+     width="79.780731"
+     y="182.15996"
+     x="486.74417"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect205"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07466" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="193.13756"
+     x="491.70685"
+     id="entity-Dataset-attr-3-type"
+     class="er entityLabel">TextField</text>
+  <rect
+     height="21.995495"
+     width="82.25779"
+     y="182.15108"
+     x="565.68488"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect208"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.04505" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="193.13756"
+     x="570.66235"
+     id="entity-Dataset-attr-3-name"
+     class="er entityLabel">description</text>
+  <rect
+     height="21.992535"
+     width="79.780731"
+     y="204.1525"
+     x="486.74417"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect211"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07466" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="215.13756"
+     x="491.70685"
+     id="entity-Dataset-attr-4-type"
+     class="er entityLabel">DateField</text>
+  <rect
+     height="21.995495"
+     width="82.25779"
+     y="204.14656"
+     x="565.68488"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect214"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.04505" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="215.13756"
+     x="570.66235"
+     id="entity-Dataset-attr-4-name"
+     class="er entityLabel">create_date</text>
+  <rect
+     height="21.992535"
+     width="79.780731"
+     y="226.14502"
+     x="486.74417"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect217"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07466" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="237.13757"
+     x="491.70685"
+     id="entity-Dataset-attr-5-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.995495"
+     width="82.25779"
+     y="226.14206"
+     x="565.68488"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect220"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.04505" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="237.13757"
+     x="570.66235"
+     id="entity-Dataset-attr-5-name"
+     class="er entityLabel">is_public</text>
+  <rect
+     height="21.992535"
+     width="79.780731"
+     y="248.13757"
+     x="486.74417"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect223"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07466" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="259.13757"
+     x="491.70685"
+     id="entity-Dataset-attr-6-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.995495"
+     width="82.25779"
+     y="248.13757"
+     x="565.68488"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect226"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.04505" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="259.13757"
+     x="570.66235"
+     id="entity-Dataset-attr-6-name"
+     class="er entityLabel">is_locked</text>
+  <rect
+     height="21.992535"
+     width="79.780731"
+     y="270.1301"
+     x="486.74417"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect229"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07466" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="281.13757"
+     x="491.70685"
+     id="entity-Dataset-attr-7-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.995495"
+     width="82.25779"
+     y="270.13306"
+     x="565.68488"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect232"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.04505" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="281.13757"
+     x="570.66235"
+     id="entity-Dataset-attr-7-name"
+     class="er entityLabel">repo_provider</text>
+  <rect
+     height="21.992535"
+     width="79.780731"
+     y="292.12265"
+     x="486.74417"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect235"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07466" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="303.13757"
+     x="491.70685"
+     id="entity-Dataset-attr-8-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.995495"
+     width="82.25779"
+     y="292.12857"
+     x="565.68488"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect238"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.04505" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="303.13757"
+     x="570.66235"
+     id="entity-Dataset-attr-8-name"
+     class="er entityLabel">repo_data_url</text>
+  <rect
+     height="21.992535"
+     width="79.780731"
+     y="314.11517"
+     x="486.74417"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect241"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07466" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="325.13757"
+     x="491.70685"
+     id="entity-Dataset-attr-9-type"
+     class="er entityLabel">FileField</text>
+  <rect
+     height="21.995495"
+     width="82.25779"
+     y="314.12405"
+     x="565.68488"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect244"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.04505" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="325.13757"
+     x="570.66235"
+     id="entity-Dataset-attr-9-name"
+     class="er entityLabel">upload_csv</text>
+  <rect
+     height="21.992535"
+     width="79.780731"
+     y="336.1077"
+     x="486.74417"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect247"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07466" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="347.13757"
+     x="491.70685"
+     id="entity-Dataset-attr-10-type"
+     class="er entityLabel">FileField</text>
+  <rect
+     height="21.995495"
+     width="82.25779"
+     y="336.11957"
+     x="565.68488"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect250"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.04505" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text'"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="347.13757"
+     x="570.66235"
+     id="entity-Dataset-attr-10-name"
+     class="er entityLabel">export_csv</text>
+  <rect
+     height="309.92496"
+     width="252.71304"
+     y="383.896"
+     x="255.28908"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er entityBox"
+     id="rect254"
+     style="fill:#005392;fill-opacity:1;stroke-width:1.10199" />
+  <text
+     style="font-size:16px;font-family:'trebuchet ms', verdana, arial, sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+     text-anchor="middle"
+     dominant-baseline="middle"
+     y="397.23563"
+     x="381.17297"
+     id="entity-Patient"
+     class="er entityLabel"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;font-family:'CMU Sans Serif';-inkscape-font-specification:'CMU Sans Serif Bold';fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+       id="tspan1331">Patient</tspan></text>
+  <rect
+     height="21.988878"
+     width="164.46901"
+     y="407.94424"
+     x="255.133"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect257"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.14457" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="418.87195"
+     x="260.06073"
+     id="entity-Patient-attr-1-type"
+     class="er entityLabel">AutoField</text>
+  <rect
+     height="21.993509"
+     width="97.119583"
+     y="407.91412"
+     x="410.89136"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect260"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.08438" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="418.87195"
+     x="415.84921"
+     id="entity-Patient-attr-1-name"
+     class="er entityLabel">id</text>
+  <rect
+     height="21.988878"
+     width="164.46901"
+     y="429.93307"
+     x="255.133"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect263"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.14457" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="440.87192"
+     x="260.06073"
+     id="entity-Patient-attr-2-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.993509"
+     width="97.119583"
+     y="429.90762"
+     x="410.89136"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect266"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.08438" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="440.87192"
+     x="415.84921"
+     id="entity-Patient-attr-2-name"
+     class="er entityLabel">sex</text>
+  <rect
+     height="21.988878"
+     width="164.46901"
+     y="451.92197"
+     x="255.133"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect269"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.14457" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="462.87192"
+     x="260.06073"
+     id="entity-Patient-attr-3-type"
+     class="er entityLabel">IntegerField</text>
+  <rect
+     height="21.993509"
+     width="97.119583"
+     y="451.90112"
+     x="410.89136"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect272"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.08438" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="462.87192"
+     x="415.84921"
+     id="entity-Patient-attr-3-name"
+     class="er entityLabel">age</text>
+  <rect
+     height="21.988878"
+     width="164.46901"
+     y="473.91083"
+     x="255.133"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect275"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.14457" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="484.87192"
+     x="260.06073"
+     id="entity-Patient-attr-4-type"
+     class="er entityLabel">DateField</text>
+  <rect
+     height="21.993509"
+     width="97.119583"
+     y="473.89462"
+     x="410.89136"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect278"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.08438" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="484.87192"
+     x="415.84921"
+     id="entity-Patient-attr-4-name"
+     class="er entityLabel">diagnose_date</text>
+  <rect
+     height="21.988878"
+     width="164.46901"
+     y="495.89972"
+     x="255.133"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect281"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.14457" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="506.87189"
+     x="260.06073"
+     id="entity-Patient-attr-5-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.993509"
+     width="97.119583"
+     y="495.88812"
+     x="410.89136"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect284"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.08438" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="506.87189"
+     x="415.84921"
+     id="entity-Patient-attr-5-name"
+     class="er entityLabel">alcohol_abuse</text>
+  <rect
+     height="21.988878"
+     width="164.46901"
+     y="517.88855"
+     x="255.133"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect287"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.14457" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="528.87189"
+     x="260.06073"
+     id="entity-Patient-attr-6-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.993509"
+     width="97.119583"
+     y="517.88165"
+     x="410.89136"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect290"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.08438" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="528.87189"
+     x="415.84921"
+     id="entity-Patient-attr-6-name"
+     class="er entityLabel">nicotine_abuse</text>
+  <rect
+     height="21.988878"
+     width="164.46901"
+     y="539.87744"
+     x="255.133"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect293"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.14457" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="550.87189"
+     x="260.06073"
+     id="entity-Patient-attr-7-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.993509"
+     width="97.119583"
+     y="539.87512"
+     x="410.89136"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect296"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.08438" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="550.87189"
+     x="415.84921"
+     id="entity-Patient-attr-7-name"
+     class="er entityLabel">hpv_status</text>
+  <rect
+     height="21.988878"
+     width="164.46901"
+     y="561.86633"
+     x="255.133"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect299"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.14457" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="572.87189"
+     x="260.06073"
+     id="entity-Patient-attr-8-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.993509"
+     width="97.119583"
+     y="561.86865"
+     x="410.89136"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect302"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.08438" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="572.87189"
+     x="415.84921"
+     id="entity-Patient-attr-8-name"
+     class="er entityLabel">neck_dissection</text>
+  <rect
+     height="21.988878"
+     width="164.46901"
+     y="583.85522"
+     x="255.133"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect305"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.14457" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="594.87189"
+     x="260.06073"
+     id="entity-Patient-attr-9-type"
+     class="er entityLabel">PositiveSmallIntegerField</text>
+  <rect
+     height="21.993509"
+     width="97.119583"
+     y="583.86212"
+     x="410.89136"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect308"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.08438" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="594.87189"
+     x="415.84921"
+     id="entity-Patient-attr-9-name"
+     class="er entityLabel">tnm_edition</text>
+  <rect
+     height="21.988878"
+     width="164.46901"
+     y="605.84406"
+     x="255.133"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect311"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.14457" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="616.87189"
+     x="260.06073"
+     id="entity-Patient-attr-10-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.993509"
+     width="97.119583"
+     y="605.85565"
+     x="410.89136"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect314"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.08438" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="616.87189"
+     x="415.84921"
+     id="entity-Patient-attr-10-name"
+     class="er entityLabel">stage_prefix</text>
+  <rect
+     height="21.988878"
+     width="164.46901"
+     y="627.83295"
+     x="255.133"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect317"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.14457" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="638.87195"
+     x="260.06073"
+     id="entity-Patient-attr-11-type"
+     class="er entityLabel">PositiveSmallIntegerField</text>
+  <rect
+     height="21.993509"
+     width="97.119583"
+     y="627.84918"
+     x="410.89136"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect320"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.08438" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="638.87195"
+     x="415.84921"
+     id="entity-Patient-attr-11-name"
+     class="er entityLabel">t_stage</text>
+  <rect
+     height="21.988878"
+     width="164.46901"
+     y="649.8219"
+     x="255.133"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect323"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.14457" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="660.87195"
+     x="260.06073"
+     id="entity-Patient-attr-12-type"
+     class="er entityLabel">PositiveSmallIntegerField</text>
+  <rect
+     height="21.993509"
+     width="97.119583"
+     y="649.84271"
+     x="410.89136"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect326"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.08438" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="660.87195"
+     x="415.84921"
+     id="entity-Patient-attr-12-name"
+     class="er entityLabel">n_stage</text>
+  <rect
+     height="21.988878"
+     width="164.46901"
+     y="671.81079"
+     x="255.133"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect329"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.14457" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="682.87195"
+     x="260.06073"
+     id="entity-Patient-attr-13-type"
+     class="er entityLabel">PositiveSmallIntegerField</text>
+  <rect
+     height="21.993509"
+     width="97.119583"
+     y="671.83624"
+     x="410.89136"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect332"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.08438" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="682.87195"
+     x="415.84921"
+     id="entity-Patient-attr-13-name"
+     class="er entityLabel">m_stage</text>
+  <rect
+     height="199.90836"
+     width="230.04584"
+     y="495.04071"
+     x="0.54584998"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er entityBox"
+     id="rect336"
+     style="fill:#005392;fill-opacity:1;stroke-width:1.0917" />
+  <text
+     style="font-size:16px;font-family:'trebuchet ms', verdana, arial, sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+     text-anchor="middle"
+     dominant-baseline="middle"
+     y="508.995"
+     x="115.38127"
+     id="entity-Tumor"
+     class="er entityLabel"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;font-family:'CMU Sans Serif';-inkscape-font-specification:'CMU Sans Serif Bold';fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+       id="tspan1663">Tumor</tspan></text>
+  <rect
+     height="21.983889"
+     width="160.03052"
+     y="519.05945"
+     x="0.56445044"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect339"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.1289" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="529.995"
+     x="5.5000048"
+     id="entity-Tumor-attr-1-type"
+     class="er entityLabel">AutoField</text>
+  <rect
+     height="21.990444"
+     width="78.193962"
+     y="519.0332"
+     x="152.10744"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect342"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07644" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="529.995"
+     x="157.06921"
+     id="entity-Tumor-attr-1-name"
+     class="er entityLabel">id</text>
+  <rect
+     height="21.983889"
+     width="160.03052"
+     y="541.04321"
+     x="0.56445044"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect345"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.1289" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="551.99487"
+     x="5.5000048"
+     id="entity-Tumor-attr-2-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.990444"
+     width="78.193962"
+     y="541.02356"
+     x="152.10744"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect348"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07644" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="551.99487"
+     x="157.06921"
+     id="entity-Tumor-attr-2-name"
+     class="er entityLabel">location</text>
+  <rect
+     height="21.983889"
+     width="160.03052"
+     y="563.0271"
+     x="0.56445044"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect351"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.1289" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="573.99487"
+     x="5.5000048"
+     id="entity-Tumor-attr-3-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.990444"
+     width="78.193962"
+     y="563.01398"
+     x="152.10744"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect354"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07644" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="573.99487"
+     x="157.06921"
+     id="entity-Tumor-attr-3-name"
+     class="er entityLabel">subsite</text>
+  <rect
+     height="21.983889"
+     width="160.03052"
+     y="585.01099"
+     x="0.56445044"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect357"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.1289" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="595.99487"
+     x="5.5000048"
+     id="entity-Tumor-attr-4-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.990444"
+     width="78.193962"
+     y="585.00446"
+     x="152.10744"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect360"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07644" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="595.99487"
+     x="157.06921"
+     id="entity-Tumor-attr-4-name"
+     class="er entityLabel">central</text>
+  <rect
+     height="21.983889"
+     width="160.03052"
+     y="606.99487"
+     x="0.56445044"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect363"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.1289" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="617.99487"
+     x="5.5000048"
+     id="entity-Tumor-attr-5-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.990444"
+     width="78.193962"
+     y="606.99487"
+     x="152.10744"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect366"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07644" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="617.99487"
+     x="157.06921"
+     id="entity-Tumor-attr-5-name"
+     class="er entityLabel">extension</text>
+  <rect
+     height="21.983889"
+     width="160.03052"
+     y="628.97876"
+     x="0.56445044"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect369"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.1289" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="639.99493"
+     x="5.5000048"
+     id="entity-Tumor-attr-6-type"
+     class="er entityLabel">FloatField</text>
+  <rect
+     height="21.990444"
+     width="78.193962"
+     y="628.98529"
+     x="152.10744"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect372"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07644" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="639.99493"
+     x="157.06921"
+     id="entity-Tumor-attr-6-name"
+     class="er entityLabel">volume</text>
+  <rect
+     height="21.983889"
+     width="160.03052"
+     y="650.96271"
+     x="0.56445044"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect375"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.1289" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="661.99493"
+     x="5.5000048"
+     id="entity-Tumor-attr-7-type"
+     class="er entityLabel">PositiveSmallIntegerField</text>
+  <rect
+     height="21.990444"
+     width="78.193962"
+     y="650.97583"
+     x="152.10744"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect378"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07644" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="661.99493"
+     x="157.06921"
+     id="entity-Tumor-attr-7-name"
+     class="er entityLabel">t_stage</text>
+  <rect
+     height="21.983889"
+     width="160.03052"
+     y="672.94659"
+     x="0.56445044"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect381"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.1289" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="683.99493"
+     x="5.5000048"
+     id="entity-Tumor-attr-8-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.990444"
+     width="78.193962"
+     y="672.96625"
+     x="152.10744"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect384"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.07644" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="683.99493"
+     x="157.06921"
+     id="entity-Tumor-attr-8-name"
+     class="er entityLabel">stage_prefix</text>
+  <rect
+     height="375.93622"
+     width="164.45424"
+     y="495.1438"
+     x="547.90857"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er entityBox"
+     id="rect388"
+     style="fill:#005392;fill-opacity:1;stroke-width:1.06378" />
+  <text
+     style="font-size:16px;font-family:'trebuchet ms', verdana, arial, sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+     text-anchor="middle"
+     dominant-baseline="middle"
+     y="509.11194"
+     x="629.66302"
+     id="entity-Diagnose"
+     class="er entityLabel"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;font-family:'CMU Sans Serif';-inkscape-font-specification:'CMU Sans Serif Bold';fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+       id="tspan1665">Diagnose</tspan></text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="519.16266"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect391"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="530.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-1-type"
+     class="er entityLabel">AutoField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="519.14209"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect394"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="530.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-1-name"
+     class="er entityLabel">id</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="541.15631"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect397"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="552.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-2-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="541.13831"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect400"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="552.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-2-name"
+     class="er entityLabel">modality</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="563.15002"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect403"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="574.11188"
+     x="552.87665"
+     id="entity-Diagnose-attr-3-type"
+     class="er entityLabel">DateField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="563.13452"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect406"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="574.11188"
+     x="631.60638"
+     id="entity-Diagnose-attr-3-name"
+     class="er entityLabel">diagnose_date</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="585.14362"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect409"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="596.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-4-type"
+     class="er entityLabel">CharField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="585.13074"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect412"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="596.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-4-name"
+     class="er entityLabel">side</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="607.13739"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect415"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="618.112"
+     x="552.87665"
+     id="entity-Diagnose-attr-5-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="607.12708"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect418"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="618.112"
+     x="631.60638"
+     id="entity-Diagnose-attr-5-name"
+     class="er entityLabel">I</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="629.13092"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect421"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="640.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-6-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="629.12317"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect424"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="640.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-6-name"
+     class="er entityLabel">Ia</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="651.12463"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect427"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="662.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-7-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="651.11945"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect430"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="662.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-7-name"
+     class="er entityLabel">Ib</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="673.11829"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect433"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="684.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-8-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="673.11572"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect436"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="684.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-8-name"
+     class="er entityLabel">II</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="695.11194"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect439"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="706.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-9-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="695.11194"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect442"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="706.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-9-name"
+     class="er entityLabel">IIa</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="717.10559"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect445"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="728.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-10-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="717.10815"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect448"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="728.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-10-name"
+     class="er entityLabel">IIb</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="739.09924"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect451"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="750.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-11-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="739.10443"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect454"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="750.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-11-name"
+     class="er entityLabel">III</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="761.0929"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect457"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="772.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-12-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="761.10065"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect460"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="772.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-12-name"
+     class="er entityLabel">IV</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="783.08655"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect463"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="794.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-13-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="783.09686"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect466"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="794.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-13-name"
+     class="er entityLabel">V</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="805.0802"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect469"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="816.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-14-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="805.09308"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect472"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="816.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-14-name"
+     class="er entityLabel">Va</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="827.07385"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect475"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="838.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-15-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="827.08936"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxOdd"
+     id="rect478"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="838.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-15-name"
+     class="er entityLabel">Vb</text>
+  <rect
+     height="21.993656"
+     width="83.809502"
+     y="849.06757"
+     x="547.92743"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect481"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.10149" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="860.11194"
+     x="552.87665"
+     id="entity-Diagnose-attr-16-type"
+     class="er entityLabel">BooleanField</text>
+  <rect
+     height="21.996233"
+     width="85.728027"
+     y="849.08557"
+     x="626.63654"
+     stroke="#808080"
+     fill-opacity="1"
+     fill="#f0fff0"
+     class="er attributeBoxEven"
+     id="rect484"
+     style="fill:#def0ff;fill-opacity:1;stroke-width:1.06028" />
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:'CMU Typewriter Text';-inkscape-font-specification:'CMU Typewriter Text';fill:#000000;fill-opacity:1"
+     text-anchor="left"
+     dominant-baseline="middle"
+     y="860.11194"
+     x="631.60638"
+     id="entity-Diagnose-attr-16-name"
+     class="er entityLabel">VII</text>
+  <g
+     id="g3872"
+     transform="translate(51.082243,-202.24603)">
+    <rect
+       fill-opacity="1"
+       fill="#ffffff"
+       height="14"
+       width="79.988281"
+       y="242.26852"
+       x="71.984795"
+       class="er relationshipLabelBox"
+       id="rect488" />
+    <text
+       style="font-size:12px;font-family:'trebuchet ms', verdana, arial, sans-serif"
+       dominant-baseline="middle"
+       text-anchor="middle"
+       y="249.26852"
+       x="111.97894"
+       id="rel26"
+       class="er relationshipLabel">is affiliation of</text>
+  </g>
+  <g
+     id="g3852"
+     transform="translate(185.35612,-43.931206)">
+    <rect
+       fill-opacity="1"
+       fill="#ffffff"
+       height="14.000015"
+       width="45.318359"
+       y="80.959908"
+       x="321.27142"
+       class="er relationshipLabelBox"
+       id="rect491" />
+    <text
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.3333px;font-family:'CMU Sans Serif';-inkscape-font-specification:'CMU Sans Serif'"
+       dominant-baseline="middle"
+       text-anchor="middle"
+       y="88.015579"
+       x="343.72552"
+       id="rel27"
+       class="er relationshipLabel">provides</text>
+  </g>
+  <g
+     id="g3842"
+     transform="translate(-83.835715,-183.85167)">
+    <rect
+       fill-opacity="1"
+       fill="#ffffff"
+       height="14"
+       width="44.978516"
+       y="425.52655"
+       x="455.92825"
+       class="er relationshipLabelBox"
+       id="rect494" />
+    <text
+       style="font-size:12px;font-family:'trebuchet ms', verdana, arial, sans-serif"
+       dominant-baseline="middle"
+       text-anchor="middle"
+       y="432.52655"
+       x="478.41751"
+       id="rel28"
+       class="er relationshipLabel">contains</text>
+  </g>
+  <g
+     id="g3862"
+     transform="translate(-120.13981,-105.03505)">
+    <rect
+       fill-opacity="1"
+       fill="#ffffff"
+       height="14"
+       width="17.861328"
+       y="519.26898"
+       x="276.53482"
+       class="er relationshipLabelBox"
+       id="rect497" />
+    <text
+       style="font-size:12px;font-family:'trebuchet ms', verdana, arial, sans-serif"
+       dominant-baseline="middle"
+       text-anchor="middle"
+       y="526.26898"
+       x="285.46548"
+       id="rel29"
+       class="er relationshipLabel">has</text>
+  </g>
+  <g
+     id="g3882"
+     transform="translate(-8.5346794,-423.66603)">
+    <rect
+       fill-opacity="1"
+       fill="#ffffff"
+       height="14"
+       width="17.861328"
+       y="837.89996"
+       x="597.48712"
+       class="er relationshipLabelBox"
+       id="rect500" />
+    <text
+       style="font-size:12px;font-family:'trebuchet ms', verdana, arial, sans-serif"
+       dominant-baseline="middle"
+       text-anchor="middle"
+       y="844.89996"
+       x="606.41779"
+       id="rel30"
+       class="er relationshipLabel">has</text>
+  </g>
+</svg>
