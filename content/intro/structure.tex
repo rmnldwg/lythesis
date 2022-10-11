@@ -1,0 +1,23 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{
+    {\subfix{./figures/}}
+}
+
+
+\begin{document}
+
+\section{Thesis structure}
+\label{sec:intro:structure}
+
+Before doing so, however, we will face the problem of insufficient data. As mentioned, the reports that constitute the basis for the elective nodal therapy guidelines only quantify the prevalence of involvement for the investigated \glspl{lnl}. They rarely allow the reader to draw conclusions about which levels have been involved together. To the best of our knowledge, the only publication that allowed a reconstruction of per-level involvement information was written by \citeauthorandlink{sanguineti_defining_2009}. To combat this trend, we extracted, curated and freely published a dataset of unprecedented detail w.r.t. nodal involvement. It is described in \cref{chap:dataset_usz}, followed by another chapter on a dataset we received in collaboration with the influential author of many of the mentioned guidelines, Vincent Grégoire, in \cref{chap:dataset_clb}.
+
+Because we want to convince the research community of the value of this kind of detailed patient data, we also developed and deployed an online interface to visualize the two datasets from \cref{chap:dataset_usz,chap:dataset_clb}. This interface will be described in great detail in \cref{chap:lyprox}.
+
+Only after that, will we dive into the modelling part of this work, starting with the mentioned extension to the work of \citeauthorandlink{pouymayou_bayesian_2019} in \cref{chap:unilateral}. Because this chapter is based on the publication by \citeauthorandlink{ludwig_hidden_2021}, which was published chronologically before the data of the \cref{chap:dataset_usz,chap:dataset_clb}, it will not actually use the information from the two patient cohorts. Instead, it will introduce the formalism of the new model in great detail and show that it performs as good as the \gls{bn} model by \citeauthorandlink{pouymayou_bayesian_2019} when applied to the only previously available Sanguineti dataset \cite{sanguineti_defining_2009}.
+
+In \cref{chap:graph} then, we finally make use of the new datasets and investigate how to include more \glspl{lnl} into the model. Following this, we complete the coverage of the model by extending it to the contralateral side in \cref{chap:bilateral}.
+
+Lastly, we combine our findings from the \cref{chap:unilateral,chap:graph,chap:bilateral} in \cref{chap:complete} to build a complete probabilistic model for lymphatic tumor progression trained on two large datasets. We then conclude the thesis with an outlook into the future ideas regarding this project (\cref{chap:extensions}).
+
+\end{document}
