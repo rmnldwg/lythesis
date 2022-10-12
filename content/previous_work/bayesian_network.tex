@@ -6,6 +6,7 @@
 \begin{document}
 
 \section[A Bayesian Network Model for Lymphatic Metastatic Progression]{A Bayesian Network Model\\for Lymphatic Metastatic Progression}
+\sectionmark{Bayesian Network Model}
 \label{sec:previous_work:bayesian_network}
 
 To begin with, the authors \citeauthorandlink{pouymayou_bayesian_2019} represented the state of an \gls{lnl} using a binary \gls{rv}. It may take on the value $X=0$ (or the boolean value \texttt{FALSE}) to indicate a healthy node level. If it harbors metastatic disease, its state would correspondingly be described with the value $X=1$ (or \texttt{TRUE}). This state indicates if there is truly disease present in an \gls{lnl}, including the presence of occult metastases. However, in practice we do not have access to that truth, which is why these \acrlongpl{rv} representing the state of an \gls{lnl} are termed \emph{hidden} \glspl{rv}.
@@ -30,7 +31,7 @@ where $V$ is the number of \glspl{lnl} $v \in \{ 1,2,\ldots,V \}$ in the graph. 
     \end{aligned}
 \end{equation}
 %
-with $s_N$ and $s_P$ being the sensitivity and specificity of the used diagnostic method. Below we give the conditional probability table of $\Probofgiven{Z}{X}$ for all combination of $X$ and $Z$
+with $s_N$ and $s_P$ being the sensitivity and specificity of the used diagnostic method. Below we give the conditional probability table of $\Probofgiven{Z}{X}$ for all combination of $X$ and $Z$:
 
 \begin{center}
     \begin{tabular}{|c|cc|}

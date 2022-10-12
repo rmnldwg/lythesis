@@ -5,7 +5,7 @@
 
 \begin{document}
 
-\section{Impact of Shape and Length of the Time-Prior}
+\section[Impact of Shape and Length of the Time-Prior]{Impact of Shape and Length\\of the Time-Prior}
 \label{sec:unilateral:tprior}
 
 It turns out that length and shape of $p(t)$ have almost no effect on the risk predictions as long as we are not concerned with different T-categories. So, if we learn our parameters from a dataset that only contains T1 patients and then compute risks for T1 patients only, the result will not differ almost regardless of the time-prior that was used for learning and risk assessment. Only too few time-steps may pose a problem, since then the system might not be able to spread to all \glspl{lnl} via all pathways. And too many time-steps could introduce numerical problems, because the learned probability rates $\tilde{b}_v$ and $\tilde{t}_{\pa(v)v}$  become smaller for longer time-priors.
