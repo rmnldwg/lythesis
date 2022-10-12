@@ -1,0 +1,21 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{
+    {\subfix{./figures/}}
+}
+
+
+\begin{document}
+
+\section{Aim of this work}
+\label{sec:intro:aim}
+
+What is missing from these guidelines is a more personalized approach. They base their recommendations on the prevalences of lymphatic involvement as seen in large cohorts. This neglects correlations between the frequency of metastases in different levels of the neck. For instance, one might expect the probability of occult disease in the ipsilateral \gls{lnl} IV to be low, given a clinically N0 neck. But in case the levels II and III show visible metastasis on a \gls{ct} scan, this probability for involvement in level IV may be much higher. This could be refined even further by including other parts of a patient's diagnosis: T-stage, exact tumor subsite, \gls{hpv} status, and possibly more that cannot be covered in heuristic guidelines.
+
+For the purpose of a more individual risk assessment, \citeauthorandlink{pouymayou_bayesian_2019} developed a probabilistic model based on \glspl{bn}. It aims to predict the lymphatic progression for any possible combination of diagnostic variables, thereby resolving the need for ever more detailed guidelines. We will explain this work's core concept separately in \cref{sec:previous_work:bayesian_network}.
+
+The goal of this thesis is to build upon and improve their model. We want to take the inspiring idea of modelling the lymphatic metastatic progression in \gls{hnscc}, and extend it to include more patient information and primary tumor characteristics, so that we can eventually predict the risk of occult disease in all \glspl{lnl} for the complete, individual diagnosis a new patient might present themselves with.
+
+Employing such a model in clinical practice may ultimately improve the quality of life for \gls{hnscc} patients, as it could aid clinicians in safely reducing the extent of elective nodal treatment that can introduce severe side effects \cite{batth_practical_2014}.
+
+\end{document}
