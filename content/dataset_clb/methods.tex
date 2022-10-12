@@ -43,8 +43,6 @@ In \cref{sec:dataset_usz:results}, we simply combined \gls{ct}, \gls{mri}, \gls{
 
 For the \gls{clb} data from \citeauthorandlink{bauwens_prevalence_2021}, this strategy does not work anymore: If a node level was clinically found to harbor a metastasis, but the pathological examination showed no sign of malign cells, the \gls{lnl} is almost certainly healthy. So, to create a similar plot of statistics as in \cref{fig:dataset_usz:statistics}, we need a method of smartly combining the two different columns of involvement reports that this dataset provides, particularly allowing the pathology information to override the clinical diagnosis.
 
-Our approach to do this will be generally applicable to combining an arbitrary number of binary diagnoses into a consensus: We will naively determine the most likely involvement, given the available modalities and their respective literature values for sensitivity and specificity, in our case from \citeauthorandlink{de_bondt_detection_2007} and \cite{kyzas_18f-fluorodeoxyglucose_2008}, as listed in \cref{table:dataset_clb:spec_sens}.
-
 \begin{table}
     \centering
     \begin{tabular}{|l|rr|l|}
@@ -62,22 +60,20 @@ Our approach to do this will be generally applicable to combining an arbitrary n
     \label{table:dataset_clb:spec_sens}
 \end{table}
 
-For example, if we have an \gls{mri} and a \gls{ct} scan available for a patient's \gls{lnl} III that reports $Z_\text{III}^\text{MRI} = 1$ and $Z_\text{III}^\text{CT} = 0$, we can compute the likelihoods
+Our approach to do this will be generally applicable to combining an arbitrary number of binary diagnoses into a consensus: We will naively determine the most likely involvement for the available modalities and their literature values for sensitivity and specificity, in our case from \citeauthorandlink{de_bondt_detection_2007} and \cite{kyzas_18f-fluorodeoxyglucose_2008}, as listed in \cref{table:dataset_clb:spec_sens}. This means we compute the likelihood of the observed diagnoses $\left\{ Z^\mathcal{O} \right\}$, given the two possible cases for the true involvement $X$ and define our consensus as the value of $X$, where the likelihood was the greatest.
+
+Naively, when we have only one diagnostic modality, this maximum likelihood consensus will simply reproduce the same diagnosis, as long as the modality's sensitivity $s_N$ and specificity $s_P$ are both larger than 50\%:
 %
 \begin{equation}
     \begin{aligned}
-        \Probofgiven{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{CT} = 0}{X_\text{III} = 0}
-        &= (1 - s^\text{MRI}_P) \cdot s^\text{CT}_P \\
-        &= (1 - 0.63) \cdot 0.76 = 0.2812 \\
-        \Probofgiven{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{CT} = 0}{X_\text{III} = 1}
-        &= s^\text{MRI}_N \cdot (1 - s^\text{CT}_N) \\
-        &= 0.81 \cdot (1 - 0.81) = 0.1539
+        \Probofgiven{Z = 1}{X = 0} &= \left( 1 - s_P \right) &< \Probofgiven{Z = 1}{X = 1} &= s_N \\
+        \Probofgiven{Z = 0}{X = 0} &= s_P &> \Probofgiven{Z = 0}{X = 1} &= \left( 1 - s_N \right)
     \end{aligned}
 \end{equation}
 %
-using the respective sensitivities $s_N^\mathcal{O}$ and specificities $s_P^\mathcal{O}$, where we have here the diagnostic modalities $\mathcal{O} \in \{ \text{MRI}, \text{CT} \}$. From this result, we now consider this patient's \gls{lnl} III to be \emph{most likely} healthy -- meaning $X_\text{III} = 0$ -- since the likelihood for the healthy state of involvement was higher.
+We can see that the observed diagnosis $Z=1$ is \emph{more likely}, given the true state of involvement of $X=1$, compared to the likelihood of $Z=1$, given $X=0$. Hence, the consensus diagnosis will be set to $Z^\text{cons} = 1$.
 
-If we have pathology results in addition to diagnostic modalities, which we consider to have sensitivity and specificity of $s^\text{path}_N = s^\text{path}_P = 1$, then the above example would look like below:
+If we have pathology results in addition to diagnostic modalities, which we consider to have sensitivity and specificity of $s^\text{path}_N = s^\text{path}_P = 1$, then an example could like this:
 %
 \begin{equation}
     \begin{aligned}
@@ -90,6 +86,25 @@ If we have pathology results in addition to diagnostic modalities, which we cons
     \end{aligned}
 \end{equation}
 %
-Evidently, the information from pathology overrides the \gls{mri} diagnosis. From a Bayesian standpoint, what we explained here is computing the unnormalized probability of the true (but hidden) involvement, given some diagnoses $\Probofgiven{X}{Z=z}$, for a uniform prior over the involvement $X$. The probabilistic model we will introduce in \cref{chap:unilateral} will essentially replace the uniform with a more sophisticated and parametrized prior. But the likelihood of a set of diagnoses, given some hidden involvement, is computed in a very similar fashion, as is outlined in \cref{subsec:unilateral:formalism:combine}. 
+where we have used the respective sensitivities $s_N^\mathcal{O}$ and specificities $s_P^\mathcal{O}$ for the diagnostic modalities $\mathcal{O} \in \{ \text{MRI}, \text{path} \}$. Evidently, the information from pathology overrides the \gls{mri} diagnosis, because it is -- according to our assumption of a perfect pathology -- impossible to obtain a negative observation $Z_\text{III}^\text{path}$, given a true, hidden involvement of $X_\text{III}$.
+
+So far, this could have been simple enough to be done by inspection. However, if we have conflicting diagnostic modalities, and possibly even more than just two, the situation gets more involved. For instance, an \gls{mri} and a \gls{ct} scan are available for a patient's \gls{lnl} III. Let us assume they report $Z_\text{III}^\text{MRI} = 1$ and $Z_\text{III}^\text{CT} = 0$, then we can compute the likelihoods
+%
+\begin{equation}
+    \begin{aligned}
+        \Probofgiven{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{CT} = 0}{X_\text{III} = 0}
+        &= (1 - s^\text{MRI}_P) \cdot s^\text{CT}_P \\
+        &= (1 - 0.63) \cdot 0.76 = 0.2812 \\
+        \Probofgiven{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{CT} = 0}{X_\text{III} = 1}
+        &= s^\text{MRI}_N \cdot (1 - s^\text{CT}_N) \\
+        &= 0.81 \cdot (1 - 0.81) = 0.1539
+    \end{aligned}
+\end{equation}
+%
+Again, we now consider the most likely state for that patient's \gls{lnl} III. Here, the result is to assume no involvement $Z^\text{cons}=0$.
+
+In most cases, this method amounts to ``trusting'' the diagnostic modality that has higher values for sensitivity and/or specificity. One could also simply rank the modalities by their respective sensitivity and specificity and then choose to believe the observation from the most ``trustworthy'' source. But the maximum likelihood approach is a more general solution that also works for edge cases, like when e.g. four diagnostic modalities report involvement, but one slightly more ``trustworthy'' modality did not find a metastasis. In this scenario, the ranking would infer wrongly  from the available information that no disease is present. The maximum likelihood method on the other hand allows many less sensitive and/or specific modalities to override another more sensitive and/or specific one.
+
+It is also the correct tratment probabilistically: From a Bayesian standpoint, what we explained here is computing the unnormalized probability of the true (but hidden) involvement, given some diagnoses $\Probofgiven{X}{Z=z} \propto \Probofgiven{Z=z}{X} P(X)$, for a uniform prior over the involvement $X$. Note that we could choose a non-uniform prior here, e.g. if we had some profound understanding of how probable it is that the \gls{lnl} harbors cancer cells. The probabilistic model we will introduce in \cref{chap:unilateral} will essentially attempt to learn this understanding and replace the uniform prior $P(X)$ with a more sophisticated and parametrized prior. But the likelihood of a set of diagnoses, given some hidden involvement, will still be computed in essentially the same fashion, as is outlined in \cref{subsec:unilateral:formalism:combine}.
 
 \end{document}
