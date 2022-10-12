@@ -35,11 +35,32 @@ A clinically positive lymph node was defined by either
 \subsection*{Maximum Likelihood Consensus Diagnosis}
 \label{subsec:dataset_clb:methods:max_llh}
 
-In \cref{chap:dataset_usz}, we plotted the prevalence of involvement for a variety of interesting scenarios (\cref{fig:dataset_usz:statistics}). Since our data often contained multiple diagnostic modalities per patient, we combined them into a consensus diagnosis using the logical OR. This means, that we considered an \gls{lnl} to be metastatic as soon as one of the available modalities for that patient and \gls{lnl} reported involvement. This worked well, since the data contained mostly imaging results and seeing a suspicious lymph node in either of them usually means a clinician would consider the corresponding \gls{lnl} to be metastatic.
+We now have two datasets: One from the \gls{usz} (see \cref{chap:dataset_usz}) containing per-level involvement information from different diagnostic modalities, e.g. \gls{ct} and \gls{mri}. And the other from the \gls{clb} that reports a clinical consensus diagnosis and for most \glspl{lnl} also a post-surgical pathology report on the true involvement of the investigated level.
 
-For the data from \citeauthorandlink{bauwens_prevalence_2021}, this strategy does not work anymore: If a node level was clinically found to harbor a metastasis, but the pathological examination showed no sign of malign cells, the \gls{lnl} is almost certainly healthy. So, to create a similar plot of statistics as in \cref{fig:dataset_usz:statistics}, we need a method of smartly combining the two different columns of involvement reports that this dataset provides, particularly allowing the pathology information to override the clinical diagnosis.
+Since many patients have information from multiple modalities reporting a diagnosis on a given \gls{lnl}, this represents us with a challenge: How should we consistently and correctly combine different diagnostic modalities, and how to incorporate the pathology information, if available?
 
-Our approach to do this will be generally applicable to combining an arbitrary number of binary diagnoses into a consensus: We will naively determine the most likely involvement, given the available modalities and their respective literature values for sensitivity and specificity, in our case from \citeauthorandlink{de_bondt_detection_2007}.
+In \cref{sec:dataset_usz:results}, we simply combined \gls{ct}, \gls{mri}, \gls{pet} and \gls{fna} into a ``consensus'' by applying the logical \texttt{OR}. This means if any of the available modalities for a patient reported involvement in an \gls{lnl}, we assumed that level to be involved. With this method, we created \cref{fig:dataset_usz:statistics}. This worked well, since the \gls{usz} data contained mostly imaging results and seeing a suspicious lymph node in either of them usually means a clinician would consider the corresponding \gls{lnl} to be metastatic.
+
+For the \gls{clb} data from \citeauthorandlink{bauwens_prevalence_2021}, this strategy does not work anymore: If a node level was clinically found to harbor a metastasis, but the pathological examination showed no sign of malign cells, the \gls{lnl} is almost certainly healthy. So, to create a similar plot of statistics as in \cref{fig:dataset_usz:statistics}, we need a method of smartly combining the two different columns of involvement reports that this dataset provides, particularly allowing the pathology information to override the clinical diagnosis.
+
+Our approach to do this will be generally applicable to combining an arbitrary number of binary diagnoses into a consensus: We will naively determine the most likely involvement, given the available modalities and their respective literature values for sensitivity and specificity, in our case from \citeauthorandlink{de_bondt_detection_2007} and \cite{kyzas_18f-fluorodeoxyglucose_2008}, as listed in \cref{table:dataset_clb:spec_sens}.
+
+\begin{table}
+    \centering
+    \begin{tabular}{|l|rr|l|}
+        \hline
+        \textbf{Modality} & \textbf{Specificity} & \textbf{Sensitivity} & \textbf{Reference} \\
+        \hline
+        \acrshort{ct} & 76\% & 81\% & \citeauthorandlink{de_bondt_detection_2007} \\
+        \acrshort{fdg-pet} & 86\% & 79\% & \citeauthorandlink{kyzas_18f-fluorodeoxyglucose_2008} \\
+        \acrshort{mri} & 63\% & 81\% & \citeauthorandlink{de_bondt_detection_2007} \\
+        \acrshort{fna} & 98\% & 80\% & \citeauthorandlink{de_bondt_detection_2007} \\
+        Pathology & $\approx$ 100\% & $\approx$ 100\% & \\
+        \hline
+    \end{tabular}
+    \caption{Values of sensitivity and specificity for diagnostic modalities and pathological examinations.}
+    \label{table:dataset_clb:spec_sens}
+\end{table}
 
 For example, if we have an \gls{mri} and a \gls{ct} scan available for a patient's \gls{lnl} III that reports $Z_\text{III}^\text{MRI} = 1$ and $Z_\text{III}^\text{CT} = 0$, we can compute the likelihoods
 %
