@@ -7,7 +7,7 @@
 
 \begin{document}
 
-\chapter{Bilateral hidden Markov model}
+\chapter{Extending the HMM to the Contralateral Neck}
 \label{chap:bilateral}
 
 In the previous chapter we have set up the formalism to deal with only one side of the neck. Implicitly, we have assumed that to be the ipsilateral side, i.e. the side of the sagittal plane where the primary tumor is located. This is because we assume lymphatic drainage to be a process that is -- as many other parts of human anatomy -- symmetric w.r.t. the sagittal plane, which means there can only be limited lymph flow across this plane. But depending on the tumor's location and lateralization, drainage and hence metastatic spread to the contralateral lymphatic system of the neck may also occur. In current clinical practice, a bilateral neck dissection or irradiation is prescribed in the vast majority of cases \cite{de_veij_mestdagh_incidence_2019}, although a growing number of researchers believe treatment may be safely limited to the ipsilateral side for many patients \cite{rackley_unilateral_2017,de_veij_mestdagh_spectct-guided_2020}. A probabilistic model like ours could support testing this hypothesis, if it can be extended successfully to the contralateral side.

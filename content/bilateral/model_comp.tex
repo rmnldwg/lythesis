@@ -5,7 +5,7 @@
 
 \begin{document}
 
-\section{Comparing bilateral models}
+\section{Comparing Bilateral Models}
 \label{sec:bilateral:model_comp}
 
 Up to this point we have largely argued that the mixing parameter makes intuitive sense because of the thought experiment, where we moved the primary tumor from a clearly lateralized position closer and closer to the mid-sagittal plane, until it was perfectly symmetric w.r.t. that plane. However, we now need to actually test whether our arguments hold. For that, we decided to compare three models:
@@ -150,7 +150,7 @@ A comparison of the log-evidence of the three models -- which we provide in \cre
 
 \Cref{fig:bilateral:model_comp:thermo_int} displays how -- using \gls{ti} -- the expected log-likelihood under the power posterior evolves over the course of a \gls{ti} round for each of the three compared models. It shows that the final accuracy $\mathcal{A}_\text{MC}(\beta=1)$ of the agnostic model $\mathcal{M}_\text{ag}$ is lower than of the other two models, which owe that to their ability to incorporate the tumor's extension over the mid plane into the prediction. However, while the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ achieve the same fit to the data, the full model's accuracy rises for later $\beta$ values, which results in a lower log-evidence and a higher complexity penalty (see \cref{eq:ti:acc_vs_kl}) compared to the simpler mixing model.
 
-\subsection{Contralateral risk depending on ipsilateral diagnosis}
+\subsection{Contralateral Risk Depending on Ipsilateral Diagnosis}
 \label{subsec:bilateral:model_comp:risk}
 
 To conclude this section, we show that the extended bilateral model that uses the mixing parameter $\alpha$ to model the contralateral spread in case of a tumor that extends over the mid-sagittal plane, can factor in ipsilateral diagnoses into its risk prediction for contralateral involvement. To that end, we have plotted in \cref{fig:bilateral:model_comp:risks} how the risk for microscopic involvement in the contralateral \gls{lnl} II increases for a worsening diagnosis. We have started with an early T-stage patient with a clearly lateralized tumor whose \gls{ct} scan showed no detectable metastases in either side of the neck. For that case, the risk for micrometastases is very low with below 2\%. This risk increases just slightly if we were to observe the same diagnosis but for a late T-stage patient. As expected, the risk jumps to over 7\% as soon as the tumor touches or grows over the mid-sagittal plane, where the patient is still of late T-stage and clinically $N_0$. The contralateral risk for microscopic involvement in \gls{lnl} II increases further to around 9\% when a metastasis is detected via \gls{ct} in the ipsilateral \gls{lnl} II and once more to 10\% when level III on the same side shows involvement as well.

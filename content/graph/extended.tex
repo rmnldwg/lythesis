@@ -7,7 +7,7 @@
 
 \begin{document}
 
-\section{Extending the network to LNLs V and VII}
+\section{Extending the Underlying Graph to LNLs V and VII}
 \label{sec:graph:extended}
 
 \begin{figure}
@@ -32,7 +32,7 @@ Based on the data, as well as anatomical and practical considerations mentioned 
 
 In \cref{fig:graph:all_lnls:base_graph}, we have also drawn green edges between the \glspl{lnl}. These additional connections are the subject of this section's experiments, as we are assessing whether adding them individually improves the model's accuracy enough to justify the greater model complexity.
 
-\subsection{Starting point: Base graph}
+\subsection{Starting Point: Base Graph}
 \label{subsec:graph:extended:base}
 
 \begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
@@ -70,7 +70,7 @@ As mentioned, we started with establishing a baseline, using a unilateral model 
     \label{table:graph:extended:base}
 \end{table}
 
-\subsection{Direction of the arc between LNL I and II}
+\subsection{Direction of the Arc Between LNL I and II}
 \label{subsec:graph:extended:IandII}
 
 \begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
@@ -230,7 +230,7 @@ We have repeated the analysis for the graph that adds an edge from \gls{lnl} IV 
     \label{fig:graph:extended:add45:prevalences}
 \end{figure}
 
-\subsection{An edge from LNL II to VII}
+\subsection{An Edge from LNL II to VII}
 \label{subsec:graph:extended:IItoVII}
 
 \begin{tcolorbox}[title=\faIcon{recycle} Reproducibility, parbox=false]
@@ -280,7 +280,7 @@ For completeness, we also show some predictions as for previous model comparison
 
 To conclude this subsection, both the computed metrics and a visual inspection of the relevant predictions strongly suggest not to add a new edge from \gls{lnl} II to VII.
 
-\subsection{Multiple additional arcs}
+\subsection{Combining Multiple Additional Arcs}
 \label{subsec:graph:extended:multiple}
 
 \input{_contributions.tex}

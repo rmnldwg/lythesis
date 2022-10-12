@@ -8,7 +8,7 @@
 \section{Implementation}
 \label{sec:lyprox:implementation}
 
-\subsection*{Database models}
+\subsection*{Database Models}
 \label{subsec:lyprox:implementation:models}
 
 \begin{figure}
@@ -42,7 +42,7 @@ For example, when we defined the \texttt{Patient} class, we used Django to gener
 
 A detailed \gls{er} diagram is shown in \cref{fig:lyprox:er_diagram}. It also lists all attributes that are stores for each entity and what Django type is used to represent them.
 
-\subsection*{Adding patients manually}
+\subsection*{Adding Patients Manually}
 \label{subsec:lyprox:implementation:add_manual}
 
 \begin{figure}
@@ -75,14 +75,14 @@ Similarly, we implemented sanitization of some \glspl{lnl} in the \texttt{Diagno
 
 When one is done adding \texttt{Patient} entries to a \texttt{Dataset}, it can be locked to preserve it as created by preventing accidental edits. A method in the \texttt{Dataset's} definition is called whenever an attempt to change a \texttt{Patient}, \texttt{Tumor} or \texttt{Diagnose} is made, and raises an exception before the change can be written to the SQLite3 database.
 
-\subsection*{Batch-importing Datasets}
+\subsection*{Batch-Importing Datasets}
 \label{subsec:lyprox:implementation:batch_import}
 
 The entire implementation of the data representation would in principle allow clinicians to directly transfer patient information from the digital patient record system of their institution into LyProX. But of course most researchers do not extract lymphatic patterns of progression for the sole purpose of adding them to our interface. Hence, we added convenience methods to the definition of a \texttt{Dataset} in Django, allowing the import and export of all its patients from and to \gls{csv} tables. This means we can take any spreadsheet-like file, rename its column headers according to what LyProX expects and batch-import entire patient cohorts in a relatively straightforward manner.
 
 The \gls{csv} format that is expected by LyProX is also used in the implementation of the probabilistic \repolink{lymph} model (see also  \cref{chap:unilateral}) to load the data for learning, and for publishing our raw data in \repolink{lyDATA}, where it is also described in great detail.
 
-\subsection*{Visualizing patterns of progression}
+\subsection*{Visualizing Patterns of Progression}
 \label{subsec:lyprox:implementation:viewer}
 
 \begin{figure}

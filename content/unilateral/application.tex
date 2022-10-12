@@ -5,7 +5,7 @@
 
 \begin{document}
 
-\section{Application to oropharyngeal SCC}
+\section{Application to Oropharyngeal SCC}
 \label{sec:unilateral:application}
 
 \input{_reproducibility.tex}
@@ -26,7 +26,7 @@ The learning process itself was implemented using the Python library of an advan
 
 Many distributions in the form of histograms we show in this work are made by computing the respective quantity -- e.g., the risk -- for a subset of the sampled parameters. We typically randomly select between 1 and 2\% of the 200,000 samples drawn after the so-called burn-in phase, when the sampling has already converged to the target distribution, as a subset. The learned parameter densities are depicted as a \repolink[dfm]{corner.py} \cite{foreman-mackey_cornerpy_2016} plot (e.g. in \cref{fig:unilateral:corner_hmm}).
 
-\subsection{A patient's evolution}
+\subsection{A Patient's Evolution}
 \label{subsec:unilateral:application:evolution}
 
 Having inferred the parameters $\tilde{t}_{\pa{(v)}v}$ and $\tilde{b}_v$, we can model how the state of \gls{lnl} involvement evolves over the time-steps that support the chosen prior. In \cref{fig:unilateral:hmm_evo_matrix,fig:unilateral:hmm_evolution} (left), we have plotted the probability of each hidden state $\boldsymbol{\xi}_i$ for each time-step (calculated for the mean over all parameter samples). At time-step zero the patient is healthy, and the system is by definition in the initial state with probability 1. One time-step later the individual lymph nodes are involved with the base probability rates $\tilde{b}_v$ (\cref{fig:unilateral:corner_hmm}).
@@ -45,7 +45,7 @@ In contrast to the probability of hidden states, the probability of a single \gl
 
 Finally, in the right panel of \cref{fig:unilateral:hmm_evolution} shows the probability of a \gls{lnl}'s involvement marginalized over all time-steps using the time-prior. The probabilities plotted in this window are the result of marginalizations of the matrix plotted in \cref{fig:unilateral:hmm_evo_matrix}: first, selectively along the x-axis; and secondly, weighted along the y-axis. These marginalized probabilities are compared to the prevalence of \gls{lnl} involvement in the dataset used during learning. The agreement between our model and the data observed in \cref{fig:unilateral:hmm_evolution} (right) verifies that the model can accurately describe the data.
 
-\subsection{Comparison to the BN model}
+\subsection{Comparison to the BN Model}
 \label{subsec:unilateral:application:comp_to_bn}
 
 \begin{figure}
@@ -72,7 +72,7 @@ It can be seen that the risk for involvement in level I is low, regardless of di
     \label{fig:unilateral:hmm_bn_comp}
 \end{figure}
 
-\subsection{Risk prediction for later T-category}
+\subsection{Risk Prediction for Later T-Category}
 \label{subsec:unilateral:application:late_risk}
 
 To illustrate the capability of the model to incorporate T-category into the risk prediction via the time-prior, we increased the parameter $p$ in the Binomial distribution while keeping the learned parameters $\tilde{b}$, $\tilde{t}$ from the previous section, which were inferred from a dataset of early T-category patients.
@@ -87,7 +87,7 @@ In \cref{fig:unilateral:hmm_risk_increase} we consider the risk of microscopic i
     \label{fig:unilateral:hmm_risk_increase}
 \end{figure}
 
-\subsection{Learning the time-prior}
+\subsection{Learning the Time-Prior}
 \label{subsec:unilateral:application:tprior}
 
 Although we have now shown how shifting the mass of the time prior towards later time steps generally increases the risk of involvement, we are not yet able to identify the different T-categories with certain time prior distributions. Throughout this work we will continue to use the Binomial distribution as time prior. But even with this simplifying choice, the question remains: Which Binomial parameter should one choose for the different T-categories? Our approach to this issue is to fix the Binomial time prior's $p$ parameter for one T-category and simultaneously learn the transition matrix parameters $\tilde{b}$ and $\tilde{t}_{\pa{(v)}v}$ together with the Binomial time prior's $p$ parameters for all other T-categories based on the likelihood function \cref{eq:hmm_log_likelihood} described in \cref{subsec:unilateral:formalism:tstage}. If we do not fix the time prior parameter for any T-category, the system becomes overdetermined and very strong correlations between the spread parameters and the Binomial parameter appear (see also \cref{sec:unilateral:tprior}). Then, if the model is presented with different degrees of involvement at different T-categories it can separate them by shifting the mass of the respective time priors apart, but it will learn the common spread parameters. This approach requires a dataset containing nodal involvement reports for patients with different T-categories.

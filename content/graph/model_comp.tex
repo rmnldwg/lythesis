@@ -7,12 +7,12 @@
 
 \begin{document}
 
-\section{Comparing models}
+\section{Comparing Models}
 \label{sec:graph:model_comp}
 
 Before being able to compare which graph, representing the lymphatic spread, describes our data best, we need to briefly establish how to compare models in a quantitative way. The following two subsections apply to the general problem of comparing models and are not specifically tailored to our specific task, which is why they may be skipped by a reader already familiar with this formalism or by anyone seeking a more thorough introduction to it.
 
-\subsection{* Model evidence and Bayes factor}
+\subsection{* Model Evidence and Bayes Factor}
 \label{subsec:graph:model_comp:evidence}
 
 In Bayesian terms, we would like to know which model $\mathcal{M}$ has the highest probability $P\left( \mathcal{M} \mid \boldsymbol{\mathcal{D}} \right)$ given a dataset $\boldsymbol{\mathcal{D}}$. This probability is given by
@@ -55,7 +55,7 @@ Harold Jeffreys gives a scale for interpreting values of the Bayes factor \cite{
     \label{table:bayes_factor}
 \end{table}
 
-\subsection{* Thermodynamic integration}
+\subsection{* Thermodynamic Integration}
 \label{subsec:graph:model_comp:thermo_int}
 
 Due to the integration over all model parameters, the quantity \cref{eq:bayes_factor:evidence} is usually impossible to calculate by brute force integration, even for models with only around a dozen parameters, as is the case for ours. Unless analytical solutions exist -- which is rarely the case -- it is often prohibitively expensive to compute the model evidence. For this reason, a large amount of approximation methods has been developed; \cite{friel_estimating_2011} names only a few of those methods that can be used in the context of \gls{mcmc}. Another method that is applicable in the context of \gls{mcmc} is \gls{ti}, which is very well introduced in \cite{aponte_introduction_2022} and only roughly sketched out in this section.
@@ -110,7 +110,7 @@ Lastly, we would like to give a final insight into the evidence that is quite na
 %
 This shows how the evidence naturally incorporates Occam's razor. The second term on the right gets larger the more the likelihood restricts the prior and the resulting penalty grows exponentially with the dimensionality of the parameter space.
 
-\subsection{* Bayesian information criterion}
+\subsection{* Bayesian Information Criterion}
 \label{subsec:graph:model_comp:bic}
 
 Because \acrlong{ti} -- as well as many other ways of computing the model evidence -- is computationally prohibitive for most use cases, there exist a number of approximations. One of them is the \gls{bic}, which is in essence a first-order approximation of the log-evidence (actually, the negative one-half of the \gls{bic} is an approximation to the log-evidence) that fits a normal distribution to the maximum likelihood estimate of the target distribution \cite{schwarz_estimating_1978}. It is defined as
