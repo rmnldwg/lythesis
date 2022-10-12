@@ -35,6 +35,7 @@ COLOR_CYCLE = cycler(color=[COLORS["red"], COLORS["green"]])
 if __name__ == "__main__":
     plt.style.use("../../../.mplstyle")
     plt.rc("axes", prop_cycle=COLOR_CYCLE)
+    plt.rcParams['figure.constrained_layout.use'] = False
 
     dataset = pd.read_csv(DATAFILE, header=[0,1,2])
     t_stages = dataset["tumor", "1", "t_stage"]
@@ -49,7 +50,6 @@ if __name__ == "__main__":
     # initialize figure
     fig = plt.figure(
         figsize=get_size(width="full", ratio=1./np.sqrt(2)),
-        constrained_layout=False,
     )
 
     # define grid layout
