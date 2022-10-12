@@ -32,11 +32,11 @@ stages:
       \ --export-latex\n"
     deps:
     - path: sens_spec_plot.svg
-      md5: 3f5ed52a969fdafafc8b69e7d2f75995
-      size: 130026
+      md5: 7d5441b2bd386d6b3126307910a3fe99
+      size: 130090
     outs:
     - path: sens_spec_plot.pdf
-      md5: de1264e7f090b08fdb1be5caae369d29
+      md5: e6db5af34c137aa51b97ead826f7b7ff
       size: 155430
     - path: sens_spec_plot.pdf_tex
       md5: b540883e8c81d73659f89f44b17bb9ab
@@ -45,50 +45,77 @@ stages:
     cmd: python statistics.py
     deps:
     - path: ../data/2021-clb-oropharynx-enhanced.csv
-      md5: ca0cca1e5bb38647d399486cfba77e62
+      md5: 0bee381b4c8eeb3ffcbb2d3d7ab55303
       size: 113393
     - path: statistics.py
-      md5: 01a1d604f54251001a0d1e7a8b6b6fb2
-      size: 9835
+      md5: 7bc507659b0028f7475115ff384a543d
+      size: 9859
     outs:
     - path: statistics.svg
-      md5: 8f2ca6b5d7d508c30cd676b1e4b02463
-      size: 119028
+      md5: d72b1e0925867e968368cba516ad4911
+      size: 119119
   plots@sens_spec_plot:
     cmd: python sens_spec_plot.py
     deps:
     - path: ../data/2021-clb-oropharynx-enhanced.csv
-      md5: ca0cca1e5bb38647d399486cfba77e62
+      md5: 0bee381b4c8eeb3ffcbb2d3d7ab55303
       size: 113393
     - path: sens_spec_plot.py
       md5: 037d51a370c6e989070d8e8a3bbbe21a
       size: 6059
     outs:
     - path: sens_spec_plot.svg
-      md5: 3f5ed52a969fdafafc8b69e7d2f75995
-      size: 130026
+      md5: 7d5441b2bd386d6b3126307910a3fe99
+      size: 130090
   convert@statistics:
     cmd: "inkscape --without-gui --file=statistics.svg --export-pdf=statistics.pdf\
       \ --export-latex\n"
     deps:
     - path: statistics.svg
-      md5: 8f2ca6b5d7d508c30cd676b1e4b02463
-      size: 119028
+      md5: d72b1e0925867e968368cba516ad4911
+      size: 119119
     outs:
     - path: statistics.pdf
-      md5: b2558b1ba69792c8062a568581388027
+      md5: 120776c862b7cffd4760a7f31f6e84b3
       size: 148973
     - path: statistics.pdf_tex
       md5: 9d274af715254a3e8d6ef19ceb06e9f0
       size: 2061
   crop-figure:
     cmd: "sed statistics.pdf_tex -e '56s/.*/    \\\\put(0,0){\\\\includegraphics[width=\\\
-      \\unitlength,page=1,trim=13mm 20mm 15mm 160mm]{statistics.pdf}}%/' > statistics_crop.pdf_tex\n"
+      \\unitlength,page=1,trim=13mm 20mm 15mm 30mm]{statistics.pdf}}%/' > statistics_crop.pdf_tex\n"
     deps:
     - path: statistics.pdf_tex
       md5: 9d274af715254a3e8d6ef19ceb06e9f0
       size: 2061
     outs:
     - path: statistics_crop.pdf_tex
-      md5: d7011fb80eeb8db35b507f8d1eb443d4
-      size: 2087
+      md5: 1729c6a3fed2888f48a051094d1e59a7
+      size: 2086
+  plots@tstage_comp:
+    cmd: python tstage_comp.py
+    deps:
+    - path: ../data/2021-clb-oropharynx-enhanced.csv
+      md5: 0bee381b4c8eeb3ffcbb2d3d7ab55303
+      size: 113393
+    - path: tstage_comp.py
+      md5: e9946e603eded286252f8d33e1d28819
+      size: 1756
+    outs:
+    - path: tstage_comp.svg
+      md5: 833d2211a8777ae944c1e405f950cb3c
+      size: 28126
+  convert@tstage_comp:
+    cmd: "inkscape --without-gui --file=tstage_comp.svg --export-pdf=tstage_comp.pdf\
+      \ --export-latex\n"
+    deps:
+    - path: tstage_comp.svg
+      md5: 833d2211a8777ae944c1e405f950cb3c
+      size: 28126
+    outs:
+    - path: tstage_comp.pdf
+      md5: 7b37de4545cee8a6907c2a2b38a403ab
+      size: 24051
+    - path: tstage_comp.pdf_tex
+      md5: 36a7b690e7069d03640944c469b6eceb
+      size: 2063

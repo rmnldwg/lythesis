@@ -12,13 +12,24 @@
 \subsection*{Involvement Patterns and Differences}
 \label{subsec:dataset_clb:results:patterns}
 
-To be able to compare some aspects of this dataset to what we extracted at our institution, in \cref{fig:dataset_clb:statistics} we recreated the same figure as in \cref{sec:dataset_usz:results}, just using the data we received from the \acrlong{clb}. As mentioned in the last section, we also used another way of combining the diagnostic consensus and the pathology findings, compared to what we used to combine the modalities in our dataset: The maximum likelihood consensus from \cref{subsec:dataset_clb:methods:max_llh}.
+\begin{figure}
+    \centering
+    \input{figures/tstage_comp.pdf_tex}
+    \caption[
+        Comparison of T-stage distribution in \gls{usz} and \gls{clb} data
+    ]{
+        Distribution over T-stages for both the patients in the \gls{usz} cohort (blue) and the \gls{clb} cohort (orange). The \gls{usz} dataset shows more patients with late T-stage tumors, compared to the \gls{clb} data that even reports T0 cases.
+    }
+    \label{fig:dataset_clb:tstage_comp}
+\end{figure}
 
-At first glance, this cohort does not seem to differ fundamentally from ours, although the general prevalence of involvement appears slightly lower, e.g. in the ipsilateral \gls{lnl} II where our data reported 78\% overall and this cohort shows only 68\%. Contralateral involvement in this level is also lower with 16\% in our data and 10\% in theirs. Noticeably, the prevalences of involvement for \glspl{lnl} V and VII seem switched: In our case it was 5\% and 10\% for these levels respectively, but the \gls{clb} data shows 7\% and 3\%.
+To be able to compare some aspects of the \gls{clb} dataset to the data we extracted at the \gls{usz}, in \cref{fig:dataset_clb:statistics} we recreated the same figure as in \cref{sec:dataset_usz:results}. As mentioned in the last section, we also used another way to combine the diagnostic consensus and the pathology findings in the \gls{clb} data, compared to the logical \texttt{OR} we used to combine the modalities in our \gls{usz} dataset: The maximum likelihood consensus from \cref{subsec:dataset_clb:methods:max_llh}.
 
-In the second row, we find that both for our and for their data a tumor extending over the mid-sagittal plane or involvement of ipsilateral \gls{lnl} III are similarly correlated to an increased frequency of contralateral involvement.
+The patient cohort in the \gls{clb} dataset shows -- as expected -- similar patterns of \gls{lnl} involvement as the \gls{usz} dataset. Generally, the prevalence of involvement is slightly lower, e.g. in the ipsilateral \gls{lnl} II the \gls{usz} data reported 78\% overall and the \gls{clb} cohort shows only 68\%. Contralateral involvement in level II is also lower with 16\% in the \gls{usz} data and 10\% in the \gls{clb} set. Noticeably are also small differences in the prevalences of involvement for \glspl{lnl} V and VII: At the \gls{usz} level V was involved in 5\% and level VII in 10\%, but the \gls{clb} data shows 7\% for \gls{lnl} V and 3\% for level VII.
 
-In the third row of \cref{fig:dataset_clb:statistics} the data by \citeauthorandlink{bauwens_prevalence_2021} shows significantly less involvement in the case of \gls{hpv}-negative patients. The patient cohort extracted at the \gls{usz} even showed no difference in the prevalence of ipsilateral involvement when comparing late T-stage patients that are \gls{hpv}$+$ or \gls{hpv}$-$.
+Contralaterally, the prevalence of involvement strongly increases when the primary tumor extends over the mid-sagittal plane: E.g., \gls{lnl} II in the contralateral neck showed metastasis in 4\% of the \gls{clb} patients, when the tumor was clearly lateralized. When the primary tumor extended over the mid-plane, \gls{lnl} II involvement contralaterally rose to 28\%. In the \gls{usz} dataset this figure increased from 9\% to 32\%, which is similar if again slightly higher. This can also be seen in the second row if \cref{fig:dataset_clb:statistics}, if compared to the same statistics for our \gls{usz} dataset in \cref{fig:dataset_usz:statistics}.
+
+In the third row of \cref{fig:dataset_clb:statistics} the \gls{clb} data by \citeauthorandlink{bauwens_prevalence_2021} shows significantly less involvement in the case of \gls{hpv}-negative patients. The patient cohort extracted at the \gls{usz} even showed no difference in the prevalence of ipsilateral involvement when comparing late T-stage patients that are \gls{hpv}$+$ or \gls{hpv}$-$.
 
 The observed differences between these two datasets reporting per-level involvement of more than 250 \gls{opscc} patients each might stem from a combination of factors:
 

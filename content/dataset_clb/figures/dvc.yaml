@@ -3,6 +3,7 @@ stages:
     foreach:
     - sens_spec_plot
     - statistics
+    - tstage_comp
     do:
       cmd: python ${item}.py
       deps:
@@ -15,6 +16,7 @@ stages:
     foreach: 
     - sens_spec_plot
     - statistics
+    - tstage_comp
     do:
       cmd: >
         inkscape
