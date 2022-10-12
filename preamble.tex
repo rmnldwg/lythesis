@@ -65,8 +65,7 @@
 \usepackage[
     style=numeric-comp,
     sorting=none,
-    minnames=3,
-    maxnames=4
+    maxnames=20,
 ]{biblatex}
 % define custom command to cite the author of somethign and add a link
 \newcommand{\citeauthorandlink}[1]{\citeauthor*{#1} \cite{#1}}
@@ -120,6 +119,8 @@
 %% Bullet lists, boxes, admonitions and icons
 \usepackage[inline]{enumitem}
 \usepackage{tcolorbox}
+\tcbuselibrary{skins,xparse,breakable}
+\tcbset{breakable}
 \usepackage{fontawesome5}
 
 %% Custom commands
