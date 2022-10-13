@@ -10,6 +10,12 @@
 \chaptermark{Improving the HMM Graph}
 \label{chap:graph}
 
+Up to this point, we have limited our model to the \glspl{lnl} I, II, III and IV. This was because the data, reconstructed from the work by \citeauthorandlink{sanguineti_defining_2009}, that was available to us at the time, only reported involvement for the \glspl{lnl} I, II, III, IV. Also, for these four levels the lymphatic pathways are known to a large degree. E.g., \citeauthorandlink{lengele_anatomical_2007} describes the \emph{main lymphatic pathway} as starting in level I and flowing through II and III into \gls{lnl} IV.
+
+Since we have extracted a more detailed and extensive dataset at the \gls{usz} (see \cref{chap:dataset_usz}) and have received more data from the \gls{clb} (see \cref{chap:dataset_clb}), we do have information on lymphatic progression patterns for the \glspl{lnl} V and VII as well. This presents us with the challenge of adding two nodes into the graph that underlies our model (see \cref{fig:fig:bn:graph}). Again, the anatomy of the lymphatic drainage pathways in the head and neck are provide some ideas of how to add them into the network: The \emph{posterior accessory pathway} drains lymph liquid from \gls{lnl} IIb into level V.
+
+However, any other flow directions or correlations between the involvement of \glspl{lnl} are not obvious from inspecting the data. We will therefore develop a strategy to compare models that are based on different underlying graph representations of the lymphatic system in the head and neck (\cref{sec:graph:model_comp,sec:graph:simple}). Employing this comparison strategy, we will then pit anatomically plausible graphs against each other and determine which one is best supported by the data in \cref{sec:graph:extended}.
+
 \subfile{model_comp}
 \subfile{simple}
 \subfile{extended}
