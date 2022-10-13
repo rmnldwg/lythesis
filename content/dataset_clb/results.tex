@@ -29,13 +29,13 @@ The patient cohort in the \gls{clb} dataset shows -- as expected -- similar patt
 
 Contralaterally, the prevalence of involvement strongly increases when the primary tumor extends over the mid-sagittal plane: E.g., \gls{lnl} II in the contralateral neck showed metastasis in 4\% of the \gls{clb} patients, when the tumor was clearly lateralized. When the primary tumor extended over the mid-plane, \gls{lnl} II involvement contralaterally rose to 28\%. In the \gls{usz} dataset this figure increased from 9\% to 32\%, which is similar if again slightly higher. This can also be seen in the second row if \cref{fig:dataset_clb:statistics}, if compared to the same statistics for our \gls{usz} dataset in \cref{fig:dataset_usz:statistics}.
 
-In the third row of \cref{fig:dataset_clb:statistics} the \gls{clb} data by \citeauthorandlink{bauwens_prevalence_2021} shows significantly less involvement in the case of \gls{hpv}-negative patients. The patient cohort extracted at the \gls{usz} even showed no difference in the prevalence of ipsilateral involvement when comparing late T-stage patients that are \gls{hpv}$+$ or \gls{hpv}$-$.
+In the third row of \cref{fig:dataset_clb:statistics} we can see that the \gls{clb} data by \citeauthorandlink{bauwens_prevalence_2021} shows significantly less involvement in the case of \gls{hpv}-negative patients, both for early and late T-stage. The patient cohort extracted at the \gls{usz}, however, only showed some differences in the prevalence of ipsilateral involvement for early T-stage patients when comparing patients that are \gls{hpv}$+$ or \gls{hpv}$-$. In case of late T-stage, the \gls{usz} cohort showed no meaningful difference in the ipsilateral involvement patterns of \gls{hpv}+ or \gls{hpv}- patients.
 
 The observed differences between these two datasets reporting per-level involvement of more than 250 \gls{opscc} patients each might stem from a combination of factors:
 
 \begin{enumerate}
-    \item Demographic differences between the two locations/countries.
-    \item Differences in patient sampling. Our data contains all \gls{opscc} patients treated in a certain time frame, while the cohort from our colleagues in France contained only those treated with \acrlong{nd}. This may introduce a bias against advanced disease when those are referred to definitive chemo-radiotherapy. For example, it contains relatively more early T-stage patients (67\% or 176 out of 263), while in our data we observe a roughly equal amount of early (52\% or 150 out of 287) and late T-stage patients.
+    \item Demographic differences between the two locations. The general population between France and Switzerland probably do not differ too much. However, different health care systems and practices regarding patient referral, as well as specializations by institutions may have an impact on the patient demographics treated at a specific clinic.
+    \item Differences in patient selection. Our data contains all \gls{opscc} patients treated in a certain time frame, while the cohort from our colleagues in France contained only those treated with \acrlong{nd}. This may introduce a bias against advanced disease when those are referred to definitive chemo-radiotherapy. For example, it contains relatively more early T-stage patients (67\% or 176 out of 263), while in our data we observe a roughly equal amount of early (52\% or 150 out of 287) and late T-stage patients. We have plotted the differences in the distribution over T-stages in \cref{fig:dataset_clb:tstage_comp}.
     \item Different ways of combining multiple diagnoses into one estimate of the likely ``true'' involvement. For the \gls{usz} data we combined them using the logical OR, meaning we considered an \gls{lnl} to be metastatic as soon as one diagnostic modality found a suspicious node in that level. For the \gls{clb} cohort, again, we used the maximum likelihood method introduced in \cref{subsec:dataset_clb:methods:max_llh}.
     \item Not strictly comparable observations. The \gls{usz} data reports involvement from a number of diagnostic modalities separately, where for each one we defined criteria that decided when an \gls{lnl} was considered to be metastatic. The French dataset on the other hand reports the clinical diagnosis as a consensus decision by clinicians, and the pathology reports basically represent the ground truth, if available.
 \end{enumerate}
@@ -56,7 +56,7 @@ Nonetheless, we still believe the two datasets to be comparable and that we may 
         \end{enumerate*}.
         Contralateral \gls{lnl} involvement stratified according to
         \begin{enumerate*}[label={(\alph*)},start=3]
-            \item midsagittal plan extension and
+            \item mid-sagittal plane extension and
             \item involvement of ipsilateral level III
         \end{enumerate*}.
         Ipsilateral \gls{lnl} involvement stratified according to HPV status for
