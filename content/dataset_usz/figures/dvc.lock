@@ -29,27 +29,27 @@ stages:
     cmd: python statistics.py
     deps:
     - path: ../data
-      md5: 4c26722e4f710fca236cfc25ea4f071c.dir
-      size: 356490
+      md5: 38c616c5596ba49d44dabcf0a992fbd5.dir
+      size: 356295
       nfiles: 7
     - path: statistics.py
-      md5: 9168a9649860c8adfbf2640e8cc3d911
+      md5: dcf02ce7e69b95aba0c0ac580008e511
       size: 9864
     outs:
     - path: statistics.svg
-      md5: 162f7ca1ea2967c238192286428b06ed
-      size: 121467
+      md5: 3b18cea49c6258b943ed610bd1862b9a
+      size: 121233
   export-to-pdf@statistics:
     cmd: "inkscape --without-gui --file=statistics.svg --export-pdf=statistics.pdf\
       \ --export-latex --export-area=0:0:0.5:0.5\n"
     deps:
     - path: statistics.svg
-      md5: 162f7ca1ea2967c238192286428b06ed
-      size: 121467
+      md5: 3b18cea49c6258b943ed610bd1862b9a
+      size: 121233
     outs:
     - path: statistics.pdf
-      md5: ecc01042720bd2f6d70f0bc7824c4e5c
-      size: 156582
+      md5: fd7ea33e197a2c2141f2fed5a4a7ccf8
+      size: 157639
     - path: statistics.pdf_tex
       md5: 9d274af715254a3e8d6ef19ceb06e9f0
       size: 2061

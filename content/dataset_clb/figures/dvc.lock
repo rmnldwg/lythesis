@@ -48,12 +48,12 @@ stages:
       md5: 0bee381b4c8eeb3ffcbb2d3d7ab55303
       size: 113393
     - path: statistics.py
-      md5: 7bc507659b0028f7475115ff384a543d
+      md5: 1d0aa1b31a2fd19086d6c8d67573f270
       size: 9859
     outs:
     - path: statistics.svg
-      md5: d72b1e0925867e968368cba516ad4911
-      size: 119119
+      md5: 46661d438a0b67ef91e2828468db2574
+      size: 118191
   plots@sens_spec_plot:
     cmd: python sens_spec_plot.py
     deps:
@@ -72,12 +72,12 @@ stages:
       \ --export-latex\n"
     deps:
     - path: statistics.svg
-      md5: d72b1e0925867e968368cba516ad4911
-      size: 119119
+      md5: 46661d438a0b67ef91e2828468db2574
+      size: 118191
     outs:
     - path: statistics.pdf
-      md5: 120776c862b7cffd4760a7f31f6e84b3
-      size: 148973
+      md5: dcc5e11e1194c9503f60ef8fc1b88f48
+      size: 146741
     - path: statistics.pdf_tex
       md5: 9d274af715254a3e8d6ef19ceb06e9f0
       size: 2061

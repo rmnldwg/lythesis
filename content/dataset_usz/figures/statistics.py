@@ -96,7 +96,7 @@ if __name__ == "__main__":
     ax["prevalence ipsi"].set_ylim(y_lim[::-1])
     ax["prevalence ipsi"].set_yticks(POSITIONS - SPACE/2.)
     ax["prevalence ipsi"].set_yticklabels(LABELS, ha="center", position=(-0.025,0))
-    ax["prevalence ipsi"].grid(axis='x')
+    ax["prevalence ipsi"].grid(axis='y')
     ax["prevalence ipsi"].annotate(
         "ipsilateral", (0.5, 0.92), 
         xycoords="axes fraction", horizontalalignment="center"
@@ -138,7 +138,7 @@ if __name__ == "__main__":
     ax["prevalence contra"].yaxis.tick_right()
     plt.setp(ax["prevalence contra"].get_yticklabels(), visible=False)
     ax["prevalence contra"].set_xlim(x_lim[::-1])
-    ax["prevalence contra"].grid(axis='x')
+    ax["prevalence contra"].grid(axis='y')
     ax["prevalence contra"].annotate(
         "contralateral", (0.5, 0.92), 
         xycoords="axes fraction", horizontalalignment="center"
@@ -173,7 +173,7 @@ if __name__ == "__main__":
     )
     ax["contra midext"].set_xticks(POSITIONS - SPACE/2.)
     ax["contra midext"].set_xticklabels(LABELS)
-    ax["contra midext"].grid(axis='y')
+    ax["contra midext"].grid(axis='x')
     ax["contra midext"].set_ylabel("contralateral involvement [%]")
     ax["contra midext"].legend()
 
@@ -206,7 +206,7 @@ if __name__ == "__main__":
     )
     ax["contra ipsiIII"].set_xticks(POSITIONS - SPACE/2.)
     ax["contra ipsiIII"].set_xticklabels(LABELS)
-    ax["contra ipsiIII"].grid(axis='y')
+    ax["contra ipsiIII"].grid(axis='x')
     ax["contra ipsiIII"].legend()
     plt.setp(ax["contra ipsiIII"].get_yticklabels(), visible=False)
 
@@ -235,7 +235,7 @@ if __name__ == "__main__":
     ax["HPV early"].set_xticks(POSITIONS - SPACE/2.)
     ax["HPV early"].set_xticklabels(LABELS)
     ax["HPV early"].set_ylabel("ipsilateral involvement [%]")
-    ax["HPV early"].grid(axis='y')
+    ax["HPV early"].grid(axis='x')
     ax["HPV early"].annotate(
         "T1 & T2", (0.5, 0.92), 
         xycoords="axes fraction", horizontalalignment="center"
@@ -265,7 +265,7 @@ if __name__ == "__main__":
     )
     ax["HPV late"].set_xticks(POSITIONS - SPACE/2.)
     ax["HPV late"].set_xticklabels(LABELS)
-    ax["HPV late"].grid(axis='y')
+    ax["HPV late"].grid(axis='x')
     plt.setp(ax["HPV late"].get_yticklabels(), visible=False)
     ax["HPV late"].annotate(
         "T3 & T4", (0.5, 0.92), 
