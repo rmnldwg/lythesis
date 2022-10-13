@@ -1,0 +1,13 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
+
+
+\begin{document}
+
+\section{Abstract}
+\label{sec:unilateral:abstract}
+
+Currently, \acrfull{ctv-n} definition for \acrfull{hnscc} is mostly based on the prevalence of nodal involvement for a given tumor location. In this work, we propose a probabilistic model for lymphatic metastatic spread that can quantify the risk of microscopic involvement in \acrfullpl{lnl} given the location of macroscopic metastases and T-category. This may allow for further personalized \gls{ctv-n} definition based on an individual patient's state of disease. We model the patient's state of metastatic lymphatic progression as a collection of hidden binary random variables that indicate the involvement of \glspl{lnl}. In addition, each \gls{lnl} is associated with observed binary random variables that indicate whether macroscopic metastases are detected. A \acrfull{hmm} is used to compute the probabilities of transitions between states over time. The underlying graph of the HMM represents the anatomy of the lymphatic drainage system. Learning of the transition probabilities is done via \gls{mcmc} sampling and is based on a dataset of \gls{hnscc} patients in whom involvement of individual \glspl{lnl} was reported. The model is demonstrated for ipsilateral metastatic spread in oropharyngeal \gls{hnscc} patients. We demonstrate the model's capability to quantify the risk of microscopic involvement in levels III and IV, depending on whether macroscopic metastases are observed in the upstream levels II and III, and depending on T-category. In conclusion, the statistical model of lymphatic progression may inform future, more personalized, guidelines on which \gls{lnl} to include in the elective \acrshort{ctv}. However, larger multi-institutional datasets for model parameter learning are required for that.
+
+\end{document}
