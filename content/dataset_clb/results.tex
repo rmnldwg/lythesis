@@ -72,6 +72,60 @@ Nonetheless, we still believe the two datasets to be comparable and that we may 
 \subsection*{Sensitivity and Specificity}
 \label{subsec:dataset_clb:results:sens_spec}
 
+\begin{table}
+    \input{tables/diagnostic_consensus-vs-pathology-contra-Ib.tex}
+    \hfill
+    \input{tables/diagnostic_consensus-vs-pathology-ipsi-Ib.tex} \\ [2mm]
+    \input{tables/diagnostic_consensus-vs-pathology-contra-II.tex}
+    \hfill
+    \input{tables/diagnostic_consensus-vs-pathology-ipsi-II.tex} \\ [2mm]
+    \input{tables/diagnostic_consensus-vs-pathology-contra-III.tex}
+    \hfill
+    \input{tables/diagnostic_consensus-vs-pathology-ipsi-III.tex} \\ [2mm]
+    \input{tables/diagnostic_consensus-vs-pathology-contra-IV.tex}
+    \hfill
+    \input{tables/diagnostic_consensus-vs-pathology-ipsi-IV.tex} \\ [2mm]
+    \input{tables/diagnostic_consensus-vs-pathology-contra-V.tex}
+    \hfill
+    \input{tables/diagnostic_consensus-vs-pathology-ipsi-V.tex}
+    \caption[]{
+        Confusion matrices between the diagnostic consensus and the pathology result the \gls{clb} data report. The left column shows these matrices for the contralateral side, the right column for the ipsilateral \glspl{lnl}. The levels for which we computed confusion matrices were \gls{lnl} Ib (first row), II (second row), III (third row), IV (fourth row) and V (fifth row).
+    }
+    \label{table:dataset_clb:confusion}
+\end{table}
+
+Since for the \gls{clb} patient cohort both the clinical diagnosis of most, and the pathological examination result for many patient's \glspl{lnl} is available, we can estimate the sensitivity and specificity of the diagnostic procedure at the \gls{clb}. We have plotted Beta posteriors over the specificity (left column) and sensitivity (right column) in \cref{fig:dataset_clb:sens_spec} for each \gls{lnl} where enough data was available to compute all four necessary values (true positives (TP), false positives (FP), true negatives (TN) and false negatives (FN)).
+
+\begin{tcolorbox}[title=\faIcon{lightbulb} Beta posterior, parbox=false]
+
+    The mentioned Beta posterior we used here comes from estimating the probability of a Binomial distribution using Bayesian inference: For example, the sensitivity $s_N$ is defined as the probability to observe a true positive event, meaning the diagnostic modality correctly identifies e.g. an \gls{lnl} as being metastatic. Hence, the number of true positives TP when P metastatic \glspl{lnl} are given can be described by a binomial distribution:
+    %
+    \begin{equation}
+        \text{TP} \sim \operatorname{Bin}(\text{P}, s_N)
+    \end{equation}
+    %
+    If we now assume that the sensitivity is Beta distributed $s_N \sim \operatorname{Beta}(\alpha, \beta)$, we can take advantage of the fact that the Beta distribution can act as a \emph{conjugate prior} to a Binomial likelihood. This means that the posterior distribution is of the same shape as the prior. Hence, using Bayesian inference, we can model the distribution over the sensitivity as an updated Beta distribution:
+    %
+    \begin{equation}
+        \begin{aligned}
+            \probofgiven{s_N}{\text{TP},\text{P}} &= \operatorname{Beta}(\alpha^\star, \beta^\star) \\
+            &= \operatorname{Beta}(\alpha + \text{TP}, \beta + \text{FP})
+        \end{aligned}
+    \end{equation}
+    %
+    For the prior hyperparameters we have chosen $\alpha=1$ and $\beta=1$, amounting to a uniform prior over the sensitivity. In this case the maximum a posteriori estimate for $s_N$ coincides with its maximum likelihood estimate, but additionally, we get naturally obtain a measure of uncertainty with it via the width of the distribution.
+
+\end{tcolorbox}
+
+It is immediately striking that -- except for level II -- the observed sensitivity is far below what \citeauthorandlink{de_bondt_detection_2007} reported for the three diagnostic modalities \gls{ct}, \gls{mri} and \gls{pet}, while the sensitivity is always higher. For \gls{lnl} II the literature values match our results, both for the ipsilateral side (green curve), and the contralateral neck (blue curve). However, as the prevalence for involvement in a given level decreases, so does the chance of diagnosing present disease.
+
+We believe there are two reasons for this discrepancy between the literature values and the actually achieved sensitivities and specificities for the different \glspl{lnl}:
+
+\begin{enumerate}
+    \item The fundamental difference in what is actually observed by the imaging modalities commonly used to diagnose lymph nodes versus what a pathologist detects when investigating a resected tissue sample. Imaging techniques observe macroscopic changes in e.g. a \gls{lnl}, exerted on the region by an accumulation of a large amount of tumor cells. Such macroscopic changes for example include necrotic areas and the swelling of lymph nodes. As mentioned in \cref{sec:intro:diagnosis}, observing microscopic disease directly, would require imaging modalities to resolve individual tumor cells, which is currently beyond their capabilities.
+    \item The distribution of metastases is not uniformly over lymph nodes and their levels. In the majority of \gls{opscc} cases, metastasis starts in the ipsilateral \gls{lnl} II. This means that the state of lymphatic metastatic progression is almost always more advanced in \gls{lnl} II than e.g. in \gls{lnl} IV. Consequently, it is more likely that metastases in level II have advanced sufficiently to be detectable by imaging, than it is for disease in \gls{lnl} IV to have reached that state.
+\end{enumerate}
+
 \begin{figure}
     \centering
     \def\svgwidth{1.0\textwidth}
@@ -79,17 +133,9 @@ Nonetheless, we still believe the two datasets to be comparable and that we may 
     \caption[
         Sensitivity and specificity per LNL in the CLB dataset
     ]{
-        Posterior Beta distributions over the specificities (left column) and sensitivities (right column) per reported \gls{lnl} (respective rows) in the \gls{clb} dataset. To compute the sensitivities and specificities, we compared the clinical diagnosis with what was pathologically reported after a \gls{nd} was performed. The vertical lines represent estimates for these values from the literature \cite{de_bondt_detection_2007,kyzas_18f-fluorodeoxyglucose_2008}.
+        Posterior Beta distributions over the specificities (left column) and sensitivities (right column) per reported \gls{lnl} (respective rows) in the \gls{clb} dataset. To compute the sensitivities and specificities, we compared the clinical diagnosis with what was pathologically reported after a \gls{nd} was performed. The vertical lines represent estimates for these values from the literature \cite{de_bondt_detection_2007,kyzas_18f-fluorodeoxyglucose_2008} for \gls{ct} (orange dashed line), \gls{mri} (red dash-dotted line) and \gls{pet} (black dotted line).
     }
     \label{fig:dataset_clb:sens_spec}
 \end{figure}
-
-Since for this patient cohort both the clinical diagnosis of most, as well as the pathological examination results for many patient's \glspl{lnl} is available, we can estimate the sensitivity and specificity of the diagnosis at the \gls{clb}. We have plotted Beta posteriors over the specificity (left column) and sensitivity (right column) in \cref{fig:dataset_clb:sens_spec} for each \gls{lnl} where enough data was available to compute all four necessary values (true positives, false positives, true negatives and false negatives).
-
-It is immediately striking that -- except for level II -- the observed sensitivity is far below what \citeauthorandlink{de_bondt_detection_2007} reported for the three diagnostic modalities \gls{ct}, \gls{mri} and \gls{pet}, while the sensitivity is always above. For \gls{lnl} II the literature values seem to be fairly representative, both for the ipsilateral side (green curve), and the contralateral neck (blue curve). However, as the prevalence for involvement in a given level decreases, so does the chance of diagnosing present disease.
-
-We believe there is a profound reason for this discrepancy between the achieved sensitivities and specificities for the different \glspl{lnl}: The fundamental difference in what is actually observed by the imaging modalities commonly used to diagnose lymph nodes versus what a pathologist detects when investigating a resected tissue sample. In the former case, what imaging is in principle capable to detect are macroscopic changes in the tissue as exerted by the presence of a large enough tumor mass (e.g. swelling of an \gls{lnl}, necrosis, etc). The latter, however, is able to see individual cancer cells directly under a microscope.
-
-In other words, e.g. a \gls{ct} scanner cannot -- with resolutions as they are currently achievable -- detect microscopic disease in an \gls{lnl}, as long as it has not yet altered the local anatomy or tissue characteristics to a large enough extent. If it had, however, the disease would by definition not be ``microscopic'' anymore, since we could then detect it with said imaging modality, albeit still not with certainty, since we might mistake a lymph node that is swollen from an infection to be a malignancy.
 
 \end{document}

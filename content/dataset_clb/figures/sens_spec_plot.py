@@ -2,6 +2,8 @@
 Analyze the senstivity and specificity of the CLB data.
 """
 from pathlib import Path
+from typing import Optional
+import re
 
 import pandas as pd
 import numpy as np
@@ -17,6 +19,7 @@ def extract_confusion_matrix(
     truth_modality: str,
     side: str,
     lnl: str,
+    table_dir: Optional[str] = None,
 ) -> pd.DataFrame:
     """
     Extract the confusion matrix of the `observed_modality` from the `data`, based on
@@ -39,7 +42,60 @@ def extract_confusion_matrix(
     )
     confusion_matrix.index.name = "truth"
     confusion_matrix.columns.name = "observed"
+
+    for obs in [False, True]:
+        if obs not in confusion_matrix:
+            confusion_matrix[obs] = 0
+
+    if table_dir is not None:
+        write_latex(
+            confusion_matrix,
+            observation=observed_modality,
+            truth=truth_modality,
+            side=side,
+            lnl=lnl,
+            table_dir=table_dir,
+        )
     return confusion_matrix
+
+
+def write_latex(
+    confusion_matrix: pd.DataFrame,
+    observation: str,
+    truth: str,
+    side: str,
+    lnl: str,
+    table_dir: str,
+    width: float = 0.45,
+):
+    """Write a confusion matrix nicely into a LaTeX file."""
+    Path(table_dir).mkdir(exist_ok=True)
+    table_path = Path(table_dir) / f"{observation}-vs-{truth}-{side}-{lnl}"
+    table_path = table_path.with_suffix(".tex")
+    caption = f"{side}lateral LNL {lnl}"
+
+    with open(table_path, mode="w") as table_file:
+        latex = confusion_matrix.to_latex(
+            column_format=r"|l|rr|",
+            caption=caption,
+        )
+        latex = latex.replace("_", " ")
+        latex = latex.replace(
+            r"\begin{table}",
+            r"\begin{subtable}{" + f"{width:.2f}" + r"\textwidth}"
+        )
+        latex = latex.replace(r"\end{table}", r"\end{subtable}")
+        latex = re.sub("\w*rule", "hline", latex)
+
+        latex_lines = latex.splitlines()
+        for i,line in enumerate(latex_lines):
+            if i == 5:
+                latex_lines[i] = line.replace("observed", r"\diagbox{truth}{observed}")
+            elif i == 6:
+                latex_lines[i] = ""
+        latex = "\n".join(latex_lines)
+
+        table_file.write(latex)
 
 
 def comp_scaled_beta_posterior(
@@ -91,6 +147,7 @@ if __name__ == "__main__":
                 truth_modality="pathology",
                 side=side,
                 lnl=lnl,
+                table_dir="../tables",
             )
 
     plt.style.use("../../../.mplstyle")

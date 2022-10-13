@@ -1,7 +1,6 @@
 stages:
   plots:
     foreach:
-    - sens_spec_plot
     - statistics
     - tstage_comp
     do:
@@ -11,6 +10,17 @@ stages:
       - ../data/2021-clb-oropharynx-enhanced.csv
       outs:
       - ${item}.svg
+
+  sens-spec:
+    cmd: >
+      python sens_spec_plot.py
+    deps:
+    - sens_spec_plot.py
+    - ../data/2021-clb-oropharynx-enhanced.csv
+    outs:
+    - sens_spec_plot.svg
+    - ../tables:
+        cache: false
 
   convert:
     foreach: 

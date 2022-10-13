@@ -32,12 +32,12 @@ stages:
       \ --export-latex\n"
     deps:
     - path: sens_spec_plot.svg
-      md5: 7d5441b2bd386d6b3126307910a3fe99
-      size: 130090
+      md5: dbef5f394ace6f38bbdeb27e7b97205b
+      size: 135559
     outs:
     - path: sens_spec_plot.pdf
-      md5: e6db5af34c137aa51b97ead826f7b7ff
-      size: 155430
+      md5: 689b59ef92fc38f42827ffa0e7b20fba
+      size: 166468
     - path: sens_spec_plot.pdf_tex
       md5: b540883e8c81d73659f89f44b17bb9ab
       size: 2069
@@ -119,3 +119,20 @@ stages:
     - path: tstage_comp.pdf_tex
       md5: 36a7b690e7069d03640944c469b6eceb
       size: 2063
+  sens-spec:
+    cmd: "python sens_spec_plot.py\n"
+    deps:
+    - path: ../data/2021-clb-oropharynx-enhanced.csv
+      md5: 0bee381b4c8eeb3ffcbb2d3d7ab55303
+      size: 113393
+    - path: sens_spec_plot.py
+      md5: 7ff3342fa7bc0cb5499fa918c3c58e21
+      size: 7761
+    outs:
+    - path: ../tables
+      md5: 1a38f653b10e6bd109b6f3dc5da16977.dir
+      size: 2463
+      nfiles: 10
+    - path: sens_spec_plot.svg
+      md5: dbef5f394ace6f38bbdeb27e7b97205b
+      size: 135559
