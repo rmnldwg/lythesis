@@ -51,7 +51,7 @@ In \cref{fig:graph:all_lnls:base_graph}, we have also drawn green edges between 
     \label{fig:graph:extended:base:corner}
 \end{figure}
 
-As mentioned, we started with establishing a baseline, using a unilateral model that is based on the graph in \cref{fig:graph:extended_graph} and trained with the data detailed in \cref{box:graph:data}. We performed a \gls{ti} using 16 inverse temperature steps that were spaced according to a fifth order power urle again. The inferred posterior distribution over the nine parameters is plotted in \cref{fig:graph:extended:base:corner}. Notably, the distribution seems well suited to approximate its log-evidence using the \gls{bic}, since it is unimodal, not skewed and falls off quickly to all sides. This is supported by \cref{table:graph:extended:base}, where we give the performance metrics we will compare the other graphs to. Since the \gls{bic} is so close to the log-evidence and \gls{ti} is computationally very expensive -- especially now that we modelled six \glspl{lnl} and the model scales exponentially with the number of levels -- we will only use the \gls{bic} to assess the additional arcs.
+As mentioned, we started with establishing a baseline, using a unilateral model that is based on the graph in \cref{fig:graph:extended_graph} and trained with the data detailed in \cref{box:graph:data}. We performed a \gls{ti} using 16 inverse temperature steps that were spaced according to a fifth order power rule again. The inferred posterior distribution over the ten parameters is plotted in \cref{fig:graph:extended:base:corner}. Notably, the distribution seems well suited to approximate its log-evidence using the \gls{bic}, since it is unimodal, not skewed and falls off quickly to all sides. This is supported by \cref{table:graph:extended:base}, where we give the performance metrics we will compare the other graphs to. Since the \gls{bic} is so close to the log-evidence and \gls{ti} is computationally very expensive -- especially now that we modelled six \glspl{lnl} and the model scales exponentially with the number of levels -- we will only use the \gls{bic} to assess the additional arcs.
 
 \begin{table}
     \centering
@@ -82,7 +82,7 @@ As mentioned, we started with establishing a baseline, using a unilateral model 
     \end{itemize}
 \end{tcolorbox}
 
-The first question we want to answer is whether we should add the connection from \gls{lnl} I to II or the other way around. We sampled two identical models -- except for the direction between \glspl{lnl} I and II -- until convergence and compared metrics and predicted prevalences for both. ``Sampling until convergence'' in this case means that we stopped the inference process when the following two requirements were met:
+The first question we want to answer is whether we should add the connection from \gls{lnl} I to II, the other way around or none between the two levels at all. We sampled two identical models -- except for the direction between \glspl{lnl} I and II -- until convergence and compared metrics and predicted prevalences for both. ``Sampling until convergence'' in this case means that we stopped the inference process when the following two requirements were met:
 
 \begin{itemize}
     \item A stable estimate of the integrated auto-correlation time $\hat{\tau}$, meaning
