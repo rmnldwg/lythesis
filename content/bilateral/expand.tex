@@ -7,15 +7,15 @@
 \section{Extending the Unilateral Formalism}
 \label{sec:bilateral:expand}
 
-If we start by dissecting this joint conditional probability in the following way
+We start by dissecting the joint conditional probability in the following way:
 %
 \begin{equation} \label{eq:hmm_bilateral_bayes}
     P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \mid \mathbf{Z}^\text{i}, \mathbf{Z}^\text{c} \right) = \frac{P \left( \mathbf{Z}^\text{i}, \mathbf{Z}^\text{c} \mid \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right) \cdot P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right)}{P \left( \mathbf{Z}^\text{i}, \mathbf{Z}^\text{c} \right)}
 \end{equation}
 %
-we notice right away that the likelihood on the right factorizes: Given the true states of involvement in the two sides of the neck, their respective diagnoses must be independent. Furthermore, the two factors are already given by their corresponding observation matrices $\mathbf{B}^\text{i}$ and $\mathbf{B}^\text{c}$.
+We notice right away that the likelihood on the right factorizes: $\Probofgiven{\mathbf{Z}^\text{i}, \mathbf{Z}^\text{c}}{\mathbf{X}^\text{i}, \mathbf{X}^\text{c}} = \Probofgiven{\mathbf{Z}^\text{i}}{\mathbf{X}^\text{i}} \cdot \Probofgiven{\mathbf{Z}^\text{c}}{\mathbf{X}^\text{c}}$, meaning that given the true states of involvement in the two sides of the neck, their respective diagnoses are independent. Furthermore, the two factors are already given by their corresponding observation matrices $\mathbf{B}^\text{i}$ and $\mathbf{B}^\text{c}$.
 
-The joint probability of the hidden states $P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right)$ does not factorize in the same manner. But if we assume the lymphatic network to be symmetric and directed, there can be no direct connection between \glspl{lnl} of the two sides of the neck, which means the probability for involvement of the ipsi- and contralateral side only correlate via the diagnose time $t$. Hence the joint probability is a sum of factorizing terms:
+The joint probability of the hidden states $P \left( \mathbf{X}^\text{i}, \mathbf{X}^\text{c} \right)$ does not factorize in the same manner. We assume now that there is no direct drainage between two lateralized \glspl{lnl} in opposite sides of the neck, i.e. no directed arcs exist between ipsi- and contralateral \glspl{lnl}. In other words, contralateral spread originates from the primary tumor and is modelled by arcs from the tumor to the contralateral \glspl{lnl}. However, the probability for involvement of the ipsi- and contralateral side are still correlated via the diagnosis time $t$. Hence, the joint probability is a sum of factorizing terms:
 %
 \begin{equation} \label{eq:bilateral:expand:dissect}
     \begin{aligned}
@@ -24,7 +24,7 @@ The joint probability of the hidden states $P \left( \mathbf{X}^\text{i}, \mathb
     \end{aligned}
 \end{equation}
 %
-Note that the two row vectors of probabilities in the second line are multiplied using an outer product. Using the notation from the last section, We can write this in an algebraic way to effectively factorize this sum as follows
+Note that the two row vectors of probabilities in the second line are multiplied using an outer product. Using the notation from \cref{chap:graph}, we can write this in an algebraic way to effectively factorize this sum as follows
 %
 \begin{equation} \label{eq:bilateral:expand:algebra}
     P \left( \mathbf{X}^\text{c} = \boldsymbol{\xi}_n, \mathbf{X}^\text{i} = \boldsymbol{\xi}_m \right) = \left[ \boldsymbol{\Lambda}_\text{c}^\top \cdot \operatorname{diag}{p(\mathbf{t})} \cdot \boldsymbol{\Lambda}_\text{i} \right]_{n,m}
@@ -38,6 +38,6 @@ Similarily, we can now multiply the observation matrices $\mathbf{B}$ from the l
     P \left( \mathbf{Z}^\text{c} = \boldsymbol{\zeta}_n, \mathbf{Z}^\text{i} = \boldsymbol{\zeta}_m \right) = \left[ \mathbf{B}^\top \cdot \boldsymbol{\Lambda}_\text{c}^\top \cdot \operatorname{diag}{p(\mathbf{t})} \cdot \boldsymbol{\Lambda}_\text{i} \cdot \mathbf{B} \right]_{n,m}
 \end{equation}
 %
-Formally, all necessary terms can now be computed so that both inference and the subsequent risk prediction can be performed. However, in the next section we will go into more detail regarding how this was implemented.
+Formally, all necessary terms can now be computed so that both parameter inference and the subsequent risk prediction can be performed. However, in the next section we will go into more detail regarding how this was implemented.
 
 \end{document}

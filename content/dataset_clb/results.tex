@@ -96,8 +96,11 @@ Nonetheless, we still believe the two datasets to be comparable and that we may 
 
 Since for the \gls{clb} patient cohort both the clinical diagnosis of most, and the pathological examination result for many patient's \glspl{lnl} is available, we can estimate the sensitivity and specificity of the diagnostic procedure at the \gls{clb}. We have plotted Beta posteriors over the specificity (left column) and sensitivity (right column) in \cref{fig:dataset_clb:sens_spec} for each \gls{lnl} where enough data was available to compute all four necessary values (true positives (TP), false positives (FP), true negatives (TN) and false negatives (FN)).
 
-\begin{tcolorbox}[title=\faIcon{lightbulb} Beta posterior, parbox=false]
-
+\begin{tcolorbox}[
+    title=\faIcon{lightbulb} Beta posterior,
+    parbox=false,
+    float
+] \label{box:dataset_clb:results:beta}
     The mentioned Beta posterior we used here comes from estimating the probability of a Binomial distribution using Bayesian inference: For example, the sensitivity $s_N$ is defined as the probability to observe a true positive event, meaning the diagnostic modality correctly identifies e.g. an \gls{lnl} as being metastatic. Hence, the number of true positives TP when P metastatic \glspl{lnl} are given can be described by a binomial distribution:
     %
     \begin{equation}
