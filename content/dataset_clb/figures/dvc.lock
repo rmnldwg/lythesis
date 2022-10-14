@@ -99,23 +99,23 @@ stages:
       md5: 0bee381b4c8eeb3ffcbb2d3d7ab55303
       size: 113393
     - path: tstage_comp.py
-      md5: e9946e603eded286252f8d33e1d28819
-      size: 1756
+      md5: f29e02127edc76a805eea0ba853fa85a
+      size: 1762
     outs:
     - path: tstage_comp.svg
-      md5: 833d2211a8777ae944c1e405f950cb3c
-      size: 28126
+      md5: a147cf1fa71207d0ebc8f5ffc35ad17f
+      size: 29047
   convert@tstage_comp:
     cmd: "inkscape --without-gui --file=tstage_comp.svg --export-pdf=tstage_comp.pdf\
       \ --export-latex\n"
     deps:
     - path: tstage_comp.svg
-      md5: 833d2211a8777ae944c1e405f950cb3c
-      size: 28126
+      md5: a147cf1fa71207d0ebc8f5ffc35ad17f
+      size: 29047
     outs:
     - path: tstage_comp.pdf
-      md5: 7b37de4545cee8a6907c2a2b38a403ab
-      size: 24051
+      md5: a4f43a07c00897bab680770851906018
+      size: 24434
     - path: tstage_comp.pdf_tex
       md5: 36a7b690e7069d03640944c469b6eceb
       size: 2063

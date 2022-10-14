@@ -98,10 +98,10 @@ if __name__ == "__main__":
         xlim=[right_row_min, right_row_max],
     )
     ax[0,0].legend(fontsize=6.)
-    ax[0,0].set_title("early T-stages")
+    ax[0,0].set_title("early T-categories")
     ax[0,0].set_ylabel(r"$\mathcal{M}_{ag}$")
     ax[0,1].legend(fontsize=6.)
-    ax[0,1].set_title("late T-stages")
+    ax[0,1].set_title("late T-categories")
     ax[0,1].set_ylim(bottom=0., top=0.6)
 
     draw(

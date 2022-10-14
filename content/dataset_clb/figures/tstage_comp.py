@@ -17,7 +17,7 @@ def extract_tstages(
     density: bool = True,
     percent: bool = True,
 ) -> float:
-    """Get `pd.Series` with number of patients per T-stage."""
+    """Get `pd.Series` with number of patients per T-category."""
     counted_tstages = patient_data.groupby(T_STAGE_COL).size()
     norm = 1 if not density else len(patient_data)
     fac = 1 if not percent else 100
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     )
     t_stage_df.plot.bar(ax=ax, rot=0)
 
-    ax.set_xlabel("T-Stage")
+    ax.set_xlabel("T-category")
     ax.set_ylabel("Portion of patients [%]")
     ax.legend(fontsize="medium", loc="upper left")
 

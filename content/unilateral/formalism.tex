@@ -114,7 +114,7 @@ In our case, the starting state corresponds to a primary tumor being present, bu
     \item It is unclear how many time-steps it took from the starting state to the one observation we have at the time of diagnosis.
 \end{enumerate}
 
-In the remainder of this section, we will detail the \gls{hmm} step-by-step, starting with the parameterization of the transition matrix $\mathbf{A}$ in \cref{subsec:unilateral:formalism:parametrization}. Afterwards, in \cref{subsec:unilateral:formalism:marginalizing}, I will tackle the aforementioned problems, followed up by explaining how we perform inference on this model (\cref{subsec:unilateral:formalism:inference}), incorporate information about a patient's T-stage (\cref{subsec:unilateral:formalism:tstage}) and assess the risk of \gls{lnl} involvement in a new patient (\cref{subsec:unilateral:formalism:risk_assessment}). Lastly, we will introduce a way to incorporate incomplete observations in \cref{subsec:unilateral:formalism:incomplete_diagnose}.
+In the remainder of this section, we will detail the \gls{hmm} step-by-step, starting with the parameterization of the transition matrix $\mathbf{A}$ in \cref{subsec:unilateral:formalism:parametrization}. Afterwards, in \cref{subsec:unilateral:formalism:marginalizing}, I will tackle the aforementioned problems, followed up by explaining how we perform inference on this model (\cref{subsec:unilateral:formalism:inference}), incorporate information about a patient's T-category (\cref{subsec:unilateral:formalism:tstage}) and assess the risk of \gls{lnl} involvement in a new patient (\cref{subsec:unilateral:formalism:risk_assessment}). Lastly, we will introduce a way to incorporate incomplete observations in \cref{subsec:unilateral:formalism:incomplete_diagnose}.
 
 \subsection{Parameterization of the Transition Matrix}
 \label{subsec:unilateral:formalism:parametrization}
@@ -188,7 +188,7 @@ The problem that the number of time-steps until diagnosis is unknown cannot be s
     P_\text{HMM} \left( \mathbf{Z} = \boldsymbol{\zeta}_j \right) = \sum_{t = 0}^{t_\text{max}}{p(t) \cdot P\left( \mathbf{Z} = \boldsymbol{\zeta}_j \mid t \right)} = \left[ \sum_{t = 0}^{t_\text{max}}{p(t) \cdot \boldsymbol{\pi}^\top \cdot (\mathbf{A})^t \cdot \mathbf{B}} \right]_j
 \end{equation}
 %
-While the choice of the time-prior may seem unclear at this point, its role for including T-stage into this model will be discussed in \cref{subsec:unilateral:formalism:tstage}.
+While the choice of the time-prior may seem unclear at this point, its role for including T-category into this model will be discussed in \cref{subsec:unilateral:formalism:tstage}.
 
 \subsection{Inference of Model Parameters}
 \label{subsec:unilateral:formalism:inference}
@@ -221,20 +221,20 @@ where $P(\theta)$ is the prior over these parameters. Since they are exclusively
 %
 where $E$ is the number of edges in the \gls{dag} we use to represent the lymphatic system. While it is easy to compute the likelihood, it is not feasible to efficiently calculate the normalization constant in the denominator of \cref{eq:unilateral:inference:bayes_theorem}. Hence, we will use \gls{mcmc} sampling methods to estimate the parameters $\theta$ and their uncertainty.
 
-\subsection{Incorporation of T-Stage}
+\subsection{Incorporation of T-category}
 \label{subsec:unilateral:formalism:tstage}
 
-We have introduced the \gls{hmm} with the promise that it could handle the concept of T-stages through its explicit modeling of dynamic processes. To keep up with that, we will now explain how this is achieved using the time-prior $p(t)$.
+We have introduced the \gls{hmm} with the promise that it could handle the concept of T-categories through its explicit modeling of dynamic processes. To keep up with that, we will now explain how this is achieved using the time-prior $p(t)$.
 
-The core idea is to assume that early T-stage and late T-stage tumors share the same patterns of metastatic progression, except that late T-stage tumors are on average diagnosed at a later point in time, and thereby also show, on average, higher \gls{lnl} involvement. Formally, this can be described by assuming a different time-prior $p_T (t)$ for every T-stage $T$.  On the other hand, the transition matrix $\mathbf{A}$ is assumed to be the same for all T-stages.
+The core idea is to assume that early T-category and late T-category tumors share the same patterns of metastatic progression, except that late T-category tumors are on average diagnosed at a later point in time, and thereby also show, on average, higher \gls{lnl} involvement. Formally, this can be described by assuming a different time-prior $p_T (t)$ for every T-category $T$.  On the other hand, the transition matrix $\mathbf{A}$ is assumed to be the same for all T-categories.
 
-For the inference of model parameters, the training data is split into subgroups according to T-stage. We now define a column-vector $\mathbf{f}_T$ separately for each T-stage, which counts the number of patients in the dataset that were diagnosed with one of the possible observational states and a given T-stage. The log-likelihood from which we want to sample is then simply a sum of the likelihoods as above, where the essential difference is that we equip each marginalization over time with a different time-prior $p_T (t)$, according to its T-stage:
+For the inference of model parameters, the training data is split into subgroups according to T-category. We now define a column-vector $\mathbf{f}_T$ separately for each T-category, which counts the number of patients in the dataset that were diagnosed with one of the possible observational states and a given T-category. The log-likelihood from which we want to sample is then simply a sum of the likelihoods as above, where the essential difference is that we equip each marginalization over time with a different time-prior $p_T (t)$, according to its T-category:
 %
 \begin{equation} \label{eq:hmm_log_likelihood}
     \log{P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right)} = \sum_{T=1}^{4}{\log{\left[ \sum_{t = 0}^{t_\text{max}}{p_T (t) \cdot \boldsymbol{\pi}^\top \cdot (\mathbf{A})^t \cdot \mathbf{B}} \right]} \cdot \mathbf{f}_T}
 \end{equation}
 %
-The logarithm must be taken element-wise for the resulting row-vector inside the square brackets. The only data-dependent term here is the vector $\mathbf{f}_T$ counting the occurrences of all possible observations. It is again important to note that the only difference between the part of the log-likelihood for the different T-stages is the exact shape or parameterization of the time-prior. The transition probabilities, and hence also the transition matrix $\mathbf{A}$, are the same for all T-stages. For this to work, we rely on the assumption that different typical patterns of nodal involvement for the same primary tumor location are caused mainly by different progression times
+The logarithm must be taken element-wise for the resulting row-vector inside the square brackets. The only data-dependent term here is the vector $\mathbf{f}_T$ counting the occurrences of all possible observations. It is again important to note that the only difference between the part of the log-likelihood for the different T-categories is the exact shape or parameterization of the time-prior. The transition probabilities, and hence also the transition matrix $\mathbf{A}$, are the same for all T-categories. For this to work, we rely on the assumption that different typical patterns of nodal involvement for the same primary tumor location are caused mainly by different progression times
 
 At this point, it makes sense to briefly introduce a notation of the above equation that is more suitable for the actual programmatic implementation of the inference and the extension we will discuss later. We can rewrite the term in the square brackets of \cref{eq:hmm_log_likelihood} by using the matrix
 %

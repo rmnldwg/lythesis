@@ -114,7 +114,7 @@ if __name__ == "__main__":
                         if i == 0:
                             ax[i,j].set_ylabel("I➜II")
                             ax[i,j].legend(fontsize=7.)
-                            ax[i,j].set_title("early T-stage")
+                            ax[i,j].set_title("early T-category")
                         else:
                             ax[i,j].set_ylabel("II➜I")
                             ax[i,j].set_xlabel("prevalence [%]")
@@ -122,7 +122,7 @@ if __name__ == "__main__":
                     else:
                         if i == 0:
                             ax[i,j].legend(fontsize=7.)
-                            ax[i,j].set_title("late T-stage")
+                            ax[i,j].set_title("late T-category")
                         else:
                             ax[i,j].set_xlabel("prevalence [%]")
                         # ax[i,j].set_xlim(65., 85.)

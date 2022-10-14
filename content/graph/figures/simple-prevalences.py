@@ -93,7 +93,7 @@ if __name__ == "__main__":
 
     ax["both/early"].set_xlim(left=BINS[0], right=BINS[-1])
     ax["both/late"].set_xlim(left=BINS[0], right=BINS[-1])
-    ax["both/early"].set_xlabel("early T-stage prevalences [%]")
-    ax["both/late"].set_xlabel("late T-stage prevalences [%]")
+    ax["both/early"].set_xlabel("early T-category prevalences [%]")
+    ax["both/late"].set_xlabel("late T-category prevalences [%]")
 
     plt.savefig("simple-prevalences.svg")
