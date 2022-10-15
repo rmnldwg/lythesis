@@ -1,0 +1,29 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{\relativeRoot/figures/}
+
+
+\begin{document}
+
+\section{Mixture of HMM Models}
+\label{sec:future:mixture}
+
+Because we have defined the likelihood of a dataset as a product over the likelihoods for individual patients in \cref{sec:unilateral:formalism} (see for example \cref{eq:unilateral:llh_as_prod}), we implicitly assume that the lymphatic spread parameters of all patients in our datasets are come the same distribution. I.e., we do not allow different ``subtypes'' of patients that might -- for some reason -- have different spread characteristics.
+
+If we want to capture different spread characteristics within a patient cohort, we would need to employ a so-called \emph{mixture model}. This means that, e.g. in the case of two different subgroups $A$ and $B$ in a cohort, we would allow any patient's spread parameters to come either from the distribution $p_A\left( \theta \right)$ or $p_B \left( \theta \right)$. The overall distribution for $\theta$ would then be
+%
+\begin{equation}
+    p \left( \theta \right) = \omega_A \cdot p_A\left( \theta \right) + \omega_B \cdot p_B\left( \theta \right)
+\end{equation}
+%
+with some weights $\omega_A, \omega_B \in [0,1]$ and $\omega_A + \omega_B = 1$. These weights can be interpreted as probabilities for a patient to belong to either of the two groups. Basically, the marginalized probability of a patient $i$ to belong to, e.g., group $A$ can be written as $p\left(g_{iA} = 1\right) = \omega_A$. Here, $\mathbf{g}_i$ is a one-hot vector (of length $|\{A,B\}| = 2$ in this case) that stores to which group any patient $i$ belongs.
+
+We now face the task of correctly assigning patients to the two groups. Doing this probabilistically, we can write
+%
+\begin{equation}
+    \omega^\star_A = \frac{\omega_A \int{\mathcal{L}\left( \boldsymbol{\mathcal{D}}_A \mid \theta \right) p\left( \theta \right) d\theta}}{\int{\omega_A \mathcal{L}\left( \boldsymbol{\mathcal{D}}_A \mid \theta \right) p\left( \theta \right) + \omega_B \mathcal{L}\left( \boldsymbol{\mathcal{D}}_B \mid \theta \right) p\left( \theta \right) d\theta}}
+\end{equation}
+%
+As is indicated by the starred $\omega^\star_A$, we can usually not find the distribution $p\left(\theta\right)$ and the weights $\boldsymbol{\omega}$ at the same time, since they always appear on both sides of the equations above.
+
+\end{document}

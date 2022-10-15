@@ -4,14 +4,14 @@
 
 \begin{document}
 
-\section{Trinary hidden random variables}
+\section{Trinary Hidden Random Variables}
 \label{sec:future:trinary}
 
-As mentioned in the beginning in \cref{sec:intro:diagnosis}, one reason for developing a probabilistic model of lymphatic tumor progression in the first place is that modern imaging modalities cannot detect tumor cells directly, but only the (macroscopic) changes they exert on their region of growth, e.g. when they cause lymph nodes to swell. In contrast, a histopathological examination of a resected malignancy or biopsy sample uses various staining techniques in combination with microscopes to detect carcinoma cells directly.
+As mentioned in the beginning in \cref{sec:intro:diagnosis}, one reason for developing a probabilistic model of lymphatic tumor progression in the first place is that modern imaging modalities cannot detect tumor cells directly, but only the (macroscopic) changes they exert on their region of growth, e.g. when they cause lymph nodes to swell. In contrast, a histopathological examination of a resected malignancy or biopsy sample uses various staining techniques in combination with microscopes and is hence capable of detecting microscopic metastases and even carcinoma cells directly.
 
-We have extensively discussed this issue in \cref{subsec:dataset_clb:results:sens_spec}, where we have shown -- using the valuable dataset as provided to us by Vincent Grégoire -- that for less often involved \glspl{lnl} (which additionally often harbor micrometastases) the chance of detecting lesions becomes very low (see \cref{fig:dataset_clb:sens_spec}).
+We have extensively discussed this issue in \cref{subsec:dataset_clb:results:sens_spec}, where we have shown -- using the valuable dataset as provided to us by Vincent Grégoire \cite{bauwens_prevalence_2021} -- that for less often involved \glspl{lnl} (which additionally often harbor micrometastases) the chance of detecting lesions becomes very low (see \cref{fig:dataset_clb:sens_spec}).
 
-To account for this issue, one could categorize lymphatic involvement a little more finely: Instead of treating the true state of a \gls{lnl} as a binary random variable representing a health node and a metastatic node respectively, we could consider micro- and macroscopic involvement separately. The hidden states were then modelled as \emph{trinary} hidden variables (see \cref{eq:bn:variables} for comparison):
+One possible solution for this issue could be to choose another definition for the hidden \acrfullpl{rv} $X_v$ that describe the true state of an \gls{lnl}. So far, we treated the involvement in any given level as binary, being either healthy ($X_v=0$) or involved ($X_v=1$) (see also \cref{sec:unilateral:formalism}). However, we could consider micro- and macroscopic involvement separately, in addition to the healthy state. The \glspl{lnl} would then be modelled as \emph{trinary} hidden \glspl{rv}:
 %
 \begin{equation}
     \begin{aligned}
@@ -20,9 +20,9 @@ To account for this issue, one could categorize lymphatic involvement a little m
     \end{aligned}
 \end{equation}
 %
-where $\mu$ and $M$ now respectively represent \emph{microscopic} and \emph{macroscopic} involvement separately.
+where $\mu$ represents \emph{microscopic} and $M$ \emph{macroscopic} involvement.
 
-Diagnoses can still only be binary and in order to decide on a treatment, i.e. whether to irradiate the \gls{lnl} in question, we also still only care about the distinction \emph{cancerous} -- meaning there are malign cells present -- vs \emph{healthy}. However, the trinary hidden state represents the underlying reality much more precisely: To an imaging modality the hidden states $0$ and $\mu$ are healthy states, since it cannot detect microscopic disease, and the respective probabilities for true and false negative observations is governed by the specificity of the modality. To a pathologist however, it is the other way around: The hidden states $\mu$ and $M$ appear as truly involved and the probability to correctly identify these states as involved is given by the sensitivity (which we usually assume to be one for pathology).
+Diagnoses can still only be binary and in order to decide on a treatment, i.e. whether to irradiate the \gls{lnl} in question, we also still only care about the distinction \emph{cancerous} -- meaning there are malign cells present -- vs \emph{healthy}. However, the trinary hidden state represents the underlying reality much more precisely: To an imaging modality the hidden states $0$ and $\mu$ are healthy states, since by definition it cannot detect microscopic disease, and the respective probabilities for true and false negative observations is governed by the specificity of the modality. To a pathologist however, it is the other way around: The hidden states $\mu$ and $M$ appear as truly involved and the probability to correctly identify these states as involved is given by the sensitivity (which we usually assume to be one for pathology).
 
 Now, it seems that with binary observations of an underlying trinary state we cannot expect to correctly infer the true state of the \gls{lnl}. But imagine that we have data on diagnostic \glspl{ct} and/or \glspl{mri} taken before a neck dissection. After the surgery, the resected \glspl{lnl} are examined by a pathologist. The outcome is as follows:
 %
@@ -35,6 +35,17 @@ Now, it seems that with binary observations of an underlying trinary state we ca
 %
 From the second observation we can immediately infer that the hidden state must be either $\mu$ or $M$, because it means tumor cells have been found in the \gls{lnl}. The \gls{mri} diagnosis gives us the additional information that the probability for state $\mu$ is $P(X_v = \mu) = s_P$, i.e. the specificity. For state $M$ it is $p(X_v = M) = 1 - s_N$, where $s_N$ is the sensitivity. Obviously, we can infer the likely true hidden state by combining observations of different kinds of modalities: Imaging on the one hand and \gls{fna} and pathology on the other hand.
 
-The inference above might seem unnecessary at first: Could the pathologist not simply distinguish the three hidden states? But the distinction between micro- and macroscopic metastases is actually done by the imaging modality. Any occult disease that cannot be detected by them is considered a microscopic disease. This ability depends on many factors, like presence of necrotic tissue and also characteristics of the machine used to obtain the scans, that make the distinction fuzzy. Clearly, pathologists cannot routinely think about whether the disease they see would already have been visible on a scan or not and consequently, the distinction between micro and macro is not done in pathology.
+The inference above might seem unnecessary at first: Could the pathologist not simply distinguish the three hidden states? They probably could, but the distinction between micro- and macroscopic metastases is actually defined by the imaging modality. Any occult disease that cannot be detected by them is considered a microscopic disease. This ability depends on many factors, like presence of necrotic tissue and also characteristics of the machine used to obtain the scans, that make the distinction fuzzy. Clearly, pathologists cannot routinely think about whether the disease they see would already have been visible on a scan or not and consequently, the distinction between micro and macro is not done in pathology.
+
+Redefining the hidden \glspl{rv} for the state of \glspl{lnl} raises a number of issues for modelling. First of all, the size of the transition matrix greatly increases from $2^V \times 2^V$ to $3^V \times 3^V$. More challenging, however, is likely how a patient's disease progression should now be modelled. For example, one would expect microscopic disease to become macroscopic, given enough time. This implies for a possible trinary model that we added some probability $\Probofgiven{X^{t+1}_v=M}{X_v^t=\mu}$ that an \gls{lnl} with micrometastases develops macroscopic metastases. From there, the next question would be if macroscopic involvement spreads faster, i.e. more likely, along the lymphatic system than occult disease. In other words, if level $\pa(v)$, the \gls{lnl} that drains into $v$, harbors microscopic disease $X_{\pa(v)} = \mu$, is it less likely to infect \gls{lnl} $v$ than if it had already developed a larger macro-metastasis $X_{\pa(v)} = M$? Formally, we are asking the following:
+%
+\begin{equation}
+    \begin{aligned}
+        &\Probofgiven{X^{t+1}_v \in \{ \mu, M \}}{X^t_{\pa(v)}=\mu, X_v^t=0} \\
+        \stackrel{?}{<} \; &\Probofgiven{X^{t+1}_v \in \{ \mu, M \}}{X^t_{\pa(v)}=M, X_v^t=0}
+    \end{aligned}
+\end{equation}
+
+Future work on extending our model in this direction will require to answer these question and implement the corresponding choices. With a growing database to rely on for inference, exploring this approach becomes more and more feasible. When we first discussed this idea, continuing to develop the formalism and implementing it would not have made much sense, since the inference process relies on patients where we have both diagnostic modalities and pathology data to accurately infer the true hidden trinary \gls{rv}.
 
 \end{document}

@@ -197,7 +197,7 @@ In the formalism of the last sections, the $P_\text{HMM}$ depends implicitly thr
 
 Formally, we can then express the dataset $\boldsymbol{\mathcal{Z}}$ of $N$ patients as vector $\mathbf{f}$ of the number of patients $f_i$ for which the diagnosis corresponds to the observational state $\boldsymbol{\zeta}_i$. The likelihood $P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right)$ of observing this dataset, given a particular choice of parameters, is then given by
 %
-\begin{equation}
+\begin{equation} \label{eq:unilateral:llh_as_prod}
     P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right) = \prod_{i=1}^{2^V}{P \left( \boldsymbol{\zeta}_i \mid \theta \right)^{f_i}}
 \end{equation}
 %
