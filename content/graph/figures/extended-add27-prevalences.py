@@ -54,7 +54,7 @@ if __name__ == "__main__":
     )
 
     for k, stage in enumerate(["early", "late"]):
-        ax[0,k].set_title(f"{stage} T-stage")
+        ax[0,k].set_title(f"{stage} T-category")
         ax[-1,k].set_xlabel("prevalence [%]")
         ax[0,k].legend(fontsize=6.)
 

@@ -7,33 +7,33 @@
 
 \begin{document}
 
-\section{Comparing models}
+\section{Comparing Models}
 \label{sec:graph:model_comp}
 
-Before being able to compare which graph, representing the lymphatic spread, describes our data best, we need to briefly establish how to compare models in a quantitative way. The following two subsections apply to the general problem of comparing models and are not specifically tailored to our specific task, which is why they may be skipped by a reader already familiar with this formalism or by anyone seeking a more thorough introduction to it.
+Before being able to compare which graph, representing the lymphatic spread, describes our data best, we need to briefly establish how to compare models in a quantitative way. The following two subsections apply to the general problem of comparing models and are not specifically tailored to our specific task, which is why they may be skipped by a reader already familiar with this formalism or by anyone seeking a more thorough introduction to it (for example, \citeauthorandlink{bishop_pattern_2006}).
 
-\subsection{* Model evidence and Bayes factor}
+\subsection{* Model Evidence and Bayes Factor}
 \label{subsec:graph:model_comp:evidence}
 
 In Bayesian terms, we would like to know which model $\mathcal{M}$ has the highest probability $P\left( \mathcal{M} \mid \boldsymbol{\mathcal{D}} \right)$ given a dataset $\boldsymbol{\mathcal{D}}$. This probability is given by
 %
 \begin{equation}
-    P\left( \mathcal{M} \mid \boldsymbol{\mathcal{D}} \right) = \frac{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M} \right) P\left( \mathcal{M} \right)}{P \left( \boldsymbol{\mathcal{D}} \right)}
+    p\left( \mathcal{M} \mid \boldsymbol{\mathcal{D}} \right) = \frac{p\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M} \right) p\left( \mathcal{M} \right)}{p \left( \boldsymbol{\mathcal{D}} \right)}
 \end{equation}
 %
-If a priori all models we want to consider have the same probability $P \left( \mathcal{M} \right)$, and we only make pairwise comparisons between models, then we can restrict ourselves to computing the \emph{Bayes factor}:
+If a priori all models we want to consider have the same probability, i.e. a uniform prior $P \left( \mathcal{M} \right)$, and we only make pairwise comparisons between models, then we can restrict ourselves to computing the \emph{Bayes factor}:
 %
 \begin{equation}
-    K_\text{1v2} = \frac{P\left( \mathcal{M}_1 \mid \boldsymbol{\mathcal{D}} \right)}{P\left( \mathcal{M}_2 \mid \boldsymbol{\mathcal{D}} \right)} = \frac{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_1 \right) P\left( \mathcal{M}_1 \right)}{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_2 \right) P\left( \mathcal{M}_2 \right)} = \frac{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_1 \right)}{P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_2 \right)}
+    K_\text{1v2} = \frac{p\left( \mathcal{M}_1 \mid \boldsymbol{\mathcal{D}} \right)}{p\left( \mathcal{M}_2 \mid \boldsymbol{\mathcal{D}} \right)} = \frac{p\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_1 \right) p\left( \mathcal{M}_1 \right)}{p\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_2 \right) p\left( \mathcal{M}_2 \right)} = \frac{p\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_1 \right)}{p\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M}_2 \right)}
 \end{equation}
 %
-On the right side in the above equation, we see the ratio of the two model's evidences, which are merely their respective likelihoods, marginalized over all parameters:
+On the right side in the above equation, we see the ratio of the two model evidences, which are merely their respective likelihoods, marginalized over all parameters:
 %
 \begin{equation} \label{eq:bayes_factor:evidence}
-    P\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M} \right) = \int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right) p(\theta \mid \mathcal{M}) d\theta}
+    p\left( \boldsymbol{\mathcal{D}} \mid \mathcal{M} \right) = \int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right) p(\theta \mid \mathcal{M}) d\theta}
 \end{equation}
 %
-So, if we can compute this model evidence -- commonly also called \emph{marginal likelihood} or \emph{partition function} $Z$ from physics -- for our models $\mathcal{M}_\text{ag}$, $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$, the respecive pairwise Bayes factors will indicate which of them is \emph{most likely} to be the true one, given the observed data, in the probabilistic sense. Note that this does not mean it \emph{is} the true data-generating model and not even that we should \emph{believe} it is the true one. But only that among the models investigated, this one is probably the best.
+So, if we can compute this model evidence -- commonly also called \emph{marginal likelihood} or \emph{partition function} $Z$ from physics -- for some models $\mathcal{M}_i$, the respective pairwise Bayes factors will indicate which of them is \emph{most likely} to be the true one, given the observed data, in the probabilistic sense. Note that this does not mean it \emph{is} the true data-generating model and not even that we should \emph{believe} it is the true one. But only that among the models investigated, this one is probably the best.
 
 Harold Jeffreys gives a scale for interpreting values of the Bayes factor \cite{jeffreys_theory_1998} in \cref{table:bayes_factor}, where we have also listed the natural logarithm $\ln{K_\text{1v2}}$ of the Bayes factor, because what we will actually be doing is compute differences in the log-evidences.
 
@@ -55,12 +55,12 @@ Harold Jeffreys gives a scale for interpreting values of the Bayes factor \cite{
     \label{table:bayes_factor}
 \end{table}
 
-\subsection{* Thermodynamic integration}
+\subsection{* Thermodynamic Integration}
 \label{subsec:graph:model_comp:thermo_int}
 
-Due to the integration over all model parameters, the quantity \cref{eq:bayes_factor:evidence} is usually impossible to calculate by brute force integration, even for models with only around a dozen parameters, as is the case for ours. Unless analytical solutions exist -- which is rarely the case -- it is often prohibitively expensive to compute the model evidence. For this reason, a large amount of approximation methods has been developed; \cite{friel_estimating_2011} names only a few of those methods that can be used in the context of \gls{mcmc}. Another method that is applicable in the context of \gls{mcmc} is \gls{ti}, which is very well introduced in \cite{aponte_introduction_2022} and only roughly sketched out in this section.
+Due to the integration over all model parameters, the quantity \cref{eq:bayes_factor:evidence} is usually impossible to calculate by brute force integration, even for models with only around a dozen parameters, as is the case for ours. Unless analytical solutions exist -- which is rarely the case -- it is often prohibitively expensive to compute the model evidence. For this reason, many approximation methods have been developed; \cite{friel_estimating_2011} names only a few of those methods that can be used in the context of \gls{mcmc}. Another method that is applicable in the context of \gls{mcmc} is \gls{ti}, which is very well introduced in \cite{aponte_introduction_2022} and only roughly sketched out in this section.
 
-The concept of \gls{ti} originates from the field of statistical mechanics and can be motivated from that standpoint. And although this path is certainly more educational and might convey a deeper understanding w.r.t. thermodynamics and information theory, we will take a more direct approach by starting with what we want to compute and subtracting a 0 from it:
+The concept of \gls{ti} originates from the field of statistical mechanics and can be motivated from that standpoint. And although this path is certainly more educational and might convey a deeper understanding w.r.t. thermodynamics and information theory, we will take a more direct approach. We start with what we want to compute and subtracting a 0 from it:
 %
 \begin{equation} \label{eq:ti:subtract_zero}
     \begin{aligned}
@@ -69,13 +69,13 @@ The concept of \gls{ti} originates from the field of statistical mechanics and c
     \end{aligned}
 \end{equation}
 %
-Writing it as this difference between two different log-evidences $\ln{Z}$ and $\ln{Z_0}$ itself does not get us far. But if we could somehow parametrize a differentiable path between the two, then maybe the integration
+Writing it as this difference between two different log-evidences $\ln{Z}$ and $\ln{Z_0}$ itself does not get us far. But if we could parametrize a differentiable path between the two, then the integration
 %
 \begin{equation} \label{eq:ti:diff_as_int}
     \ln{Z} - \ln{Z_0} = \int_0^1{ \frac{d}{d\beta} \ln{Z_\beta} d\beta}
 \end{equation}
 %
-we end up with can actually be computed. Just by inspection of \cref{eq:ti:subtract_zero} and \cref{eq:ti:diff_as_int}, one can see that on such differentiable path could be built using what we are going to call the \emph{power posterior} $p_\beta (\theta \mid \boldsymbol{\mathcal{D}}, \mathcal{M})$:
+we end up with can actually be computed. By inspection of \cref{eq:ti:subtract_zero} and \cref{eq:ti:diff_as_int}, one can see that such a differentiable path can be built using what we call the \emph{power posterior} $p_\beta (\theta \mid \boldsymbol{\mathcal{D}}, \mathcal{M})$:
 %
 \begin{equation} \label{eq:ti:power_post}
     \begin{aligned}
@@ -94,13 +94,13 @@ with the derivative
     \end{aligned}
 \end{equation}
 %
-The solution to computing the evidence now lies in sight: Using \gls{mcmc}, we can draw samples from the power posterior $p_\beta$ and use those samples to compute the expectation over the (unmodified) likelihood. Doing this for a sufficient number of steps in the interval $\left[ 0, 1 \right]$ and integrating over the resulting $\mathcal{A}_\text{MC}(\beta)$ will then yield an approximation to the log-evidence.
+The solution to computing the evidence now lies in sight: Using \gls{mcmc}, we can draw samples from the power posterior $p_\beta$ and use those samples to compute the expectation over the (unmodified) likelihood, which we denote as $\mathcal{A}_\text{MC}(\beta)$. Doing this for a sufficient number of steps in the interval $\left[ 0, 1 \right]$ and integrating over the resulting $\mathcal{A}_\text{MC}(\beta)$ will then yield an approximation to the log-evidence.
 %
 \begin{equation}
     \ln{Z} \approx \frac{1}{2} \sum_{j=1}^{N-1} \left( \beta_{j+1} - \beta_j \right) \big( \mathcal{A}_\text{MC}(\beta_{j+1}) + \mathcal{A}_\text{MC}(\beta_j) \big)
 \end{equation}
 %
-This approximation gets better with larger values for $S$ and $N$. But also how the $\beta_j$ are chosen is crucial for computing a good estimate: Usually, the $\mathcal{A}_\text{MC}(\beta)$ -- which can be seen as accuracy terms -- rise steeply for increasing $\beta$ close to 0, while levelling off towards $\beta=1$. It therefore makes sense to distribute the ladder of these values unevenly. A common choice, that we employed as well, was $\beta_j = x_j^5$ where the $x_j$ are linearly spaced within the interval $[0, 1]$. This yields a very fine resolution for the first steps and gets successively coarser towards the end of the interval.
+This approximation gets better with larger values for $S$ and $N$. But also how the $\beta_j$ are chosen is crucial for computing a good estimate efficiently: Usually, the $\mathcal{A}_\text{MC}(\beta)$ -- which can be seen as accuracy terms -- rise steeply for increasing $\beta$ close to 0, while levelling off towards $\beta=1$. It therefore makes sense to distribute the ladder of these values unevenly. A common choice, that we employed as well, is $\beta_j = x_j^5$ where the $x_j$ are linearly spaced within the interval $[0, 1]$. This yields a very fine resolution for the first steps and gets successively coarser towards the end of the interval.
 
 Lastly, we would like to give a final insight into the evidence that is quite naturally obtained when following the derivation from statistical physics, but hard to see with the brief, formal derivation we gave up to this point. Therefore, we will just state it below and point to a publication giving a nice example of how to get to this result \cite{aponte_introduction_2022}. According to this, the log-evidence can be written in the following form:
 %
@@ -110,7 +110,7 @@ Lastly, we would like to give a final insight into the evidence that is quite na
 %
 This shows how the evidence naturally incorporates Occam's razor. The second term on the right gets larger the more the likelihood restricts the prior and the resulting penalty grows exponentially with the dimensionality of the parameter space.
 
-\subsection{* Bayesian information criterion}
+\subsection{* Bayesian Information Criterion}
 \label{subsec:graph:model_comp:bic}
 
 Because \acrlong{ti} -- as well as many other ways of computing the model evidence -- is computationally prohibitive for most use cases, there exist a number of approximations. One of them is the \gls{bic}, which is in essence a first-order approximation of the log-evidence (actually, the negative one-half of the \gls{bic} is an approximation to the log-evidence) that fits a normal distribution to the maximum likelihood estimate of the target distribution \cite{schwarz_estimating_1978}. It is defined as

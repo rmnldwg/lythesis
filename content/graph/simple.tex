@@ -7,10 +7,10 @@
 
 \begin{document}
 
-\section{The simplest graphs}
+\section{Introductory Example for LNLs II and III only}
 \label{sec:graph:simple}
 
-Before turning to the full problem where we want to find the best graph(s) connecting all clinically interesting \glspl{lnl} we have data on, let us consider a much simpler ``toy problem'': In this section we will only look at \glspl{lnl} II and III, which are the two most frequently involved levels.
+Before turning to the full problem where we want to find the best graph(s) connecting all clinically relevant \glspl{lnl} we have data on, let us consider a much simpler ``toy problem'': In this section we will only look at \glspl{lnl} II and III, which are the two most frequently involved levels.
 
 \begin{figure}
     \centering
@@ -23,15 +23,15 @@ Before turning to the full problem where we want to find the best graph(s) conne
         \begin{enumerate*}[label={(\arabic*)}]
             \item On the left, no correlations between the involvements of the two levels can be modelled.
             \item The next graph assumes the anatomically most sensible spread direction from \gls{lnl} II to III, while
-            \item flips this connection.
+            \item attempt to model the correlation between \gls{lnl} II and III using an arc from III to II.
             \item The rightmost graph allows for spread among \gls{lnl} II and III in both directions.
         \end{enumerate*}}
     \label{fig:graph:simple}
 \end{figure}
 
-Anatomically, \gls{lnl} II sits directly above \gls{lnl} III, so we would expect the direction of lymphatic spread to follow the pull of gravity and build the graph as displayed by the second graph from the left in \cref{fig:graph:simple}. However, we need to keep in mind that our model -- although anatomically motivated and designed to represent the mechanics of lymphatic spread -- is ultimately only capable of modelling correlations and does not necessarily allow us to draw conclusions about the causal relations. In other words, we need to be careful not to trust our abstract representation of the lymphatic network too much, as that might be misleading.
+Anatomically, \gls{lnl} II is located cranial to \gls{lnl} III, and we expect \gls{lnl} III to receive efferent lymphatic drainage from level II. We therefore built the graph as displayed by the second graph from the left in \cref{fig:graph:simple}. However, we need to keep in mind that our model -- although anatomically motivated and designed to represent lymphatic spread -- is ultimately only capable of modelling correlations and does not necessarily allow us to draw conclusions about the causal relations. In other words, we need to be careful not to trust our abstract representation of the lymphatic network too much, as that might be misleading.
 
-We can look back at \acrlongpl{bn}, as introduced in \cref{sec:previous_work:bayesian_network}. They represent factorizations of joint probability distributions of a number of \glspl{rv}. In our simplified case we want to find the factorizations of the joint which are all visualized in the three \glspl{dag} on the left of \cref{fig:graph:simple}:
+We can look back at \acrlongpl{bn}, as introduced in \cref{sec:previous_work:bayesian_network}. They represent factorizations of joint probability distributions of a number of \acrfullpl{rv}. In our simplified case we want to find the factorizations of the joint which are all visualized in the three \acrfullpl{dag} on the left of \cref{fig:graph:simple}:
 %
 \begin{equation}
     \Probofgiven{X_\text{II}, X_\text{III}}{T=1} = \begin{cases}
@@ -59,7 +59,7 @@ The rightmost graph in \cref{fig:graph:simple} cannot represent a \gls{bn} and h
     \label{table:graph:simple:mockup}
 \end{table}
 
-Let $\boldsymbol{\mathcal{D}}$ now be a made-up dataset of 100 patients. Let us say 80 of those have metastases in \gls{lnl} II and of those 80 patients, 40 also harbor metastases in \gls{lnl} III. See also \cref{table:graph:simple:mockup} for how this data is supposed to look like. This constructed case is so simple that we can easily go through it in our heads: For the leftmost graph, this would lead to the maximum likelihood estimate of the spread probabilities from the tumor to the levels taking on the values $b_\text{II} = 80\%$ and $b_\text{III} = 40\%$. This would describe the prevalences of involvement for each level separately quite well, but it would also predict a probability of
+Let $\boldsymbol{\mathcal{D}}$ now be a made-up dataset of 100 patients. Let us say 80 of those have metastases in \gls{lnl} II and of those 80 patients, 40 also harbor metastases in \gls{lnl} III (see also \cref{table:graph:simple:mockup}). This constructed case is so simple that we can easily go through it in our heads: For the leftmost graph, this would lead to the maximum likelihood estimate of the spread probabilities from the tumor to the levels taking on the values $b_\text{II} = 80\%$ and $b_\text{III} = 40\%$. This would describe the prevalences of involvement for each level separately well, but it would also predict a probability of 8\% that level III is involved without II:
 %
 \begin{equation}
     \begin{aligned}
@@ -68,7 +68,7 @@ Let $\boldsymbol{\mathcal{D}}$ now be a made-up dataset of 100 patients. Let us 
     \end{aligned}
 \end{equation}
 %
-but the corresponding pattern of involvement is never observed in the data.
+However, this pattern of involvement is never observed in the data.
 
 Looking at the second graph from the left in \cref{fig:graph:simple}, the best estimate for the spread parameters would be $b_\text{II} = 80\%$, $b_\text{III} = 0\%$ and $t_{\text{II} \rightarrow \text{III}} = 50\%$. This describes the data perfectly: The probabilities of all four possible patterns of involvement exactly match the prevalence in the data.
 
@@ -76,23 +76,23 @@ Lastly, for the third graph, where we have the connection $\text{III} \rightarro
 
 Although this clearly is a constructed example, the illustrated ambiguity exists in real-world data and for the \gls{hmm} model as well. To show this, in the next section, we give the results of an experiment using real data on the involvement of \gls{opscc} patients from two different institutions.
 
-\subsection{Comparisons}
+\subsection{Comparisons of Four Possible Graphs}
 \label{subsec:graph:simple:comp}
+
+\input{_simple_reproducibility.tex}
 
 \input{\subfix{../_databox.tex}}
 \label{box:graph:data}
 
-\input{_simple_reproducibility.tex}
-
-In this experiment, we performed one \gls{ti} round for each of the  four graphs in \cref{fig:graph:simple}, consisting of 64 inverse temperature $\beta$ steps spaced according to a fifth order power rule. This means that
+In this experiment, we performed one \acrfull{ti} round for each of the four graphs in \cref{fig:graph:simple}, consisting of 64 inverse temperature steps $\beta_i$ spaced according to a fifth order power rule. This means that
 %
 \begin{equation}
-    \beta_i = \left( \frac{i - 1}{64 - 1} \right)^5
+    \beta_i = \left( \frac{i - 1}{64 - 1} \right)^5 \qquad i = 1,2, \ldots, 64
 \end{equation}
 %
-At each point of this \gls{ti} schedule, we ran the sampling for 1000 steps, simultaneously drawing $20 \cdot k$ burn-in samples, where $k$ is the number of dimensions of the model. This dimensionality $k = 3$ for the model without any connections between \gls{lnl} II and III (graph 1 in \cref{fig:graph:simple}), $k = 4$ for the models with one connection between these \glspl{lnl} (graphs 2 and 3 in \cref{fig:graph:simple}) and $k = 5$ for the model connecting the two levels in both directions.
+At each point $\beta_i$ of this \gls{ti} schedule, we performed a sampling of the model parameters, again using the Python library \repolink[dfm]{emcee} \cite{foreman-mackey_emcee_2013}, based on affine invariant ensemble samplers by \citeauthorandlink{nelson_run_2013} and \citeauthorandlink{ter_braak_differential_2008}. We ran this sampling for 1000 steps, simultaneously drawing $20 \cdot k$ burn-in samples, where $k$ is the number of parameters in the model. The dimensionality is $k = 3$ for the model without any connections between \gls{lnl} II and III (graph 1 in \cref{fig:graph:simple}), $k = 4$ for the models with one connection between these \glspl{lnl} (graphs 2 and 3 in \cref{fig:graph:simple}) and $k = 5$ for the model connecting the two levels in both directions.
 
-After the burn-in phase, we drew another $250 \cdot 20 \cdot k$ samples and discarded every fifth. With the remaining $1000 \cdot k$ samples, we computed the log-likelihood 1000 times for each $\beta_i$ and were therefore able to calculate 1000 \gls{ti} estimates of the evidence, which could then be used to compute the expected evidence and its standard deviation. The log-evidence, along with \gls{bic} has been printed in \cref{table:graph:simple:comp}.
+After the burn-in phase, we drew another $250 \cdot 20 \cdot k$ samples and discarded every fifth. With the remaining $250 \cdot 20 \cdot k / 5 = 1000 \cdot k$ samples, we computed the accuracy term $\mathcal{A}_\text{MC}(\beta_i)$ 1000 times for each $\beta_i$ and were therefore able to calculate 1000 \gls{ti} estimates of the integral approximating the evidence. Using this approach, 1000 evidence estimates can then be used to compute the expected evidence and its standard deviation. The log-evidence, along with \gls{bic} has been printed in \cref{table:graph:simple:comp}.
 
 \begin{figure}
     \centering
@@ -108,7 +108,7 @@ After the burn-in phase, we drew another $250 \cdot 20 \cdot k$ samples and disc
             \item[(blue)] vice versa, only \gls{lnl} II is metastatic and lastly,
             \item[(red)] both \glspl{lnl} are involved 
         \end{enumerate*})
-        and early (left column), as well as late T-stage (right column). The corresponding data prevalence is plotted as a Beta posterior in the same color as the prediction. The legend in the top row shows how many patients of the respective T-stage showed the involvement of interest.
+        and early (left column), as well as late T-category (right column). The corresponding data prevalence is plotted as a Beta posterior in the same color as the prediction. The legend in the top row shows how many patients of the respective T-category showed the involvement of interest.
     }
     \label{fig:graph:simple:prevalenes}
 \end{figure}

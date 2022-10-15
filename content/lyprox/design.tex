@@ -8,7 +8,7 @@
 \section{Styling, Layout and Design}
 \label{sec:lyprox:design}
 
-Conceptually, the described online interface still fulfills the same purpose as the prototype shown in \cref{subsec:lyprox:motivation:prototype}. The new Django-based implementation has -- over the initial development period -- added a few more options for filtering the cohorts and how to treat multiple diagnoses per patient. Most visually striking, however, might be the overhauled visuals. The original prototype used the Python library \href{https://kivy.org}{Kivy} to run and render the \gls{gui}, which means the appearance is adjusted in the interface's code. LyProX, on the other hand, only serves \acrshort{html} pages which are styled on the client side using the \gls{css} code delivered with it. This has the disadvantage that we could not easily transfer the appearance of the prototype to the online interface, but it makes setting up a modern, responsive and professionally looking web page very straightforward: There exists an abundance of \gls{css} frameworks that provide pre-defined and carefully designed building blocks that can quickly be combined and adapted to one's needs. All we had to do is basically ship the slightly customized \gls{css} code alongside the \acrshort{html} responses to create a visually appealing \gls{gui}.
+Conceptually, the described online interface still fulfills the same purpose as the prototype shown in \cref{fig:lyprox:pouymayou_gui}. The new Django-based implementation has -- over the initial development period -- added a few more options for filtering the cohorts and how to treat multiple diagnoses per patient. Most visually striking, however, might be the overhauled visuals. The original prototype used the Python library \href{https://kivy.org}{Kivy} to run and render the \gls{gui}, which means the appearance is adjusted in the interface's code. LyProX, on the other hand, only serves \acrshort{html} pages which are styled on the client side using the \gls{css} code delivered with it. This has the disadvantage that we could not easily transfer the appearance of the prototype to the online interface, but it makes setting up a modern, responsive and professionally looking web page very straightforward: There exists an abundance of \gls{css} frameworks that provide pre-defined and carefully designed building blocks that can quickly be combined and adapted to one's needs. So, to create a visually appealing \gls{gui}, it is sufficient to choose a \gls{css} framework, customize it to match the desired appearance and send it alongside the interface's \acrshort{html} responses.
 
 We used the popular free and open source \gls{css} framework \href{https://bulma.io}{\faIcon{external-link-alt}~Bulma} \cite{thomas_bulma_2021}, which is published under MIT license. Very little \gls{css} knowledge is required to employ it effectively, but it is still heavily customizable and extensible, making it a safe choice for further development and potential design changes in the future.
 
@@ -36,6 +36,9 @@ In \cref{fig:lyprox:plain_vs_bulma} we show a side-by-side comparison of a very 
         }
         \label{fig:lyprox:bulma}
     \end{subfigure}
+    \caption[Plain HTML vs HTML plus CSS styling]{
+        Comparison of how the same \acrshort{html} code gets rendered by a modern browser with and without \gls{css} styling.
+    }
     \label{fig:lyprox:plain_vs_bulma}
 \end{figure}
 

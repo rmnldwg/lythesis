@@ -7,11 +7,18 @@
 \begin{document}
 
 \chapter[
-    CLB Dataset on involvement in OPSCC
+    CLB Dataset on Lymph Node Involvement in OPSCC
 ]{
-    Dataset on involvement in \acrlong{opscc} extracted at the \gls{clb}
+    Dataset on Lymph Node Involvement in \acrlong{opscc} Extracted at the \gls{clb}
 }
+\chaptermark{CLB Dataset on Involvement in OPSCC}
 \label{chap:dataset_clb}
+
+Besides the \gls{usz} dataset introduced in the previous \cref{chap:dataset_usz}, data from another patient cohort, extracted at the \gls{clb} in France, was used in this thesis. It was kindly provided to us by Vincent Grégoire and is based on the publication by \citeauthorandlink{bauwens_prevalence_2021}.
+
+The \gls{clb} dataset, like our \gls{usz} data, reports involvement information per \gls{lnl} for \gls{opscc} patients. But unlike the \gls{usz} cohort, all patients at the \gls{clb} were surgically treated and resected \glspl{lnl} were examined by a pathologist. Hence, in addition to a clinical diagnosis, the \gls{clb} dataset contains histopathological information on the metastatic state of each resected \gls{lnl}. This represents an invaluable addition to our \gls{usz} dataset, as the pathology information contained in the \gls{clb} data can basically be considered to be the ground truth.
+
+This chapter will detail how this data was acquired, what information is contained in it and how it compares to the previously discussed \gls{usz} data.
 
 \input{_contributions.tex}
 \input{_data.tex}

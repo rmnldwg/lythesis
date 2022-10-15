@@ -29,6 +29,10 @@
 \definecolor{uszorange}{HTML}{F17900}
 \definecolor{uszred}{HTML}{AE0060}
 \definecolor{uszgreen}{HTML}{00AFA5}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.7}
 
 %% Layout
 \usepackage[a4paper,top=25mm,bottom=25mm]{geometry}
@@ -65,8 +69,7 @@
 \usepackage[
     style=numeric-comp,
     sorting=none,
-    minnames=3,
-    maxnames=4
+    maxnames=20,
 ]{biblatex}
 % define custom command to cite the author of somethign and add a link
 \newcommand{\citeauthorandlink}[1]{\citeauthor*{#1} \cite{#1}}
@@ -115,10 +118,13 @@
 
 %% Tables
 \usepackage{multirow}
+\usepackage{diagbox}
+\usepackage{booktabs}
 
 %% Bullet lists, boxes, admonitions and icons
 \usepackage[inline]{enumitem}
 \usepackage{tcolorbox}
+\tcbuselibrary{skins,xparse,breakable}
 \usepackage{fontawesome5}
 
 %% Custom commands

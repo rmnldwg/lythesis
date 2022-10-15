@@ -6,21 +6,21 @@
 
 \begin{document}
 
-\section{Materials \& methods}
+\section{Materials \& Methods}
 \label{sec:dataset_clb:methods}
 
-\subsection*{Patient cohort}
+\subsection*{Patient Cohort}
 \label{subsec:dataset_clb:methods:cohort}
 
 \Citeauthorandlink{bauwens_prevalence_2021} reviewed the medical records of 395 patients with \gls{opscc} treated between 2014 and 2018 at the \faIcon{hospital}~\textbf{
 Centre Hospitalier} (Valence, France), the \faIcon{hospital}~\textbf{Centre Marie Curie} (Valence, France) or the \faIcon{hospital}~\textbf{Centre Léon Bérard} (Lyon, France). Patients were selected from the medical database by searching for the keywords ``oropharynx'', ``SCC'' and ``lymph node dissection''. Consequently, only patients who received neck dissection were included whereas patients treated with definitive (chemo)radiotherapy were not. They further excluded patients with non-retrieveable \gls{hpv}-status, prior head and neck cancer, distant metastases at diagnosis, prior neck surgery or radiotherapy, use of induction chemotherapy as a treatment modality, and patients with a carcinoma of unknown primary. These inclusion and exclusion criteria resulted in a dataset of 263 patients.
 
-\subsection*{Neck dissection and pathological LNL involvement}
+\subsection*{Neck Dissection and Pathological LNL Involvement}
 \label{subsec:dataset_clb:methods:dissection}
 
 All patients underwent a neck node dissection, unilaterally or bilaterally. On patients with clinically negative \glspl{lnl} (cN0) a unilateral selective neck dissection removing the levels II, III and IV was performed in most cases. When ipsilateral neck nodes were involved clinically, a unilateral radical neck dissection was performed, removing \glspl{lnl} I to V. If additionally, the tumor was either close to the midline or a large T3 or T4 tumor, an additional selective neck node dissection was performed on the contralateral side. In patients with clinically positive bilateral neck nodes or in patients with clinically positive contralateral nodes, a bilateral neck node dissection was typically performed; in the latter case, a selective neck node dissection or a modified radical neck node dissection was performed on the contralateral side. In all 3 centers, for selective and radical modified neck dissection procedures, the surgeons were used to send the dissected levels separately to the pathologist. For radical neck dissection, the dissected levels were sent to the pathologist in one specimen and identification of the levels were done using suture of various colors. For curation of this dataset, the number of examined lymph nodes and the number of metastatic lymph nodes per level was extracted from the pathology reports.
 
-\subsection*{Clinical LNL involvement and tumor characteristics}
+\subsection*{Clinical LNL Involvement and Tumor Characteristics}
 \label{subsec:dataset_clb:methods:involvement}
 
 Prior to treatment all patients received a fiber-optic head and neck examination, an endoscopy under general anesthesia with biopsy of all suspected sites, a head and neck \gls{ct} or \gls{mri}, and a chest \gls{ct} or a \gls{fdg-pet} scan to detect second primaries or metastases in the lung. All patients were discussed in the multidisciplinary tumor board, staged, and then their treatment strategy was decided. The primary tumor location was defined according to IARC ICD-O-3 \cite{fritz_international_2000}. Clinical and pathological TNM staging was reported using TNM-7 (2009) and TNM-8 (2017) \cite{brierley_tnm_2017}.
@@ -32,31 +32,48 @@ A clinically positive lymph node was defined by either
     \item lymph node(s) visible on \gls{ct}- or \gls{mri}-scan with the smallest diameter of 10 mm or more, a spherical shape, a necrotic area, matted nodes, or nodes with signs of extra-capsular infiltration
 \end{enumerate}
 
-\subsection*{Maximum likelihood consensus diagnosis}
+\subsection*{Maximum Likelihood Consensus Diagnosis}
 \label{subsec:dataset_clb:methods:max_llh}
 
-In \cref{chap:dataset_usz}, we plotted the prevalence of involvement for a variety of interesting scenarios (\cref{fig:dataset_usz:statistics}). Since our data often contained multiple diagnostic modalities per patient, we combined them into a consensus diagnosis using the logical OR. This means, that we considered an \gls{lnl} to be metastatic as soon as one of the available modalities for that patient and \gls{lnl} reported involvement. This worked well, since the data contained mostly imaging results and seeing a suspicious lymph node in either of them usually means a clinician would consider the corresponding \gls{lnl} to be metastatic.
+We now have two datasets: One from the \gls{usz} (see \cref{chap:dataset_usz}) containing per-level involvement information from different diagnostic modalities, e.g. \gls{ct} and \gls{mri}. And the other from the \gls{clb} that reports a clinical consensus diagnosis and for most \glspl{lnl} also a post-surgical pathology report on the true involvement of the investigated level.
 
-For the data from \citeauthorandlink{bauwens_prevalence_2021}, this strategy does not work anymore: If a node level was clinically found to harbor a metastasis, but the pathological examination showed no sign of malign cells, the \gls{lnl} is almost certainly healthy. So, to create a similar plot of statistics as in \cref{fig:dataset_usz:statistics}, we need a method of smartly combining the two different columns of involvement reports that this dataset provides, particularly allowing the pathology information to override the clinical diagnosis.
+Since many patients have information from multiple modalities reporting a diagnosis on a given \gls{lnl}, this represents us with a challenge: How should we consistently and correctly combine different diagnostic modalities, and how to incorporate the pathology information, if available?
 
-Our approach to do this will be generally applicable to combining an arbitrary number of binary diagnoses into a consensus: We will naively determine the most likely involvement, given the available modalities and their respective literature values for sensitivity and specificity, in our case from \citeauthorandlink{de_bondt_detection_2007}.
+In \cref{sec:dataset_usz:results}, we simply combined \gls{ct}, \gls{mri}, \gls{pet} and \gls{fna} into a ``consensus'' by applying the logical \texttt{OR}. This means if any of the available modalities for a patient reported involvement in an \gls{lnl}, we assumed that level to be involved. With this method, we created \cref{fig:dataset_usz:statistics}. This worked well, since the \gls{usz} data contained mostly imaging results and seeing a suspicious lymph node in either of them usually means a clinician would consider the corresponding \gls{lnl} to be metastatic.
 
-For example, if we have an \gls{mri} and a \gls{ct} scan available for a patient's \gls{lnl} III that reports $Z_\text{III}^\text{MRI} = 1$ and $Z_\text{III}^\text{CT} = 0$, we can compute the likelihoods
+For the \gls{clb} data from \citeauthorandlink{bauwens_prevalence_2021}, this strategy does not work anymore: If a node level was clinically found to harbor a metastasis, but the pathological examination showed no sign of malign cells, the \gls{lnl} is almost certainly healthy. So, to create a similar plot of statistics as in \cref{fig:dataset_usz:statistics}, we need a method of smartly combining the two different columns of involvement reports that this dataset provides, particularly allowing the pathology information to override the clinical diagnosis.
+
+\begin{table}
+    \centering
+    \begin{tabular}{|l|rr|l|}
+        \hline
+        \textbf{Modality} & \textbf{Specificity} & \textbf{Sensitivity} & \textbf{Reference} \\
+        \hline
+        \acrshort{ct} & 76\% & 81\% & \citeauthorandlink{de_bondt_detection_2007} \\
+        \acrshort{fdg-pet} & 86\% & 79\% & \citeauthorandlink{kyzas_18f-fluorodeoxyglucose_2008} \\
+        \acrshort{mri} & 63\% & 81\% & \citeauthorandlink{de_bondt_detection_2007} \\
+        \acrshort{fna} & 98\% & 80\% & \citeauthorandlink{de_bondt_detection_2007} \\
+        Pathology & $\approx$ 100\% & $\approx$ 100\% & \\
+        \hline
+    \end{tabular}
+    \caption{Values of sensitivity and specificity for diagnostic modalities and pathological examinations.}
+    \label{table:dataset_clb:spec_sens}
+\end{table}
+
+Our approach to do this will be generally applicable to combining an arbitrary number of binary diagnoses into a consensus: We will naively determine the most likely involvement for the available modalities and their literature values for sensitivity and specificity, in our case from \citeauthorandlink{de_bondt_detection_2007} and \cite{kyzas_18f-fluorodeoxyglucose_2008}, as listed in \cref{table:dataset_clb:spec_sens}. This means we compute the likelihood of the observed diagnoses $\left\{ Z^\mathcal{O} \right\}$, given the two possible cases for the true involvement $X$ and define our consensus as the value of $X$, where the likelihood was the greatest.
+
+Naively, when we have only one diagnostic modality, this maximum likelihood consensus will simply reproduce the same diagnosis, as long as the modality's sensitivity $s_N$ and specificity $s_P$ are both larger than 50\%:
 %
 \begin{equation}
     \begin{aligned}
-        \Probofgiven{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{CT} = 0}{X_\text{III} = 0}
-        &= (1 - s^\text{MRI}_P) \cdot s^\text{CT}_P \\
-        &= (1 - 0.63) \cdot 0.76 = 0.2812 \\
-        \Probofgiven{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{CT} = 0}{X_\text{III} = 1}
-        &= s^\text{MRI}_N \cdot (1 - s^\text{CT}_N) \\
-        &= 0.81 \cdot (1 - 0.81) = 0.1539
+        \Probofgiven{Z = 1}{X = 0} &= \left( 1 - s_P \right) &< \Probofgiven{Z = 1}{X = 1} &= s_N \\
+        \Probofgiven{Z = 0}{X = 0} &= s_P &> \Probofgiven{Z = 0}{X = 1} &= \left( 1 - s_N \right)
     \end{aligned}
 \end{equation}
 %
-using the respective sensitivities $s_N^\mathcal{O}$ and specificities $s_P^\mathcal{O}$, where we have here the diagnostic modalities $\mathcal{O} \in \{ \text{MRI}, \text{CT} \}$. From this result, we now consider this patient's \gls{lnl} III to be \emph{most likely} healthy -- meaning $X_\text{III} = 0$ -- since the likelihood for the healthy state of involvement was higher.
+We can see that the observed diagnosis $Z=1$ is \emph{more likely}, given the true state of involvement of $X=1$, compared to the likelihood of $Z=1$, given $X=0$. Hence, the consensus diagnosis will be set to $Z^\text{cons} = 1$.
 
-If we have pathology results in addition to diagnostic modalities, which we consider to have sensitivity and specificity of $s^\text{path}_N = s^\text{path}_P = 1$, then the above example would look like below:
+If we have pathology results in addition to diagnostic modalities, which we consider to have sensitivity and specificity of $s^\text{path}_N = s^\text{path}_P = 1$, then an example could like this:
 %
 \begin{equation}
     \begin{aligned}
@@ -69,6 +86,25 @@ If we have pathology results in addition to diagnostic modalities, which we cons
     \end{aligned}
 \end{equation}
 %
-Evidently, the information from pathology overrides the \gls{mri} diagnosis. From a Bayesian standpoint, what we explained here is computing the unnormalized probability of the true (but hidden) involvement, given some diagnoses $\Probofgiven{X}{Z=z}$, for a uniform prior over the involvement $X$. The probabilistic model we will introduce in \cref{chap:unilateral} will essentially replace the uniform with a more sophisticated and parametrized prior. But the likelihood of a set of diagnoses, given some hidden involvement, is computed in a very similar fashion, as is outlined in \cref{subsec:unilateral:formalism:combine}. 
+where we have used the respective sensitivities $s_N^\mathcal{O}$ and specificities $s_P^\mathcal{O}$ for the diagnostic modalities $\mathcal{O} \in \{ \text{MRI}, \text{path} \}$. Evidently, the information from pathology overrides the \gls{mri} diagnosis, because it is -- according to our assumption of a perfect pathology -- impossible to obtain a negative observation $Z_\text{III}^\text{path}$, given a true, hidden involvement of $X_\text{III}$.
+
+So far, this could have been simple enough to be done by inspection. However, if we have conflicting diagnostic modalities, and possibly even more than just two, the situation gets more involved. For instance, an \gls{mri} and a \gls{ct} scan are available for a patient's \gls{lnl} III. Let us assume they report $Z_\text{III}^\text{MRI} = 1$ and $Z_\text{III}^\text{CT} = 0$, then we can compute the likelihoods
+%
+\begin{equation}
+    \begin{aligned}
+        \Probofgiven{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{CT} = 0}{X_\text{III} = 0}
+        &= (1 - s^\text{MRI}_P) \cdot s^\text{CT}_P \\
+        &= (1 - 0.63) \cdot 0.76 = 0.2812 \\
+        \Probofgiven{Z_\text{III}^\text{MRI} = 1, Z_\text{III}^\text{CT} = 0}{X_\text{III} = 1}
+        &= s^\text{MRI}_N \cdot (1 - s^\text{CT}_N) \\
+        &= 0.81 \cdot (1 - 0.81) = 0.1539
+    \end{aligned}
+\end{equation}
+%
+Again, we now consider the most likely state for that patient's \gls{lnl} III. Here, the result is to assume no involvement $Z^\text{cons}=0$.
+
+In most cases, this method amounts to ``trusting'' the diagnostic modality that has higher values for sensitivity and/or specificity. One could also simply rank the modalities by their respective sensitivity and specificity and then choose to believe the observation from the most ``trustworthy'' source. But the maximum likelihood approach is a more general solution that also works for edge cases, like when e.g. four diagnostic modalities report involvement, but one slightly more ``trustworthy'' modality did not find a metastasis. In this scenario, the ranking would infer wrongly  from the available information that no disease is present. The maximum likelihood method on the other hand allows many less sensitive and/or specific modalities to override another more sensitive and/or specific one.
+
+It is also the correct tratment probabilistically: From a Bayesian standpoint, what we explained here is computing the unnormalized probability of the true (but hidden) involvement, given some diagnoses $\Probofgiven{X}{Z=z} \propto \Probofgiven{Z=z}{X} P(X)$, for a uniform prior over the involvement $X$. Note that we could choose a non-uniform prior here, e.g. if we had some profound understanding of how probable it is that the \gls{lnl} harbors cancer cells. The probabilistic model we will introduce in \cref{chap:unilateral} will essentially attempt to learn this understanding and replace the uniform prior $P(X)$ with a more sophisticated and parametrized prior. But the likelihood of a set of diagnoses, given some hidden involvement, will still be computed in essentially the same fashion, as is outlined in \cref{subsec:unilateral:formalism:combine}.
 
 \end{document}

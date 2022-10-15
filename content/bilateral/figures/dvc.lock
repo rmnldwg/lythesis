@@ -103,8 +103,8 @@ stages:
       size: 3731
     outs:
     - path: thermo_int.svg
-      md5: e3413407cf23e1fa874ad679ab313b08
-      size: 43468
+      md5: 3a634e269080efd6d826c996633ce4ac
+      size: 43487
   thermo-int-to-pdf:
     cmd: inkscape --without-gui --file=thermo_int.svg --export-pdf=thermo_int.pdf
       --export-latex
@@ -135,12 +135,12 @@ stages:
       md5: 3cc8d86ea394b3c8bb78653e4e230c31
       size: 5595
     - path: contra-correlations-noext.py
-      md5: dae617d22af915dcfa5d46d6bd357c4f
-      size: 4149
+      md5: 411fbb3f0d2b388d89c0638f87f8f977
+      size: 4157
     outs:
     - path: contra-correlations-noext.svg
-      md5: b45c401604f83b1bea3ae642a7fb270a
-      size: 197296
+      md5: 19fd1c98cdae84f9cef8ba6c9fc4a94f
+      size: 197789
   plot@contra-overall:
     cmd: python contra-overall.py
     deps:
@@ -161,18 +161,18 @@ stages:
       size: 2791
     outs:
     - path: contra-overall.svg
-      md5: cce26a2d65728b821b2cb9d84656906a
-      size: 157924
+      md5: 073c62b0d7245795f92a33e1541b6173
+      size: 157967
   convert-to-pdf@contra-overall:
     cmd: "inkscape --file=contra-overall.svg --export-pdf=contra-overall.pdf --without-gui\
       \ --export-latex\n"
     deps:
     - path: contra-overall.svg
-      md5: cce26a2d65728b821b2cb9d84656906a
-      size: 157924
+      md5: 073c62b0d7245795f92a33e1541b6173
+      size: 157967
     outs:
     - path: contra-overall.pdf
-      md5: 28abeee7c55a0c0fe65630ac2dc6d95b
+      md5: 25c83233ce26d6c5cc09178e95a3e4ab
       size: 72888
     - path: contra-overall.pdf_tex
       md5: edd37a97ed9ca82f0bb6fe2edb1db5c4
@@ -182,11 +182,11 @@ stages:
       \ --export-latex\n"
     deps:
     - path: thermo_int.svg
-      md5: e3413407cf23e1fa874ad679ab313b08
-      size: 43468
+      md5: 3a634e269080efd6d826c996633ce4ac
+      size: 43487
     outs:
     - path: thermo_int.pdf
-      md5: 6a608f846aaee0f5df22589f211b6efb
+      md5: 19c7eae0b5f0e40a88eac6443a5fb57b
       size: 40435
     - path: thermo_int.pdf_tex
       md5: 030a8e07f116b87acf33897176462adb
@@ -207,23 +207,23 @@ stages:
       md5: 3cc8d86ea394b3c8bb78653e4e230c31
       size: 5595
     - path: contra-correlations-ext.py
-      md5: 9423eaafc3024477ba32ce106bc54233
-      size: 4224
+      md5: 421a8e8cbe6312e5411da84782b94287
+      size: 4232
     outs:
     - path: contra-correlations-ext.svg
-      md5: 379f2915c1ffc3268c5f78933e6c2787
-      size: 194856
+      md5: 373a4f72b0260b8eb1b574c9b5d9556d
+      size: 195349
   convert-to-pdf@contra-correlations-ext:
     cmd: "inkscape --file=contra-correlations-ext.svg --export-pdf=contra-correlations-ext.pdf\
       \ --without-gui --export-latex\n"
     deps:
     - path: contra-correlations-ext.svg
-      md5: 379f2915c1ffc3268c5f78933e6c2787
-      size: 194856
+      md5: 373a4f72b0260b8eb1b574c9b5d9556d
+      size: 195349
     outs:
     - path: contra-correlations-ext.pdf
-      md5: a196fe4afd2e3039132f8f9808d386be
-      size: 102390
+      md5: 3e01ec71b5d4936f417d7e1d4b617f11
+      size: 103843
     - path: contra-correlations-ext.pdf_tex
       md5: 8cf2ca9c3e1ef917f2403e84b6598ced
       size: 2080
@@ -247,19 +247,19 @@ stages:
       size: 4243
     outs:
     - path: ipsi-overall.svg
-      md5: 24a47100119f39dd964383e0008ef617
-      size: 438802
+      md5: dda297cff17f8c2b232889579bf9a975
+      size: 434468
   convert-to-pdf@ipsi-overall:
     cmd: "inkscape --file=ipsi-overall.svg --export-pdf=ipsi-overall.pdf --without-gui\
       \ --export-latex\n"
     deps:
     - path: ipsi-overall.svg
-      md5: 24a47100119f39dd964383e0008ef617
-      size: 438802
+      md5: dda297cff17f8c2b232889579bf9a975
+      size: 434468
     outs:
     - path: ipsi-overall.pdf
-      md5: a2c76b8a5ac858b15f834718e270fb7b
-      size: 97429
+      md5: 595f719b326263f708bd85d1c07907da
+      size: 97504
     - path: ipsi-overall.pdf_tex
       md5: 9439cf11af87227b42add24cdf5e0aaf
       size: 2058
@@ -268,12 +268,12 @@ stages:
       \ --without-gui --export-latex\n"
     deps:
     - path: contra-correlations-noext.svg
-      md5: b45c401604f83b1bea3ae642a7fb270a
-      size: 197296
+      md5: 19fd1c98cdae84f9cef8ba6c9fc4a94f
+      size: 197789
     outs:
     - path: contra-correlations-noext.pdf
-      md5: 81988f9893c049c2f673de4ad4445146
-      size: 100998
+      md5: d58167381e844ae5472e2f4a18192dd9
+      size: 102136
     - path: contra-correlations-noext.pdf_tex
       md5: f1fe473d8c7a9f165501f2236f5ecc87
       size: 2084
@@ -297,18 +297,18 @@ stages:
       size: 2622
     outs:
     - path: contra-risks.svg
-      md5: e24c230c074f44dfd9aef66f15ce70fa
-      size: 88301
+      md5: 481367bb6daad18142f816a42d06a366
+      size: 88328
   convert-to-pdf@contra-risks:
     cmd: "inkscape --file=contra-risks.svg --export-pdf=contra-risks.pdf --without-gui\
       \ --export-latex\n"
     deps:
     - path: contra-risks.svg
-      md5: e24c230c074f44dfd9aef66f15ce70fa
-      size: 88301
+      md5: 481367bb6daad18142f816a42d06a366
+      size: 88328
     outs:
     - path: contra-risks.pdf
-      md5: 421448e723512ecb534eff992837bca2
+      md5: 5ccfb30eb669366397461ab85078ff22
       size: 59164
     - path: contra-risks.pdf_tex
       md5: 607cae98b21bbba7324d4c6b81be9ee4

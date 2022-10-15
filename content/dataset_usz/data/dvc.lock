@@ -13,5 +13,5 @@ stages:
       size: 137
     outs:
     - path: 2021-usz-oropharynx-enhanced.csv
-      md5: e80f2a2d46cf1a26296409dd39888116
-      size: 195637
+      md5: b9391511670273d265095c22207bdc9f
+      size: 195442

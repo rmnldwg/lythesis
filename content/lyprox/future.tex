@@ -8,7 +8,7 @@
 \section{Future}
 \label{sec:lyprox:future}
 
-Since our research group consists mainly of physicists and clinicians, the development of a web-based \gls{gui} was new to us in many aspects. We did thoroughly consider our choices w.r.t. the technologies and frameworks LyProX is built with, and we tried to adhere to many software development standards. Nonetheless, there are issues in the current state of the web interface stemming partly from our experience growing along the way and partly from the quickly expanding scope of the project. Below, we will briefly outline these issues and how we want to address them in the future:
+Since our research group consists mainly of physicists and clinicians, the development of a web-based \gls{gui} was new to us in many aspects. We did thoroughly consider our choices w.r.t. the technologies and frameworks LyProX is built with, and we tried to adhere to many software development standards. Nonetheless, there are issues in the current state of the web interface stemming partly from our experience growing along the way and partly from the quickly expanding scope of the project. Below, we will briefly outline these issues and how we want to address them in the future.
 
 \subsection*{Testing}
 
@@ -18,18 +18,18 @@ The testing suite of LyProX currently only covers a few core components and is o
 
 Hence, we would like to write an extensive and fully automated set of tests covering a large portion of LyProX' source code. Since implementing such a test suite becomes more and more difficult with a project's growing complexity, we consider testing a top priority before implementing further features.
 
-\subsection*{User experience}
+\subsection*{User Experience}
 
-So far, we have informally asked a few colleagues and collaborators to assess how usable and intuitive our interface is. As many of them were already familiar with our work -- or even the prototype of \cref{subsec:lyprox:motivation:prototype} -- this cannot be considered a very objective assessment of LyProX' user experience. We do not aim to make it intuitively usable and accessible to the general public, as it will remain a specific tool about lymphatic cancer progression and hence targeted to \gls{hnscc} experts. But if the scope and budget of our project allows, we would like to consult UX designers and/or frontend developers on its user experience. With such professional feedback and help, an improved interface design might convince more clinicians to use LyProX, come up with new hypotheses to test or even collaborate with us on extending the database.
+So far, we have informally asked colleagues and collaborators to assess how usable and intuitive our interface is. As many of them were already familiar with our work -- or even the prototype of \cref{subsec:lyprox:motivation:prototype} -- this cannot be considered a very objective assessment of LyProX' user experience. We do not aim to make it intuitively usable and accessible to the public, as it will remain a specific tool about lymphatic cancer progression and hence targeted to \gls{hnscc} experts. But if the scope and budget of our project allows, we would like to consult UX designers and/or frontend developers on its user experience. With such professional feedback and help, an improved interface design might convince more clinicians to use LyProX and maybe collaborate with us on extending the database.
 
 \subsection*{Availability and Redundancy}
 
-As mentioned in \cref{sec:lyprox:dev}, the \gls{gui} currently runs on a single \gls{vm} located in Switzerland. As the research community is quite international, we might want to consider hosting solutions that allow us to seamlessly scale the hardware LyProX runs on to locations distributed over the globe. This generally improves the loading times and latency of the website, besides protecting it against regional outages.
+As mentioned in \cref{sec:lyprox:dev}, the \gls{gui} currently runs on a single \acrlong{vm} located in Switzerland. As the research community is quite international, we consider hosting solutions that allow us to seamlessly scale the hardware LyProX runs on to locations distributed over the globe. This generally improves the loading times and latency of the website, besides protecting it against regional outages.
 
-\subsection*{Integration with related Repositories}
+\subsection*{Integration with Related Repositories}
 
-Since the patient information displayed in LyProX originates from our public repository \repolink{lyDATA}, it would make sense to automate the process of adding new datasets to the interface's database: Whenever we publish a new cohort on \repolink{lyDATA}, an automated workflow could be triggered that integrates the new list of patients into LyProX.
+Since the patient information displayed in LyProX originates from our public repository \repolink{lyDATA}, it could make sense to automate the process of adding new datasets to the interface's database: Whenever we publish a new cohort on \repolink{lyDATA}, an automated workflow could be triggered that integrates the new list of patients into LyProX.
 
-Ultimately, we also want to include a risk prediction into our website that goes beyond displaying prevalences of involvement for previously observed patients. For a given, individual diagnosis, it could predict the probability for microscopic metastases is any \gls{lnl} of interest. The formalism for such a model will be introduced in \cref{chap:unilateral} and its programmatic implementation is published in the repositories \repolink{lymph} and \repolink{lyscripts}. Integrating the model from these two locations along with the inference pipeline using data pulled from \repolink{lyDATA} is another major objective in the development of LyProX.
+Ultimately, we also want to include a risk prediction module into our website that goes beyond displaying prevalences of involvement for previously observed patients. For a user-specified, individual diagnosis, it would predict the probability for microscopic metastases is any \gls{lnl} of interest. The formalism for such a model will be introduced in \cref{chap:unilateral} and its programmatic implementation is published in the repositories \repolink{lymph} and \repolink{lyscripts}. Integrating the model from these two locations along with the inference pipeline using data pulled from \repolink{lyDATA} is another major objective in the development of LyProX.
 
 \end{document}
