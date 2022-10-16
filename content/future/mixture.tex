@@ -10,9 +10,11 @@
 
 Because we have defined the likelihood of a dataset as a product over the likelihoods for individual patients in \cref{sec:unilateral:formalism} (see for example \cref{eq:unilateral:llh_as_prod}), we implicitly assume that the lymphatic spread parameters of all patients in our datasets are from the same distribution. I.e., we do not allow different ``subgroups'' of patients that might have different spread characteristics.
 
-If we want to capture different spread characteristics within a patient cohort, we would need to employ a so-called \emph{mixture model}. To explain this concept, we will loosely follow the descriptions in \citeauthorandlink{bishop_pattern_2006}, \citeauthorandlink{mackay_information_nodate}, and \citeauthorandlink{gelman_bayesian_2015}. Note that due to the way we have defined our variables earlier, we cannot stick to the notation of these books that usually call $\mathbf{X}$ the data and $\mathbf{Z}$ the latent variables. Rather, as defined in \cref{sec:previous_work:bayesian,sec:unilateral:formalism}, $\mathbf{X}$ represents the hidden state of metastatic involvement and $\mathbf{Z}$ a diagnosis or observation of that state.
+If we want to capture different spread characteristics within a patient cohort, we would need to employ a so-called \emph{mixture model}. To explain this concept, we will loosely follow the descriptions in \citeauthorandlink{bishop_pattern_2006}, \citeauthorandlink{mackay_information_nodate}, and \citeauthorandlink{gelman_bayesian_2015}. Note that due to the way we have defined our variables earlier, we cannot stick to the notation of these books that usually call $\mathbf{X}$ the data and $\mathbf{Z}$ the latent variables. Rather, as defined in \cref{sec:previous_work:bayesian,sec:unilateral:formalism}, $\mathbf{X}$ represents the hidden state of metastatic involvement and $\mathbf{Z}$ a diagnosis or observation of that state. And a dataset of patients is -- as previously -- written as $\boldsymbol{\mathcal{Z}} = \{ \mathbf{Z}_i \}$ with $i \in [1, 2, \ldots, N]$ being the index for individual patients.
 
-Before, we have assumed that the observed diagnosis $\mathbf{Z}_i$ of patient $i$ was sampled from the distribution $\Probofgiven{\mathbf{Z}_i}{\theta}$. Now let us say we know there are $K$ subgroups among the patients in our dataset that exhibit different lymphatic progression characteristics defined by $\theta_k$ and $k \in [1, \ldots, K]$. If we define new \acrfullpl{rv} $G_k$ that can take on the values $G_k = 1$ when the patient $i$ belongs to subgroup $k$ and $G_k = 0$ otherwise, then we can write the distribution over the $i$-th patient's diagnosis $\mathbf{z}_i$ as follows:
+Before, we have assumed that all patients exhibit the same lymphatic spread characteristics, defined by one set of parameters $\theta$. We now drop that assumption and instead consider that it might be possible to categorize patients of a cohort into $K$ subgroups. To be able to capture which patient belongs to which subgroup, we introduce new \glspl{rv}: $G_{ik} = 1$, if patient $i$ belongs to subgroup $k$ and in that case all $G_{i\ell} = 0$ for $\ell \neq k$. We collect these assignment variables for each patient in a random matrix $\boldsymbol{\mathcal{G}} = \{ \mathbf{G}_i \}$. Together with the diagnoses of all patients, these subgroup assignments compose the \emph{complete data} $\{ \boldsymbol{\mathcal{Z}}, \boldsymbol{\mathcal{G}} \}$. However, we cannot know which patient belongs to which subgroup, since we do not even know how each subgroup is characterized in terms of their respective spread parameters $\theta_k$. All we have at hand for our inference, is the \emph{incomplete data} $\{ \boldsymbol{\mathcal{Z}} \}$.
+
+Before, we have assumed that the observed diagnosis $\mathbf{Z}_i$ of patient $i$ was sampled from the distribution $\Probofgiven{\mathbf{Z}_i}{\theta}$. Now let us say we know there are $K$ subgroups among the patients in our dataset that exhibit different lymphatic progression characteristics defined by $\theta_k$ and $k \in [1, \ldots, K]$. If we define new \acrfullpl{rv} $G_{ik}$ that take on the value $G_{ik} = 1$ when the patient $i$ belongs to subgroup $k$ and $G_{i\ell} = 0$ for $\ell \neq k$, then we can write the distribution over the $i$-th patient's diagnosis as follows:
 %
 \begin{equation}
     \begin{aligned}
@@ -54,11 +56,17 @@ Now, if we knew the spread parameters for all subgroups $\boldsymbol{\theta}$, w
     \end{aligned}
 \end{equation}
 %
-And in turn, if we knew the group label $\mathbf{g}$ for patient $i$, we could infer that patient's spread parameters, e.g. through sampling. Unfortunately, solving for both at the same time results in a set of equations that mutually depend on each other. But there exists a family of algorithms that can solve for the group labels and parameters alternatingly, resulting in an iterative procedure called \gls{em}. This approach has proven very powerful, and it can be generalized to derive the framework of variational inference. However, these topics are covered in a more comprehensive and detailed manner elsewhere \cite{bishop_pattern_2006,mackay_information_nodate,gelman_bayesian_2015}, and we will hence not go into more detail.
+And in turn, if we knew the group label $\mathbf{g}$ for patient $i$, we could infer that patient's spread parameters, e.g. through sampling. Unfortunately, solving for both at the same time results in a set of equations that mutually depend on each other. But there exists a family of algorithms that can solve for the group labels and parameters alternatingly, resulting in an iterative procedure called \gls{em}.
 
-\subsection{Deterministic Annealing for Clustering}
-\label{subsec:future:mixture:da}
+To formulate the \gls{em} algorithm for our problem, let us first collect the individual patient's assignments and diagnoses into matrices: As before $\boldsymbol{\mathcal{Z}} = \{ \mathbf{Z}_i \}$ for patients $i \in \left[ 1, 2, \ldots, N \right]$, and similarily for the group assignments $\boldsymbol{\mathcal{G}} = \{ \mathbf{G}_i \}$, so that now $g_{ik} = 1$ means that patient $i$ belongs to subgroup $k$.
 
-
+As the name suggests, it consists of two steps:
+\begin{enumerate}
+    \item[(E)] Computing the \emph{expectation} of the complete data (log-)likelihood $\Probofgiven{\mathbf{Z}, \mathbf{G}}{\boldsymbol{\theta}}$ for the current estimate of the subgroup assignments $\Probofgiven{\mathbf{G}}{\mathbf{Z}, \boldsymbol{\theta}^\text{old}}$ using the current estimate of the model's parameters $\boldsymbol{\theta}^\text{old}$.
+    \item[(M)] Maximize the expectation computed in the (E) step with respect to the parameters $\boldsymbol{\theta}$:
+    \begin{equation}
+        \boldsymbol{\theta}^\text{new} = \argmax_\theta{\sum_{\mathbf{g}}{\Probofgiven{\mathbf{Z}, \mathbf{g}}{\boldsymbol{\theta}} \Probofgiven{\mathbf{g}}{\mathbf{Z}, \boldsymbol{\theta}^\text{old}}}}
+    \end{equation}
+\end{enumerate}
 
 \end{document}
