@@ -8,22 +8,57 @@
 \section{Mixture of HMM Models}
 \label{sec:future:mixture}
 
-Because we have defined the likelihood of a dataset as a product over the likelihoods for individual patients in \cref{sec:unilateral:formalism} (see for example \cref{eq:unilateral:llh_as_prod}), we implicitly assume that the lymphatic spread parameters of all patients in our datasets are come the same distribution. I.e., we do not allow different ``subtypes'' of patients that might -- for some reason -- have different spread characteristics.
+Because we have defined the likelihood of a dataset as a product over the likelihoods for individual patients in \cref{sec:unilateral:formalism} (see for example \cref{eq:unilateral:llh_as_prod}), we implicitly assume that the lymphatic spread parameters of all patients in our datasets are from the same distribution. I.e., we do not allow different ``subgroups'' of patients that might have different spread characteristics.
 
-If we want to capture different spread characteristics within a patient cohort, we would need to employ a so-called \emph{mixture model}. This means that, e.g. in the case of two different subgroups $A$ and $B$ in a cohort, we would allow any patient's spread parameters to come either from the distribution $p_A\left( \theta \right)$ or $p_B \left( \theta \right)$. The overall distribution for $\theta$ would then be
+If we want to capture different spread characteristics within a patient cohort, we would need to employ a so-called \emph{mixture model}. To explain this concept, we will loosely follow the descriptions in \citeauthorandlink{bishop_pattern_2006}, \citeauthorandlink{mackay_information_nodate}, and \citeauthorandlink{gelman_bayesian_2015}. Note that due to the way we have defined our variables earlier, we cannot stick to the notation of these books that usually call $\mathbf{X}$ the data and $\mathbf{Z}$ the latent variables. Rather, as defined in \cref{sec:previous_work:bayesian,sec:unilateral:formalism}, $\mathbf{X}$ represents the hidden state of metastatic involvement and $\mathbf{Z}$ a diagnosis or observation of that state.
+
+Before, we have assumed that the observed diagnosis $\mathbf{Z}_i$ of patient $i$ was sampled from the distribution $\Probofgiven{\mathbf{Z}_i}{\theta}$. Now let us say we know there are $K$ subgroups among the patients in our dataset that exhibit different lymphatic progression characteristics defined by $\theta_k$ and $k \in [1, \ldots, K]$. If we define new \acrfullpl{rv} $G_k$ that can take on the values $G_k = 1$ when the patient $i$ belongs to subgroup $k$ and $G_k = 0$ otherwise, then we can write the distribution over the $i$-th patient's diagnosis $\mathbf{z}_i$ as follows:
 %
 \begin{equation}
-    p \left( \theta \right) = \omega_A \cdot p_A\left( \theta \right) + \omega_B \cdot p_B\left( \theta \right)
+    \begin{aligned}
+        P \left( \mathbf{Z}_i \right) &= \sum_{\mathbf{g}}{ \Probofgiven{\mathbf{Z}_i}{\boldsymbol{\theta}, \mathbf{G} = \mathbf{g}} P \left(\mathbf{G} = \mathbf{g}\right) } \\
+        &= \sum_{k=1}^K{ \omega_k P_\text{HMM} \left( \mathbf{Z}_i \mid \theta_k \right) }
+    \end{aligned}
 \end{equation}
 %
-with some weights $\omega_A, \omega_B \in [0,1]$ and $\omega_A + \omega_B = 1$. These weights can be interpreted as probabilities for a patient to belong to either of the two groups. Basically, the marginalized probability of a patient $i$ to belong to, e.g., group $A$ can be written as $p\left(g_{iA} = 1\right) = \omega_A$. Here, $\mathbf{g}_i$ is a one-hot vector (of length $|\{A,B\}| = 2$ in this case) that stores to which group any patient $i$ belongs.
-
-We now face the task of correctly assigning patients to the two groups. Doing this probabilistically, we can write
+For the second line, we have written some terms in other forms: Because the group assignment $\mathbf{g}$ uses a ``1-of-$K$'' encoding, meaning only one of its $K$ elements can be one and all others must be zero, its probability can be written as
 %
 \begin{equation}
-    \omega^\star_A = \frac{\omega_A \int{\mathcal{L}\left( \boldsymbol{\mathcal{D}}_A \mid \theta \right) p\left( \theta \right) d\theta}}{\int{\omega_A \mathcal{L}\left( \boldsymbol{\mathcal{D}}_A \mid \theta \right) p\left( \theta \right) + \omega_B \mathcal{L}\left( \boldsymbol{\mathcal{D}}_B \mid \theta \right) p\left( \theta \right) d\theta}}
+    P \left(\mathbf{g}\right) = \prod_{k=1}^K{ \omega_k^{g_k} }
 \end{equation}
 %
-As is indicated by the starred $\omega^\star_A$, we can usually not find the distribution $p\left(\theta\right)$ and the weights $\boldsymbol{\omega}$ at the same time, since they always appear on both sides of the equations above.
+with $\omega_k = P \left(g_k = 1\right)$. And if we know to which subgroup patient $i$ belongs, we can use the \gls{hmm} likelihood from \cref{eq:unilateral:hmm_marginalize} to write
+%
+\begin{equation}
+    \Probofgiven{\mathbf{Z}_i}{\theta_k, g_k = 1} = P_\text{HMM} \left( \mathbf{Z}_i \mid \theta_k \right)
+\end{equation}
+%
+allowing us to restate
+%
+\begin{equation}
+    \Probofgiven{\mathbf{Z}_i}{\boldsymbol{\theta}, \mathbf{g}} = \prod_{k=1}^K{ P_\text{HMM} \left( \mathbf{Z}_i \mid \theta_k \right)^{g_k} }
+\end{equation}
+%
+A fundamental problem with such a mixture model now is that we only observe the so-called \emph{incomplete} data $\boldsymbol{\mathcal{Z}} = \left\{ \mathbf{z}_i \right\}$. The \emph{complete} dataset $\left\{ \mathbf{z}_i, \mathbf{g}_i \right\}$ of diagnoses along with the respective group labels for each patient would be necessary to perform inference using the complete data likelihood
+%
+\begin{equation}
+    \Probofgiven{\mathbf{Z}, \mathbf{G}}{\boldsymbol{\theta}} = \Probofgiven{\mathbf{Z}}{\boldsymbol{\theta}, \mathbf{G} = \mathbf{g}} P \left(\mathbf{G} = \mathbf{g}\right)
+\end{equation}
+%
+Now, if we knew the spread parameters for all subgroups $\boldsymbol{\theta}$, we could infer the group assignment for patient $i$ in a Bayesian fashion:
+%
+\begin{equation}
+    \begin{aligned}
+        \Probofgiven{g_k = 1}{\mathbf{Z}_i, \boldsymbol{\theta}} &= \frac{\Probofgiven{\mathbf{Z}_i}{\theta_k, g_k=1} P \left( g_k = 1 \right)}{\sum_{j=1}^K{\Probofgiven{\mathbf{Z}_i}{\theta_j, g_j=1} P \left( g_j = 1 \right)}} \\
+        &= \frac{\omega_k P_\text{HMM} \left( \mathbf{Z}_i \mid \theta_k \right)}{\sum_{j=1}^K{\omega_j P_\text{HMM} \left( \mathbf{Z}_i \mid \theta_j \right)}}
+    \end{aligned}
+\end{equation}
+%
+And in turn, if we knew the group label $\mathbf{g}$ for patient $i$, we could infer that patient's spread parameters, e.g. through sampling. Unfortunately, solving for both at the same time results in a set of equations that mutually depend on each other. But there exists a family of algorithms that can solve for the group labels and parameters alternatingly, resulting in an iterative procedure called \gls{em}. This approach has proven very powerful, and it can be generalized to derive the framework of variational inference. However, these topics are covered in a more comprehensive and detailed manner elsewhere \cite{bishop_pattern_2006,mackay_information_nodate,gelman_bayesian_2015}, and we will hence not go into more detail.
+
+\subsection{Deterministic Annealing for Clustering}
+\label{subsec:future:mixture:da}
+
+
 
 \end{document}
