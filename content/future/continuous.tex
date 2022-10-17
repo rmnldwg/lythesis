@@ -1,0 +1,15 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{\relativeRoot/figures/}
+
+
+\begin{document}
+
+\section{Continuous Variables}
+\label{sec:future:continuous}
+
+Every observed quantity that went into the presented models so far was a binary (observations of \gls{lnl} involvement, extension over mid-plane) or categorical variable (T-category). However, especially the variable of T-category is -- according to its definition \cite{brierley_tnm_2017} -- largely a categorization of tumor size, which is a continuous variable. To date, no dataset reporting this quantity is available to us. But it is often recorded when \acrlong{rt} is chosen as treatment, as the primary tumor is carefully delineated on a 3D scan prior to treatment planning. From this \gls{gtv} delineation in the treatment planning software it is usually straightforward to compute e.g. the volume of the tumor.
+
+Our assumption when introducing the marginalization over diagnosis times in \cref{subsec:unilateral:formalism:tstage} was that tumor size at the time of diagnosis correlates with the time a tumor was able to spread lymphatically, and that T-category is a surrogate of tumor size. Based on this, we should also be able to directly use the continuous variable of tumor size and define a conditional probability over the diagnosis time $\probofgiven{t}{V_\text{PT}, \theta^{(t)}}$, given the volume of a primary tumor $V_\text{PT}$ and some learnable parameters $\theta^{(t)}$. These parameters may control how the volume $V_\text{PT}$ affects the distribution over the diagnosis time $t$.
+
+\end{document}
