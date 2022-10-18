@@ -11,6 +11,7 @@ stages:
     - extended-add45-prevalences
     - extended-add27-prevalences
     - graph-comparison
+    - acor
     do:
       cmd: >
         inkscape
@@ -25,6 +26,15 @@ stages:
           cache: false
       - ${item}.pdf_tex:
           cache: false
+
+  acor-times:
+    cmd: python acor.py
+    deps:
+    - acor.py
+    - ../data/extended-add12-v1-acor.csv
+    - ../data/extended-add21-v1-acor.csv
+    outs:
+    - acor.svg
 
   simple-prevalences:
     cmd: python simple-prevalences.py

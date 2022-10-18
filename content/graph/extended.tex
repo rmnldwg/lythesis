@@ -7,7 +7,7 @@
 
 \begin{document}
 
-\section{Extending the Underlying Graph to LNLs V and VII}
+\section[Extending the Underlying Graph to LNLs V and VII]{Extending the Underlying Graph\\to LNLs V and VII}
 \label{sec:graph:extended}
 
 \begin{figure}
@@ -82,6 +82,17 @@ As mentioned, we started with establishing a baseline, using a unilateral model 
     \end{itemize}
 \end{tcolorbox}
 
+\begin{figure}
+    \centering
+    \input{figures/acor.pdf_tex}
+    \caption[
+        Plot of mean integrated auto-correlation times during the sampling process
+    ]{
+        Graph showing how the integrated mean auto-correlation time of all parallel walkers evolved during the sampling process for the model adding the arc from \gls{lnl} I to II (blue) and from II to I (orange). In the beginning the estimate for the auto-correlation times is far too low, which is why we only trust it once it has passed the threshold $30 \cdot \hat{\tau}_i \geq N$ (black dotted line).
+    }
+    \label{fig:graph:extended:acor}
+\end{figure}
+
 The first question we want to answer is whether we should add the connection from \gls{lnl} I to II, the other way around or none between the two levels at all. We sampled two identical models -- except for the direction between \glspl{lnl} I and II -- until convergence and compared metrics and predicted prevalences for both. ``Sampling until convergence'' in this case means that we stopped the inference process when the following two requirements were met:
 
 \begin{itemize}
@@ -95,6 +106,8 @@ The first question we want to answer is whether we should add the connection fro
     \end{equation}
     where $N$ is the number of drawn samples. This means we only trust the estimate once we have a sufficiently large number of samples.
 \end{itemize}
+
+We have plotted an example of how the integrated auto-correlation estimate evolves over the course of a sampling procedure in \cref{fig:graph:extended:acor}. It can be seen that the estimate is far too low initially. Only later, after the burn in phase, does it level off around the actual auto-correlation time. This is why the second requirement (shown as black line in the plot) is introduced.
 
 Looking at the \gls{bic} in \cref{table:graph:extend:12or21}, the results suggest that adding the connection as we originally intended from level I to II is barely worth the additional complexity compared to the base graph. The other way around, however, the differences in one half of the \glspl{bic} show a \emph{very strong} (see \cref{table:bayes_factor}) support for the added connection from \gls{lnl} II into \gls{lnl} I over the base graph, despite having one parameter more.
 

@@ -414,3 +414,32 @@ stages:
     - path: graph-comparison.pdf_tex
       md5: 540ab201b5da59b2ef81d2e331b6f9ec
       size: 2065
+  acor-times:
+    cmd: python acor.py
+    deps:
+    - path: ../data/extended-add12-v1-acor.csv
+      md5: b9a2c8aacabee03fd797f4f01602670f
+      size: 906
+    - path: ../data/extended-add21-v1-acor.csv
+      md5: af7a79908218fdbd677a9a439340782d
+      size: 1179
+    - path: acor.py
+      md5: ede12c004ab56860ad58f3d32c19424f
+      size: 1243
+    outs:
+    - path: acor.svg
+      md5: f9b209305ebae195d39836b36e5359e6
+      size: 31518
+  convert-to-pdf@acor:
+    cmd: "inkscape --without-gui --file=acor.svg --export-pdf=acor.pdf --export-latex\n"
+    deps:
+    - path: acor.svg
+      md5: f9b209305ebae195d39836b36e5359e6
+      size: 31518
+    outs:
+    - path: acor.pdf
+      md5: 956ea56616892ba2b82e1c5fd771d066
+      size: 32333
+    - path: acor.pdf_tex
+      md5: 65f2be0221d819e0e49d234d5e55ea1f
+      size: 2049
