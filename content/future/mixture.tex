@@ -1,0 +1,54 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{\relativeRoot/figures/}
+
+
+\begin{document}
+
+\section{Mixture of HMM Models}
+\label{sec:future:mixture}
+
+Because we have defined the likelihood of a dataset as a product over the likelihoods for individual patients in \cref{sec:unilateral:formalism} (see for example \cref{eq:unilateral:llh_as_prod}), we implicitly assume that the lymphatic spread parameters of all patients in our datasets are from the same distribution. I.e., we do not allow different ``subgroups'' of patients that might have different spread characteristics.
+
+If we want to capture different spread characteristics within a patient cohort, we would need to employ a so-called \emph{mixture model}. To explain this concept, we will loosely follow the descriptions in \citeauthorandlink{bishop_pattern_2006}, \citeauthorandlink{mackay_information_nodate}, and \citeauthorandlink{gelman_bayesian_2015}. Note that due to the way we have defined our variables earlier, we cannot stick to the notation of these books that usually call $\mathbf{X}$ the data and $\mathbf{Z}$ the latent variables. Rather, as defined in \cref{sec:previous_work:bayesian,sec:unilateral:formalism}, $\mathbf{X}$ represents the hidden state of metastatic involvement and $\mathbf{Z}$ a diagnosis or observation of that state. And a dataset of patients is -- as previously -- written as $\boldsymbol{\mathcal{Z}} = \{ \mathbf{Z}_i \}$ with $i \in [1, 2, \ldots, N]$ being the index for individual patients.
+
+Before, we have assumed that all patients exhibit the same lymphatic spread characteristics, defined by one set of parameters $\theta$. We now drop that assumption and instead consider that it might be possible to categorize patients of a cohort into $K$ subgroups that each shows different spread patterns. To be able to capture which patient belongs to which subgroup, we introduce new \glspl{rv}: The group labels $\mathbf{G}_i$, where $g_{ik} = 1$ if patient $i$ belongs to subgroup $k \in [1,2, \ldots, K]$ and in that case all $g_{i\ell} = 0$ for $\ell \neq k$. We collect these assignment variables for each patient in a random matrix $\boldsymbol{\mathcal{G}} = \{ \mathbf{G}_i \}$. Together with the diagnoses of all patients, these subgroup assignments compose the \emph{complete data} $\{ \boldsymbol{\mathcal{Z}}, \boldsymbol{\mathcal{G}} \}$. The corresponding complete data likelihood is then a product over all $N$ patients and all $K$ subgroups:
+%
+\begin{equation} \label{eq:future:mixture:complete_llh}
+    \Probofgiven{\boldsymbol{\mathcal{Z}}, \boldsymbol{\mathcal{G}}}{\boldsymbol{\theta}} = \prod_{i=1}^N{ \prod_{k=1}^K{ \big[ \omega_{ik} P_\text{HMM} \left( \mathbf{Z}_i \mid \theta_k \right) \big]^{g_{ik}} } }
+\end{equation}
+%
+The weights $\omega_{ik}$ describe the probability that patient $i$ belongs to subgroup $k$: $P \left( G_{ik} = 1 \right) = \omega_{ik}$. We would achieve the same, if we had sorted the patients beforehand into their subgroups, computed the likelihood for each of them and then compute the product over subgroup-likelihoods.
+
+Unfortunately, we cannot know which patient belongs to which subgroup, since we do not even know how each subgroup is characterized in terms of their respective spread parameters $\theta_k$. All we have at hand for our inference, is the \emph{incomplete data} $\{ \boldsymbol{\mathcal{Z}} \}$. And the respective likelihood for the incomplete data $\boldsymbol{\mathcal{Z}}$ is a marginalization over all possible group assignments, since they are unknown to us:
+%
+\begin{equation}
+    \begin{aligned}
+        \Probofgiven{\boldsymbol{\mathcal{Z}}}{\boldsymbol{\theta}} &= \sum_{\boldsymbol{\mathcal{G}}}{ \Probofgiven{\boldsymbol{\mathcal{Z}}, \boldsymbol{\mathcal{G}}}{\boldsymbol{\theta}} } \\
+        &= \prod_{i=1}^N{ \sum_{k=1}^K{ \omega_{ik} P_\text{HMM} \left( \mathbf{Z}_i \mid \theta_k \right) } }
+    \end{aligned}
+\end{equation}
+%
+In the second line, we have used that due to the terms $g_{ik} \in \{ 0,1 \}$ in the exponent of \cref{eq:future:mixture:complete_llh}, every term except one in the product over $k \in [0,1, \ldots, K]$ becomes one. Computing this incomplete data likelihood is not particularly difficult for our problem. However, optimizing $\Probofgiven{\boldsymbol{\mathcal{Z}}}{\boldsymbol{\theta}}$ w.r.t. to the variables it depends on is very hard, since in addition to the spread parameters $\theta_k$, we would now also need to sample the weights $\omega_{ik}$. This may add many thousand parameters to the problem, making it prohibitively expensive.
+
+Given an estimate or sample of the group spread parameters $\boldsymbol{\hat{\theta}}$, however, we could infer the group assignments, e.g. by computing a maximum a posteriori estimate or drawing a sample $\boldsymbol{\hat{\mathcal{G}}}$ from the following distribution:
+%
+\begin{equation}
+    \Probofgiven{G_{ik} = 1}{\mathbf{Z}_i, \boldsymbol{\hat{\theta}}} = \frac{\omega_{ik} P_\text{HMM} \left( \mathbf{Z}_i \mid \hat{\theta}_k \right)}{\sum_{j=1}^K{ \omega_{ij} P_\text{HMM} \left( \mathbf{Z}_i \mid \hat{\theta}_j \right) } }
+\end{equation}
+%
+And conversely, we could use this group assignment $\boldsymbol{\hat{\mathcal{G}}}$ to obtain a new spread set of parameters again from the distribution below (e.g. via maximum likelihood estimation in this case):
+%
+\begin{equation}
+    \Probofgiven{\theta_k}{\boldsymbol{\mathcal{Z}}, \boldsymbol{\hat{\mathcal{G}}}} = \prod_{i=1}^N \Probofgiven{\theta_k}{\mathbf{Z}_i}^{\hat{g}_{ik}} \propto \prod_{i=1}^N{ P_\text{HMM} \big( \mathbf{Z}_i \mid \theta_k \big)^{\hat{g}_{ik}} }
+\end{equation}
+%
+This motivates an approach to alternatingly compute the so-called \emph{latent} variables $\boldsymbol{\mathcal{G}}$ and the set of lymphatic spread parameters $\boldsymbol{\theta}$ until convergence. Notably, this is -- though crudely oversimplified -- the core idea of the famous \gls{em} algorithm \cite{dempster_maximum_1977}.
+
+Another approach is a sampling algorithm termed \emph{data augmentation} or \gls{ip} algorithm as described in \citeauthor*{bishop_pattern_2006}~\cite[537]{bishop_pattern_2006}, that also alternates between the two estimation above until a stable solution is found. It is hence conceptually similar to the \gls{em} algorithm, but extends it for the use with sampling techniques, such as \gls{mcmc} that we have extensively used throughout this thesis.
+
+To apply the briefly outlined concepts of this section to our model, some questions need to be addressed first. For example, exactly which iterative algorithm to implement, as many ``\gls{em}-like'' approaches have been developed, such as \emph{deterministic annealing} by \citeauthorandlink{rose_deterministic_1998}. This choice also highly depends on the performance of each implementation. It may, for instance, be computationally too expensive to sample from a distribution until convergence during each of the alternating steps that are themselves repeated until a stable solution is found.
+
+There is also the danger that algorithms like these automatically stratify data points into obvious but for us meaningless groups. For example, if the algorithm starts to distinguish early and late T-category, or patients with and without mide-plane extension, then that would not help us in any way. Because on the one hand, we do not gain additional insight from such a data split, and secondly, we have already developed interpretable and machanistic methodologies to incorporate the risk factors T-category and mid-plane extension into our model.
+
+\end{document}

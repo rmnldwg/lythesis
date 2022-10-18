@@ -1,0 +1,19 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{\relativeRoot/figures/}
+
+
+\begin{document}
+
+\section{Incorporating HPV Status into the Model}
+\label{sec:future:hpv}
+
+Our discussion and modelling of \gls{opscc} so far has largely left out an important prognostic factor for overall survival: The \gls{hpv} status of a patient. \Citeauthorandlink{ragin_survival_2007} showed an almost 30\% reduced risk of death in case of \gls{hpv}-positive oropharyngeal \gls{scc} patients, compared to \gls{hpv}-negative ones. Moreover, \gls{hpv}-positive \gls{opscc} seems to spread faster or earlier lymphatically, but not differently, compared to \gls{hpv}-negative disease \cite{bauwens_prevalence_2021}. Our dataset, too, showed a higher prevalence of nodal metastasis when comparing \gls{hpv}-positive and -negative cases, at least for early T-category \cite{ludwig_detailed_2021} (see also \cref{chap:dataset_usz}).
+
+In the framework of our model, ``faster spread'' actually corresponds or is equivalent to later diagnosis times. This is because -- as outlined in \cref{subsubsec:unilateral:formalism:tstage:interpretation} -- a time step in the model does not correspond to any fixed real-world time. It represents the tumor- or patient-specific time to accumulate a certain risk of spread. For example, let us look at the base probability rate for spread from the tumor to \gls{lnl} II and suppose its value was $\tilde{b}_2 = 24\%$. Then the actual time that has passed between $t=0$ and $t=1$ is the time it took for 24\% of identical patients to develop metastasis in \gls{lnl} II starting at the onset of their disease. If a particular tumor spreads quickly, this means that more of our abstract time-steps fit into the time between the beginning of the patient's \gls{scc} and the time of diagnosis. And this leads to a ``later'' time $t$ of diagnosis.
+
+Consequently, if we want to model patients with \gls{hpv}-positive and -negative \gls{opscc}, we may be able to simply learn different time-priors for them, as we have done for different T-categories (e.g. early and late). This means, we would replace for example $\probofgiven{t}{p_\text{early}}$ with two distributions $\probofgiven{t}{p_\text{early}^\text{HPV+}}$ and $\probofgiven{t}{p_\text{early}^\text{HPV--}}$. Of course, this means stratifying the patients by their \gls{hpv} status and learning the respective binomial time-prior parameter separately.
+
+Along with modelling additional subsites and tumor locations (\cref{sec:future:subsites}), this is most likely very straightforward to implement and hence test how this approach performs. Also, data on the \gls{hpv} status of \gls{opscc} patients is almost always available, because it is such an important predictor of outcome.
+
+\end{document}
