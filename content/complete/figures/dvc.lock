@@ -1,0 +1,32 @@
+schema: '2.0'
+stages:
+  plots@ipsiIV-risks:
+    cmd: python ipsiIV-risks.py
+    deps:
+    - path: ../data/complete-v1-ipsiIV-risks.hdf5
+      md5: 96a895febac460bcf06a02ced166fb21
+      size: 926736
+    - path: _utils.py
+      md5: cee2a6b24b3588b826c3c99ee36ffd3b
+      size: 5595
+    - path: ipsiIV-risks.py
+      md5: 314478ed2d17df670ee4b2a51d2b47ae
+      size: 2315
+    outs:
+    - path: ipsiIV-risks.svg
+      md5: f578c2dbb2b6165c019bf57792d699dc
+      size: 64184
+  convert-to-pdf@ipsiIV-risks:
+    cmd: "inkscape --file=ipsiIV-risks.svg --export-pdf=ipsiIV-risks.pdf --without-gui\
+      \ --export-latex\n"
+    deps:
+    - path: ipsiIV-risks.svg
+      md5: f578c2dbb2b6165c019bf57792d699dc
+      size: 64184
+    outs:
+    - path: ipsiIV-risks.pdf
+      md5: 55c80f0db8a7f3c8dea43972d2eecfa0
+      size: 37601
+    - path: ipsiIV-risks.pdf_tex
+      md5: 9fba36499418b5b66073cb36f206e80f
+      size: 2058

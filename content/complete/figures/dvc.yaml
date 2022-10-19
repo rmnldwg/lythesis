@@ -1,0 +1,30 @@
+stages:
+  plots:
+    foreach:
+    - ipsiIV-risks
+    do:
+      cmd: python ${item}.py
+      deps:
+      - ${item}.py
+      - ../data/complete-v1-${item}.hdf5
+      - _utils.py
+      outs:
+      - ${item}.svg
+
+  convert-to-pdf:
+    foreach:
+    - ipsiIV-risks
+    do:
+      cmd: >
+        inkscape
+        --file=${item}.svg
+        --export-pdf=${item}.pdf
+        --without-gui
+        --export-latex
+      deps:
+      - ${item}.svg
+      outs:
+      - ${item}.pdf:
+          cache: false
+      - ${item}.pdf_tex:
+          cache: false

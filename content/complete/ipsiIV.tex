@@ -1,0 +1,29 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
+
+
+\begin{document}
+
+\section[Risk for Involvement in the Ipsilateral LNL IV]{Risk for Involvement\\in the Ipsilateral LNL IV}
+\label{sec:complete:ipsi_IV}
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/ipsiIV-risks.pdf_tex}
+    \caption[]{
+        Histograms over risk for involvement in the ipsilateral \gls{lnl} II, given specific scenarios:
+        \begin{enumerate*}
+            \item[(green, shaded)] Early T-category patient with clinically N0 neck.
+            \item[(blue, outlined)] Also early T-category, but with metastasis in the upstream \gls{lnl} II detected using \gls{ct}, for which we defined the specificity of $s_P = 76\%$, and sensitivity of $s_N = 81\%$. All other \glspl{lnl} show no suspicious lymph nodes.
+            \item[(orange, shaded)] Late T-category with clinically N0 neck.
+            \item[(red, shaded)] Late T-category with involvement in \gls{lnl} II, as detected by \gls{ct}.
+            \item[(red, hatched)] Late T-category where involvement has been found in the levels II and III. The \gls{lnl} of interest to us, level IV, still shows no metastatic lmyph node on \gls{ct}
+        \end{enumerate*}.
+    }
+\end{figure}
+
+We being with inspecting what risks our model predicts for the ipsilateral \gls{lnl} IV, given different diagnoses.
+
+\end{document}
