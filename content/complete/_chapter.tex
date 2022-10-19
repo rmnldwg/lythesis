@@ -1,0 +1,20 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
+
+
+\begin{document}
+
+\chapter{Complete Model of Bilateral Lymphatic Metastatic Spread}
+\label{chap:complete}
+
+Finally, in this chapter we will conclude our efforts to model lymphatic metastatic spread in \gls{hnscc} by combining all insights of previous chapters. Specifically, this means inferring the spread parameters for a model that has the extended graph of \cref{chap:graph} as underlying representation of the lymphatic network, and uses the results from \cref{chap:bilateral} to include the contralateral side.
+
+We will compute risks for different realistic scenarios based on this complete model and show how the resulting predictions may be used clinically for quantitatively informed decisions on \acrfull{ctv-n} definition. This will then also be compared to the currently established guidelines for \gls{ctv-n} definition to see where the potential for dose de-escalation in the elective treatment of e.g. \gls{opscc} arises.
+
+\input{_reproducibility.tex}
+\input{../_databox.tex}
+
+\subfile{ipsi_IV}
+
+\end{document}
