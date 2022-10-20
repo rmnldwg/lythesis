@@ -9,28 +9,29 @@
 \chaptermark{Complete Bilateral Model}
 \label{chap:complete}
 
-\setlength\intextsep{0pt}
-\begin{wrapfigure}{l}{0.4\textwidth}
-    \centering
-    \def\svgwidth{0.38\textwidth}
-    \input{figures/graph.pdf_tex}
-    \caption[
-        Graph underlying the complete model
-    ]{
-        Graph underlying the complete model. This graph was chosen based on the results in \cref{chap:graph}. Note that each of the shown \glspl{lnl} exists twice: Once for the ipsilateral and once for the contralateral side.
-    }
-    \label{fig:complete:graph}
-\end{wrapfigure}
-\intextsep\skip32
+\begin{samepage}
+    \setlength\intextsep{0pt}
+    \begin{wrapfigure}{l}{0.4\textwidth}
+        \centering
+        \def\svgwidth{0.38\textwidth}
+        \input{figures/graph.pdf_tex}
+        \caption[
+            Graph underlying the complete model
+        ]{
+            Graph underlying the complete model. This graph was chosen based on the results in \cref{chap:graph}. Note that each of the shown \glspl{lnl} exists twice: Once for the ipsilateral and once for the contralateral side.
+        }
+        \label{fig:complete:graph}
+    \end{wrapfigure}
+    
+    Finally, in this chapter we will conclude our efforts to model lymphatic metastatic spread in \gls{hnscc} by combining all insights of previous chapters. Specifically, this means inferring the spread parameters for a model that has the extended graph of \cref{chap:graph} as underlying representation of the lymphatic network, and uses the results from \cref{chap:bilateral} to include the contralateral side.
+    
+    The complete model now includes the \glspl{lnl} I, II, III, IV, V and VII. They are connected as shown in \cref{fig:complete:graph}, based on the results in \cref{chap:graph}. For the treatment of the contralateral side, we decided to employ the model $\mathcal{M}_\alpha$ that was introduced in \cref{chap:bilateral}. We also called this the ``mixing model'', because it uses the mixing parameter $\alpha$ that sets the probability rates for spread from the tumor to the contralateral \glspl{lnl} in case of an extension over the mid-sagittal plane to be a linear combination between the ipsilateral base probability rates and the contralateral ones, when the tumor is lateralized:
+    %
+    \begin{equation}
+        \tilde{b}_v^\text{c,e} = \alpha \cdot \tilde{b}_v^\text{i} + (1 - \alpha) \cdot \tilde{b}_v^{\text{c},\centernot{\text{e}}}
+    \end{equation}
+\end{samepage}
 
-Finally, in this chapter we will conclude our efforts to model lymphatic metastatic spread in \gls{hnscc} by combining all insights of previous chapters. Specifically, this means inferring the spread parameters for a model that has the extended graph of \cref{chap:graph} as underlying representation of the lymphatic network, and uses the results from \cref{chap:bilateral} to include the contralateral side.
-
-The complete model now includes the \glspl{lnl} I, II, III, IV, V and VII. They are connected as shown in \cref{fig:complete:graph}, based on the results in \cref{chap:graph}. For the treatment of the contralateral side, we decided to employ the model $\mathcal{M}_\alpha$ that was introduced in \cref{chap:bilateral}. We also called this the ``mixing model'', because it uses the mixing parameter $\alpha$ that sets the probability rates for spread from the tumor to the contralateral \glspl{lnl} in case of an extension over the mid-sagittal plane to be a linear combination between the ipsilateral base probability rates and the contralateral ones, when the tumor is lateralized:
-%
-\begin{equation}
-    \tilde{b}_v^\text{c,e} = \alpha \cdot \tilde{b}_v^\text{i} + (1 - \alpha) \cdot \tilde{b}_v^{\text{c},\centernot{\text{e}}}
-\end{equation}
-%
 It performed well in capturing the increased risk for contralateral metastasis, while only adding one parameter to the model.
 
 By putting together the six \glspl{lnl} and the bilateral mixing model, we end up with an \gls{hmm} of 19 parameters: Six for the ipsilateral, and six for the contralateral base probability rates (when the tumor does not extend over the mid-sagittal plane), the mixing parameter $\alpha$, five probability rates for the spread among \glspl{lnl} and lastly, one parameter for the late T-category time-prior.
