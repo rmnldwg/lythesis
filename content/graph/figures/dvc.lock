@@ -424,22 +424,22 @@ stages:
       md5: af7a79908218fdbd677a9a439340782d
       size: 1179
     - path: acor.py
-      md5: ede12c004ab56860ad58f3d32c19424f
-      size: 1243
+      md5: f9f3fab51b159bbe1bf480f14af0a461
+      size: 1261
     outs:
     - path: acor.svg
-      md5: f9b209305ebae195d39836b36e5359e6
-      size: 31518
+      md5: 7a7b024e8d3b5ae8d1c9d875729662f2
+      size: 34340
   convert-to-pdf@acor:
     cmd: "inkscape --without-gui --file=acor.svg --export-pdf=acor.pdf --export-latex\n"
     deps:
     - path: acor.svg
-      md5: f9b209305ebae195d39836b36e5359e6
-      size: 31518
+      md5: 7a7b024e8d3b5ae8d1c9d875729662f2
+      size: 34340
     outs:
     - path: acor.pdf
-      md5: 956ea56616892ba2b82e1c5fd771d066
-      size: 32333
+      md5: a108bc6387bb15c49ed1de878441426e
+      size: 33193
     - path: acor.pdf_tex
       md5: 65f2be0221d819e0e49d234d5e55ea1f
       size: 2049

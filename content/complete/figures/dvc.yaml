@@ -1,5 +1,5 @@
 stages:
-  plots:
+  plot-risks:
     foreach:
     - ipsiIV-risks
     do:
@@ -11,9 +11,19 @@ stages:
       outs:
       - ${item}.svg
 
+  acor:
+    cmd: python acor.py
+    deps:
+    - acor.py
+    - ../data/complete-v1-acor.csv
+    outs:
+    - acor.svg
+
   convert-to-pdf:
     foreach:
     - ipsiIV-risks
+    - graph
+    - acor
     do:
       cmd: >
         inkscape

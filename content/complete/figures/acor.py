@@ -9,10 +9,6 @@ import matplotlib.pyplot as plt
 
 from lyscripts.plot.histograms import get_size
 
-MODELS = {
-    "add12": "I➜II",
-    "add21": "II➜I",
-}
 COLORS = {
     "blue": '#005ea8',
     "green": '#00afa5',
@@ -27,15 +23,11 @@ if __name__ == "__main__":
 
     fig, ax = plt.subplots(figsize=get_size())
 
-    for name, label in MODELS.items():
-        acor_times = pd.read_csv(f"../data/extended-{name}-v1-acor.csv")
-        acor_times.plot(x="x", y="acor_times", ax=ax, label=label)
+    acor_times = pd.read_csv(f"../data/complete-v1-acor.csv")
+    acor_times.plot(x="x", y="acor_times", ax=ax, legend=False)
 
-        xlim = ax.get_xlim()
-        ax.set_xlim(
-            left=max(xlim[0], acor_times["x"].values[0]),
-            right=max(xlim[1], acor_times["x"].values[-1]),
-        )
+    xlim = ax.get_xlim()
+    ax.set_xlim(left=0., right=max(xlim[1], acor_times["x"].values[-1]))
 
     xlim = ax.get_xlim()
     ylim = ax.get_ylim()
@@ -45,6 +37,5 @@ if __name__ == "__main__":
     ax.set_xlabel("samples $N$")
     ax.set_ylim(*ylim)
     ax.set_ylabel(r"auto-correlation estimate $\hat{\tau}$")
-    ax.legend(loc="center right")
 
     plt.savefig(Path(__file__).with_suffix(".svg").name)

@@ -24,6 +24,8 @@
     }
 \end{figure}
 
-We being with inspecting what risks our model predicts for the ipsilateral \gls{lnl} IV, given different diagnoses.
+We begin with inspecting what risks our model predicts for the ipsilateral \gls{lnl} IV, given different diagnoses. The most recent guidelines by \citeauthorandlink{biau_selection_2019} recommend for all cases, even N0 patients, the elective irradiation of at least the ipsilateral levels II, III and IVa, regardless of T-category. According to the prediction of our model, however, the risk for occult disease in \gls{lnl} IV, given different \gls{ct} scan based diagnoses (specificity $s_P = 76\%$, sensitivity $s_N = 81\%$), suggests that the risk is only high ($\geq 5\%$) in case of late T-category and when both \gls{lnl} II and III ipsilaterally showed macroscopic metastases.
+
+If we look at the spread probabilities, the model has inferred that the primary tumor spreads to \gls{lnl} IV with a probability of $\tilde{b}_\text{IV}^\text{i} = 0.96 \pm 0.26 \%$ per time-step, which is comparatively small. Spread from \gls{lnl} III to IV shows a rate of $\tilde{t}_{\text{III}\rightarrow\text{IV}} = 16.37 \pm 2.8 \%$. This means that as soon as level III shows likely involvement, the risk in \gls{lnl} IV rises quickly, too. But as long as the upstream \gls{lnl} III appears healthy, the model predicts a low probability of involvement in level IV.
 
 \end{document}

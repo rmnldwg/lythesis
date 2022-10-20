@@ -30,3 +30,58 @@ stages:
     - path: ipsiIV-risks.pdf_tex
       md5: 9fba36499418b5b66073cb36f206e80f
       size: 2058
+  convert-to-pdf@graph:
+    cmd: "inkscape --file=graph.svg --export-pdf=graph.pdf --without-gui --export-latex\n"
+    deps:
+    - path: graph.svg
+      md5: ce5696e1b1a911fca487ce007162b5bc
+      size: 13317
+    outs:
+    - path: graph.pdf
+      md5: 5f5d994012e12667bf2a32d131a80bff
+      size: 4963
+    - path: graph.pdf_tex
+      md5: af7a28a995cec72b38a046f0dcd9e831
+      size: 2042
+  acor:
+    cmd: python acor.py
+    deps:
+    - path: ../data/complete-v1-acor.csv
+      md5: 9f6dbcd885460db88bdb533101390c95
+      size: 3193
+    - path: acor.py
+      md5: e308956f077916c9c09b4cd576035273
+      size: 1035
+    outs:
+    - path: acor.svg
+      md5: df3b31e110d07f14139ea12ce379739a
+      size: 28844
+  plot-risks@ipsiIV-risks:
+    cmd: python ipsiIV-risks.py
+    deps:
+    - path: ../data/complete-v1-ipsiIV-risks.hdf5
+      md5: 96a895febac460bcf06a02ced166fb21
+      size: 926736
+    - path: _utils.py
+      md5: cee2a6b24b3588b826c3c99ee36ffd3b
+      size: 5595
+    - path: ipsiIV-risks.py
+      md5: 314478ed2d17df670ee4b2a51d2b47ae
+      size: 2315
+    outs:
+    - path: ipsiIV-risks.svg
+      md5: f578c2dbb2b6165c019bf57792d699dc
+      size: 64184
+  convert-to-pdf@acor:
+    cmd: "inkscape --file=acor.svg --export-pdf=acor.pdf --without-gui --export-latex\n"
+    deps:
+    - path: acor.svg
+      md5: df3b31e110d07f14139ea12ce379739a
+      size: 28844
+    outs:
+    - path: acor.pdf
+      md5: 6ea0181c4718354cecdf5902fb20f7ab
+      size: 23666
+    - path: acor.pdf_tex
+      md5: 65f2be0221d819e0e49d234d5e55ea1f
+      size: 2049
