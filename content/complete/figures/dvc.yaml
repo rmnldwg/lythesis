@@ -3,6 +3,8 @@ stages:
     foreach:
     - ipsiIV-risks
     - contraII-risks
+    - contraIIIandIV-risks
+    - ipsiV-risks
     do:
       cmd: python ${item}.py
       deps:
@@ -24,6 +26,8 @@ stages:
     foreach:
     - ipsiIV-risks
     - contraII-risks
+    - contraIIIandIV-risks
+    - ipsiV-risks
     - graph
     - acor
     do:

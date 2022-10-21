@@ -34,7 +34,7 @@
 
 It performed well in capturing the increased risk for contralateral metastasis, while only adding one parameter to the model.
 
-By putting together the six \glspl{lnl} and the bilateral mixing model, we end up with an \gls{hmm} of 19 parameters: Six for the ipsilateral, and six for the contralateral base probability rates (when the tumor does not extend over the mid-sagittal plane), the mixing parameter $\alpha$, five probability rates for the spread among \glspl{lnl} and lastly, one parameter for the late T-category time-prior.
+By joining the six \glspl{lnl} and the bilateral mixing model, we end up with an \gls{hmm} of 19 parameters: Six for the ipsilateral, and six for the contralateral base probability rates (when the tumor does not extend over the mid-sagittal plane), the mixing parameter $\alpha$, five probability rates for the spread among \glspl{lnl} and lastly, one parameter for the late T-category time-prior.
 
 For inference, we again used the \repolink[dfm]{emcee} Python package that implements ensemble-based \gls{mcmc} methods. We set the number of concurrent ``walkers'' to $20 \cdot k = 380$, where $k$ is the number of parameters. A proposal for a new parameer sample was generated with 80\% probability based on the differential evolution move by \citeauthorandlink{nelson_run_2013}, and with 20\% probability it used a differential evolution ``Snooker Move'' by \citeauthorandlink{ter_braak_differential_2008}. The early T-category's time-prior was fixed to a binomial distribution over eleven time-steps, meaning its support is $t \in \left[0, 1, 2, \ldots, 10\right]$, whereas the success probability $p_\text{early}$ was set to 30\%.
 
@@ -66,12 +66,15 @@ A plot of how the mean integrated auto-correlation estimate developed over the c
     \label{fig:complete:acor}
 \end{figure}
 
-After the sampling converged, we drew another 250 samples, of which we discarded all but every fifth, leaving us with $50 \cdot 380 = 19\,000$ parameter samples. From these, we compute risks for different realistic scenarios show how the resulting predictions may be used clinically for quantitatively informed decisions on \acrfull{ctv-n} definition. This will then also be compared to the currently established guidelines for \gls{ctv-n} definition to see where the potential for dose de-escalation in the elective treatment of e.g. \gls{opscc} arises.
+After the sampling converged, we drew another 250 samples, of which we discarded all but every fifth, leaving us with $50 \cdot 380 = 19\,000$ parameter samples. From these, we compute risks for different realistic scenarios to show how the resulting predictions may be used clinically for quantitatively informed decisions on \acrfull{ctv-n} definition. This will then also be compared to the currently established guidelines for \gls{ctv-n} definition to see where the potential for dose de-escalation in the elective treatment of e.g. \gls{opscc} arises.
 
 \input{_reproducibility.tex}
 \input{../_databox.tex}
 
 \subfile{ipsiIV}
+\subfile{ipsiV}
 \subfile{contraII}
+\subfile{contraIIIandIV}
+\subfile{discussion}
 
 \end{document}
