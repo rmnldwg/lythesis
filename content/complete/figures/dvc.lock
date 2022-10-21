@@ -1,0 +1,177 @@
+schema: '2.0'
+stages:
+  plots@ipsiIV-risks:
+    cmd: python ipsiIV-risks.py
+    deps:
+    - path: ../data/complete-v1-ipsiIV-risks.hdf5
+      md5: 96a895febac460bcf06a02ced166fb21
+      size: 926736
+    - path: _utils.py
+      md5: cee2a6b24b3588b826c3c99ee36ffd3b
+      size: 5595
+    - path: ipsiIV-risks.py
+      md5: 314478ed2d17df670ee4b2a51d2b47ae
+      size: 2315
+    outs:
+    - path: ipsiIV-risks.svg
+      md5: f578c2dbb2b6165c019bf57792d699dc
+      size: 64184
+  convert-to-pdf@ipsiIV-risks:
+    cmd: "inkscape --file=ipsiIV-risks.svg --export-pdf=ipsiIV-risks.pdf --without-gui\
+      \ --export-latex\n"
+    deps:
+    - path: ipsiIV-risks.svg
+      md5: aaf4535832d2d3c8182a5aa3c3374018
+      size: 64184
+    outs:
+    - path: ipsiIV-risks.pdf
+      md5: 5d32810867e0e63bd425be4e0df5e1c0
+      size: 37601
+    - path: ipsiIV-risks.pdf_tex
+      md5: 9fba36499418b5b66073cb36f206e80f
+      size: 2058
+  convert-to-pdf@graph:
+    cmd: "inkscape --file=graph.svg --export-pdf=graph.pdf --without-gui --export-latex\n"
+    deps:
+    - path: graph.svg
+      md5: ce5696e1b1a911fca487ce007162b5bc
+      size: 13317
+    outs:
+    - path: graph.pdf
+      md5: 5f5d994012e12667bf2a32d131a80bff
+      size: 4963
+    - path: graph.pdf_tex
+      md5: af7a28a995cec72b38a046f0dcd9e831
+      size: 2042
+  acor:
+    cmd: python acor.py
+    deps:
+    - path: ../data/complete-v1-acor.csv
+      md5: 9f6dbcd885460db88bdb533101390c95
+      size: 3193
+    - path: acor.py
+      md5: e308956f077916c9c09b4cd576035273
+      size: 1035
+    outs:
+    - path: acor.svg
+      md5: df3b31e110d07f14139ea12ce379739a
+      size: 28844
+  plot-risks@ipsiIV-risks:
+    cmd: python ipsiIV-risks.py
+    deps:
+    - path: ../data/complete-v1-ipsiIV-risks.hdf5
+      md5: 96a895febac460bcf06a02ced166fb21
+      size: 926736
+    - path: _utils.py
+      md5: a902ac6566e3f75d6bcbe991852388cd
+      size: 9631
+    - path: ipsiIV-risks.py
+      md5: 314478ed2d17df670ee4b2a51d2b47ae
+      size: 2315
+    outs:
+    - path: ipsiIV-risks.svg
+      md5: aaf4535832d2d3c8182a5aa3c3374018
+      size: 64184
+  convert-to-pdf@acor:
+    cmd: "inkscape --file=acor.svg --export-pdf=acor.pdf --without-gui --export-latex\n"
+    deps:
+    - path: acor.svg
+      md5: df3b31e110d07f14139ea12ce379739a
+      size: 28844
+    outs:
+    - path: acor.pdf
+      md5: 6ea0181c4718354cecdf5902fb20f7ab
+      size: 23666
+    - path: acor.pdf_tex
+      md5: 65f2be0221d819e0e49d234d5e55ea1f
+      size: 2049
+  plot-risks@contraII-risks:
+    cmd: python contraII-risks.py
+    deps:
+    - path: ../data/complete-v1-contraII-risks.hdf5
+      md5: 93905926966e70f9a26b73ae653454c2
+      size: 1847016
+    - path: _utils.py
+      md5: a902ac6566e3f75d6bcbe991852388cd
+      size: 9631
+    - path: contraII-risks.py
+      md5: df7c94872b621bae04b11a972b1dab8e
+      size: 3318
+    outs:
+    - path: contraII-risks.svg
+      md5: b19d53e1cae852d33bc15e2fdf050c11
+      size: 90465
+  convert-to-pdf@contraII-risks:
+    cmd: "inkscape --file=contraII-risks.svg --export-pdf=contraII-risks.pdf --without-gui\
+      \ --export-latex\n"
+    deps:
+    - path: contraII-risks.svg
+      md5: b19d53e1cae852d33bc15e2fdf050c11
+      size: 90465
+    outs:
+    - path: contraII-risks.pdf
+      md5: 1d74fc4f028de38d4ec6f7a9c42ce2ff
+      size: 60793
+    - path: contraII-risks.pdf_tex
+      md5: 723896127b986912c9f82977dff18e9b
+      size: 2062
+  plot-risks@contraIIIandIV-risks:
+    cmd: python contraIIIandIV-risks.py
+    deps:
+    - path: ../data/complete-v1-contraIIIandIV-risks.hdf5
+      md5: 9e545fd14e5bc914632a0193348693fa
+      size: 1088472
+    - path: _utils.py
+      md5: a902ac6566e3f75d6bcbe991852388cd
+      size: 9631
+    - path: contraIIIandIV-risks.py
+      md5: e24d10be72c91b1a1a46f38565840198
+      size: 2810
+    outs:
+    - path: contraIIIandIV-risks.svg
+      md5: c2898d936495ba6db1c00199e9bb7da9
+      size: 86261
+  convert-to-pdf@contraIIIandIV-risks:
+    cmd: "inkscape --file=contraIIIandIV-risks.svg --export-pdf=contraIIIandIV-risks.pdf\
+      \ --without-gui --export-latex\n"
+    deps:
+    - path: contraIIIandIV-risks.svg
+      md5: c2898d936495ba6db1c00199e9bb7da9
+      size: 86261
+    outs:
+    - path: contraIIIandIV-risks.pdf
+      md5: 03ae76cf892646ef762a59006363b0c3
+      size: 69247
+    - path: contraIIIandIV-risks.pdf_tex
+      md5: ebeba6847da63b0136837014dd30856f
+      size: 2074
+  plot-risks@ipsiV-risks:
+    cmd: python ipsiV-risks.py
+    deps:
+    - path: ../data/complete-v1-ipsiV-risks.hdf5
+      md5: 05404c862050bc803fc45aee8a590c90
+      size: 925704
+    - path: _utils.py
+      md5: a902ac6566e3f75d6bcbe991852388cd
+      size: 9631
+    - path: ipsiV-risks.py
+      md5: 0aaedd33f5f50d566c54d058ebce1c9c
+      size: 1977
+    outs:
+    - path: ipsiV-risks.svg
+      md5: 742252f439d2b2ed308c8077095bd6d3
+      size: 67927
+  convert-to-pdf@ipsiV-risks:
+    cmd: "inkscape --file=ipsiV-risks.svg --export-pdf=ipsiV-risks.pdf --without-gui\
+      \ --export-latex\n"
+    deps:
+    - path: ipsiV-risks.svg
+      md5: 742252f439d2b2ed308c8077095bd6d3
+      size: 67927
+    outs:
+    - path: ipsiV-risks.pdf
+      md5: 4edf7e254e6e88aff5262c2dc3bfae28
+      size: 41684
+    - path: ipsiV-risks.pdf_tex
+      md5: e84a86667565f25743df450abb05eb30
+      size: 2056

@@ -1,0 +1,80 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
+
+
+\begin{document}
+
+\chapter{Complete Model of Bilateral Lymphatic Metastatic Spread}
+\chaptermark{Complete Bilateral Model}
+\label{chap:complete}
+
+\begin{samepage}
+    \setlength\intextsep{0pt}
+    \begin{wrapfigure}{l}{0.4\textwidth}
+        \centering
+        \def\svgwidth{0.38\textwidth}
+        \input{figures/graph.pdf_tex}
+        \caption[
+            Graph underlying the complete model
+        ]{
+            Graph underlying the complete model. This graph was chosen based on the results in \cref{chap:graph}. Note that each of the shown \glspl{lnl} exists twice: Once for the ipsilateral and once for the contralateral side.
+        }
+        \label{fig:complete:graph}
+    \end{wrapfigure}
+    
+    Finally, in this chapter we will conclude our efforts to model lymphatic metastatic spread in \gls{hnscc} by combining all insights of previous chapters. Specifically, this means inferring the spread parameters for a model that has the extended graph of \cref{chap:graph} as underlying representation of the lymphatic network, and uses the results from \cref{chap:bilateral} to include the contralateral side.
+    
+    The complete model now includes the \glspl{lnl} I, II, III, IV, V and VII. They are connected as shown in \cref{fig:complete:graph}, based on the results in \cref{chap:graph}. For the treatment of the contralateral side, we decided to employ the model $\mathcal{M}_\alpha$ that was introduced in \cref{chap:bilateral}. We also called this the ``mixing model'', because it uses the mixing parameter $\alpha$ that sets the probability rates for spread from the tumor to the contralateral \glspl{lnl} in case of an extension over the mid-sagittal plane to be a linear combination between the ipsilateral base probability rates and the contralateral ones, when the tumor is lateralized:
+    %
+    \begin{equation}
+        \tilde{b}_v^\text{c,e} = \alpha \cdot \tilde{b}_v^\text{i} + (1 - \alpha) \cdot \tilde{b}_v^{\text{c},\centernot{\text{e}}}
+    \end{equation}
+\end{samepage}
+
+It performed well in capturing the increased risk for contralateral metastasis, while only adding one parameter to the model.
+
+By joining the six \glspl{lnl} and the bilateral mixing model, we end up with an \gls{hmm} of 19 parameters: Six for the ipsilateral, and six for the contralateral base probability rates (when the tumor does not extend over the mid-sagittal plane), the mixing parameter $\alpha$, five probability rates for the spread among \glspl{lnl} and lastly, one parameter for the late T-category time-prior.
+
+For inference, we again used the \repolink[dfm]{emcee} Python package that implements ensemble-based \gls{mcmc} methods. We set the number of concurrent ``walkers'' to $20 \cdot k = 380$, where $k$ is the number of parameters. A proposal for a new parameer sample was generated with 80\% probability based on the differential evolution move by \citeauthorandlink{nelson_run_2013}, and with 20\% probability it used a differential evolution ``Snooker Move'' by \citeauthorandlink{ter_braak_differential_2008}. The early T-category's time-prior was fixed to a binomial distribution over eleven time-steps, meaning its support is $t \in \left[0, 1, 2, \ldots, 10\right]$, whereas the success probability $p_\text{early}$ was set to 30\%.
+
+Sampling was then run until convergence, meaning that the estimate of the mean integrated auto-corralation of all 380 walkers, which was computed every 100 sampling steps, fulfills these conditions:
+
+\begin{enumerate}[label={(\arabic*)}]
+    \item The estimate $\hat{\tau}$ needs to be stable, meaning
+    \begin{equation}
+        \left| 1 - \left( \frac{\hat{\tau}_{i-1}}{\hat{\tau}_i} \right) \right| \leq 0.075
+    \end{equation}
+    \item We only trust the estimate once it fulfills
+    \begin{equation}
+        30 \cdot \hat{\tau}_i \geq N
+    \end{equation}
+    where $N$ is the number of drawn samples.
+\end{enumerate}
+
+A plot of how the mean integrated auto-correlation estimate developed over the course of this sampling round is shown in \cref{fig:complete:acor}.
+
+\begin{figure}
+    \centering
+    \def\svgwidth{0.7\textwidth}
+    \input{figures/acor.pdf_tex}
+    \caption[
+        Mean integrated auto-correlation estimate for the complete model's run
+    ]{
+        Evolution of the mean integrated auto-correlation estimate for the sampling run with the complete model. Only when the estimate (blue) undercuts the black dashed line and is sufficiently stable do we consider the sampling procedure converged.
+    }
+    \label{fig:complete:acor}
+\end{figure}
+
+After the sampling converged, we drew another 250 samples, of which we discarded all but every fifth, leaving us with $50 \cdot 380 = 19\,000$ parameter samples. From these, we compute risks for different realistic scenarios to show how the resulting predictions may be used clinically for quantitatively informed decisions on \acrfull{ctv-n} definition. This will then also be compared to the currently established guidelines for \gls{ctv-n} definition to see where the potential for dose de-escalation in the elective treatment of e.g. \gls{opscc} arises.
+
+\input{_reproducibility.tex}
+\input{../_databox.tex}
+
+\subfile{ipsiIV}
+\subfile{ipsiV}
+\subfile{contraII}
+\subfile{contraIIIandIV}
+\subfile{discussion}
+
+\end{document}

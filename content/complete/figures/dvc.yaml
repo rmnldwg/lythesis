@@ -1,0 +1,46 @@
+stages:
+  plot-risks:
+    foreach:
+    - ipsiIV-risks
+    - contraII-risks
+    - contraIIIandIV-risks
+    - ipsiV-risks
+    do:
+      cmd: python ${item}.py
+      deps:
+      - ${item}.py
+      - ../data/complete-v1-${item}.hdf5
+      - _utils.py
+      outs:
+      - ${item}.svg
+
+  acor:
+    cmd: python acor.py
+    deps:
+    - acor.py
+    - ../data/complete-v1-acor.csv
+    outs:
+    - acor.svg
+
+  convert-to-pdf:
+    foreach:
+    - ipsiIV-risks
+    - contraII-risks
+    - contraIIIandIV-risks
+    - ipsiV-risks
+    - graph
+    - acor
+    do:
+      cmd: >
+        inkscape
+        --file=${item}.svg
+        --export-pdf=${item}.pdf
+        --without-gui
+        --export-latex
+      deps:
+      - ${item}.svg
+      outs:
+      - ${item}.pdf:
+          cache: false
+      - ${item}.pdf_tex:
+          cache: false

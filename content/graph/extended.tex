@@ -95,7 +95,7 @@ As mentioned, we started with establishing a baseline, using a unilateral model 
 
 The first question we want to answer is whether we should add the connection from \gls{lnl} I to II, the other way around or none between the two levels at all. We sampled two identical models -- except for the direction between \glspl{lnl} I and II -- until convergence and compared metrics and predicted prevalences for both. ``Sampling until convergence'' in this case means that we stopped the inference process when the following two requirements were met:
 
-\begin{itemize}
+\begin{enumerate}
     \item A stable estimate of the integrated auto-correlation time $\hat{\tau}$, meaning
     \begin{equation}
         \left| 1 - \left( \frac{\hat{\tau}_{i-1}}{\hat{\tau}_i} \right) \right| \leq 0.075
@@ -105,7 +105,7 @@ The first question we want to answer is whether we should add the connection fro
         30 \cdot \hat{\tau}_i \geq N
     \end{equation}
     where $N$ is the number of drawn samples. This means we only trust the estimate once we have a sufficiently large number of samples.
-\end{itemize}
+\end{enumerate}
 
 We have plotted an example of how the integrated auto-correlation estimate evolves over the course of a sampling procedure in \cref{fig:graph:extended:acor}. It can be seen that the estimate is far too low initially. Only later, after the burn in phase, does it level off around the actual auto-correlation time. This is why the second requirement (shown as black line in the plot) is introduced.
 

@@ -1,0 +1,12 @@
+md5: 54f02cf50305c703b4cc5519b2b22ca0
+frozen: true
+deps:
+- path: models/risks.hdf5
+  repo:
+    url: https://github.com/rmnldwg/lynference
+    rev: complete-part2-v1
+    rev_lock: 1b2efa4f990ece70300c223bac07ddc6155b8e43
+outs:
+- md5: 93905926966e70f9a26b73ae653454c2
+  size: 1847016
+  path: complete-v1-contraII-risks.hdf5
