@@ -4,22 +4,30 @@
 
 \begin{document}
     
-% \begin{abstract}
-%     \thispagestyle{empty}
-%     Abstract goes here...
-% \end{abstract}
+\begin{abstract}
+    \thispagestyle{plain}
+    \Glspl{hnscc} are often treated using radiotherapy. Because this type of cancer frequently spreads to regional lymph nodes, parts of the lymphatic system are irradiated alongside the primary tumor. Macroscopic nodal metastasis, visible on imaging modalities such as computed tomography, is always included in the target volume of radiotherapy. Additionally, clinicians may electively irradiate \glspl{lnl} when their estimated risk to harbor microscopic disease exceeds a given threshold. Currently, this risk estimate is based on the prevalence of metastatic involvement in a given \gls{lnl} as reported in the literature. However, published studies on lymphatic metastatic progression patterns rarely report how involvement of \glspl{lnl} is correlated, which is of crucial importance to create more personalized elective target volumes. This work aims to tackle this issue in three related ways:
 
-% \chapter*{Dedication}
-% \thispagestyle{empty}
-% To mum and dad
+    \begin{enumerate}[label={(\arabic*)}]
+        \item We extracted a dataset of patients diagnosed with oropharyngeal \acrshort{scc} at the \gls{usz}. This dataset details the observed involvement per \gls{lnl} and diagnostic modality. It is thereby the most detailed dataset on patterns of lymphatic progression to date.
+        \item In addition to sharing the full dataset freely with the research community, we developed an intuitive web page named \href{https://lyprox.org}{\faIcon{external-link-alt}~LyProX}. The interface on this web page allows researchers to visually and interactively explore the data extracted at the \gls{usz}, as well as another dataset that was kindly provided to us by Vincent Grégoire in response to our efforts.
+        \item Lastly, we have developed a \gls{hmm} that aims to predict the risk of microscopic disease, given an individual diagnosis. It is based on a previous model using \glspl{bn}, but extends it to naturally include T-category as diagnostic variable. Using bayesian model comparison, the \gls{hmm} framework is extended to include the \glspl{lnl} I, II, III, IV, V, and VII in both the ipsi- and the contralateral side of the neck.
+    \end{enumerate}
 
-% \chapter*{Declaration}
-% \thispagestyle{empty}
-% I declare that..
+    Ultimately, we train the \gls{hmm} with the available data and demonstrate how the resulting predictions may be used to quantitatively predict the personalized risk of occult disease. We find that our model supports a reduction of electively irradiated nodal volumes, especially in the contralateral neck when the primary tumor is clearly lateralized. However, clinical validation of the \gls{hmm}'s performance is necessary before our model can aid decision-making with respect to clinical target volume definition.
+\end{abstract}
 
-% \chapter*{Acknowledgements}
-% \thispagestyle{empty}
-% I want to thank...
+\chapter*{Dedication}
+\thispagestyle{empty}
+To mum and dad
+
+\chapter*{Declaration}
+\thispagestyle{empty}
+I declare that..
+
+\chapter*{Acknowledgements}
+\thispagestyle{empty}
+I want to thank...
 
 \tableofcontents
 \thispagestyle{plain}

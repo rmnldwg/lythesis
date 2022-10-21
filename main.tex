@@ -2,7 +2,11 @@
 \providecommand{\relativeRoot}{.}
 
 
-\documentclass[12pt,twoside]{report}
+\documentclass[
+    12pt,
+    twoside,
+    openright
+]{report}
 
 %% Load preamble
 \input{preamble.tex}
@@ -22,7 +26,6 @@
     \pagenumbering{roman}
     \subfile{content/frontmatter}
 
-    \pagenumbering{arabic}
     %% The Chapters as subfiles
     \subfile{content/intro/_chapter}
     \subfile{content/previous_work/_chapter}
