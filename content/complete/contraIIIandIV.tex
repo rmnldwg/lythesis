@@ -1,0 +1,27 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
+
+
+\begin{document}
+
+\section[Risk for Contralateral LNL III and IV Involvement]{Risk for Contralateral LNL III and IV\\Involvement}
+\label{sec:complete:contraIIIandIV}
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/contraIIIandIV-risks.pdf_tex}
+    \caption[
+        Risks for the contralateral LNLs III and IV, predicted by the complete model
+    ]{
+        Distributions over involvement risks in the contralateral \glspl{lnl} III and IV, given specific scenarios, as histograms. As described in the legend, in all scenarios we investigated the risk for late T-category (T3 and T4) where the tumor does extend over the mid-sagittal plane. All involvements that were provided as diagnosis are based on \gls{ct} scan's specificity $s_P = 76\%$ and sensitivity $s_N = 81\%$. E.g., The red shaded histogram displays the risk for involvement in the contralateral \gls{lnl} III, given on \gls{ct} visible metastases in the ipsilateral levels II and III, as well as in the contralateral level II. This is also the only risk that is around a 5\% threshold.
+    }
+    \label{fig:complete:contraIIIandIV}
+\end{figure}
+
+Next, we looked at more involvement scenarios in the contralateral neck: Predictions of the risk for occult nodal disease in the levels III and IV contralaterally. For these \glspl{lnl} we always considered the case of late T-category and a tumor extending over the mid-sagittal plane. Otherwise, the computed risks are simply too small to be relevant. And even in such advanced and not lateralized diseases, the risks mostly stay below 5\%: The probability to find microscopic disease in the contralateral \gls{lnl} III, despite negative findings based on \gls{ct}, only rises to around 5\% when the immediate upstream level II, in addition to the ipsilateral levels II and III, shows detectable metastasis on the \gls{ct} scan (see \cref{fig:complete:contraIIIandIV}).
+
+An update of the guidelines by \citeauthorandlink{biau_selection_2019} based on our model would hence conclude that elective irradiation of the \glspl{lnl} III and IV contralaterally is indicated only for high risk scenarios: In case of late T-category tumors that extend over the mid-sagittal plane and where the immediate upstream level is clinically involved.
+
+\end{document}

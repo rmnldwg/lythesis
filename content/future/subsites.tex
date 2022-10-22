@@ -1,0 +1,25 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{\relativeRoot/figures/}
+
+
+\begin{document}
+
+\section{Additional Tumor Subsites}
+\label{sec:future:subsites}
+
+So far, we have exclusively dealt with oropharyngeal \gls{scc}, but lymphatic metastatic spread occurs for different primary tumor locations as well, e.g. oral cavity \acrlong{scc} \cite{shah_patterns_1990,razfar_incidence_2009,woolgar_topography_2007}. When considering tumors in different locations and subsites, one expects and in fact observes different patterns of lymphatic metastatic progression. For example, when the primary is located in the cheek, \gls{lnl} is involved far more often than in case of oropharyngeal disease \cite{woolgar_topography_2007}.
+
+To model the risk for occult disease in the lymph nodes of the neck for patients with e.g. oral cavity \gls{scc} we could naturally employ the \gls{hmm} that we have introduced and tested in the \cref{chap:unilateral,chap:graph,chap:bilateral} without adapting anything other that the dataset the model is trained on. We have not built our model on assumptions unique to oropharyngeal \gls{scc} and to the best of our knowledge there is no reason to believe they would not hold for e.g. oral cavity \gls{scc}.
+
+Such a model for \gls{oc}, trained on a dataset $\boldsymbol{\mathcal{D}}^\text{OC}$ from patients with oral cavity \gls{scc} would consequently learn spread parameters $\boldsymbol{\theta}^\text{OC}$ in analogy to how the spread parameters $\boldsymbol{\theta}^\text{OP}$ are inferred from a dataset $\boldsymbol{\mathcal{D}}^\text{OP}$ of patients with a tumor in the \gls{op}. As soon as datasets of lymphatic patterns of metastatic progression covering other tumor locations are available to us -- e.g. through extended efforts to extract datasets at the \gls{usz} or through collaborations -- it will be interesting to apply the presented methodology to the new data.
+
+In addition, there may be a way to enable models to improve each other and simultaneously learn parameters from data of different tumor locations: Since they all represent the lymphatic progression in the same region of the neck, a joint model with shared transition probabilities $\tilde{t}_{rv}$ among the \glspl{lnl} may allow the models to share information. The base probabilities $\tilde{b}_v$ denoting how likely spread is to occur from the tumor to level $v$, would remain independent for the models. Under this setup, the lymphatic spread characteristics from tumors located in different parts of the head and neck region could be learned separately, while multiple datasets would contribute information to the pathways of lymphatic spread from \gls{lnl} to \gls{lnl}.
+
+For instance, according to data underlying study by \citeauthorandlink{woolgar_topography_2007}, oral cavity tumors generally exhibit much more frequent spread to \gls{lnl} I (up to 62\% in the case of tumors in the cheek) than orpharyngeal tumors (only 3\% as reported by \citeauthorandlink{woolgar_topography_2007}, 10\% overall in the \gls{usz} and \gls{clb} datasets combined). This means it is easier to infer about the spread between the \glspl{lnl} I and II from oral cavity \gls{scc} data than it is to infer from oropharyngeal \gls{scc} data. Consequently, a dataset of oral cavity cancer patients might -- through a joint model -- improve the risk prediction for nodal metastasis in oropharyngeal \glspl{scc} that involve the connection between \glspl{lnl} I and II.
+
+In the actual parameter inference, such a joint model approach is straightforward: We simply add up the log-likelihoods of the individual models, while distributing the shared parameters among them for each sample in the \gls{mcmc} process.
+
+Remaining questions regarding this approach are if other parameters may be shared as well. E.g., should the parameter governing the shape of late(r) T-category time-prior(s) be shared among models for different tumor locations (see \cref{subsec:unilateral:formalism:tstage,sec:unilateral:tprior})? Intuitively, it makes sense to only implement this parameter once for all models, since it is strongly connected to spread probabilities $\tilde{t}_{rv}$ that would be jointly implemented. Doing so would effectively synchronize the abstract time frames of all connected models. The same question as for the time-prior parameter may also be asked for the mixing parameter $\alpha$ (\cref{sec:bilateral:parameter_symmetries}).
+
+\end{document}

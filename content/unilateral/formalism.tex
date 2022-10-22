@@ -197,7 +197,7 @@ In the formalism of the last sections, the $P_\text{HMM}$ depends implicitly thr
 
 Formally, we can then express the dataset $\boldsymbol{\mathcal{Z}}$ of $N$ patients as vector $\mathbf{f}$ of the number of patients $f_i$ for which the diagnosis corresponds to the observational state $\boldsymbol{\zeta}_i$. The likelihood $P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right)$ of observing this dataset, given a particular choice of parameters, is then given by
 %
-\begin{equation}
+\begin{equation} \label{eq:unilateral:llh_as_prod}
     P \left( \boldsymbol{\mathcal{Z}} \mid \theta \right) = \prod_{i=1}^{2^V}{P \left( \boldsymbol{\zeta}_i \mid \theta \right)^{f_i}}
 \end{equation}
 %
@@ -212,7 +212,7 @@ By Bayes' rule, the posterior distribution of those parameters is
 where $P(\theta)$ is the prior over these parameters. Since they are exclusively probability rates, they must all come from the interval $[0,1] \in \mathbb{R}$. In this work we will choose the most uninformative prior
 %
 \begin{equation}
-    p(\theta) = 
+    P(\theta) = 
     \begin{cases}
         1 & \text{if} \ \ \theta_r \in \left[ 0,1 \right]; \forall r \leq E \\
         0 & \text{otherwise}
@@ -220,6 +220,42 @@ where $P(\theta)$ is the prior over these parameters. Since they are exclusively
 \end{equation}
 %
 where $E$ is the number of edges in the \gls{dag} we use to represent the lymphatic system. While it is easy to compute the likelihood, it is not feasible to efficiently calculate the normalization constant in the denominator of \cref{eq:unilateral:inference:bayes_theorem}. Hence, we will use \gls{mcmc} sampling methods to estimate the parameters $\theta$ and their uncertainty.
+
+\subsubsection*{Markov-Chain Monte Carlo Sampling}
+\label{subsubsec:unilateral:formalism:inference:mcmc}
+
+At this point, we will just briefly introduce the basic concept behind \gls{mcmc} sampling. A better resource introducing this topic more thoroughly can be found in \citeauthorandlink{bishop_pattern_2006}, \citeauthorandlink{mackay_information_nodate} or \citeauthorandlink{gelman_bayesian_2015}.
+
+As with our posterior distribution $\Probofgiven{\theta}{\boldsymbol{\mathcal{Z}}}$ of \cref{eq:unilateral:inference:bayes_theorem}, the problem often occurs that one cannot compute expectations of under the distribution of interest. These expectations generally take the form
+%
+\begin{equation}
+    \mathbb{E}_{P} \left[ f \right] = \int{P \left( \theta \right) f \left( \theta \right) d\theta}
+\end{equation}
+%
+and are hard to compute even for a low dimensionality of $\theta$. \Gls{mcmc} is a conceptually simple framework that allows us to draw samples from almost any distribution by constructing a Markov chain of samples $\theta_1, \theta_2, \ldots, \theta_\tau$ in the following way:
+
+\begin{enumerate}[label={(\arabic*)}]
+    \item Draw a new proposal $\theta^\star$ to add to the Markov chain from the proposal distribution $q\left(\theta^\star \mid \theta_\tau\right)$. In the simplest case, this proposal distribution is symmetric $q\left(\theta^\star \mid \theta_\tau\right) = q\left(\theta_\tau \mid \theta^\star\right)$, in which case this is called the \emph{Metropolis} algorithm \cite{metropolis_equation_1953}.
+    \item Accept the new proposal with probability
+    \begin{equation}
+        A \left( \theta^\star, \theta_\tau \right) = \min{\left( 1, \frac{\tilde{P}\left(\theta^\star\right)}{\tilde{P}\left(\theta_\tau\right)} \right)}
+    \end{equation}
+    where the unnormalized posterior is $\tilde{P}\left(\theta\right)$.
+    \item If the new proposal got accepted, set $\theta_{\tau+1} = \theta^\star$, otherwise repeat the last sample by setting $\theta_{\tau+1} = \theta_\tau$.
+\end{enumerate}
+
+It can be shown that the samples produced by repeatedly executing these simple steps are in fact distributed like $P\left(\theta\right)$ if the number of drawn samples goes to infinity $S \rightarrow \infty$. Additionally, one needs to be careful, since successive samples are highly correlated and especially in the beginning the chain might be far away from the modes of the target distribution. But if there are enough steps discarded in between samples after a sufficiently long so-called \emph{burn in} phase, the samples are nearly independent and one may compute expectations as follows:
+%
+\begin{equation}
+    \mathbb{E}_{P} \left[ f \right] = \int{ P \left( \theta \right) f \left( \theta \right) d\theta} \approx \frac{1}{S} \sum_{s=1}^S{ f \left(\theta_s\right) }
+\end{equation}
+%
+In the upcoming experiments, we will not use this simple Metropolis algorithm, but more modern and sophisticated algorithms that mainly differ from the introduced procedure in two aspects: They
+\begin{enumerate*}[label={(\alph*)}]
+    \item draw multiple interacting Markov chains concurrently, and
+    \item use more sophisticated (non-symmetric) proposal distributions based on the position of the ``ensemble'' of chains
+\end{enumerate*}.
+This leads to dramatically shorter auto-correlation times of the chains, meaning we need to draw fewer samples to be able to accurately compute expectations.
 
 \subsection{Incorporation of T-category}
 \label{subsec:unilateral:formalism:tstage}
@@ -282,7 +318,7 @@ With a parameter set $\hat{\theta} = \left( \big\{ \Tilde{b}_v \big\}, \big\{ \T
 %
 Note that in the second line, we have explicitly written out the marginalization over all hidden states $\boldsymbol{\xi}_i$ that have \gls{lnl} $v$ involved. We have written the state of \gls{lnl} $v$ in the state $\boldsymbol{\xi}_i$ as $\xi_{iv}$. The denominator can be computed using \cref{eq:unilateral:hmm_marginalize}, which already includes the marginalization over all hidden states $\boldsymbol{\xi}_i$.
 
-Instead of just using one estimate of a parameter set $\hat{\theta}$ however, we are going to employ \gls{mcmc}. This allows us to draw $L$ sets of parameters $\boldsymbol{\hat{\theta}} = \begin{pmatrix} \hat{\theta}_1 & \hat{\theta}_2 & \ldots & \hat{\theta}_L \end{pmatrix}$ that are distributed like the posterior $\Probofgiven{\hat{\theta}}{\boldsymbol{\mathcal{Z}}}$. Since those sampled $\boldsymbol{\hat{\theta}}$ are random variables, the risk $R \left( X_v \mid \mathbf{z}, \hat{\theta} \right)$ being a function of $\hat{\theta}$ is too. Using the Monte Carlo estimator, we can therefore compute the moments of the distribution over the risk, including e.g. the expectation value
+Instead of just using one estimate of a parameter set $\hat{\theta}$ however, we are going to employ \gls{mcmc}. This allows us to draw $L$ sets of parameters $\boldsymbol{\hat{\theta}} = \begin{pmatrix}  \end{pmatrix}$ that are distributed like the posterior $\Probofgiven{\theta}{\boldsymbol{\mathcal{Z}}}$. Since those sampled $\boldsymbol{\hat{\theta}}$ are random variables, the risk $R \big( X_v \mid \mathbf{z}, \hat{\theta} \big)$ -- being a function of $\hat{\theta}$ -- is, too. Using the Monte Carlo estimator, we can therefore compute the moments of the distribution over the risk, including e.g. the expectation value
 %
 \begin{equation}
     \mathbb{E}_{\boldsymbol{\hat{\theta}}} \left[ R \left( X_v = 1 \mid \mathbf{z} \right) \right] = \frac{1}{L} \sum_{k=1}^{L}{R \left( X_v = 1 \mid \mathbf{z}, \hat{\theta}_k \right)}

@@ -1,0 +1,31 @@
+\providecommand{\relativeRoot}{../..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{{\subfix{./figures/}}}
+
+
+\begin{document}
+
+\section{Involvement Risk for Contralateral LNL II}
+\label{sec:complete:contraII}
+
+\begin{figure}
+    \centering
+    \def\svgwidth{1.0\textwidth}
+    \input{figures/contraII-risks.pdf_tex}
+    \caption[
+        Complete model's risk predictions for contralateral LNL II
+    ]{
+        Histograms over risk for involvement in the contralateral \gls{lnl} II, given specific scenarios. In the legend, ``early'' (T1 and T2) and ``late'' (T3 and T4) refer to the T-category, ``no ext'' and ``ext'' indicate whether the tumor extended over the mid-sagittal plane. Lastly, ``N0'' means that based on a \gls{ct} scan (specificity $s_P = 76\%$, sensitivity $s_N = 81\%$), no nodal involvement was detected, whereas e.g. ``CT shows ipsi LNL II involved'' indicates that the \gls{ct} scan found suspicious lymph nodes in level II. However, all other \glspl{lnl} where still diagnosed to be healthy. The histograms indicate that the strongest predictor of contralateral involvement in \gls{lnl} II is the tumor's lateralization, i.e., whether it extends over the mid-plane.
+    }
+    \label{fig:complete:contraII}
+\end{figure}
+
+Looking at the guidelines' recommendations for the \gls{ctv-n} definition in the contralateral neck, we find that \gls{lnl} II (as well as III and IVa) should be included \cite{biau_selection_2019}. An exception are \glspl{scc} in the tonsil, where drainage appears to be more lateralized and data showed low contralateral neck failures when only ipsilateral irradiation was performed \cite{huang_re-evaluation_2017}.
+
+Our model predicted the risk of contralateral level II involvement for a range of worsening scenarios, which are plotted in \cref{fig:complete:contraII}. It predicts that the tumor's extension over the mid-sagittal plane is the greatest risk factor for contralateral nodal disease. Only when the tumor is not lateralized anymore does the risk for occult disease in \gls{lnl} II contralaterally rise above 4\%. Note that these risks are still conditioned on the fact that a \gls{ct} scan did not find any suspicious lymph nodes in the contralateral level II.
+
+As we have shown already in \cref{chap:bilateral}, our model is capable of correlating worsening ipsilateral diagnoses with increased risk for contralateral disease. As such, finding metastasis e.g. in the \glspl{lnl} II and/or III ipsilaterally increases the risk for nodal disease in the contralateral level II significantly.
+
+Based on these predictions and the data we have provided our model with, recommendations for the definition of contralateral \gls{ctv-n} would be as follows: Ipsilateral irradiation only is indicated as long as the tumor is clearly lateralized, regardless of T-category and extent of nodal disease ipsilaterally. However, as soon as the primary tumor touches or extends over the mid-sagittal plane, again regardless of T-category or ipsilateral nodal involvement, inclusion of at least \gls{lnl} II into the contralateral \gls{ctv-n} is indicated.
+
+\end{document}

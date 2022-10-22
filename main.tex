@@ -2,7 +2,11 @@
 \providecommand{\relativeRoot}{.}
 
 
-\documentclass[12pt,twoside]{report}
+\documentclass[
+    12pt,
+    twoside,
+    openright
+]{report}
 
 %% Load preamble
 \input{preamble.tex}
@@ -10,19 +14,18 @@
 %% Metadata
 \title{Modelling Lymphatic Metastatic Progression in Head and Neck Cancer}
 \author{Roman Ludwig}
-\date{\today}
+\date{\monthyeardate\today}
 
 %% The actual document
 \begin{document}
     
     %% Titlepage
-    \maketitle
+    \subfile{content/titlepage}
 
     %% Frontmatter
     \pagenumbering{roman}
     \subfile{content/frontmatter}
 
-    \pagenumbering{arabic}
     %% The Chapters as subfiles
     \subfile{content/intro/_chapter}
     \subfile{content/previous_work/_chapter}
@@ -32,6 +35,7 @@
     \subfile{content/unilateral/_chapter}
     \subfile{content/graph/_chapter}
     \subfile{content/bilateral/_chapter}
+    \subfile{content/complete/_chapter}
     \subfile{content/future/_chapter}
 
     %% Backmatter

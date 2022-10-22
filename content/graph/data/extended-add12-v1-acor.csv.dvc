@@ -1,0 +1,12 @@
+md5: 98c913758e69dc9e5cc984afdfea2fd4
+frozen: true
+deps:
+- path: plots/sampling/acor_times.csv
+  repo:
+    url: https://github.com/rmnldwg/lynference
+    rev: extended-add12-v1
+    rev_lock: b19b96c3a4c18efa57ff8e3a51505e3a7350e4ac
+outs:
+- md5: b9a2c8aacabee03fd797f4f01602670f
+  size: 906
+  path: extended-add12-v1-acor.csv
