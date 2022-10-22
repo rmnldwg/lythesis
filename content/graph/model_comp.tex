@@ -64,22 +64,22 @@ The concept of \gls{ti} originates from the field of statistical mechanics and c
 %
 \begin{equation} \label{eq:ti:subtract_zero}
     \begin{aligned}
-        \ln{Z} &\coloneqq \ln{p(\boldsymbol{\mathcal{D}} \mid \mathcal{M})} = \ln{\int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right) p(\theta \mid \mathcal{M}) d\theta}} - \ln{1} \\
-        &= \ln{\int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right) p(\theta \mid \mathcal{M}) d\theta}} - \underbrace{ \ln{ \int{ p(\theta \mid \mathcal{M}) d\theta} } }_{\ln{Z_0}}
+        \ln{E} &\coloneqq \ln{p(\boldsymbol{\mathcal{D}} \mid \mathcal{M})} = \ln{\int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right) p(\theta \mid \mathcal{M}) d\theta}} - \ln{1} \\
+        &= \ln{\int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right) p(\theta \mid \mathcal{M}) d\theta}} - \underbrace{ \ln{ \int{ p(\theta \mid \mathcal{M}) d\theta} } }_{\ln{E_0}}
     \end{aligned}
 \end{equation}
 %
-Writing it as this difference between two different log-evidences $\ln{Z}$ and $\ln{Z_0}$ itself does not get us far. But if we could parametrize a differentiable path between the two, then the integration
+Writing it as this difference between two different log-evidences $\ln{E}$ and $\ln{E_0}$ itself does not get us far. But if we could parametrize a differentiable path between the two, then the integration
 %
 \begin{equation} \label{eq:ti:diff_as_int}
-    \ln{Z} - \ln{Z_0} = \int_0^1{ \frac{d}{d\beta} \ln{Z_\beta} d\beta}
+    \ln{E} - \ln{E_0} = \int_0^1{ \frac{d}{d\beta} \ln{E_\beta} d\beta}
 \end{equation}
 %
 we end up with can actually be computed. By inspection of \cref{eq:ti:subtract_zero} and \cref{eq:ti:diff_as_int}, one can see that such a differentiable path can be built using what we call the \emph{power posterior} $p_\beta (\theta \mid \boldsymbol{\mathcal{D}}, \mathcal{M})$:
 %
 \begin{equation} \label{eq:ti:power_post}
     \begin{aligned}
-        \ln{Z_\beta} &= \ln{ \int{ p_\beta (\theta \mid \boldsymbol{\mathcal{D}}, \mathcal{M}) d\theta} } \\
+        \ln{E_\beta} &= \ln{ \int{ p_\beta (\theta \mid \boldsymbol{\mathcal{D}}, \mathcal{M}) d\theta} } \\
         &= \ln{\int{ p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right)^\beta p(\theta \mid \mathcal{M}) d\theta}}
     \end{aligned}
 \end{equation}
@@ -88,7 +88,7 @@ with the derivative
 %
 \begin{equation} \label{eq:ti:accuracy}
     \begin{aligned}
-        \frac{d}{d\beta} \ln{Z_\beta} &= \int{ \frac{p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right)^\beta p(\theta \mid \mathcal{M})}{Z_\beta} \ln{p(\boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} )} d\theta} \\
+        \frac{d}{d\beta} \ln{E_\beta} &= \int{ \frac{p\left( \boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} \right)^\beta p(\theta \mid \mathcal{M})}{Z_\beta} \ln{p(\boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M} )} d\theta} \\
         &= \mathbb{E}\left[ \ln{ p(\boldsymbol{\mathcal{D}} \mid \theta, \mathcal{M}) } \right]_{p_\beta (\theta \mid \boldsymbol{\mathcal{D}}, \mathcal{M})} \\
         &\approx \frac{1}{S} \sum_{i=1}^S{ \ln{ p(\boldsymbol{\mathcal{D}} \mid \hat{\theta}_{\beta i}, \mathcal{M}) } } = \mathcal{A}_\text{MC}(\beta)
     \end{aligned}
@@ -97,7 +97,7 @@ with the derivative
 The solution to computing the evidence now lies in sight: Using \gls{mcmc}, we can draw samples from the power posterior $p_\beta$ and use those samples to compute the expectation over the (unmodified) likelihood, which we denote as $\mathcal{A}_\text{MC}(\beta)$. Doing this for a sufficient number of steps in the interval $\left[ 0, 1 \right]$ and integrating over the resulting $\mathcal{A}_\text{MC}(\beta)$ will then yield an approximation to the log-evidence.
 %
 \begin{equation}
-    \ln{Z} \approx \frac{1}{2} \sum_{j=1}^{N-1} \left( \beta_{j+1} - \beta_j \right) \big( \mathcal{A}_\text{MC}(\beta_{j+1}) + \mathcal{A}_\text{MC}(\beta_j) \big)
+    \ln{E} \approx \frac{1}{2} \sum_{j=1}^{N-1} \left( \beta_{j+1} - \beta_j \right) \big( \mathcal{A}_\text{MC}(\beta_{j+1}) + \mathcal{A}_\text{MC}(\beta_j) \big)
 \end{equation}
 %
 This approximation gets better with larger values for $S$ and $N$. But also how the $\beta_j$ are chosen is crucial for computing a good estimate efficiently: Usually, the $\mathcal{A}_\text{MC}(\beta)$ -- which can be seen as accuracy terms -- rise steeply for increasing $\beta$ close to 0, while levelling off towards $\beta=1$. It therefore makes sense to distribute the ladder of these values unevenly. A common choice, that we employed as well, is $\beta_j = x_j^5$ where the $x_j$ are linearly spaced within the interval $[0, 1]$. This yields a very fine resolution for the first steps and gets successively coarser towards the end of the interval.
@@ -105,7 +105,7 @@ This approximation gets better with larger values for $S$ and $N$. But also how 
 Lastly, we would like to give a final insight into the evidence that is quite naturally obtained when following the derivation from statistical physics, but hard to see with the brief, formal derivation we gave up to this point. Therefore, we will just state it below and point to a publication giving a nice example of how to get to this result \cite{aponte_introduction_2022}. According to this, the log-evidence can be written in the following form:
 %
 \begin{equation} \label{eq:ti:acc_vs_kl}
-    \ln{Z} = \underbrace{\int{ \ln{ \probofgiven{\boldsymbol{\mathcal{D}}}{\theta, \mathcal{M}} } \probofgiven{\theta}{\boldsymbol{\mathcal{D}}, \mathcal{M}} d\theta}}_{\text{accuracy} \; \mathcal{A}(\beta = 1)} - \underbrace{\int{ \ln{ \frac{\probofgiven{\theta}{\boldsymbol{\mathcal{D}}, \mathcal{M}}}{\probofgiven{\theta}{\mathcal{M}}} } \probofgiven{\theta}{\boldsymbol{\mathcal{D}}, \mathcal{M}} d\theta}}_\text{complexity (KL-divergence)}
+    \ln{E} = \underbrace{\int{ \ln{ \probofgiven{\boldsymbol{\mathcal{D}}}{\theta, \mathcal{M}} } \probofgiven{\theta}{\boldsymbol{\mathcal{D}}, \mathcal{M}} d\theta}}_{\text{accuracy} \; \mathcal{A}(\beta = 1)} - \underbrace{\int{ \ln{ \frac{\probofgiven{\theta}{\boldsymbol{\mathcal{D}}, \mathcal{M}}}{\probofgiven{\theta}{\mathcal{M}}} } \probofgiven{\theta}{\boldsymbol{\mathcal{D}}, \mathcal{M}} d\theta}}_\text{complexity (KL-divergence)}
 \end{equation}
 %
 This shows how the evidence naturally incorporates Occam's razor. The second term on the right gets larger the more the likelihood restricts the prior and the resulting penalty grows exponentially with the dimensionality of the parameter space.
