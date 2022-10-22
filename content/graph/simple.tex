@@ -41,7 +41,7 @@ We can look back at \acrlongpl{bn}, as introduced in \cref{sec:previous_work:bay
     \end{cases}
 \end{equation}
 %
-The rightmost graph in \cref{fig:graph:simple} cannot represent a \gls{bn} and hence also no valid factorization, since it is not acyclic. In the \gls{hmm} model however, this is perfectly fine, since in that case different \glspl{rv} are connected across time-steps, which resolves the cycle.
+The rightmost graph in \cref{fig:graph:simple} does not represent a \acrfull{bn} and hence also no valid factorization, since it is not acyclic. In the \gls{hmm} model however, this is perfectly fine, since in that case different \glspl{rv} are connected across time-steps, which resolves the cycle.
 
 \begin{table}
     \centering
@@ -55,7 +55,11 @@ The rightmost graph in \cref{fig:graph:simple} cannot represent a \gls{bn} and h
         40 & 1 & 1 \\
         \hline
     \end{tabular}
-    \caption{Mockup dataset $\boldsymbol{\mathcal{D}}$ for illustrating the ambiguity between the two possible spread directions from and two the \glspl{lnl} II and III.}
+    \caption[
+        Mockup dataset for thought experiment
+    ]{
+        Mockup dataset $\boldsymbol{\mathcal{D}}$ of 100 patients showing their involvement in the \glspl{lnl} II and III for illustrating the ambiguity between the two possible spread directions from and two the \glspl{lnl} II and III.
+    }
     \label{table:graph:simple:mockup}
 \end{table}
 
@@ -84,15 +88,27 @@ Although this clearly is a constructed example, the illustrated ambiguity exists
 \input{\subfix{../_databox.tex}}
 \label{box:graph:data}
 
-In this experiment, we performed one \acrfull{ti} round for each of the four graphs in \cref{fig:graph:simple}, consisting of 64 inverse temperature steps $\beta_i$ spaced according to a fifth order power rule. This means that
+In this experiment, we performed \acrfull{ti} for each of the four graphs in \cref{fig:graph:simple}, consisting of 64 inverse temperature steps $\beta_i$ spaced according to a fifth order power rule. This means that
 %
 \begin{equation}
     \beta_i = \left( \frac{i - 1}{64 - 1} \right)^5 \qquad i = 1,2, \ldots, 64
 \end{equation}
 %
-At each point $\beta_i$ of this \gls{ti} schedule, we performed a sampling of the model parameters, again using the Python library \repolink[dfm]{emcee} \cite{foreman-mackey_emcee_2013}, based on affine invariant ensemble samplers by \citeauthorandlink{nelson_run_2013} and \citeauthorandlink{ter_braak_differential_2008}. We ran this sampling for 1000 steps, simultaneously drawing $20 \cdot k$ burn-in samples, where $k$ is the number of parameters in the model. The dimensionality is $k = 3$ for the model without any connections between \gls{lnl} II and III (graph 1 in \cref{fig:graph:simple}), $k = 4$ for the models with one connection between these \glspl{lnl} (graphs 2 and 3 in \cref{fig:graph:simple}) and $k = 5$ for the model connecting the two levels in both directions.
+At each point $\beta_i$ of this \gls{ti} schedule, we performed a sampling of the model parameters, again using the Python library \repolink[dfm]{emcee} \cite{foreman-mackey_emcee_2013}, based on affine invariant ensemble samplers by \citeauthorandlink{nelson_run_2013} and \citeauthorandlink{ter_braak_differential_2008}. The time-prior of the early T-category was set to a binomial distribution supporting the diagnosis times $t \in [0, 1, 2, \ldots, 10]$ and with the probability parameter $p_\text{early} = 0.3$. The late T-category's time-prior shared the same support, but its parameter was inferred by the sampling process.
 
-After the burn-in phase, we drew another $250 \cdot 20 \cdot k$ samples and discarded every fifth. With the remaining $250 \cdot 20 \cdot k / 5 = 1000 \cdot k$ samples, we computed the accuracy term $\mathcal{A}_\text{MC}(\beta_i)$ 1000 times for each $\beta_i$ and were therefore able to calculate 1000 \gls{ti} estimates of the integral approximating the evidence. Using this approach, 1000 evidence estimates can then be used to compute the expected evidence and its standard deviation. The log-evidence, along with \gls{bic} has been printed in \cref{table:graph:simple:comp}.
+We ran this sampling for 1000 steps, simultaneously drawing $20 \cdot k$ burn-in samples, where $k$ is the number of parameters in the model. The dimensionality is $k = 3$ for the model without any connections between \gls{lnl} II and III (graph 1 in \cref{fig:graph:simple}), $k = 4$ for the models with one connection between these \glspl{lnl} (graphs 2 and 3 in \cref{fig:graph:simple}) and $k = 5$ for the model connecting the two levels in both directions.
+
+After the burn-in phase, we drew another $250 \cdot 20 \cdot k$ samples and discarded every fifth. With the remaining $250 \cdot 20 \cdot k / 5 = 1000 \cdot k$ samples, we computed the accuracy term $\mathcal{A}_\text{MC}(\beta_i)$ 1000 times for each $\beta_i$ and were therefore able to calculate 1000 \gls{ti} estimates of the integral approximating the evidence. Using this approach, 1000 evidence estimates can then be used to compute the expected evidence and its standard deviation. The log-evidence, along with \gls{bic} has been printed in \cref{table:graph:simple:comp}. For comparison, we also provide the maximum log-likelihood $\log{\mathcal{L}^\star}$ and mean log-likelihood $\log{\bar{\mathcal{L}}}$, which are defined as follows:
+%
+\begin{equation}
+    \log{\mathcal{L}^\star} = \max_{s}{ \log{\mathcal{L} \left( \boldsymbol{\mathcal{D}} \mid \hat{\theta}_s \right)} }
+\end{equation}
+%
+\begin{equation}
+    \log{\bar{\mathcal{L}}} = \frac{1}{S} \sum_{s=1}^S{ \log {\mathcal{L} \left( \boldsymbol{\mathcal{D}} \mid \hat{\theta}_s \right) }}
+\end{equation}
+%
+Above, the $\boldsymbol{\hat{\theta}} = \{ \hat{\theta}_s \}$ are the samples drawn at $\beta_{64} = 1$ with the index $s \in [1, 2, \ldots, S]$ enumerating them.
 
 \begin{figure}
     \centering
@@ -128,16 +144,16 @@ After the burn-in phase, we drew another $250 \cdot 20 \cdot k$ samples and disc
     \caption[
         Comparison of performance metrics for four different simple graphs
     ]{
-        Comparison of performance metrics for the models based on the four different graphs in \cref{fig:graph:simple}. Displayed are the computed values for the log-evidence (computed by performing \acrlong{ti}), the \gls{bic}, the maximum and expected likelihood for the last step in the \gls{ti} schedule $\beta_{64} = 1$. Note that we give one half of the \gls{bic} and the negative of the other metrics to bring all values into a similar range and get rid of all the negative signs. Therefore, smaller values correspond to a better model performance.
+        Comparison of performance metrics for the models based on the four different graphs in \cref{fig:graph:simple}. Displayed are the computed values for the log-evidence (computed by performing \acrlong{ti}), the \gls{bic}, the maximum and expected likelihood for the last step in the \gls{ti} schedule $\beta_{64} = 1$. Note that we state the \gls{bic} divided by two and the negative of the likelihoods to bring all values into a similar range and avoid negative signs. Therefore, smaller values correspond to a better model performance.
     }
     \label{table:graph:simple:comp}
 \end{table}
 
 Both \cref{table:graph:simple:comp} and \cref{fig:graph:simple:prevalenes} show that graph 1 (\cref{fig:graph:simple}, left) is not able to capture the observed data very well. This is simply because it lacks any mechanism to model the correlation between \gls{lnl} II's and \gls{lnl} III's involvement. Therefore, not only are the predicted prevalences off compared to the data prevalences, but also the log-evidence is -- with a difference of 2.32 to the next worst model -- between ``substantial'' and ``strong'', according to \cref{table:bayes_factor}. This is despite the fact that it has the fewest parameters, which gives the model an advantage, since the evidence automatically penalizes complex models (Occam's razor, see \cref{eq:ti:acc_vs_kl}).
 
-As indicated during the thought experiment using the \acrlong{bn}, the graphs no. 2 and 3 present an ambiguity: They both seem to model the data almost equally well, which can be seen in the mean and maximum likelihood in \cref{table:graph:simple:comp}, as well as in the good fits of the predicted prevalences in the second and thirds row in \cref{fig:graph:simple:prevalenes}. The log-evidence in this table shows a barely ``substantial'' preference, surprisingly for the graph that is less intuitive from an anatomical point of view. Finally, when connecting \glspl{lnl} II and III in both directions, the predictions do get slightly -- though not noticeably in \cref{fig:graph:simple:prevalenes} -- better, but the penalty for the increased model complexity negates this advantage.
+As indicated during the thought experiment using the \acrlong{bn}, the graphs no. 2 and 3 are ambiguous: They both model the data almost equally well, which can be seen in the mean and maximum likelihood in \cref{table:graph:simple:comp}, as well as in the good fits of the predicted prevalences in the second and thirds row in \cref{fig:graph:simple:prevalenes}. The log-evidence in this table shows a barely ``substantial'' preference, surprisingly for the graph 3 that is less intuitive from an anatomical point of view. Finally, when connecting \glspl{lnl} II and III in both directions (graph 4), the predictions do get slightly -- though not noticeably in \cref{fig:graph:simple:prevalenes} -- better, but the penalty for the increased model complexity negates this advantage.
 
-Lastly, we want to point to the \gls{bic} as a metric for comparing models: From \cref{table:graph:simple:comp} it seems as if the \gls{bic} -- or rather the negative one half of the \gls{bic} -- is not always a reliable approximation of the log-evidence. We believe this is due to the shape of the posterior distribution over the parameters, which we have plotted for the first graph (\cref{fig:graph:simple:corner_nocon}) and the last (\cref{fig:graph:simple:corner_both}).
+Lastly, we want to point to the \gls{bic} as a metric for comparing models: From \cref{table:graph:simple:comp} it seems as if the \gls{bic} -- or rather the negative one half of the \gls{bic} -- is not always a reliable approximation of the log-evidence. We believe this is due to the shape of the posterior distribution over the parameters, which we have plotted for the first graph and the last (\cref{fig:graph:simple:corner}). We believe this is because the \gls{bic} is derived from Laplace's approximation that fits a Gaussian distribution to the maximum likelihood estimate of the target distribution. Hence, the approximation is good, when the target density is Gaussian in shape, which is the case for graph 1 (green posterior in \cref{fig:graph:simple:corner}), but much less for graph 4 (blue posterior in \cref{fig:graph:simple:corner}).
 
 \begin{figure}
     \centering
