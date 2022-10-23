@@ -5,8 +5,11 @@
 
 \begin{document}
 
-\section[Interface for Visualizing Patterns of Lymphatic Metastatic Progression]{Interface for Visualizing Patterns\\of Lymphatic Metastatic Progression}
-\sectionmark{Visualizing Progression Patterns}
+\section[Interface for Visualizing Patterns of Progression]{Interface for Visualizing Patterns\\of Lymphatic Metastatic Progression}
 \label{sec:previous_work:prototype_gui}
+
+In the same work that reported nodal disease patterns of the 132 \gls{hnscc} patients from the \gls{usz}, \citeauthorandlink{pouymayou_analysis_2019} also described a \gls{gui} that allows its user to visually explore the provided dataset. The intuitive interface makes the complex underlying patient data explorable interactively. Based on an \acrshort{sql} database, in which the raw patient data is stored, the \gls{gui} provides a method to investigate how variables like T-category, primary tumor location or nicotine abuse influence the patterns of lymphatic progression. Moreover, the visualization tool can filter patients by \gls{lnl} involvement. This means that the user may e.g. select to display only patients with diagnosed involvement in \gls{lnl} II and consequently observe how this changes the prevalence of involvement in the downstream levels III and IV.
+
+We believe that an interface like the one described by \citeauthorandlink{pouymayou_analysis_2019} may substantially lower the hurdles for other researchers to interact with the valuable data on lymphatic metastatic progression patterns. However, this \faIcon{python}~Python based \gls{gui} would have been difficult to distribute among the research community, because it required some programming experience. To make it even easier to access and utilize such an intuitive interface, we will show in \cref{chap:lyprox} how we built an online \gls{gui}, modelled after the prototype by \citeauthorandlink{pouymayou_analysis_2019}.
 
 \end{document}

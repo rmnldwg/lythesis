@@ -5,15 +5,14 @@
 
 \begin{document}
 
-\section{Lymphatic Metastatic Progression Patterns as Reported in the Literature}
-\sectionmark{Progression Patterns in the Literature}
+\section[Progression Patterns in the Literature]{Lymphatic Metastatic Progression Patterns as Reported in the Literature}
 \label{sec:previous_work:sanguineti}
 
 As mentioned in the introduction (\cref{sec:intro:management}), numerous studies have been published that report the prevalence of \gls{lnl} involvement in \gls{hnscc} \cite{candela_patterns_1990,shah_patterns_1990,woolgar_histological_1999,woolgar_topography_2007,chao_determination_2002,vauterin_patterns_2006,razfar_incidence_2009,ho_patterns_2012,bauwens_prevalence_2021}. However, these works do not provide a quantitative analysis of metastatic disease progression, which is crucial to assess a patient's risk for occult disease in a given \gls{lnl}. E.g., metastasis in the ipsilateral level III that is already visible on imaging is expected to increase the risk of occult nodal disease in \gls{lnl} IV, because level IV receives efferent lymphatic flow from level III.
 
 What is reported in detail by the mentioned works is the prevalence of nodal involvement by level. For instance, the work by \citeauthorandlink{bauwens_prevalence_2021} shows in table 2 how frequently each of the \glspl{lnl} Ia, Ib, II, III, IV, V and VII was pathologically involved for the clinically N0 part of the investigated cohort of patients with oropharyngeal \gls{scc}. While certainly valuable to estimate the \emph{a priori} probability of involvement in a given clinically node negative \gls{lnl}, this information does not allow us to tailor our risk assessment to a particular patient's clinical diagnosis.
 
-To the best of our knowledge, the publication by \citeauthorandlink{sanguineti_defining_2009} is the only one in the literature that reports on the frequency of more complex involvement patterns, i.e., the correlations between \gls{lnl} involvements. In particular, figure 3 of \citeauthorandlink{sanguineti_defining_2009} shows four panels displaying the portion of patients with pathologically confirmed occult disease in the \glspl{lnl} I, II, III, IV and V, given that
+To the best of our knowledge, the publication by \citeauthorandlink{sanguineti_defining_2009} was the only one in the literature, up to the work by \citeauthorandlink{pouymayou_analysis_2019}, that reports on the frequency of more complex involvement patterns, i.e., the correlations between \gls{lnl} involvements. In particular, figure 3 of \citeauthorandlink{sanguineti_defining_2009} shows four panels displaying the portion of patients with pathologically confirmed occult disease in the \glspl{lnl} I, II, III, IV and V, given that
 \begin{enumerate*}[label={(\alph*)}]
     \item \gls{lnl} II harbored tumor cells,
     \item \gls{lnl} III showed pathological involvement,
@@ -21,7 +20,9 @@ To the best of our knowledge, the publication by \citeauthorandlink{sanguineti_d
     \item that the chain of \glspl{lnl} II, III, and IV was observed to be metastatic
 \end{enumerate*}. Provided with information of this level of detail, a clinician may infer how the risk for metastasis in \gls{lnl} IV changes, depending on the involvement of the upstream level III.
 
-Some issues with the data provided by \citeauthorandlink{sanguineti_defining_2009} remain, however: They only reported on early T-category (T1/T2) patients and only included pathologically node positive patients in their study. Hence, a complete reconstruction of the patient cohort is still not possible, and unfortunately the authors also did not choose to make their underlying data publicly available. By assuming the pN0 portion of patients to be 30\% (corresponding to 44 patients), however, \citeauthorandlink{pouymayou_bayesian_2019} were able to reconstruct a dataset of 147 patients, which we show in \cref{table:previous_work:sanguineti}. At the time the presented work on the topic of modelling lymphatic metastatic progression began in late 2019, this reconstructed dataset was the only one available and was therefore also used in our initial model, described in \cref{chap:unilateral}.
+Some issues with the data provided by \citeauthorandlink{sanguineti_defining_2009} remain, however: They only reported on early T-category (T1/T2) patients and only included pathologically node positive patients in their study. Hence, a complete reconstruction of the patient cohort is still not possible, and unfortunately the authors also did not choose to make their underlying data publicly available. By assuming the pN0 portion of patients to be 30\% (corresponding to 44 patients), however, \citeauthorandlink{pouymayou_bayesian_2019} were able to reconstruct a dataset of 147 patients -- which we show in \cref{table:previous_work:sanguineti} -- for their \acrlong{bn} model. This dataset based on the paper by \citeauthorandlink{sanguineti_defining_2009} was subsequently also used for the work presented here in \cref{chap:unilateral} to allow for an easy comparison between our results and the results from \citeauthorandlink{pouymayou_bayesian_2019}.
+
+In addition to reconstructing nodal disease patterns from \citeauthorandlink{sanguineti_defining_2009}, another work by \citeauthorandlink{pouymayou_analysis_2019} published clinical involvement data from 132 \gls{hnscc} patients retrospectively analyzed at the \gls{usz}. This marked the first publication to directly provide detailed diagnostic patterns of lymphatic metastatic spread per \gls{lnl} and in tabular form.
 
 \begin{table}
     \centering
