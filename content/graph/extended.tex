@@ -97,7 +97,7 @@ As mentioned, we started with establishing a baseline, using a unilateral model 
 
 The first question we want to answer is whether we should add the connection from \gls{lnl} I to II, the other way around or none between the two levels at all. A motivation for adding the arc from \gls{lnl} I to II -- as \citeauthorandlink{pouymayou_bayesian_2019} have done -- would be that it more closely represents the assumed lymphatic drainage. However, the prevalence of involvement in \gls{lnl} I (10\%) is much lower than the prevalence of involvement in \gls{lnl} II (73\%). Hence, inferring this spread direction is difficult. While not as intuitive, an arc from \gls{lnl} II to I may be better suited to probabilistically model the increased prevalence in level I when \gls{lnl} II is involved (13\%).
 
-We performed \acrfull{mcmc} to sample from two identical models -- except for the direction between \glspl{lnl} I and II -- until convergence and compared metrics and predicted prevalences for both. ``Sampling until convergence'' in this case means that we stopped the inference process when the following two requirements were met:
+We performed \gls{mcmc} to sample from two identical models -- except for the direction between \glspl{lnl} I and II -- until convergence and compared metrics and predicted prevalences for both. ``Sampling until convergence'' in this case means that we stopped the inference process when the following two requirements were met:
 
 \begin{enumerate}
     \item A stable estimate of the integrated auto-correlation time $\hat{\tau}$, meaning
@@ -390,6 +390,6 @@ We have found the most significant improvements to originate from the addition o
 
 The benefits of new parametrized spread pathways between the \glspl{lnl} IV and V, as well as II and VII were very small or even negligible and will hence not be used by future models. Their effects even introduced dangerous underestimations of involvements, as could be seen in the right panel of \cref{fig:graph:extended:add27:prevalences}.
 
-Going forward, and based on the experiments and comparisons of this section, we decided to represent the lymphatic progression in \acrlong{opscc} using the graph highlighted in \cref{fig:graph:extended:all_graphs}. It contains the unequivocally supported arc II $\rightarrow$ I and the arc III $\rightarrow$ V. The model evidence does neither support nor discourage the addition of a connection from \gls{lnl} III to V, but it is anatomically plausible and clinically meaningful to model increased risk in level V, as soon as \gls{lnl} III shows involvement.
+Going forward, and based on the experiments and comparisons of this section, we decided to represent the lymphatic progression in \gls{opscc} using the graph highlighted in \cref{fig:graph:extended:all_graphs}. It contains the unequivocally supported arc II $\rightarrow$ I and the arc III $\rightarrow$ V. The model evidence does neither support nor discourage the addition of a connection from \gls{lnl} III to V, but it is anatomically plausible and clinically meaningful to model increased risk in level V, as soon as \gls{lnl} III shows involvement.
 
 \end{document}

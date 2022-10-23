@@ -8,7 +8,7 @@
 \section[Bayesian Network Model for Lymphatic Spread]{A Bayesian Network Model\\for Lymphatic Metastatic Progression}
 \label{sec:previous_work:bayesian_network}
 
-To model lymphatic metastatic spread in \glspl{hnscc} probabilistically, the authors \citeauthorandlink{pouymayou_bayesian_2019} started by representing the state of an \gls{lnl} using a binary \gls{rv}. It may take on the value $X=0$ (or the boolean value \texttt{FALSE}) to indicate a healthy node level. If it harbors metastatic disease, its state would correspondingly be described with the value $X=1$ (or \texttt{TRUE}). This state indicates if there is truly disease present in an \gls{lnl}, including the presence of occult metastases. However, in practice we do not have access to that truth, which is why these \acrlongpl{rv} representing the state of an \gls{lnl} are termed \emph{hidden} \glspl{rv}.
+To model lymphatic metastatic spread in \glspl{hnscc} probabilistically, the authors \citeauthorandlink{pouymayou_bayesian_2019} started by representing the state of an \gls{lnl} using a binary \gls{rv}. It may take on the value $X=0$ (or the boolean value \texttt{FALSE}) to indicate a healthy node level. If it harbors metastatic disease, its state would correspondingly be described with the value $X=1$ (or \texttt{TRUE}). This state indicates if there is truly disease present in an \gls{lnl}, including the presence of occult metastases. However, in practice we do not have access to that truth, which is why these \glspl{rv} representing the state of an \gls{lnl} are termed \emph{hidden} \glspl{rv}.
 
 What we do have access to, is an array of diagnostic modalities with which we may be able to infer the true state of involvement. Most used for diagnosis are imaging techniques such as \gls{pet}, \gls{ct} and \gls{mri}, but palpation or \gls{fna} are also used. The diagnosis, too, can be modelled as a binary \gls{rv} -- this time an \emph{observed} one -- taking on the values $Z=0$ (\texttt{FALSE}) for a clinically healthy \gls{lnl} and $Z=1$ (\texttt{TRUE}) if the examination resulted in a finding in the corresponding level.
 
@@ -62,7 +62,7 @@ The parameters $b_v$ and $t_{rs}$ associated with the directed arcs represent co
     \end{multlined}
 \end{equation}
 %
-We note here that this parametrization assumes the \gls{ici}, thereby allowing us to describe the model using only a few interpretable parameters. Dropping this assumption, a \gls{bn} can also be defined using \gls{cpt} that have columns for every possible combinations of parent states. However, with the increase of the number of parent nodes (causes) in the graph, the number of parameters in the respective \gls{cpt} would grow exponentially.
+We note here that this parametrization assumes the \acrlong{ici}, thereby allowing us to describe the model using only a few interpretable parameters. Dropping this assumption, a \gls{bn} can also be defined using \gls{cpt} that have columns for every possible combinations of parent states. However, with the increase of the number of parent nodes (causes) in the graph, the number of parameters in the respective \gls{cpt} would grow exponentially.
 
 For the graph in \cref{fig:bn:graph} we can use \cref{eq:bn_cp} to write down the parametrized \gls{cpt} explicitly in the following manner:
 %

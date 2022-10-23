@@ -10,7 +10,7 @@
 
 Before we begin formulating lymphatic metastatic progression as \acrlong{hmm}, we briefly restate the probabilistic basics that we showed in \cref{sec:previous_work:bayesian_network}:
 
-We describe the true, but unobservable and hence \emph{hidden}, state of a \gls{lnl} using a binary \acrfull{rv} $X_v$, where $v \in \{ 1,2, \ldots, V \}$ indexes the $V$ nodal levels. If it is in state $X=0$ (\texttt{FALSE}), the corresponding \gls{lnl} is healthy. State $X=1$ (\texttt{TRUE}) means the respective \gls{lnl} contains at least one lymph node that harbors disease.
+We describe the true, but unobservable and hence \emph{hidden}, state of a \gls{lnl} using a binary \gls{rv} $X_v$, where $v \in \{ 1,2, \ldots, V \}$ indexes the $V$ nodal levels. If it is in state $X=0$ (\texttt{FALSE}), the corresponding \gls{lnl} is healthy. State $X=1$ (\texttt{TRUE}) means the respective \gls{lnl} contains at least one lymph node that harbors disease.
 
 Similarily, any modality that observes the state of an \gls{lnl} will be modelled as an \gls{rv}, too, but an \emph{observed} one: $Z_v^\mathcal{O}$ models whether observing $X_v$ using a modality with sensitivity $s_N^\mathcal{O}$ and specificity $s_P^\mathcal{O}$ yields a finding ($Z_v^\mathcal{O}=1$) or not ($Z_v^\mathcal{O}=0$). Here, $\mathcal{O} \in \{ \text{MRI}, \text{CT}, \ldots \}$ indexes the individual modalities for observing the state of \gls{lnl} $v$.
 
