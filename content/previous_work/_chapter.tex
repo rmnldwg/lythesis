@@ -4,12 +4,16 @@
 
 \begin{document}
 
-\chapter{Previous Work}
+\chapter[Previous Work on Personalizing CTV-N Definition]{Previous Work on Personalizing Elective CTV Definition}
+\chaptermark{Previous Work on CTV-N Definition}
 \label{chap:previous_work}
 
-In this chapter we will introduce models that were previously developed to capture and predict lymphatic progression in \gls{hnscc}. This also includes the \gls{bn} model by \citeauthorandlink{pouymayou_bayesian_2019} we mentioned in the introduction, which served as a starting point to this work. This brief recap will introduce the notation and formalism that will be used throughout the rest of the thesis. Also, we will discuss the limitations and reasons to develop a new model and formalism.
+In this chapter we will present what has been done -- both by the overall research community and in our research group at the \gls{uzh} and \gls{usz} -- prior to the work we present in this thesis. The three following \cref{sec:previous_work:sanguineti,sec:previous_work:prototype_gui,sec:previous_work:bayesian_network} will briefly establish where the work of this thesis began w.r.t. the three aspects we have focused on in our effort to make the \acrfull{ctv-n} definition more personalized.
 
+First, in \cref{sec:previous_work:sanguineti}, we show what data is available that reports regional lymph node involvement in \gls{hnscc} and why the majority of it is insufficient to draw conclusions from this data about the lymphatic metastatic progression. The section will also explain how \citeauthorandlink{pouymayou_analysis_2019} began to work towards more detailed available data. Secondly, in \cref{sec:previous_work:prototype_gui}, and also based on the work by \citeauthorandlink{pouymayou_analysis_2019}, we show the origin of the idea to visualize the complex data of lymphatic metastatic patterns. Lastly, \cref{sec:previous_work:bayesian_network} introduces the work about modelling lymphatic spread in \gls{hnscc} using \glspl{bn} by \citeauthorandlink{pouymayou_bayesian_2019}, which is also the basis for the later modelling work in this thesis.
+
+\subfile{sanguineti}
+\subfile{prototype_gui}
 \subfile{bayesian_network}
-\subfile{limitations}
 
 \end{document}

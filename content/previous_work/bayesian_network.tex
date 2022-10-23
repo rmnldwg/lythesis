@@ -5,11 +5,10 @@
 
 \begin{document}
 
-\section[A Bayesian Network Model for Lymphatic Metastatic Progression]{A Bayesian Network Model\\for Lymphatic Metastatic Progression}
-\sectionmark{Bayesian Network Model}
+\section[Bayesian Network Model for Lymphatic Spread]{A Bayesian Network Model\\for Lymphatic Metastatic Progression}
 \label{sec:previous_work:bayesian_network}
 
-To begin with, the authors \citeauthorandlink{pouymayou_bayesian_2019} represented the state of an \gls{lnl} using a binary \gls{rv}. It may take on the value $X=0$ (or the boolean value \texttt{FALSE}) to indicate a healthy node level. If it harbors metastatic disease, its state would correspondingly be described with the value $X=1$ (or \texttt{TRUE}). This state indicates if there is truly disease present in an \gls{lnl}, including the presence of occult metastases. However, in practice we do not have access to that truth, which is why these \acrlongpl{rv} representing the state of an \gls{lnl} are termed \emph{hidden} \glspl{rv}.
+To model lymphatic metastatic spread in \glspl{hnscc} probabilistically, the authors \citeauthorandlink{pouymayou_bayesian_2019} started by representing the state of an \gls{lnl} using a binary \gls{rv}. It may take on the value $X=0$ (or the boolean value \texttt{FALSE}) to indicate a healthy node level. If it harbors metastatic disease, its state would correspondingly be described with the value $X=1$ (or \texttt{TRUE}). This state indicates if there is truly disease present in an \gls{lnl}, including the presence of occult metastases. However, in practice we do not have access to that truth, which is why these \acrlongpl{rv} representing the state of an \gls{lnl} are termed \emph{hidden} \glspl{rv}.
 
 What we do have access to, is an array of diagnostic modalities with which we may be able to infer the true state of involvement. Most used for diagnosis are imaging techniques such as \gls{pet}, \gls{ct} and \gls{mri}, but palpation or \gls{fna} are also used. The diagnosis, too, can be modelled as a binary \gls{rv} -- this time an \emph{observed} one -- taking on the values $Z=0$ (\texttt{FALSE}) for a clinically healthy \gls{lnl} and $Z=1$ (\texttt{TRUE}) if the examination resulted in a finding in the corresponding level.
 
@@ -95,5 +94,10 @@ We can now connect the probability of observing certain $Z_v^k$ given hidden inv
 \end{equation}
 %
 where we marginalized over all hidden variables $X$. Here we have assumed that each patient's diagnosis $\mathbf{z} = \left( z_1 \quad z_2 \quad \cdots \quad z_V \right)$ is complete, meaning that we have a diagnosis for each \gls{lnl}. The likelihood can then be used to infer the model parameters via maximum likelihood inference or sampling.
+
+\subsection*{Limitations of the Bayesian Network Model}
+\label{subsec:previous_work:limitations}
+
+While \glspl{bn} can model the probabilistic relationship between involvement in different levels, they lack an explicit way to describe the evolution of the tumor over time. The concept of \glspl{dbn} has been developed to introduce the notion of time into probabilistic models. \Glspl{dbn} are generalizations of \glspl{hmm} and formally similar to what we will introduce now. The metastatic spread in the lymphatic system is a dynamic system and by modeling it with a formalism that can capture this, we obtain a more intuitive model of the problem and a framework that can incorporate T-category into estimating the risk of \gls{lnl} involvement. We can do this because tumors go through the stages T1 to T4 sequentially, meaning that -- for a given tumor -- T-category is a surrogate of time.
 
 \end{document}
