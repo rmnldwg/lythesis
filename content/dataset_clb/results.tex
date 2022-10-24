@@ -29,12 +29,12 @@ The patient cohort in the \gls{clb} dataset shows -- as expected -- similar patt
 
 Contralaterally, the prevalence of involvement strongly increases when the primary tumor extends over the mid-sagittal plane: E.g., \gls{lnl} II in the contralateral neck showed metastasis in 4\% of the \gls{clb} patients, when the tumor was clearly lateralized. When the primary tumor extended over the mid-plane, \gls{lnl} II involvement contralaterally rose to 28\%. In the \gls{usz} dataset this figure increased from 9\% to 32\%, which is similar if again slightly higher. This can also be seen in the second row if \cref{fig:dataset_clb:statistics}, if compared to the same statistics for our \gls{usz} dataset in \cref{fig:dataset_usz:statistics}.
 
-In the third row of \cref{fig:dataset_clb:statistics} we can see that the \gls{clb} data by \citeauthorandlink{bauwens_prevalence_2021} shows significantly less involvement in the case of \gls{hpv}-negative patients, both for early and late T-category. The patient cohort extracted at the \gls{usz}, however, only showed some differences in the prevalence of ipsilateral involvement for early T-category patients when comparing patients that are \gls{hpv}$+$ or \gls{hpv}$-$. In case of late T-category, the \gls{usz} cohort showed no meaningful difference in the ipsilateral involvement patterns of \gls{hpv}+ or \gls{hpv}- patients.
+In the third row of \cref{fig:dataset_clb:statistics} we can see that the \gls{clb} data by \citeauthorandlink{bauwens_prevalence_2021} shows significantly less involvement in the case of \gls{hpv}-negative patients, both for early and late T-category. The patient cohort extracted at the \gls{usz}, however, only showed some differences in the prevalence of ipsilateral involvement for early T-category patients when comparing \gls{hpv}$+$ to \gls{hpv}$-$ patients. In case of late T-category, the \gls{usz} cohort showed no meaningful differences in the ipsilateral involvement patterns between \gls{hpv}+ and \gls{hpv}- patients.
 
 The observed differences between these two datasets reporting per-level involvement of more than 250 \gls{opscc} patients each might stem from a combination of factors:
 
 \begin{enumerate}
-    \item Demographic differences between the two locations. The general population between France and Switzerland probably do not differ too much. However, different health care systems and practices regarding patient referral, as well as specializations by institutions may have an impact on the patient demographics treated at a specific clinic.
+    \item Demographic differences between the two locations. The general population between France and Switzerland probably do not differ too much. However, different health care systems and practices regarding patient referral, as well as specializations by institutions may have an impact on the patient cohort treated at a specific clinic.
     \item Differences in patient selection. Our data contains all \gls{opscc} patients treated in a certain time frame, while the cohort from our colleagues in France contained only those treated with \acrlong{nd}. This may introduce a bias against advanced disease when those are referred to definitive chemo-radiotherapy. For example, it contains relatively more early T-category patients (67\% or 176 out of 263), while in our data we observe a roughly equal amount of early (52\% or 150 out of 287) and late T-category patients. We have plotted the differences in the distribution over T-categories in \cref{fig:dataset_clb:tstage_comp}.
     \item Different ways of combining multiple diagnoses into one estimate of the likely ``true'' involvement. For the \gls{usz} data we combined them using the logical OR, meaning we considered an \gls{lnl} to be metastatic as soon as one diagnostic modality found a suspicious node in that level. For the \gls{clb} cohort, again, we used the maximum likelihood method introduced in \cref{subsec:dataset_clb:methods:max_llh}.
     \item Not strictly comparable observations. The \gls{usz} data reports involvement from a number of diagnostic modalities separately, where for each one we defined criteria that decided when an \gls{lnl} was considered to be metastatic. The French dataset on the other hand reports the clinical diagnosis as a consensus decision by clinicians, and the pathology reports basically represent the ground truth, if available.
@@ -45,7 +45,7 @@ Nonetheless, we still believe the two datasets to be comparable and that we may 
 \begin{figure}
     \centering
     \def\svgwidth{1.0\textwidth}
-    \input{figures/statistics_crop.pdf_tex}
+    \input{figures/clb_statistics_crop.pdf_tex}
     \caption[
         Statistics that characterize the cohort of OPSCC patients extracted at the CLB
     ]{
@@ -89,7 +89,7 @@ Nonetheless, we still believe the two datasets to be comparable and that we may 
     \hfill
     \input{tables/diagnostic_consensus-vs-pathology-ipsi-V.tex}
     \caption[]{
-        Confusion matrices between the diagnostic consensus and the pathology result the \gls{clb} data report. The left column shows these matrices for the contralateral side, the right column for the ipsilateral \glspl{lnl}. The levels for which we computed confusion matrices were \gls{lnl} Ib (first row), II (second row), III (third row), IV (fourth row) and V (fifth row).
+        Confusion matrices between the diagnostic consensus and the pathology result in the \gls{clb} data report. The left column shows these matrices for the contralateral side, the right column for the ipsilateral \glspl{lnl}. The levels for which we computed confusion matrices were \gls{lnl} Ib (first row), II (second row), III (third row), IV (fourth row) and V (fifth row).
     }
     \label{table:dataset_clb:confusion}
 \end{table}
@@ -101,7 +101,7 @@ Since for the \gls{clb} patient cohort both the clinical diagnosis of most, and 
     parbox=false,
     float
 ] \label{box:dataset_clb:results:beta}
-    The mentioned Beta posterior we used here comes from estimating the probability of a Binomial distribution using Bayesian inference: For example, the sensitivity $s_N$ is defined as the probability to observe a true positive event, meaning the diagnostic modality correctly identifies e.g. an \gls{lnl} as being metastatic. Hence, the number of true positives TP when P metastatic \glspl{lnl} are given can be described by a binomial distribution:
+    The Beta posterior we used here comes from estimating the probability of a Binomial distribution using Bayesian inference: For example, the sensitivity $s_N$ is defined as the probability to observe a true positive event, meaning the diagnostic modality correctly identifies e.g. an \gls{lnl} as being metastatic. Hence, the number of true positives TP when P metastatic \glspl{lnl} are given can be described by a binomial distribution:
     %
     \begin{equation}
         \text{TP} \sim \operatorname{Bin}(\text{P}, s_N)
@@ -116,7 +116,7 @@ Since for the \gls{clb} patient cohort both the clinical diagnosis of most, and 
         \end{aligned}
     \end{equation}
     %
-    For the prior hyperparameters we have chosen $\alpha=1$ and $\beta=1$, amounting to a uniform prior over the sensitivity. In this case the maximum a posteriori estimate for $s_N$ coincides with its maximum likelihood estimate, but additionally, we get naturally obtain a measure of uncertainty with it via the width of the distribution.
+    For the prior hyperparameters we have chosen $\alpha=1$ and $\beta=1$, amounting to a uniform prior over the sensitivity. In this case the maximum a posteriori estimate for $s_N$ coincides with its maximum likelihood estimate, but additionally, we naturally obtain a measure of uncertainty with it via the width of the distribution.
 
 \end{tcolorbox}
 
@@ -125,8 +125,8 @@ It is immediately striking that -- except for level II -- the observed sensitivi
 We believe there are two reasons for this discrepancy between the literature values and the actually achieved sensitivities and specificities for the different \glspl{lnl}:
 
 \begin{enumerate}
-    \item The fundamental difference in what is actually observed by the imaging modalities commonly used to diagnose lymph nodes versus what a pathologist detects when investigating a resected tissue sample. Imaging techniques observe macroscopic changes in e.g. a \gls{lnl}, exerted on the region by an accumulation of a large amount of tumor cells. Such macroscopic changes for example include necrotic areas and the swelling of lymph nodes. As mentioned in \cref{sec:intro:diagnosis}, observing microscopic disease directly, would require imaging modalities to resolve individual tumor cells, which is currently beyond their capabilities.
-    \item The distribution of metastases is not uniformly over lymph nodes and their levels. In the majority of \gls{opscc} cases, metastasis starts in the ipsilateral \gls{lnl} II. This means that the state of lymphatic metastatic progression is almost always more advanced in \gls{lnl} II than e.g. in \gls{lnl} IV. Consequently, it is more likely that metastases in level II have advanced sufficiently to be detectable by imaging, than it is for disease in \gls{lnl} IV to have reached that state.
+    \item The fundamental difference in what is actually observed by the imaging modalities commonly used to diagnose lymph nodes versus what a pathologist detects when investigating a resected tissue sample. Imaging techniques observe macroscopic morphological changes in lymph node, as a result of a growing tumor mass. Such macroscopic changes for example include enlarged lymph nodes, spherical shape and areas of central necrosis. As mentioned in \cref{sec:intro:diagnosis}, observing microscopic disease directly, would require imaging modalities to resolve individual tumor cells, which is currently beyond their capabilities.
+    \item The distribution of occult metastases is not uniform over the \acrlongpl{lnl}. In the majority of \gls{opscc} cases, metastasis starts in the ipsilateral \gls{lnl} II. This means that the state of lymphatic metastatic progression is almost always more advanced in \gls{lnl} II than e.g. in \gls{lnl} IV. Consequently, it is more likely that metastases in level II have advanced sufficiently to be detectable by imaging, than it is for disease in \gls{lnl} IV to have reached that state.
 \end{enumerate}
 
 \begin{figure}

@@ -37,7 +37,7 @@ A clinically positive lymph node was defined by either
 
 We now have two datasets: One from the \gls{usz} (see \cref{chap:dataset_usz}) containing per-level involvement information from different diagnostic modalities, e.g. \gls{ct} and \gls{mri}. And the other from the \gls{clb} that reports a clinical consensus diagnosis and for most \glspl{lnl} also a post-surgical pathology report on the true involvement of the investigated level.
 
-Since many patients have information from multiple modalities reporting a diagnosis on a given \gls{lnl}, this represents us with a challenge: How should we consistently and correctly combine different diagnostic modalities, and how to incorporate the pathology information, if available?
+Since many patients have information from multiple different modalities reporting a diagnosis on a given \gls{lnl}, this confronts us with a challenge: How should we consistently and correctly combine different diagnostic modalities, and how to incorporate the pathology information, if available?
 
 In \cref{sec:dataset_usz:results}, we simply combined \gls{ct}, \gls{mri}, \gls{pet} and \gls{fna} into a ``consensus'' by applying the logical \texttt{OR}. This means if any of the available modalities for a patient reported involvement in an \gls{lnl}, we assumed that level to be involved. With this method, we created \cref{fig:dataset_usz:statistics}. This worked well, since the \gls{usz} data contained mostly imaging results and seeing a suspicious lymph node in either of them usually means a clinician would consider the corresponding \gls{lnl} to be metastatic.
 
@@ -62,7 +62,7 @@ For the \gls{clb} data from \citeauthorandlink{bauwens_prevalence_2021}, this st
 
 Our approach to do this will be generally applicable to combining an arbitrary number of binary diagnoses into a consensus: We will naively determine the most likely involvement for the available modalities and their literature values for sensitivity and specificity, in our case from \citeauthorandlink{de_bondt_detection_2007} and \cite{kyzas_18f-fluorodeoxyglucose_2008}, as listed in \cref{table:dataset_clb:spec_sens}. This means we compute the likelihood of the observed diagnoses $\left\{ Z^\mathcal{O} \right\}$, given the two possible cases for the true involvement $X$ and define our consensus as the value of $X$, where the likelihood was the greatest.
 
-Naively, when we have only one diagnostic modality, this maximum likelihood consensus will simply reproduce the same diagnosis, as long as the modality's sensitivity $s_N$ and specificity $s_P$ are both larger than 50\%:
+Naively, when we have only one single diagnostic modality, this maximum likelihood consensus will simply reproduce the same diagnosis, as long as the modality's sensitivity $s_N$ and specificity $s_P$ are both larger than 50\%:
 %
 \begin{equation}
     \begin{aligned}
@@ -73,7 +73,7 @@ Naively, when we have only one diagnostic modality, this maximum likelihood cons
 %
 We can see that the observed diagnosis $Z=1$ is \emph{more likely}, given the true state of involvement of $X=1$, compared to the likelihood of $Z=1$, given $X=0$. Hence, the consensus diagnosis will be set to $Z^\text{cons} = 1$.
 
-If we have pathology results in addition to diagnostic modalities, which we consider to have sensitivity and specificity of $s^\text{path}_N = s^\text{path}_P = 1$, then an example could like this:
+If we have pathology results in addition to diagnostic modalities, which we consider to have sensitivity and specificity of $s^\text{path}_N = s^\text{path}_P = 1$, then an example looks as follows:
 %
 \begin{equation}
     \begin{aligned}
