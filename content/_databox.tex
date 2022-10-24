@@ -2,13 +2,13 @@
     For the following experiments, we combined two datasets:
 
     \begin{itemize}[leftmargin=7mm]
-        \item[\faIcon{hospital}] \textbf{USZ}: 287 patients with newly diagnosed \gls{opscc}, treated at the \acrlong{usz} between 2013 and 2019. This dataset has been described in great detail in \cref{chap:dataset_usz}.
-        \item[\faIcon{hospital}] \textbf{CLB}: 263 patients with newly diagnosed \gls{opscc}, treated at the \acrlong{clb} between 2014 and 2018. A table containing this data was kindly provided to us by \textbf{Vincent Grégoire}, who was also the \gls{pi} of the study during which this data was extracted and for which it was analyzed \cite{bauwens_prevalence_2021}.
+        \item[\faIcon{hospital}] \textbf{USZ}: 287 patients with newly diagnosed \gls{opscc}, treated at the \acrlong{usz} between 2013 and 2019. This dataset has been described in detail in \cref{chap:dataset_usz}.
+        \item[\faIcon{hospital}] \textbf{CLB}: 263 patients with newly diagnosed \gls{opscc}, treated at the \acrlong{clb} between 2014 and 2018. A table containing this data was kindly provided to us by \textbf{Vincent Grégoire}, who was also the \gls{pi} of the study during which this data was extracted and for which it was analyzed \cite{bauwens_prevalence_2021}. We describe this data in \cref{chap:dataset_clb}.
     \end{itemize}
 
     Both datasets are available in our repository \repolink{lyDATA} or in the online interface \href{https://lyprox.org/patients/dataset/}{\faIcon{external-link-alt} LyProX}.
 
     All available diagnostic and pathological modalities reported in the data were used in combination with literature values for their respective sensitivity and specificity \cite{de_bondt_detection_2007,kyzas_18f-fluorodeoxyglucose_2008} to arrive at an estimate for the most likely true pattern of involvement for each patient.
 
-    This maximum likelihood estimate was then fed into the model, assuming a sensitivity and specificity of 1. See \cref{chap:dataset_clb} and more specifically \cref{sec:dataset_clb:discussion} for an intuition into our motivations for this simplification.
+    This maximum likelihood estimate was then used for model training, assuming a sensitivity and specificity of 1. See \cref{chap:dataset_clb} and more specifically \cref{sec:dataset_clb:discussion} for an intuition into our motivations for this simplification.
 \end{tcolorbox}
