@@ -28,7 +28,7 @@ stages:
     - contraII-risks
     - contraIIIandIV-risks
     - ipsiV-risks
-    - graph
+    - complete_graph
     - acor
     do:
       cmd: >

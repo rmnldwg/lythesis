@@ -1,6 +1,6 @@
 %% Creator: Inkscape inkscape 0.92.5, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
-%% Accompanies image file 'graph.pdf' (pdf, eps, ps)
+%% Accompanies image file 'complete_graph.pdf' (pdf, eps, ps)
 %%
 %% To include the image in your LaTeX document, write
 %%   \input{<filename>.pdf_tex}
@@ -53,6 +53,6 @@
   \begin{picture}(1,1.39285714)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
-    \put(0,0){\includegraphics[width=\unitlength,page=1]{graph.pdf}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{complete_graph.pdf}}%
   \end{picture}%
 \endgroup%

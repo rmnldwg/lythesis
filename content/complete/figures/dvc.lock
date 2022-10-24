@@ -175,3 +175,17 @@ stages:
     - path: ipsiV-risks.pdf_tex
       md5: e84a86667565f25743df450abb05eb30
       size: 2056
+  convert-to-pdf@complete_graph:
+    cmd: "inkscape --file=complete_graph.svg --export-pdf=complete_graph.pdf --without-gui\
+      \ --export-latex\n"
+    deps:
+    - path: complete_graph.svg
+      md5: ce5696e1b1a911fca487ce007162b5bc
+      size: 13317
+    outs:
+    - path: complete_graph.pdf
+      md5: dde8f22d8eb8cc216f65e8a34928422c
+      size: 4963
+    - path: complete_graph.pdf_tex
+      md5: 091b464487bfacb9c574ef74f9fe76ff
+      size: 2060
