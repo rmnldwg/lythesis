@@ -5,17 +5,54 @@
 * _Supervisor:_ **Prof. Jan Unkelbach**
 * _Time:_ **September 2019 - December 2022**
 
-## Set up
-
 This repository contains the source code for my PhD dissertation. It is set up to be - above all - modular and reproducible. Below follows a quick guide to this repository's layout.
 
-### Requirements
 
-To compile this thesis, one needs...
+## Requirements
 
-1. a TeX distribution (I used [TeX Live]).
-2. the tool _Data Version Control_ ([DVC]), a Python program that enables one to extend git's functionality to version large, binary data and pipelines.
-3. an installation of [Inkscape] to convert `.svg` plots into a `.pdf` and a `.pdf_tex` file each.
+To compile this thesis, one needs a TeX distribution. Ideally TeX Live 2022, I have noticed some errors with TeXt Live 2019.
+
+All figures in the thesis are compiled using scripts that are contained in this repository. This means, given the correct data, one can recreate all plots. This is not necessary for compiling the thesis, because the figures are also contained in the repository, but if anyone wants to check if I have done everything correctly, feel free to do so.
+
+To recreate all figures, in addition to a TeX Live distribution, one needs...
+1. Python 3.8 or later installed. Ideally one has also created a virtual environment.
+2. an installation of [Inkscape] to convert `.svg` plots into a `.pdf` and a `.pdf_tex` file each.
+
+The section below lays out the steps for recreating the figures.
+
+
+## Reproduce
+
+If you want to reproduce the thesis, i.e. recompile it and recreate all the figures, do the following (ideally inside a virtual environment, like [`venv`]):
+
+First, install the dependencies:
+
+```
+pip install -U pip setuptools wheel
+pip install -r requirements.txt
+```
+
+Then, update all the data sources. You could go through all `data` folders inside every chapter's directory and execute `dvc update -R .` but there is a faster way. At the root of the repository, call
+
+```
+find -iname "*.dvc" -exec dvc update {} \;
+```
+
+Next, the plots can be reproduced by telling the tool [DVC] to rerun the pipelines that were defined with its help. Again, this could be done chapter by chapter, but the shorthand command is
+
+```
+find -iname "dvc.yaml" -exec dvc repro {} \;
+```
+
+And after this, you can build the entire document by running
+
+```
+pdflatex -output-directory="_build" "./main.tex"
+```
+
+Now your `_build` directory at the root of the repo should contain a beautifully rendered `main.pdf` :+1:
+
+## Repository Structure
 
 ### Subfiles
 
@@ -42,37 +79,6 @@ The root and every chapter folder also have `figures` directories in them. This 
 2. scripts that produce plots of computed results
 
 For the second point, I again rely heavily on [DVC]. This tool defines which files in the respective `data` folder to use with which (Python) script to produce exactly which version (using MD5 hashes) of a plot.
-
-## Reproduce
-
-If you want to reproduce the thesis, i.e. recompile it and recreate all the figures, do the following (ideally inside a virtual environment, like [`venv`]):
-
-First, install the dependencies:
-
-```
-pip install -U pip setuptools wheel
-pip install -r requirements.txt
-```
-
-Then, update all the data sources
-
-```
-dvc update -R ./content/<chapter-name>/data
-```
-
-Do this for all the chapters in the document. Next, reproduce all the plots
-
-```
-dvc repro -R .
-```
-
-And after this, you can build the entire document by running
-
-```
-pdflatex -output-directory="_build" "./main.tex"
-```
-
-After that, your `_build` directory at the root of the repo should contain a beautifully rendered `main.pdf` :+1:
 
 ## Make this _YOUR_ thesis
 
