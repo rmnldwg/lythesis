@@ -10,4 +10,29 @@
 \section{Reproducibility}
 \label{sec:intro:reproducibility}
 
+We have undertaken a significant effort to make almost all results presented in this thesis fully reproducible. First, the entire source code of this thesis if available inside the repository \repolink{lyThesis}. The way this repository is set up allows recreating every data-based figure by executing all scripts stored in the repository. Where to obtain the data that underlies the plots and which scripts to execute in which order to produce them is managed by a tool called \acrshort{dvc} \cite{noauthor_data_2022}. This open source framework aims to supplement the version control system \faIcon{git-alt}~git \cite{torvalds_git_2022}, which is designed and built for tracking text files, but not large binary data. \Acrshort{dvc} ties large binary data files into git's version control by storing small text files in the git repository that unambiguously refer to the large binary data located elsewhere.
+
+For example, the samples we have drawn for the base graph, as described later in \cref{subsec:graph:extended:base}, are used but not stored inside the repository of this thesis. Instead, in \repolink{lyThesis} the \faIcon{folder}~\texttt{content/graph} folder (that corresponds to \cref{chap:graph}) contains a directory \faIcon{folder}~\texttt{data}. It contains several \texttt{.dvc} files, such as this one:
+
+\begin{tcolorbox}[title=\faIcon{file-alt} \texttt{extended-base-v1-samples.hdf5.dvc}, parbox=false]
+\begin{verbatim}
+md5: b40d03ebdf115657f8af5f73ede56eaf
+frozen: true
+deps:
+- path: models/prevalences.hdf5
+  repo:
+      url: https://github.com/rmnldwg/lynference
+      rev: extended-base-v1
+      rev_lock: a58a75912860a6f1113b45da94fe4e558010dad8
+outs:
+- md5: 9a49e7ef412ab6c6542262506b9eb99b
+  size: 2765440
+  path: extended-base-v1-prevalences.hdf5
+\end{verbatim}
+\end{tcolorbox}
+
+Essentially, this is a \acrshort{yaml} file that details precisely where to find the data and even that data's MD5 hash. To obtain the data, all one has to do is to enter the folder \faIcon{folder}~\texttt{content/graph/data} and inside -- assuming \acrshort{dvc} is installed -- run \texttt{\$~dvc~update} inside a terminal.
+
+What \acrshort{dvc} will then do is go to the specified online GitHub repository and check if the data is tracked there. If not (as is the case for the particular example above), it will search for a specification inside the repository that was also created by \acrshort{dvc} detailing where to look for external files. In this case, the remote storage location defined for large binary files in the \repolink{lynference} repository is hosted on an Azure Blob storage. Hence, \acrshort{dvc} will use the MD5 hash value of the file it is looking for and retrieve the correct data from the Azure Blob storage with the help of the specifications from \repolink{lynference}.
+
 \end{document}
