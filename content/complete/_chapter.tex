@@ -38,6 +38,18 @@ It performed well in capturing the increased risk for contralateral metastasis, 
 
 By joining the six \glspl{lnl} and the bilateral mixing model, we end up with an \gls{hmm} of 19 parameters: Six for the ipsilateral, and six for the contralateral base probability rates (when the tumor does not extend over the mid-sagittal plane), the mixing parameter $\alpha$, five probability rates for the spread among \glspl{lnl} and lastly, one parameter for the late T-category time-prior.
 
+\begin{figure}
+    \centering
+    \def\svgwidth{0.7\textwidth}
+    \input{figures/acor.pdf_tex}
+    \caption[
+        Mean integrated auto-correlation estimate for the complete model's run
+    ]{
+        Evolution of the mean integrated auto-correlation estimate for the sampling run with the complete model. Only when the estimate (blue) undercuts the black dashed line and is sufficiently stable do we consider the sampling procedure converged.
+    }
+    \label{fig:complete:acor}
+\end{figure}
+
 For inference, we again used the \repolink[dfm]{emcee} Python package that implements ensemble-based \gls{mcmc} methods. We set the number of concurrent ``walkers'' to $20 \cdot k = 380$, where $k$ is the number of parameters. A proposal for a new parameer sample was generated with 80\% probability based on the differential evolution move by \citeauthorandlink{nelson_run_2013}, and with 20\% probability it used a differential evolution ``Snooker Move'' by \citeauthorandlink{ter_braak_differential_2008}. The early T-category's time-prior was fixed to a binomial distribution over eleven time-steps, meaning its support is $t \in \left[0, 1, 2, \ldots, 10\right]$, whereas the success probability $p_\text{early}$ was set to 30\%.
 
 Sampling was then run until convergence, meaning that the estimate of the mean integrated auto-corralation of all 380 walkers, which was computed every 100 sampling steps, fulfills these conditions:
@@ -66,19 +78,7 @@ Where the sum runs over the normalized auto-correlation function of a chain of s
     c_\theta(t) = \frac{1}{N-t} \sum_{s=1}^{M-t}{ \left( \theta_{s+1} - \bar{\theta} \right) \left( \theta_s - \bar{\theta} \right) }
 \end{equation}
 %
-In practice, computing the integrated auto-correlation time can be done efficiently using fast Fourier transforms. This method is also used by the \repolink[dfm]{emcee} package to compute a walker's integrated auto-correlation time. The estimates for all walkers are then averaged to get the mean integrated auto-correlation estimate. A plot of how this estimate developed over the course of this sampling round is shown in \cref{fig:complete:acor}.
-
-\begin{figure}
-    \centering
-    \def\svgwidth{0.7\textwidth}
-    \input{figures/acor.pdf_tex}
-    \caption[
-        Mean integrated auto-correlation estimate for the complete model's run
-    ]{
-        Evolution of the mean integrated auto-correlation estimate for the sampling run with the complete model. Only when the estimate (blue) undercuts the black dashed line and is sufficiently stable do we consider the sampling procedure converged.
-    }
-    \label{fig:complete:acor}
-\end{figure}
+with the mean of all samples $\bar{\theta}$. In practice, computing the integrated auto-correlation time can be done efficiently using fast Fourier transforms. This method is also used by the \repolink[dfm]{emcee} package to compute a walker's integrated auto-correlation time. The estimates for all walkers are then averaged to get the mean integrated auto-correlation estimate. A plot of how this estimate developed over the course of this sampling round is shown in \cref{fig:complete:acor}.
 
 After the sampling converged, we drew another 250 samples, of which we discarded all but every fifth, leaving us with $50 \cdot 380 = 19\,000$ parameter samples. From these, we compute risks for different realistic scenarios to show how the resulting predictions may be used clinically for quantitatively informed decisions on \gls{ctv-n} definition. This will then also be compared to the currently established guidelines for \gls{ctv-n} definition to see where the potential for volume de-escalation in the elective treatment of e.g. \gls{opscc} arises.
 
