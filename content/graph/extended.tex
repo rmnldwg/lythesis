@@ -111,6 +111,20 @@ We performed \gls{mcmc} to sample from two identical models -- except for the di
     where $N$ is the number of drawn samples. This means we only trust the estimate once we have a sufficiently large number of samples.
 \end{enumerate}
 
+The estimate for the mean integrated auto-correlation time $\hat{\tau}$ can be obtained, following \citeauthorandlink{sokal_monte_1997}, as stated below
+%
+\begin{equation}
+    \hat{\tau} = 1 + 2 \sum_{t=1}^{M \ll N}\frac{ c_\theta(t) }{ c_\theta(0) }
+\end{equation}
+%
+Where the sum runs over the normalized auto-correlation function of a chain of samples. The function $c_\theta(t)$, in turn, can be computed using
+%
+\begin{equation}
+    c_\theta(t) = \frac{1}{N-t} \sum_{s=1}^{M-t}{ \left( \theta_{s+1} - \bar{\theta} \right) \left( \theta_s - \bar{\theta} \right) }
+\end{equation}
+%
+where $\bar{\theta}$ is the mean of all samples. The \repolink[dfm]{emcee} package actually uses fast Fourier transforms to compute a walker's integrated auto-correlation time more efficiently. The estimates for all walkers are then averaged to get the mean integrated auto-correlation estimate.
+
 We have plotted an example of how the integrated auto-correlation estimate evolves over the course of a sampling procedure in \cref{fig:graph:extended:acor}. It can be seen that the estimate is far too low initially. Only later, after the burn in phase, does it level off around the actual auto-correlation time. This is why the second requirement (shown as black line in the plot) is introduced.
 
 As in \cref{chap:unilateral,sec:graph:simple}, we used \repolink[dfm]{emcee} for ensemble sampling and set the early T-category's time-prior to a binomial distribution with support $t \in [0, 1, 2, \ldots, 10]$ and a ``diagnosis probability'' of $p_\text{early} = 0.3$. The corresponding parameter for the late T-category's time-prior $p_\text{late}$ was inferred along the spread probabilities.
