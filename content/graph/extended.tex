@@ -15,7 +15,7 @@
     \def\svgwidth{0.4\textwidth}
     \input{figures/extended-graph.pdf_tex}
     \caption[
-        Base graph of the extended ipsilateral model with possible additional edges
+        Base graph of the extended ipsilateral model
     ]{
         Minimal base graph connecting the extended ipsilateral network of \glspl{lnl}. Red arcs connect the tumor $T$ to the \glspl{lnl} $X_v$ for $v \in \{ \text{I}, \text{II}, \text{III}, \text{IV}, \text{V}, \text{VII} \}$, while the levels themselves are connected to each other with the blue arcs. Green arcs depict possible additional connections and deciding whether they should be added to better describe the data is the aim of this section.
     }
@@ -32,7 +32,7 @@ Lastly, \citeauthorandlink{lengele_anatomical_2007} also describe the \emph{post
 
 Based on the data, as well as anatomical and practical considerations mentioned above, we can now draw the \emph{base graph} that allows us to do inference and compare it to models that are based on graphs with additional connections between the \glspl{lnl}. We have sketched this graph in \cref{fig:graph:extended_graph} (considering only the red and blue edges). Note that this base graph does not assume a causal relation between the \glspl{lnl}, which cannot be captured by our model, as we have shown in \cref{sec:graph:simple}. Rather, it is the other way around: We fix those arcs to make our model more interpretable, as it allows e.g. a clinician or patient, getting informed by the model, to assign meaning to the parameters an abstract model has inferred from correlations in data.
 
-In \cref{fig:graph:all_lnls:base_graph}, we have also drawn green edges between the \glspl{lnl}. These additional connections are the subject of this section's experiments, as we are assessing whether adding them individually improves the model's accuracy enough to justify the greater model complexity.
+In \cref{fig:graph:extended_graph}, we have also drawn green edges between the \glspl{lnl}. These additional connections are the subject of this section's experiments, as we are assessing whether adding them individually improves the model's accuracy enough to justify the greater model complexity.
 
 \subsection{Starting Point: Base Graph}
 \label{subsec:graph:extended:base}
@@ -46,7 +46,7 @@ In \cref{fig:graph:all_lnls:base_graph}, we have also drawn green edges between 
     \def\svgwidth{1.04\textwidth}
     \input{figures/extended-base-corner.pdf_tex}
     \caption[
-        Corner plot displaying the posterior over parameters for the extended base graph
+        Corner plot of parameters for the extended base graph
     ]{
         Corner plot showing all 1D and 2D marginals of the sampled posterior distribution over the parameters of the model based on the extended base graph, as shown in \cref{fig:graph:extended_graph} (leaving out the green arcs). The distribution is unimodal, shows few correlations among the parameters and falls off similarly as a normal distribution. The \gls{bic} is therefore a good approximation for the log-evidence.
     }
@@ -88,7 +88,7 @@ As mentioned, we started with establishing a baseline, using a unilateral model 
     \centering
     \input{figures/acor.pdf_tex}
     \caption[
-        Plot of mean integrated auto-correlation times during the sampling process
+        Mean integrated auto-correlation times during sampling
     ]{
         Graph showing how the integrated mean auto-correlation time of all parallel walkers evolved during the sampling process for the model adding the arc from \gls{lnl} I to II (blue) and from II to I (orange). In the beginning the estimate for the auto-correlation times is far too low, which is why we only trust it once it has passed the threshold $30 \cdot \hat{\tau}_i \geq N$ (black dotted line).
     }
@@ -143,7 +143,7 @@ Looking at the \gls{bic} in \cref{table:graph:extend:12or21}, the results sugges
             \hline
         \end{tabular}
         \caption[
-            Comparison of performance metrics for connection between LNL I and II
+            Metrics: Direction of arc between LNL I and II
         ]{
             Metrics -- namely \gls{bic}, maximum and mean likelihood -- computed for the base-graph, as well as for the graph with an added connection from \gls{lnl} I to II, and for the model based on the graph with the same connection, but from \gls{lnl} II to I. A lower value corresponds to a better performance.
         }
@@ -157,7 +157,7 @@ This can also intuitively be seen in the two figures, where we have plotted the 
     \def\svgwidth{1.0\textwidth}
     \input{figures/extended-conn12-low-prevalences.pdf_tex}
     \caption[
-        Comparison of prevalences of low-risk scenarios for the two directions of the arc between LNL I and II
+        Arc between LNL I \& II: Low prevalence comparisons
     ]{
         Predicted (histograms) vs observed prevalences (line plots) for two low-risk scenarios: The involvement of \gls{lnl} I overall and the involvement of \gls{lnl} I without \gls{lnl} II. The left column shows these scenarios for early T-category, the right column for late T-category. In the top row we have plotted these predictions for the graph where the connections go from \gls{lnl} I to II and in the bottom row we show the predictions of the model with the reversed arc. The gray, hatched histogram shows the respective scenarios as predicted by the base graph.
     }
@@ -173,7 +173,7 @@ Our main goal with investigating an additional arc from or to \gls{lnl} I is to 
     \def\svgwidth{1.0\textwidth}
     \input{figures/extended-conn12-high-prevalences.pdf_tex}
     \caption[
-        Comparison of prevalences of high-risk scenarios for the two directions of the arc between LNL I and II
+        Arc between LNL I \& II: High prevalence comparisons
     ]{
         Predicted (histograms) vs observed prevalences (line plots) for two high-risk scenarios: The involvement of \gls{lnl} II overall and the involvement of \gls{lnl} II without \gls{lnl} I. The left column shows these scenarios for early T-category, the right column for late T-category. In the top row we have plotted these predictions for the graph where the connections go from \gls{lnl} I to II and in the bottom row we show the predictions of the model with the reversed arc. The gray, hatched histogram shows the respective scenarios as predicted by the base graph.
     }
@@ -206,7 +206,7 @@ To conclude this comparison, we can compare the actual values for the inferred s
         \hline
     \end{tabular}
     \caption[
-        Metrics assessing the performance of graphs with added connections to LNL V.
+        Metrics: Added connections to LNL V
     ]{
         Performance metrics for the model with
         \begin{enumerate*}[label={(\alph*)}]
@@ -227,7 +227,7 @@ The quantitative results are given in \cref{table:graph:extended:toV} and compar
     \def\svgwidth{1.0\textwidth}
     \input{figures/extended-add35-prevalences.pdf_tex}
     \caption[
-        Comparison of predicted prevalences for the model with an additional arc from LNL III to V
+        Arc from LNL III to V: Comparison of prevalences
     ]{
         Histograms displaying the computed prevalences of the model with an added edge $\tilde{t}_{35}$ (shaded histograms) compared to both the base graph model's respective prevalence (hatched histograms) and the Beta posterior over the prevalence of the two scenarios as observed in the data (solid lines). The shown scenarios are
         \begin{enumerate*}[label={(\alph*)}]
@@ -249,7 +249,7 @@ We have repeated the analysis for the graph that adds an edge from \gls{lnl} IV 
     \def\svgwidth{1.0\textwidth}
     \input{figures/extended-add45-prevalences.pdf_tex}
     \caption[
-        Comparison of predicted prevalences for the model with an additional arc from LNL IV to V
+        Arc from LNL IV to V: Prevalence comparisons
     ]{
         Plot of the prevalence for two different patterns of involvement:
         \begin{enumerate*}[label={(\alph*)}]
@@ -279,7 +279,7 @@ We have repeated the analysis for the graph that adds an edge from \gls{lnl} IV 
         \hline
     \end{tabular}
     \caption[
-        Performance comparison of the base graph model and the graph with an added arc from LNL II to VII
+        Metrics: Base graph vs additional arc from LNL II to VII
     ]{
         The base graph model's performance metrics -- as before the \gls{bic}, negative maximum and negative expected log-likelihood -- tabulated against the model's respective values where we introduced a connection from \gls{lnl} II to VII.
     }
@@ -295,7 +295,7 @@ As before, we start by comparing the performance metrics of the model where the 
     \def\svgwidth{1.0\textwidth}
     \input{figures/extended-add27-prevalences.pdf_tex}
     \caption[
-        Prevalences as predicted by the model with an additional arc from LNL II to VII
+        Additional arc from LNL II to VII: Prevalences compared
     ]{
         Histograms displaying the predicted prevalences for the base graph (gray, hatched) and the model with a new arc from \gls{lnl} II to VII (colored). The shown scenarios are
         \begin{enumerate*}[label={(\alph*)}]
