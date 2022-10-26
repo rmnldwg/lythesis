@@ -3,15 +3,30 @@
 
 
 \begin{document}
-    
-\chapter*{Colophon}
-This thesis was made in \LaTeXe{} using my blood, sweat and tears.
 
-%% I prefer to put these tables here rather than making the
-%% front matter seemingly interminable. No-one cares, anyway!
-\printbibliography[title={Bibliography}]
+
+\printglossary[
+    title={Abbreviations},
+    type=acronym,
+    style=long
+]
+    
+\printbibliography[
+    title={Bibliography},
+    heading=bibintoc
+]
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
 \listoftables
-\printglossary[title={Abbreviations},type=acronym,style=long]
+
+\chapter*{Colophon}
+This thesis was typeset in \LaTeX. Plots were created using \faIcon{python}~Python version 3.8. The source code is available at \repolink{lyThesis}.
 
 \end{document}
