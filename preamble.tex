@@ -4,6 +4,7 @@
 \usepackage{graphicx}
 \graphicspath{
     {\relativeRoot/figures/}
+    {\relativeRoot/content/figures/}
     {\relativeRoot/content/intro/figures/}
     {\relativeRoot/content/previous_work/figures/}
     {\relativeRoot/content/dataset_usz/figures/}
@@ -16,6 +17,7 @@
     {\relativeRoot/content/future/figures/}
 }
 \usepackage{caption}
+\captionsetup{textfont=it}
 \usepackage{subcaption}
 \usepackage{rotating}
 \usepackage[export]{adjustbox}
@@ -39,32 +41,38 @@
 
 %% Layout
 \usepackage{layout}
-\usepackage[a4paper,top=25mm,bottom=25mm]{geometry}
+\usepackage[
+    a4paper,
+    top=25mm,
+    bottom=25mm,
+    headheight=15pt,
+]{geometry}
 \usepackage{parskip}
 \usepackage{afterpage}
 \usepackage{pdflscape}
 \usepackage{linegoal}
+\emergencystretch=1em
 
-%% Setting up the headers and footers
-\usepackage{fancyhdr}
-% delete all headers and footers for the `empty' pagestyle in the front matter
-\fancypagestyle{empty}{
-    \renewcommand{\headrulewidth}{0pt}
-    \fancyhf{}
-}
-% `plain' is the pagestyle of chapter beginnings
-\fancypagestyle{plain}{
-    \renewcommand{\headrulewidth}{0pt}
-    \fancyhf{}
-    \fancyfoot[RO,LE]{\thepage}
-}
-% the rest of the document will be in the pagestyle `fancy'
-\pagestyle{fancy}
-\fancyhead{}
-\fancyhead[RO]{\rightmark}
-\fancyhead[LE]{\leftmark}
-\fancyfoot{}
-\fancyfoot[RO,LE]{\thepage}
+% %% Setting up the headers and footers
+% \usepackage{fancyhdr}
+% % delete all headers and footers for the `empty' pagestyle in the front matter
+% \fancypagestyle{empty}{
+%     \renewcommand{\headrulewidth}{0pt}
+%     \fancyhf{}
+% }
+% % `plain' is the pagestyle of chapter beginnings
+% \fancypagestyle{plain}{
+%     \renewcommand{\headrulewidth}{0pt}
+%     \fancyhf{}
+%     \fancyfoot[RO,LE]{\thepage}
+% }
+% % the rest of the document will be in the pagestyle `fancy'
+% \pagestyle{fancy}
+% \fancyhead{}
+% \fancyhead[RO]{\rightmark}
+% \fancyhead[LE]{\leftmark}
+% \fancyfoot{}
+% \fancyfoot[RO,LE]{\thepage}
 
 %% For later reference of title, author, etc.
 \usepackage{titling}
@@ -109,7 +117,7 @@
 \newtheorem{hyp}{Hypothesis}
 
 %% Glossary
-\usepackage[acronym]{glossaries}
+\usepackage[acronym,toc]{glossaries}
 \makeglossaries
 \setacronymstyle{long-short}
 \loadglsentries[acronym]{glossary}

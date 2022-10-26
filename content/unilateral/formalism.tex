@@ -12,11 +12,11 @@ Before we begin formulating lymphatic metastatic progression as \acrlong{hmm}, w
 
 We describe the true, but unobservable and hence \emph{hidden}, state of a \gls{lnl} using a binary \gls{rv} $X_v$, where $v \in \{ 1,2, \ldots, V \}$ indexes the $V$ nodal levels. If it is in state $X=0$ (\texttt{FALSE}), the corresponding \gls{lnl} is healthy. State $X=1$ (\texttt{TRUE}) means the respective \gls{lnl} contains at least one lymph node that harbors disease.
 
-Similarily, any modality that observes the state of an \gls{lnl} will be modelled as an \gls{rv}, too, but an \emph{observed} one: $Z_v^\mathcal{O}$ models whether observing $X_v$ using a modality with sensitivity $s_N^\mathcal{O}$ and specificity $s_P^\mathcal{O}$ yields a finding ($Z_v^\mathcal{O}=1$) or not ($Z_v^\mathcal{O}=0$). Here, $\mathcal{O} \in \{ \text{MRI}, \text{CT}, \ldots \}$ indexes the individual modalities for observing the state of \gls{lnl} $v$.
+Similarly, any modality that observes the state of an \gls{lnl} will be modelled as an \gls{rv}, too, but an \emph{observed} one: $Z_v^\mathcal{O}$ models whether observing $X_v$ using a modality with sensitivity $s_N^\mathcal{O}$ and specificity $s_P^\mathcal{O}$ yields a finding ($Z_v^\mathcal{O}=1$) or not ($Z_v^\mathcal{O}=0$). Here, $\mathcal{O} \in \{ \text{MRI}, \text{CT}, \ldots \}$ indexes the individual modalities for observing the state of \gls{lnl} $v$.
 
 We can also collect individual \glspl{rv} in a random vector:
 %
-\begin{equation} \label{eq:bn:variables}
+\begin{equation}
     \begin{aligned}
         \text{hidden}& & \mathbf{X} &= ( X_v ) \rightarrow \{ 0,1 \}^V \\
         \text{observed}& & \mathbf{Z} &= ( Z_v ) \rightarrow \left\{ 0, 1 \right\}^V
@@ -170,7 +170,7 @@ where the $\boldsymbol{\pi}$ is the column vector for the healthy starting state
     \centering
     \def\svgwidth{0.9\textwidth}
     \input{figures/hmm_paths.pdf_tex}
-    \caption[Schematic illustrating possible evolution paths of the HMM for a simple case]{Illustration of possible paths from the starting state $\boldsymbol{\pi}$ to a diagnosis $\mathbf{z}$ at time $T$ on a discrete grid of time vs state. Only 4 states (corresponding to 2 \glspl{lnl}) are shown, where green indicates healthy and purple involved. Following the arrows from $\boldsymbol{\pi}$ to $\mathbf{z}$ yields a possible path. Some connections between states are forbidden due to $Q$ (no self-healing). To calculate the probability of a diagnosis $\mathbf{z}$, we must marginalize over all paths.}
+    \caption[Schematic of evolution paths in a simple HMM]{Illustration of possible paths from the starting state $\boldsymbol{\pi}$ to a diagnosis $\mathbf{z}$ at time $T$ on a discrete grid of time vs state. Only 4 states (corresponding to 2 \glspl{lnl}) are shown, where green indicates healthy and purple involved. Following the arrows from $\boldsymbol{\pi}$ to $\mathbf{z}$ yields a possible path. Some connections between states are forbidden due to $Q$ (no self-healing). To calculate the probability of a diagnosis $\mathbf{z}$, we must marginalize over all paths.}
     \label{fig:unilateral:hmm_paths}
 \end{figure}
 
