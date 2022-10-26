@@ -47,7 +47,7 @@ find -iname "dvc.yaml" -exec dvc repro {} \;
 And after this, you can build the entire document by running
 
 ```
-pdflatex -output-directory="_build" "./main.tex"
+latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf -outdir=_build main
 ```
 
 Now your `_build` directory at the root of the repo should contain a beautifully rendered `main.pdf` :+1:

@@ -5,7 +5,6 @@
 \begin{document}
     
 \begin{abstract}
-    \thispagestyle{plain}
     \Glspl{hnscc} are often treated using radiotherapy. Because this type of cancer frequently spreads to regional lymph nodes, parts of the lymphatic system are irradiated alongside the primary tumor. Macroscopic nodal metastasis, visible on imaging modalities such as \acrlong{ct}, is always included in the target volume of radiotherapy. Additionally, clinicians electively irradiate \glspl{lnl} when their estimated risk to harbor microscopic disease exceeds a given threshold. Currently, this risk estimate is based on the overall prevalence of metastatic involvement in a given \gls{lnl} as reported in the literature. However, few published studies on lymphatic metastatic progression patterns investigate how the probability of involvement of \glspl{lnl} depends on the involvement of other levels and clinicopathological factors such as T-category, which is of crucial importance to create more personalized elective target volumes. This work makes three related contributions to address this problem:
 
     \begin{enumerate}[label={(\arabic*)}]
@@ -26,21 +25,27 @@
 % I declare that..
 
 \chapter*{Acknowledgements}
-\thispagestyle{empty}
-First, I want to thank my Professor and supervisor Jan Unkelbach for his relentless support and feedback throughout my PhD. Being able to discuss new ideas or occurring problems with him at almost any time was invaluable for this research project.
+First, I want to thank my Professor and supervisor Jan Unkelbach for his relentless support and feedback throughout my PhD. Being able to discuss new ideas or occurring issues with him at almost any time while also having the freedom to explore different approaches to problems made my PhD an invaluable experience. Even throughout the COVID-19 pandemic I never felt lost because of the support and trust he offered to all his students in this extraordinary period.
 
-I am also grateful to Bertrand Pouymayou, a medical physics Postdoc in our group, who laid the groundwork on this topic and introduced me to the mathematical details of the model he had developed. His perspectives on different aspects of our modelling approach helped me gain a deeper understanding of formalism and its implications.
+I am also grateful to Bertrand Pouymayou, a medical physics Postdoc in our group, who laid the foundation of this work and introduced me to the mathematical details of the model he had developed. His unconventional perspectives on different aspects of our project helped me gain a deeper understanding of what we were doing.
 
-% Panagiotis Balermpas
+Thanks is also due to Panagiotis Balermpas, the clinician of our research group, for explaining to me the medical and biological basics of how cancer and the lymphatic system works. Without his regular reality check, I would have quickly abstracted away all problems.
 
-This work was supported by the \gls{crpp}\\\emph{Artificial Intelligence in Oncological Imaging}.
+In addition, I want to thank all those I worked with, either on a publication or simply in the same office. Every co-author's and colleague's acquaintance I got to make was enriching and utterly enjoyable.
+
+Lastly, of course, I thank my family for paving much of the road up to this point.\\
+And my love, Rosalie, thank you for choosing to pave the road ahead with me.
+
+\vspace{4cm}
+
+This work was supported by the \gls{crpp}\\\href{https://www.crpp-ai-oncology.uzh.ch/en.html}{\emph{Artificial Intelligence in Oncological Imaging}}.
 
 \chapter*{Contributions}
 \section*{Publications Included in this Dissertation}
 \begin{itemize}
-    \item \Cref{chap:dataset_usz}: \fullcite{ludwig_dataset_2022}
-    \item \Cref{chap:dataset_usz}: \fullcite{ludwig_detailed_2022}
-    \item \Cref{chap:unilateral}: \fullcite{ludwig_hidden_2021}
+    \item \textbf{\Cref{chap:dataset_usz}:} \fullcite{ludwig_dataset_2022}
+    \item \textbf{\Cref{chap:dataset_usz}:} \fullcite{ludwig_detailed_2022}
+    \item \textbf{\Cref{chap:unilateral}:} \fullcite{ludwig_hidden_2021}
 \end{itemize}
 
 \section*{Abstracts Submitted to Conferences}
