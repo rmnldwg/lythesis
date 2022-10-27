@@ -1,0 +1,29 @@
+%% Specify root of repository relative to this file.
+\providecommand{\relativeRoot}{.}
+
+
+\documentclass[
+    a4paper,
+    12pt,
+]{report}
+
+%% Load preamble
+\input{preamble.tex}
+
+%% Metadata
+\title{Modelling Lymphatic Metastatic Progression in Head and Neck Cancer}
+\author{Roman Ludwig}
+\date{\monthyeardate\today}
+
+\hypersetup{
+    pdftitle={\thetitle},
+    pdfauthor={\theauthor}
+}
+
+%% The actual document
+\begin{document}
+    \pagestyle{empty}
+    \subfile{titlepage}
+    \pagestyle{plain}
+    \subfile{content/_content.tex}
+\end{document}

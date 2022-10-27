@@ -1,0 +1,50 @@
+\providecommand{\relativeRoot}{..}
+\documentclass[\relativeRoot/main.tex]{subfiles}
+\graphicspath{
+    {\relativeRoot/figures/}
+    {\relativeRoot/intro/figures/}
+    {\relativeRoot/previous_work/figures/}
+    {\relativeRoot/dataset_usz/figures/}
+    {\relativeRoot/dataset_clb/figures/}
+    {\relativeRoot/lyprox/figures/}
+    {\relativeRoot/unilateral/figures/}
+    {\relativeRoot/graph/figures/}
+    {\relativeRoot/bilateral/figures/}
+    {\relativeRoot/complete/figures/}
+    {\relativeRoot/future/figures/}
+}
+
+
+\begin{document}
+
+    %% Frontmatter
+    \pagenumbering{roman}
+    \subfile{frontmatter}
+
+    %% The Chapters as subfiles
+    \subfile{intro/_chapter}
+    \glsresetall
+    \subfile{previous_work/_chapter}
+    \glsresetall
+    \subfile{dataset_usz/_chapter}
+    \glsresetall
+    \subfile{dataset_clb/_chapter}
+    \glsresetall
+    \subfile{lyprox/_chapter}
+    \glsresetall
+    \subfile{unilateral/_chapter}
+    \glsresetall
+    \subfile{graph/_chapter}
+    \glsresetall
+    \subfile{bilateral/_chapter}
+    \glsresetall
+    \subfile{complete/_chapter}
+    \glsresetall
+    \subfile{future/_chapter}
+    \glsresetall
+    \subfile{discussion/_chapter}
+
+    %% Backmatter
+    \subfile{backmatter}
+
+\end{document}

@@ -12,8 +12,27 @@
 %% Load preamble
 \input{preamble.tex}
 
-%% Load custom commands regarding links
-\input{print_commands.tex}
+%% Setting up the headers and footers
+\usepackage{fancyhdr}
+% delete all headers and footers for the `empty' pagestyle in the front matter
+\fancypagestyle{empty}{
+    \renewcommand{\headrulewidth}{0pt}
+    \fancyhf{}
+}
+% `plain' is the pagestyle of chapter beginnings
+\fancypagestyle{plain}{
+    \renewcommand{\headrulewidth}{0pt}
+    \fancyhf{}
+    \fancyfoot[RO,LE]{\thepage}
+}
+\fancypagestyle{fancy}{
+    \renewcommand{\headrulewidth}{0pt}
+    \fancyhf{}
+    \fancyfoot[RO,LE]{\thepage}
+}
+
+% Print out the URLs of all links
+\renewcommand{\superhref}[2]{#2 (\url{#1})}
 
 %% Metadata
 \title{Modelling Lymphatic Metastatic Progression in Head and Neck Cancer}
@@ -22,46 +41,15 @@
 
 \hypersetup{
     pdftitle={\thetitle},
-    pdfauthor={\theauthor}
+    pdfauthor={\theauthor},
+    urlcolor=uszblue
 }
 
 %% The actual document
 \begin{document}
     \pagestyle{empty}
-    
-    %% Titlepage
-    \subfile{content/titlepage}
+    \subfile{titlepage}
     \cleardoublepage
-
-    %% Frontmatter
     \pagestyle{fancy}
-    \pagenumbering{roman}
-    \subfile{content/frontmatter}
-
-    %% The Chapters as subfiles
-    \subfile{content/intro/_chapter}
-    \glsresetall
-    \subfile{content/previous_work/_chapter}
-    \glsresetall
-    \subfile{content/dataset_usz/_chapter}
-    \glsresetall
-    \subfile{content/dataset_clb/_chapter}
-    \glsresetall
-    \subfile{content/lyprox/_chapter}
-    \glsresetall
-    \subfile{content/unilateral/_chapter}
-    \glsresetall
-    \subfile{content/graph/_chapter}
-    \glsresetall
-    \subfile{content/bilateral/_chapter}
-    \glsresetall
-    \subfile{content/complete/_chapter}
-    \glsresetall
-    \subfile{content/future/_chapter}
-    \glsresetall
-    \subfile{content/discussion/_chapter}
-
-    %% Backmatter
-    \subfile{content/backmatter}
-
+    \subfile{content/_content.tex}
 \end{document}

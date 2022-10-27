@@ -54,25 +54,6 @@
 \emergencystretch=1em
 \usepackage{bold-extra}
 
-%% Setting up the headers and footers
-\usepackage{fancyhdr}
-% delete all headers and footers for the `empty' pagestyle in the front matter
-\fancypagestyle{empty}{
-    \renewcommand{\headrulewidth}{0pt}
-    \fancyhf{}
-}
-% `plain' is the pagestyle of chapter beginnings
-\fancypagestyle{plain}{
-    \renewcommand{\headrulewidth}{0pt}
-    \fancyhf{}
-    \fancyfoot[RO,LE]{\thepage}
-}
-\fancypagestyle{fancy}{
-    \renewcommand{\headrulewidth}{0pt}
-    \fancyhf{}
-    \fancyfoot[RO,LE]{\thepage}
-}
-
 %% For later reference of title, author, etc.
 \usepackage{titling}
 
@@ -139,3 +120,8 @@
 \usepackage{tcolorbox}
 \tcbuselibrary{skins,xparse,breakable}
 \usepackage{fontawesome5}
+
+% Custom commands
+\newcommand{\superhref}[2]{\href{#1}{#2}}
+\newcommand{\repolink}[2][rmnldwg]{\href{https://github.com/#1/#2}{\faIcon{github}~\texttt{#2}}}
+\newcommand{\lytag}[1]{\href{https://github.com/rmnldwg/lynference/releases/tag/#1}{\faIcon{tags}~\texttt{#1}}}
