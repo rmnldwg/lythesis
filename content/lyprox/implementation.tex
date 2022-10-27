@@ -23,7 +23,7 @@
     \label{fig:lyprox:er_diagram}
 \end{figure}
 
-The first step in creating a Django web application -- aside from initializing the project by choosing important settings -- usually consists of defining the database models. This is done by writing a Python class that inherits from Django's \texttt{Model} class for each type of object one wants to store. One such class essentially corresponds to a table in the underlying database (e.g., an \acrshort{sql} database like \href{https://www.sqlite.org/index.html}{SQLite3}). It can be given attributes for each column in that table and may also store relationships between tables/classes. Based on this Python representation of data, Django can automatically create extensive functionality. As their documentation states: 
+The first step in creating a Django web application -- aside from initializing the project by choosing important settings -- usually consists of defining the database models. This is done by writing a Python class that inherits from Django's \texttt{Model} class for each type of object one wants to store. One such class essentially corresponds to a table in the underlying database (e.g., an \acrshort{sql} database like \superhref{https://www.sqlite.org/index.html}{SQLite3}). It can be given attributes for each column in that table and may also store relationships between tables/classes. Based on this Python representation of data, Django can automatically create extensive functionality. As their documentation states: 
 
 \begin{displayquote}[Django documentation \cite{noauthor_creating_nodate}]
     The goal is to define your data model in one place and automatically derive things from it.
@@ -80,7 +80,7 @@ After adding \texttt{Patient} entries to a \texttt{Dataset}, it can be locked to
 
 The data representation of LyProX allows it to be used in the initial stage of data collection by entering patients manually one by one. But we also implemented methods for batch importing previously curated datasets. This means we can take any spreadsheet-like file, rename its column headers according to what LyProX expects and batch-import entire patient cohorts as a \acrshort{csv} file.
 
-The \acrshort{csv} format that is expected by LyProX, and documented at \href{https://lyprox.org/dataset}{\faIcon{external-link-alt}~\texttt{lyprox.org/\\dataset}}, is also used in the implementation of the probabilistic \repolink{lymph} model (see also  \cref{chap:unilateral}) to load the data for learning, and for publishing our raw data in \repolink{lyDATA}, where it is described again.
+The \acrshort{csv} format that is expected by LyProX, and documented at \superhref{https://lyprox.org/dataset}{\faIcon{external-link-alt}~\texttt{lyprox.org/\\dataset}}, is also used in the implementation of the probabilistic \repolink{lymph} model (see also  \cref{chap:unilateral}) to load the data for learning, and for publishing our raw data in \repolink{lyDATA}, where it is described again.
 
 \subsection*{Visualizing Patterns of Progression}
 \label{subsec:lyprox:implementation:viewer}
@@ -147,7 +147,7 @@ As can be seen in \cref{fig:lyprox:data_viewer}, the overall layout  of the inte
     \end{tikzpicture}\\
     [3mm]
     Above we have labelled the three rows showing the prevalence of involvement in level II contralaterally, along with that \gls{lnl}'s sublevels.
-    \item \textbf{Controls}~(right column, bottom bar): In this last box we have placed a few controls: On the left, we have a normal toggle button, allowing the user to switch between percentages and absolute numbers. In case the former is selected, all patient counts in the interface will be replaced by percentages, i.e. absolute numbers divided bz the number of patients in the current selection. On the right we have three buttons (from left to right): The ``\faIcon{question} Help'' button redirects to LyProX' \href{https://lyprox.org/dashboard/help}{\faIcon{external-link-alt}~help page}. The button displaying the total number of patients in selection links to a list of these patients. Finally, the bright orange ``\faIcon{cogs} Compute'' button needs to be pressed for the interface to update, after a user changes the patient selection e.g. via the toggle buttons. We have considered automatically updating the dashboard after each user input, e.g. when a toggle button is switched. However, in that case the number of requests sent to the server would be much larger and the perceived responsiveness of the interface might suffer, because after each click there would be a split-second delay until all numbers and bars update.
+    \item \textbf{Controls}~(right column, bottom bar): In this last box we have placed a few controls: On the left, we have a normal toggle button, allowing the user to switch between percentages and absolute numbers. In case the former is selected, all patient counts in the interface will be replaced by percentages, i.e. absolute numbers divided bz the number of patients in the current selection. On the right we have three buttons (from left to right): The ``\faIcon{question} Help'' button redirects to LyProX' \superhref{https://lyprox.org/dashboard/help}{\faIcon{external-link-alt}~help page}. The button displaying the total number of patients in selection links to a list of these patients. Finally, the bright orange ``\faIcon{cogs} Compute'' button needs to be pressed for the interface to update, after a user changes the patient selection e.g. via the toggle buttons. We have considered automatically updating the dashboard after each user input, e.g. when a toggle button is switched. However, in that case the number of requests sent to the server would be much larger and the perceived responsiveness of the interface might suffer, because after each click there would be a split-second delay until all numbers and bars update.
 \end{itemize}
 
 \begin{figure}
@@ -161,6 +161,6 @@ As can be seen in \cref{fig:lyprox:data_viewer}, the overall layout  of the inte
     \label{fig:lyprox:data_viewer_lnl_example}
 \end{figure}
 
-On the mentioned \href{https://lyprox.org/dashboard/help}{\faIcon{external-link-alt}~help page} we have provided an illustrated user manual explaining the concepts and workings of the \gls{gui}. On the same page, one can also find two videos we recorded, showing how to get started with exploring patterns of lymph node involvement using LyProX.
+On the mentioned \superhref{https://lyprox.org/dashboard/help}{\faIcon{external-link-alt}~help page} we have provided an illustrated user manual explaining the concepts and workings of the \gls{gui}. On the same page, one can also find two videos we recorded, showing how to get started with exploring patterns of lymph node involvement using LyProX.
 
 \end{document}

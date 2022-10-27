@@ -87,9 +87,7 @@
 \usepackage{mathtools}
 \usepackage{nicefrac}
 \usepackage{siunitx}
-\sisetup{
-    group-digits=false
-    }
+\sisetup{group-digits=false}
 \input{math_operators}
 
 \usepackage{ntheorem}
@@ -103,6 +101,7 @@
 \loadglsentries[acronym]{glossary}
 
 %% Cross-referencing
+\usepackage{xurl}
 \usepackage{hyperref}
 \usepackage{cleveref}
 \usepackage{auxhook}
@@ -123,5 +122,5 @@
 
 % Custom commands
 \newcommand{\superhref}[2]{\href{#1}{#2}}
-\newcommand{\repolink}[2][rmnldwg]{\href{https://github.com/#1/#2}{\faIcon{github}~\texttt{#2}}}
-\newcommand{\lytag}[1]{\href{https://github.com/rmnldwg/lynference/releases/tag/#1}{\faIcon{tags}~\texttt{#1}}}
+\newcommand{\repolink}[2][rmnldwg]{\superhref{https://github.com/#1/#2}{\faIcon{github}~\texttt{#2}}}
+\newcommand{\lytag}[1]{\superhref{https://github.com/rmnldwg/lynference/releases/tag/#1}{\faIcon{tags}~\texttt{#1}}}

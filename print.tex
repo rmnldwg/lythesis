@@ -32,7 +32,7 @@
 }
 
 % Print out the URLs of all links
-\renewcommand{\superhref}[2]{#2 (\url{#1})}
+\renewcommand{\superhref}[2]{#2 {\footnotesize (\url{#1})}}
 
 %% Metadata
 \title{Modelling Lymphatic Metastatic Progression in Head and Neck Cancer}
@@ -42,6 +42,9 @@
 \hypersetup{
     pdftitle={\thetitle},
     pdfauthor={\theauthor},
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=gray,
     urlcolor=uszblue
 }
 
