@@ -5,12 +5,13 @@
 \documentclass[
     a4paper,
     12pt,
-    twoside,
-    openright
 ]{report}
 
 %% Load preamble
 \input{preamble.tex}
+
+%% Load custom commands regarding links
+\input{online_commands.tex}
 
 %% Metadata
 \title{Modelling Lymphatic Metastatic Progression in Head and Neck Cancer}
@@ -28,7 +29,6 @@
     
     %% Titlepage
     \subfile{content/titlepage}
-    \cleardoublepage
 
     %% Frontmatter
     \pagestyle{fancy}

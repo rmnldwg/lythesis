@@ -1,0 +1,67 @@
+%% Specify root of repository relative to this file.
+\providecommand{\relativeRoot}{.}
+
+
+\documentclass[
+    a4paper,
+    12pt,
+    twoside,
+    openright
+]{report}
+
+%% Load preamble
+\input{preamble.tex}
+
+%% Load custom commands regarding links
+\input{print_commands.tex}
+
+%% Metadata
+\title{Modelling Lymphatic Metastatic Progression in Head and Neck Cancer}
+\author{Roman Ludwig}
+\date{\monthyeardate\today}
+
+\hypersetup{
+    pdftitle={\thetitle},
+    pdfauthor={\theauthor}
+}
+
+%% The actual document
+\begin{document}
+    \pagestyle{empty}
+    
+    %% Titlepage
+    \subfile{content/titlepage}
+    \cleardoublepage
+
+    %% Frontmatter
+    \pagestyle{fancy}
+    \pagenumbering{roman}
+    \subfile{content/frontmatter}
+
+    %% The Chapters as subfiles
+    \subfile{content/intro/_chapter}
+    \glsresetall
+    \subfile{content/previous_work/_chapter}
+    \glsresetall
+    \subfile{content/dataset_usz/_chapter}
+    \glsresetall
+    \subfile{content/dataset_clb/_chapter}
+    \glsresetall
+    \subfile{content/lyprox/_chapter}
+    \glsresetall
+    \subfile{content/unilateral/_chapter}
+    \glsresetall
+    \subfile{content/graph/_chapter}
+    \glsresetall
+    \subfile{content/bilateral/_chapter}
+    \glsresetall
+    \subfile{content/complete/_chapter}
+    \glsresetall
+    \subfile{content/future/_chapter}
+    \glsresetall
+    \subfile{content/discussion/_chapter}
+
+    %% Backmatter
+    \subfile{content/backmatter}
+
+\end{document}
