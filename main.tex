@@ -3,9 +3,10 @@
 
 
 \documentclass[
+    a4paper,
     12pt,
-    % twoside,
-    % openright
+    twoside,
+    openright
 ]{report}
 
 %% Load preamble
@@ -23,11 +24,14 @@
 
 %% The actual document
 \begin{document}
+    \pagestyle{empty}
     
     %% Titlepage
     \subfile{content/titlepage}
+    \cleardoublepage
 
     %% Frontmatter
+    \pagestyle{fancy}
     \pagenumbering{roman}
     \subfile{content/frontmatter}
 
