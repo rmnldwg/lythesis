@@ -125,15 +125,10 @@
 \usepackage{fontawesome5}
 
 % Custom commands
-\newcommand{\superhref}[2]{\href{#1}{#2}}
-\newcommand{\repolink}[2][rmnldwg]{\superhref{https://github.com/#1/#2}{\faIcon{github}~\texttt{#2}}}
-\newcommand{\lytag}[1]{\superhref{https://github.com/rmnldwg/lynference/releases/tag/#1}{\faIcon{tags}~\texttt{#1}}}
+\newcommand{\superhref}[3][\faIcon{external-link-alt}~]{\href{#2}{#1#3}}
+\newcommand{\repolink}[2][rmnldwg]{\superhref[\faIcon{github}~]{https://github.com/#1/#2}{\texttt{#2}}}
+\newcommand{\lytag}[1]{\superhref[\faIcon{tags}~]{https://github.com/rmnldwg/lynference/releases/tag/#1}{\texttt{#1}}}
 \newcommand{\lyproxlogo}[2][-0.93]{\raisebox{#1\dp\strutbox}{\def\svgscale{#2}\input{\relativeRoot/figures/lyprox.pdf_tex}}}
 \newcommand{\inlinelyproxlogo}{%
-    \iftoggle{lyproxIsUsed}{%
-        \href{https://lyprox.org}{\raisebox{-0.7\dp\strutbox}{\def\svgscale{0.4}\input{\relativeRoot/figures/lyprox_black.pdf_tex}}}%
-    }{%
-        \href{https://lyprox.org}{\raisebox{-0.7\dp\strutbox}{\def\svgscale{0.4}\input{\relativeRoot/figures/lyprox_black.pdf_tex}}} {\footnotesize \textup{(\url{https://lyprox.org})}}%
-    }%
-    \global\toggletrue{lyproxIsUsed}%
+    \href{https://lyprox.org}{\raisebox{-0.7\dp\strutbox}{\def\svgscale{0.4}\input{\relativeRoot/figures/lyprox_black.pdf_tex}}}%
 }

@@ -32,7 +32,15 @@
 }
 
 % Print out the URLs of all links
-\renewcommand{\superhref}[2]{#2 {\footnotesize \textup{(\url{#1})}}}
+\renewcommand{\superhref}[3][]{#1#3~{\footnotesize\textup{(\url{#2})}}}
+\renewcommand{\inlinelyproxlogo}{%
+    \iftoggle{lyproxIsUsed}{%
+        \href{https://lyprox.org}{\raisebox{-0.7\dp\strutbox}{\def\svgscale{0.4}\input{\relativeRoot/figures/lyprox_black.pdf_tex}}}%
+    }{%
+        \href{https://lyprox.org}{\raisebox{-0.7\dp\strutbox}{\def\svgscale{0.4}\input{\relativeRoot/figures/lyprox_black.pdf_tex}}}~{\footnotesize\textup{(\url{https://lyprox.org})}}%
+    }%
+    \global\toggletrue{lyproxIsUsed}%
+}
 
 %% Metadata
 \title{Modelling Lymphatic Metastatic Progression in Head and Neck Cancer}

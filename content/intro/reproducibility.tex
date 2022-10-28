@@ -18,7 +18,7 @@ We have undertaken a significant effort to make almost all results presented in 
     \item The experiments that created the data in the first place can be rerun as well. They are made persistent in a separate repository called \repolink{lynference}.
 \end{enumerate}
 
-We will not go into detail regarding the second level, as this is described in great detail within the \repolink{lynference} repository itself. Moreover, \faIcon{recycle}~\textbf{Reproducibility} boxes before chapters and sections that contain results indicate which pipeline exactly would need to be reproduced.
+We will not go into detail regarding the second level, as this is described in great detail within the \repolink{lynference} repository itself. Moreover, \faIcon{recycle}~\textbf{Reproducibility} boxes before chapters and sections that contain results indicate which experiment pipeline would need to be reproduced.
 
 However, for pulling the data underlying the figures and recreating them, the necessary steps are listed in the \faIcon{info-circle}~\texttt{README.md} at the root of the \repolink{lyThesis} repository and summarized below:
 
@@ -29,7 +29,7 @@ However, for pulling the data underlying the figures and recreating them, the ne
     \item Install the requirements for the reproduction. These consist of an installation of \faIcon{python}~Python version 3.8 or later, an installation of \TeX~Live~2022 and the vector graphic program \raisebox{-0.6\dp\strutbox}{\def\svgscale{0.12}\input{figures/inkscape.pdf_tex}} Inkscape \cite{noauthor_inkscape_2022}. When Python is installed, the necessary packages can be installed via the command below (which should be executed in a virtual environment):
     \begin{verbatim}$ pip install -r requirements.txt\end{verbatim}
     
-    \item Pull all data files that are indexed by \raisebox{-0.8\dp\strutbox}{\def\svgscale{0.13}\input{figures/dvc.pdf_tex}} \acrshort{dvc} \cite{noauthor_data_2022} using the bash command given below. It finds all files that end with \texttt{.dvc}, which specify data sources.
+    \item Pull all data files that are indexed by \raisebox{-0.7\dp\strutbox}{\def\svgscale{0.16}\input{figures/dvc_black.pdf_tex}} \cite{noauthor_data_2022} using the bash command given below. It finds all files that end with \texttt{.dvc}, which specify data sources.
     \begin{verbatim}$ find content -iname "*.dvc" -exec dvc update {} \;\end{verbatim}
     
     \item Run all pipelines in the repository. These pipelines are defined inside \texttt{dvc.yaml} files that can be understood and reproduced by \acrlong{dvc}.
