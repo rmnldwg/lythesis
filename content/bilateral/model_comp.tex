@@ -1,6 +1,9 @@
 \providecommand{\relativeRoot}{../..}
 \documentclass[\relativeRoot/main.tex]{subfiles}
-\graphicspath{{\subfix{./figures/}}}
+\graphicspath{
+	{\relativeRoot/figures/}
+    {\subfix{./figures/}}
+}
 
 
 \begin{document}
@@ -17,6 +20,8 @@ Up to this point we have largely argued that the mixing parameter makes intuitiv
 \end{itemize}
 
 We now want to know which of these three models best describes the data. Intuitively, one would argue that it must be $\mathcal{M}_\text{full}$, but this model is also more complex than the other two. A natural choice for a metric that incorporates both the accuracy of the model and a penalty for model complexity -- often also called \emph{Occam's razor} -- is the \emph{model evidence} \cite{aponte_introduction_2022}, which we introduced in \cref{sec:graph:model_comp}.
+
+\clearpage
 
 \subsection{Implementation}
 \label{subsec:bilateral:model_comp:implementation}
@@ -154,7 +159,7 @@ A comparison of the log-evidence of the three models -- which we provide in \cre
 
 \Cref{fig:bilateral:model_comp:thermo_int} displays how -- using \gls{ti} -- the expected log-likelihood under the power posterior evolves as a function of $\beta$ for each of the three models. It shows that the final accuracy $\mathcal{A}_\text{MC}(\beta=1)$ of the agnostic model $\mathcal{M}_\text{ag}$ is lower than that of the other two models, because both the model $\mathcal{M}_\alpha$ and $\mathcal{M}_\text{full}$ incorporate the tumor's extension over the mid plane into their prediction. However, while the mixing model $\mathcal{M}_\alpha$ and the full model $\mathcal{M}_\text{full}$ achieve the same fit to the data, the full model's accuracy rises for later $\beta$ values, which results in a lower log-evidence and a higher complexity penalty (see \cref{eq:ti:acc_vs_kl}) compared to the simpler mixing model.
 
-\subsection{Contralateral Risk Depending on Ipsilateral Diagnosis}
+\subsection[Contralateral Risk Depending on Ipsilateral Diagnosis]{Contralateral Risk Depending\\on Ipsilateral Diagnosis}
 \label{subsec:bilateral:model_comp:risk}
 
 To conclude this section, we show that the extended bilateral model that uses the mixing parameter $\alpha$ to model the contralateral spread in case of a tumor that extends over the mid-sagittal plane, can factor in ipsilateral diagnoses into its risk prediction for contralateral involvement. For that, we have plotted in \cref{fig:bilateral:model_comp:risks} how the risk for microscopic involvement in the contralateral \gls{lnl} II increases for a worsening diagnosis. To that end, we assumed \gls{ct} imaging with a specificity $s_P = 76\%$ and sensitivity of $s_N = 81\%$ as the modality for clinical N-classification. We have started with an early T-category patient with a clearly lateralized tumor whose \gls{ct} scan showed no detectable metastases in either side of the neck. For that case, the risk for occult metastases is very low (below 2\%, green histograms). This risk increases just slightly if we were to observe the same diagnosis but for a late T-category patient (shaded blue histogram). As expected, the risk jumps to over 7\% as soon as the tumor grows over the mid-sagittal plane, where the patient is still of late T-category and clinically $N_0$. The contralateral risk for microscopic involvement in \gls{lnl} II increases further to around 9\% when a metastasis is detected via \gls{ct} in the ipsilateral \gls{lnl} II and once more to 10\% when level III on the same side shows involvement as well.

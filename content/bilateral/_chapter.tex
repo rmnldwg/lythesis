@@ -1,6 +1,7 @@
 \providecommand{\relativeRoot}{../..}
 \documentclass[\relativeRoot/main.tex]{subfiles}
 \graphicspath{
+	{\relativeRoot/figures/}
     {\subfix{./figures/}}
 }
 
@@ -9,6 +10,7 @@
 
 \chapter{Extending the HMM to the Contralateral Neck}
 \label{chap:bilateral}
+\global\togglefalse{lyproxIsUsed}
 
 In the previous chapter we have set up the formalism to deal with only one side of the neck. Implicitly, we have assumed that to be the ipsilateral side, i.e. the side of the sagittal plane where the primary tumor is located. Depending on the tumor's location and lateralization, drainage and hence metastatic spread to the contralateral lymphatic system of the neck also occurs. In current clinical practice, a bilateral neck dissection or irradiation is recommended in the vast majority of cases \cite{de_veij_mestdagh_incidence_2019}, although a growing number of researchers believe treatment may be safely limited to the ipsilateral side for many patients \cite{rackley_unilateral_2017,de_veij_mestdagh_spectct-guided_2020}. A probabilistic model like ours could support the selection of patients in whom the contralateral neck irradiation is reduced or even omitted, if it can be extended successfully to the contralateral side.
 

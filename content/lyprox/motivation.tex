@@ -1,6 +1,9 @@
 \providecommand{\relativeRoot}{../..}
 \documentclass[\relativeRoot/main.tex]{subfiles}
-\graphicspath{{\subfix{./figures/}}}
+\graphicspath{
+	{\relativeRoot/figures/}
+    {\subfix{./figures/}}
+}
 
 
 \begin{document}
@@ -56,6 +59,6 @@ We decided to build a \emph{dynamic} site for two main reasons:
 
 At the time of beginning the development for the \gls{gui}, we had already implemented the probabilistic model that we will introduce in \cref{chap:unilateral} in the programming language \faIcon{python}~Python. Hence, we decided to use a web framework also implemented in that language, since it matched our skills and may allow us to add that model's library directly into the \gls{gui}'s logic.
 
-Even when one has settled on a dynamic website that serves content using a backend written in \faIcon{python}~Python, there are still numerous frameworks to choose from, e.g. \href{https://flask.palletsprojects.com/en/2.2.x/}{Flask}, \href{https://plotly.com/dash/}{Dash} or \href{http://bottlepy.org/docs/dev/}{Bottle}. However, we decided to go with \href{https://www.djangoproject.com/}{Django} \cite{noauthor_django_2022}, as it is one of the most popular ones and comes with numerous features -- especially related to security and authorization -- already built-in. It makes heavy use of the \acrlong{oop} paradigm, especially for its database models, which -- as we will see -- made it easy for us to represent e.g. a patient within Django.
+Even when one has settled on a dynamic website that serves content using a backend written in \faIcon{python}~Python, there are still numerous frameworks to choose from, e.g. \superhref{https://flask.palletsprojects.com/en/2.2.x/}{Flask}, \superhref{https://plotly.com/dash/}{Dash} or \superhref{http://bottlepy.org/docs/dev/}{Bottle}. However, we decided to go with \superhref{https://www.djangoproject.com/}{Django} \cite{noauthor_django_2022}, as it is one of the most popular ones and comes with numerous features -- especially related to security and authorization -- already built-in. It makes heavy use of the \acrlong{oop} paradigm, especially for its database models, which -- as we will see -- made it easy for us to represent e.g. a patient within Django.
 
 \end{document}

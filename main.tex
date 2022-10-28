@@ -3,9 +3,8 @@
 
 
 \documentclass[
+    a4paper,
     12pt,
-    % twoside,
-    % openright
 ]{report}
 
 %% Load preamble
@@ -23,38 +22,11 @@
 
 %% The actual document
 \begin{document}
-    
-    %% Titlepage
-    \subfile{content/titlepage}
+    \pagestyle{empty}
+    \subfile{titlepage}
+    \pagestyle{plain}
+    \subfile{content/_content.tex}
 
-    %% Frontmatter
-    \pagenumbering{roman}
-    \subfile{content/frontmatter}
-
-    %% The Chapters as subfiles
-    \subfile{content/intro/_chapter}
-    \glsresetall
-    \subfile{content/previous_work/_chapter}
-    \glsresetall
-    \subfile{content/dataset_usz/_chapter}
-    \glsresetall
-    \subfile{content/dataset_clb/_chapter}
-    \glsresetall
-    \subfile{content/lyprox/_chapter}
-    \glsresetall
-    \subfile{content/unilateral/_chapter}
-    \glsresetall
-    \subfile{content/graph/_chapter}
-    \glsresetall
-    \subfile{content/bilateral/_chapter}
-    \glsresetall
-    \subfile{content/complete/_chapter}
-    \glsresetall
-    \subfile{content/future/_chapter}
-    \glsresetall
-    \subfile{content/discussion/_chapter}
-
-    %% Backmatter
-    \subfile{content/backmatter}
+    This thesis was typeset in \LaTeX. Plots were created using \faIcon{python}~Python version 3.8. The source code and a print version of this document is available at \repolink{lyThesis}. It was compiled by \texttt{Latexmk} v4.77 on \today.
 
 \end{document}

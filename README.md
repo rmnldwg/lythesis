@@ -5,7 +5,10 @@
 * _Supervisor:_ **Prof. Jan Unkelbach**
 * _Time:_ **September 2019 - December 2022**
 
-This repository contains the source code for my PhD dissertation. It is set up to be - above all - modular and reproducible. Below follows a quick guide to this repository's layout.
+This repository contains the source code for my PhD dissertation. It is set up to be - above all - modular and reproducible. I have created two versions of it: An online version, optimized for screens and without lengthy URLs or empty pages, and a print version, where chapters start on right pages and every link is written out. You can download them via the buttons below:
+
+[![print version button](https://img.shields.io/badge/&#128221;%20print-blue)](https://github.com/rmnldwg/lythesis/releases/download/v1.1/print.pdf)
+[![screen version button](https://img.shields.io/badge/&#128187;%20screen-red)](https://github.com/rmnldwg/lythesis/releases/download/v1.1/screen.pdf)
 
 
 ## Requirements
@@ -32,7 +35,7 @@ pip install -U pip setuptools wheel
 pip install -r requirements.txt
 ```
 
-Then, update all the data sources. You could go through all `data` folders inside every chapter's directory and execute `dvc update -R .` but there is a faster way. At the root of the repository, call
+Then, update all the data sources. You could go through all `data` folders inside every chapter's directory and execute `dvc update -R .`, but there is a faster way. At the root of the repository, call
 
 ```
 find -iname "*.dvc" -exec dvc update {} \;
@@ -52,16 +55,39 @@ latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf -outdir=_build
 
 Now your `_build` directory at the root of the repo should contain a beautifully rendered `main.pdf` :+1:
 
+Of course, you can also build the print version of the document. Simply replace `main` with `print` in the last command above.
+
+
+## Attribute
+
+The thesis itself is obviously copyrighted by default, meaning you cannot sell or distribute it under your name. But the basic structure of this repository may be used freely as a sort of template under the [MIT license](https://github.com/rmnldwg/lythesis/blob/main/LICENSE). If you base your thesis on the scaffolding of mine, you can use the "Cite this repository" button to give credit.
+
+To cite the thesis itself, you can use this BibTeX entry:
+
+```bibtex
+@thesis{ludwig_modelling_2022,
+    title = {Modelling {{Lymphatic Metastatic Progression}} in {{Head}} and {{Neck Cancer}}},
+    author = {Ludwig, Roman},
+    date = {2022-10},
+    institution = {{University of Zurich}},
+    location = {{Zurich, Switzerland}},
+    langid = {english},
+    pagetotal = {181},
+}
+```
+
+
 ## Repository Structure
 
 ### Subfiles
 
-I make heavy use of LaTeX's [`subfiles`] package to make everything as modular as possible. The `main.tex` contains no content, except the thesis title, author and date. It only loads in other files and directories.
+I make heavy use of LaTeX's [`subfiles`] package to make everything as modular as possible. The `main.tex` and `print.tex` files contain no content, except the thesis title, author and date. They only load in other files and directories.
 
 1. First, it loads the `preamble.tex`, where I define all the packages and set up the document. There I also load the `math_operators.tex` I defined for myself and an extensive `glossary.tex` of abbreviations.
-2. Then - after defining title, author and date - it loads the `content/frontmatter.tex`, where one can find the abstract and acknowledgement along with the ToC.
-3. Thirdly, all the content is pulled in from subdirectories within the folder `content`. It does, however, not include content files directly, but `content/<title>/_chapter.tex` files, that - like the `main.tex` - don't have much content in them. These chapter TeX files, too, use subfiles to include the sections within the respective chapter. This makes it super easy to in- or exclude entire sections and chapters.
-4. In the end, like the `content/frontmatter.tex` a file `content/backmatter.tex` defines what follows after the main body. Like a table of figures and stuff like that.
+2. After that comes a simple [`subfile`] call to the actual content that I store inside `content/_content.tex`. This file in turn includes other files via [`subfile`] calls:
+   1. The abstract, acknowledgements, ToC, etc. are all in the `content/frontmatter.tex`.
+   2. Written chapters are pulled in from subdirectories within the `content` folder. However, not as large content files directly, but via `content/<title>/_chapter.tex` files, that - like the `main.tex` - don't have much content in them. These chapter TeX files, too, use [`subfiles`] to include the sections within the respective chapter. This makes it super easy to in- or exclude entire sections and chapters. Only besides the `_chapter.tex` files in the corresponding directory can one find the "leafs" of this thesis' structure tree.
+   3. Lastly, like the `content/frontmatter.tex` a file `content/backmatter.tex` defines what follows after the main body. Like a table of figures and stuff like that.
 
 Since it is set up such that every `.tex` file that has a `document` environment in it compiles into a working PDF, this repo should have `_build` directories on every level. I have configured VS Code such that it always puts intermediate files and compiled PDFs there. These folders can then just be ignored by git to keep the repo uncluttered.
 
@@ -101,6 +127,7 @@ That _should_ fix all errors regarding LaTeX not being able to find figures.
 [TeX Live]: https://tug.org/texlive/
 [DVC]: https://dvc.org
 [Inkscape]: https://inkscape.org/
+[`subfile`]: https://www.ctan.org/pkg/subfiles
 [`subfiles`]: https://www.ctan.org/pkg/subfiles
 [`lynference`]: https://github.com/rmnldwg/lynference
 [`venv`]: https://docs.python.org/3/library/venv.html
