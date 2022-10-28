@@ -1,0 +1,26 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: lyThesis
+message: >-
+  If you use this thesis template, please cite it
+  using the metadata from this file.
+type: software
+authors:
+  - given-names: Roman
+    family-names: Ludwig
+    email: roman.ludwig2@uzh.ch
+    affiliation: University of Zurich
+    orcid: 'https://orcid.org/0000-0001-9434-328X'
+repository-code: 'https://github.com/rmnldwg/lythesis'
+abstract: >-
+  This LaTeX and Python code was used my PhD thesis
+  "Modelling Lymphatic Metastatic Progression in Head
+  and Neck Cancer". The content of this thesis is
+  copyrighted, but the scaffolding may be used freely
+  for other works.
+keywords:
+  - LaTeX
+  - PhD Thesis
+license: MIT
