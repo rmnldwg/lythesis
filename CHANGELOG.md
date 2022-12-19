@@ -6,6 +6,7 @@
 - bump linked document versions in README
 
 ### Typo & Bug Fixes
+- remove icon before `pydoctor` reference in print version
 - remove one unnecessary whitespace in first sentence of section 4.1
 - typo & small correction after Jan's feedback
 - typo and better rewording
