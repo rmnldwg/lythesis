@@ -7,8 +7,8 @@
 
 This repository contains the source code for my PhD dissertation. It is set up to be - above all - modular and reproducible. I have created two versions of it: An online version, optimized for screens and without lengthy URLs or empty pages, and a print version, where chapters start on right pages and every link is written out. You can download them via the buttons below:
 
-[![print version button](https://img.shields.io/badge/&#128221;%20print-blue)](https://github.com/rmnldwg/lythesis/releases/download/v1.3/print.pdf)
-[![screen version button](https://img.shields.io/badge/&#128187;%20screen-red)](https://github.com/rmnldwg/lythesis/releases/download/v1.3/screen.pdf)
+[![print version button](https://img.shields.io/badge/&#128221;%20print-blue)](https://github.com/rmnldwg/lythesis/releases/download/v1.4/print.pdf)
+[![screen version button](https://img.shields.io/badge/&#128187;%20screen-red)](https://github.com/rmnldwg/lythesis/releases/download/v1.4/screen.pdf)
 
 
 ## Requirements

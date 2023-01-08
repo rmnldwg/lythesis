@@ -23,7 +23,7 @@ Hence, we would like to write an extensive and fully automated set of tests cove
 
 \subsection*{User Experience}
 
-So far, we have informally asked colleagues and collaborators to assess how usable and intuitive our interface is. As many of them were already familiar with our work -- or even the prototype of \cref{subsec:lyprox:motivation:prototype} -- this cannot be considered a very objective assessment of \inlinelyproxlogo{}' user experience. We do not aim to make it intuitively usable and accessible to the public, as it will remain a specific tool about lymphatic cancer progression and hence targeted to \gls{hnscc} experts. But if the scope and budget of our project allows, we would like to consult UX designers and/or frontend developers on its user experience. With such professional feedback and help, an improved interface design might convince more clinicians to use \inlinelyproxlogo{} and maybe collaborate with us on extending the database.
+So far, we have informally asked colleagues and collaborators to assess how usable and intuitive our interface is. As many of them were already familiar with our work -- or even the prototype of \cref{subsec:lyprox:motivation:prototype} -- this cannot be considered a very objective assessment of \inlinelyproxlogo{}' user experience. We do not aim to make it intuitively usable and accessible to the public, as it will remain a specific tool about lymphatic cancer progression and hence targeted to \gls{hnscc} experts. But if the scope and budget of our project allows, we would like to consult UX designers and/or frontend developers on its user experience. With such professional feedback and help, an improved interface design might convince more clinicians to use \inlinelyproxlogo{} and maybe collaborate with us on extending the database.\looseness=-2
 
 \subsection*{Availability and Redundancy}
 
@@ -31,7 +31,7 @@ As mentioned in \cref{sec:lyprox:dev}, the \gls{gui} currently runs on a single 
 
 \subsection*{Integration with Related Repositories}
 
-Since the patient information displayed in \inlinelyproxlogo{} originates from our public repository \repolink{lyDATA}, it could make sense to automate the process of adding new datasets to the interface's database: Whenever we publish a new cohort on \faIcon{github}~\texttt{lyDATA}, an automated workflow could be triggered that integrates the new list of patients into \inlinelyproxlogo{}.
+Since the patient information displayed in \inlinelyproxlogo{} originates from our public repository \repolink{lyDATA}, it could make sense to automate the process of adding new datasets to the interface's database: Whenever we publish a new cohort on \faIcon{github}~\texttt{lyDATA}, an automated workflow could be triggered that integrates the new list of patients into \inlinelyproxlogo{}.\looseness=-1
 
 Ultimately, we also want to include a risk prediction module into our website that goes beyond displaying prevalences of involvement for previously observed patients. For a user-specified, individual diagnosis, it would predict the probability for microscopic metastases is any \gls{lnl} of interest. The formalism for such a model will be introduced in \cref{chap:unilateral} and its programmatic implementation is published in the repositories \repolink{lymph} and \repolink{lyscripts}. Integrating the model from these two locations along with the inference pipeline using data pulled from \faIcon{github}~\texttt{lyDATA} is another major objective in the development of \inlinelyproxlogo{}.
 

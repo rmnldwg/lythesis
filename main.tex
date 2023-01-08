@@ -20,6 +20,10 @@
     pdfauthor={\theauthor}
 }
 
+\newcommand{\globalreset}{%
+    \glsresetall
+}
+
 %% The actual document
 \begin{document}
     \pagestyle{empty}
@@ -27,6 +31,12 @@
     \pagestyle{plain}
     \subfile{content/_content.tex}
 
-    This thesis was typeset in \LaTeX. Plots were created using \faIcon{python}~Python version 3.8. The source code and a print version of this document is available at \repolink{lyThesis}. It was compiled by \texttt{Latexmk} v4.77 on \today.
+    \begin{center}
+        This document was typeset in \LaTeX.\\
+        Plots were created using \faIcon{python}~Python~3.8.\\
+        Source code \& PDFs of the thesis are available\\
+        at \faIcon{github}~\texttt{lyThesis}~{\footnotesize\textup{(\url{https://github.com/rmnldwg/lyThesis})}}.\\
+        It was compiled by \texttt{Latexmk} v4.77 on \today.
+    \end{center}
 
 \end{document}
