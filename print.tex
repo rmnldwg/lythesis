@@ -34,12 +34,41 @@
 % Print out the URLs of all links
 \renewcommand{\superhref}[3][]{#1#3~{\footnotesize\textup{(\url{#2})}}}
 \renewcommand{\inlinelyproxlogo}{%
-    \iftoggle{lyproxIsUsed}{%
+    \providetoggle{lyproxLogoIsUsed}%
+    \iftoggle{lyproxLogoIsUsed}{%
         \href{https://lyprox.org}{\raisebox{-0.7\dp\strutbox}{\def\svgscale{0.4}\input{\relativeRoot/figures/lyprox_black.pdf_tex}}}%
     }{%
         \href{https://lyprox.org}{\raisebox{-0.7\dp\strutbox}{\def\svgscale{0.4}\input{\relativeRoot/figures/lyprox_black.pdf_tex}}}~{\footnotesize\textup{(\url{https://lyprox.org})}}%
     }%
-    \global\toggletrue{lyproxIsUsed}%
+    \global\toggletrue{lyproxLogoIsUsed}%
+}
+% But don't print repolinks repeatedly for the same repo
+\renewcommand{\repolink}[2][rmnldwg]{%
+    \providetoggle{#2IsUsed}%
+    \iftoggle{#2IsUsed}{%
+        \faIcon{github}~\texttt{#2}%
+    }{%
+        \superhref[\faIcon{github}~]{https://github.com/#1/#2}{\texttt{#2}}%
+    }%
+    \global\toggletrue{#2IsUsed}%
+}
+% Reset all toggles
+\newcommand{\globalreset}{%
+    \glsresetall%
+    \providetoggle{lyproxLogoIsUsed}%
+    \providetoggle{lyproxIsUsed}%
+    \providetoggle{lyDATAIsUsed}%
+    \providetoggle{lynfereceIsUsed}%
+    \providetoggle{lyThesisIsUsed}%
+    \providetoggle{lymphIsUsed}%
+    \providetoggle{lyscriptsIsUsed}%
+    \global\togglefalse{lyproxLogoIsUsed}%
+    \global\togglefalse{lyproxIsUsed}%
+    \global\togglefalse{lyDATAIsUsed}%
+    \global\togglefalse{lynfereceIsUsed}%
+    \global\togglefalse{lyThesisIsUsed}%
+    \global\togglefalse{lymphIsUsed}%
+    \global\togglefalse{lyscriptsIsUsed}%
 }
 
 %% Metadata
