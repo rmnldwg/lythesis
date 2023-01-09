@@ -92,7 +92,9 @@
 %% The actual document
 \begin{document}
     \pagestyle{empty}
+    \includepdf{coverpage.pdf}
     \includepdf{_build/titlepage.pdf}
+    \shipout\null
     \cleardoublepage
     \pagestyle{fancy}
     \subfile{content/_content.tex}
