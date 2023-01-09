@@ -1,3 +1,15 @@
+<a name="v1.5"></a>
+## [v1.5] - 2023-01-09
+
+### Maintenance
+- bump document links in `README.md` to future v1.5 of PDFs
+
+### Typo & Bug Fixes
+- add document version to colophon and place it on separate page
+- remove lymph node schematic's partly white background
+- remove leading whitespace in table of contents for the dataset chapters (fixes [#11])
+
+
 <a name="v1.4"></a>
 ## [v1.4] - 2023-01-08
 
@@ -52,7 +64,8 @@
 This is the version that was originally handed in to the UZH.
 
 
-[Unreleased]: https://github.com/rmnldwg/lyscripts/compare/v1.4...HEAD
+[Unreleased]: https://github.com/rmnldwg/lyscripts/compare/v1.5...HEAD
+[v1.5]: https://github.com/rmnldwg/lyscripts/compare/v1.4...v1.5
 [v1.4]: https://github.com/rmnldwg/lyscripts/compare/v1.3...v1.4
 [v1.3]: https://github.com/rmnldwg/lyscripts/compare/v1.2...v1.3
 [v1.2]: https://github.com/rmnldwg/lyscripts/compare/v1.1...v1.2
@@ -63,3 +76,4 @@ This is the version that was originally handed in to the UZH.
 [#8]: https://github.com/rmnldwg/lyscripts/issues/8
 [#9]: https://github.com/rmnldwg/lyscripts/issues/9
 [#10]: https://github.com/rmnldwg/lyscripts/issues/10
+[#11]: https://github.com/rmnldwg/lyscripts/issues/11
